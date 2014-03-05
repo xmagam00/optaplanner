@@ -1,24 +1,24 @@
 \select@language {czech}
 \contentsline {chapter}{\numberline {1}\IeC {\'U}vod}{2}{chapter.1}
-\contentsline {chapter}{\numberline {2}Java EE 6}{3}{chapter.2}
-\contentsline {chapter}{\numberline {3}Java EE aplika\IeC {\v c}n\IeC {\'y} model}{5}{chapter.3}
-\contentsline {section}{\numberline {3.1}Distribuovan\IeC {\'a} viacstup\IeC {\v n}ov\IeC {\'a} aplik\IeC {\'a}cia}{5}{section.3.1}
-\contentsline {section}{\numberline {3.2}Bezpe\IeC {\v c}nos\IeC {\v t}}{6}{section.3.2}
-\contentsline {chapter}{\numberline {4}Java EE komponenty}{7}{chapter.4}
-\contentsline {section}{\numberline {4.1}Java EE klienti}{7}{section.4.1}
-\contentsline {section}{\numberline {4.2}The JavaBeans Component Architecture}{8}{section.4.2}
-\contentsline {section}{\numberline {4.3}Webov\IeC {\'e} komponenty}{8}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Web Services}{8}{subsection.4.3.1}
-\contentsline {section}{\numberline {4.4}JavaServer Faces}{8}{section.4.4}
-\contentsline {section}{\numberline {4.5}Enterprise JavaBeans}{9}{section.4.5}
-\contentsline {chapter}{\numberline {5}JBoss}{10}{chapter.5}
-\contentsline {section}{\numberline {5.1}Hist\IeC {\'o}ria JBoos-u}{10}{section.5.1}
-\contentsline {section}{\numberline {5.2}OptaPlanner}{11}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}Princ\IeC {\'\i }p pl\IeC {\'a}novania}{11}{subsection.5.2.1}
-\contentsline {chapter}{\numberline {6}Grafick\IeC {\'e} u\IeC {\v z}\IeC {\'\i }vate\IeC {\v l}sk\IeC {\'e} rozhranie}{12}{chapter.6}
-\contentsline {section}{\numberline {6.1}Twitter Bootstrap}{12}{section.6.1}
-\contentsline {subsection}{\numberline {6.1.1}Hist\IeC {\'o}ria}{12}{subsection.6.1.1}
-\contentsline {subsection}{\numberline {6.1.2}V\IeC {\'y}hody}{12}{subsection.6.1.2}
-\contentsline {subsection}{\numberline {6.1.3}Komponenty}{12}{subsection.6.1.3}
-\contentsline {section}{\numberline {6.2}N\IeC {\'a}vrh rozhrania}{13}{section.6.2}
-\contentsline {chapter}{\numberline {7}Z\IeC {\'a}ver}{16}{chapter.7}
+\contentsline {chapter}{\numberline {2}Java Enterprise edition 6}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Aplika\IeC {\v c}n\IeC {\'y} model}{3}{section.2.1}
+\contentsline {section}{\numberline {2.2}Distribuovan\IeC {\'a} viacstup\IeC {\v n}ov\IeC {\'a} aplik\IeC {\'a}cia}{4}{section.2.2}
+\contentsline {section}{\numberline {2.3}Bezpe\IeC {\v c}nos\IeC {\v t}}{5}{section.2.3}
+\contentsline {chapter}{\numberline {3}Java EE komponenty}{6}{chapter.3}
+\contentsline {section}{\numberline {3.1}Java EE klienti}{6}{section.3.1}
+\contentsline {section}{\numberline {3.2}The JavaBeans Component Architecture}{7}{section.3.2}
+\contentsline {section}{\numberline {3.3}Webov\IeC {\'e} komponenty}{7}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Web Services}{7}{subsection.3.3.1}
+\contentsline {section}{\numberline {3.4}JavaServer Faces}{7}{section.3.4}
+\contentsline {section}{\numberline {3.5}Enterprise JavaBeans}{8}{section.3.5}
+\contentsline {chapter}{\numberline {4}JBoss}{9}{chapter.4}
+\contentsline {section}{\numberline {4.1}Hist\IeC {\'o}ria JBoos-u}{9}{section.4.1}
+\contentsline {section}{\numberline {4.2}OptaPlanner}{10}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Princ\IeC {\'\i }p pl\IeC {\'a}novania}{10}{subsection.4.2.1}
+\contentsline {chapter}{\numberline {5}Grafick\IeC {\'e} u\IeC {\v z}\IeC {\'\i }vate\IeC {\v l}sk\IeC {\'e} rozhranie}{11}{chapter.5}
+\contentsline {section}{\numberline {5.1}Twitter Bootstrap}{11}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Hist\IeC {\'o}ria}{11}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}V\IeC {\'y}hody}{11}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}Komponenty}{11}{subsection.5.1.3}
+\contentsline {section}{\numberline {5.2}N\IeC {\'a}vrh rozhrania}{12}{section.5.2}
+\contentsline {chapter}{\numberline {6}Z\IeC {\'a}ver}{15}{chapter.6}
