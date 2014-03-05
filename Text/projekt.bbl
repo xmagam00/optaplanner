@@ -1,0 +1,28 @@
+\begin{thebibliography}{1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+\providecommand{\selectlanguage}[1]{\relax}
+\providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem{Pravidla}
+{Arun Gupta}: \emph{Java EE 6 Pocet Guide}. O'REILLY, 2012,
+  iSBN~978-1-449-33668-4.
+
+\bibitem{fitWeb}
+Jendrock, E.; Cervera-Navarro, R.; Evans, I.; aj.: The Java EE 6 Tutorial
+  [online]. {\tt http://docs.oracle.com/javaee/6/tutorial/doc/}, 2013-11-03
+  [cit. 2013-10-25].
+
+\bibitem{boot}
+Thilo, M. O. J. T. C. R.~J.: Twitter Bootstrap [online]. {\tt
+  hhttp://getbootstrap.com/}, 2013-12-16 [cit. 2013-12-27].
+
+\bibitem{jbossWeb}
+{WWW stránky}: JBoss. {\tt http://www.jboss.org/}, 2013-12-16 [cit.
+  2013-12-27].
+
+\end{thebibliography}

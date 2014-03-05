@@ -1,0 +1,260 @@
+
+
+\chapter{Úvod}
+
+
+
+
+
+\chapter{Java Enterprise edition 6}
+V posledných rokoch prevláda tendencia tvorby komplexných systémov, ktoré spracovávajú veľké množstvá dát.
+ 
+
+
+Java Enterprise Edition 6(Java EE 6) predstavuje platformu určenú na vývoj webových a podnikových aplikácií.\cite{fitWeb}Tieto aplikácie sú viacvrstvové z dôvodu lepšej prenositeľnosti,nasaditeľnosti a modifikovateľnosti. Frontend, predstavujúci užívateľské rozhranie a logiku na jeho ovládanie, pozostáva z webových frameworkov, stredná vrsta poskytuje bezpečnosť a transakcie. Najnižšia vrstva poskytuje pripojenie k databázam. Java EE 6 je vhodná pre implementáciu podnikovej logiky, ktorá dokáže byť riadená alebo interagovať s inými podnikovými aplikáciami. Java Enterprise Edition 6 je platformou, ktorá poskytuje širokú škálu aplikačných programových rozhraní(API), ktoré zjednodušujú, zkracujú a znižujú komplexnosť výslednej aplikácie. Jej vývoj neustále napreduje a je spravovaný Java Comunnity process(JCP).
+
+
+\indent Java EE 6 bola uvoľnená v decembri 2009 a poskytuje ľahké používanie a kompletnú sadu nástrojov na tvorbu podnikových aplikácií. V súčastnosti vyšla ďalšia verzia, ktorá priniesla ďalšie novinky, ktoré môžte dohľadať v online dokumentácií. V ďalších kapitolách si rozoberieme aplikaný model jazyka, ktoré je veľmi dôležitý pre pochopenie princípu činnosti aplikácií vyvinutých touto platformou. Následne sa zameriame na JBoss a OptaPlanner, pre ktoré je určené užívateľské rozhranie. 
+
+
+\section{Aplikačný model}
+Java EE je určená pre implementáciu služieb pre zákazníkov, zamestnancov, dodávateľov kohokoľvek, kto prispieva do podniku. Takéto aplikácie sú komplexné a môže byť k nim pristupované z rozličných zdrojov. Pre lepšie zvládanie sú sústredené do stupňov.
+
+\indent Java EE definuje spôsob implementácie služieb, ktoré sú škálovateľné, prístupné a spravovateľné podnikovou aplikáciou. Tento model implementuje viacstupňový model do nasledujúcich častí:
+\begin{itemize}
+\item Podniková a prezentačná logika poskytovaná Java EE platformou
+\item Štandardná systémová platforma 
+\end{itemize}
+
+\section{Distribuovaná viacstupňová aplikácia}
+Java EE používa aplikácie, ktoré sú viacvrstvové(multitier). Aplikačná logika je rozdelená medzi komponenty podľa funkcie.\cite{Pravidla} Jednotlivé komponenty sa následne rôzne inštalujú v závislosti, do ktorého stupňa patria. Jednotlivé stupňe sa skladajú z rôznych komponent:
+\begin{itemize}
+\item Klientská komponenta, ktorá beží na klientskom počítači
+\item Webová komponenta, ktorá beží na Java EE serveri
+\item Podniková komponentna, ktorá beží na Java EE serveri
+\item Enterprise Information System software bežiaci na EIS serveri
+\end{itemize}
+
+Napriek tomúto rozloženiu býva aplikácia rozložená len do 3 stupňov: Java EE server, klient, databázy na pozadí. Typicky beží medzi klientskom a databázou častou viac-vláknový Java EE server, ktorý býva označovaný skratkou EIS. Viacstupňovérozloženie môžete názorne vidieť na obrázku č. \ref{model}.
+\begin{figure}[htb]
+
+\begin{center}
+
+\includegraphics[scale=0.5]{model.jpg} 
+\caption{Model Java EE, prevzaté z  http://docs.oracle.com/javaee/6/tutorial/doc/}
+\label{model}
+
+\end{center}
+
+\end{figure}
+Java EE aplikácia beží na klientskej stanici, býva obykle reprezentovaná tenkým klientom(webovým prehliadačom), nazývaným \uv{thin client}, alebo hrubým klientom, do ktoré je vložená logika aplikácia. V strednej časti obrázku sa nachádza Java EE server, na ktorom môžu bežať rôzne technológie v závislosti od požiadavky výslednej aplikácie. Java EE server môže by reprezentovaný rôznymi dostupnými technológiami, či už sa jedná o open-source riešenia (JBoss, Tomcat, GlassFish) alebo komerčné riešenia (IBM WebSphere,BEA WebLogic), ten obsahuje rôzne komponenty, ktoré so sebou rôzne komunikujú a interaugujú na požiadavky klienta a na druhej strane komunikujú s databázovým systémom. Tieto komponenty predstavujú logiku aplikáciu. Posledná časť predstavuje databázový systém, ktorý obsahuju dáta, ktoré klient požaduje pri svojom požiadavku, tento server sa nazýva "EIS" 
+\newpage
+\section{Bezpečnosť}
+
+Java EE  vytvára prostriedky, ktoré sú prenositeľné a tak je možné systémy nasadzovať naprieč rôznymi platformami. Poskytuje mechanizmus  prístupovej kontroly pravidiel, ktoré sú interpretované, keď je aplikácia nasadzovaná na server. Java implementuje mechanizmus prihlasovania štandardne, čím odpadá programátori povinnosti túto časť dodatočne implementovať.
+
+V ďalšej časti sa zameriame na podrobné vysvetlenie jednotlivých Java EE komponent, pretože ich pochopenie bude nevyhnuté.
+\chapter{Java EE komponenty}
+Java EE pozostáva z komponent, čo je vlastne sada sebestačného softwaru, ktorý je zhromaždený do Java EE aplikácií a komunikujú s inými komponentami. Java EE definuje nasledujúce komponenty: 
+\begin{itemize}
+\item Aplikačný klienti a aplety bežiaci na klientovi
+\item Java Servlet, JavaServer Faces, and JavaServer Pages (JSP) komponenty bežia na Java EE serveri\cite{fitWeb}.
+\item Enterprise JavaBeans (EJB) komponenty bežia na Java EE serveri\cite{fitWeb}.
+\end{itemize}
+
+V nasledujúcej časti sa zameriami na vysvetlenie jednotlivých pojmov, pretože sú doôležité z hľadiska pochopiteľnosti výslednej aplikácie.
+
+\section{Java EE klienti}
+Java EE client je typicky webový klient alebo aplikačný klient.
+
+Typický webový klient pozostáva z dvoch častí:
+\begin{itemize}
+\item Dynamické webové stránky pozostávajúce z rôzneho značkovacieho jazyka(HTML, XML), ktoré sú generované webovými komponentami
+\item Webovým prehliadačom, ktorý zobrazuje stránky
+\end{itemize}
+Typický webový klient sa nazýva "thin" klient, pretože nedotazuje nad databázou, alebo implementuje zložitú bussiness logiku. Všetky tieto činnosti vykonavá Java EE server. Klient len posiela požiadavky Java EE serveru a ten vykonáva dotazovanie a predávanie výsledkov.
+
+
+Aplikační klienti bežia na klientských počítačoch, kde poskytujú bohatšie užívateľské rozhranie ako webový rozhrania značkovacích jazykov.
+Typicky býva vytváraný technológiou Swing\footnote{http://cs.wikipedia.org/wiki/Swing\_(Java)} alebo Abstract Window Toolkit(AWT)\footnote{http://en.wikipedia.org/wiki/Abstract\_Window\_Toolkit}, občas sa vyskytuje aj prikázový riadok ako rozhranie.
+
+\section{The JavaBeans Component Architecture}
+Server a klient tiež zahŕňa komponenty založené na JavaBeans component architecture(JavaBeans components)\footnote{http://docs.oracle.com/javaee/1.4/tutorial/doc/JSPIntro8.html}, ktoré správujú toky dát medzi:
+\begin{itemize}
+\item Aplikačným klientom,alebo apletom a komponentami bežiacimi na Java EE serveri
+\item Serverovými komponentami a databázami
+\end{itemize}
+
+
+Komunikácia medzi klientom s podnikovým stupňom, ktorý sa nachádza na Java EE serveri, v prípade, že klient beží v prehliadači.
+
+\section{Webové komponenty}
+Java EE webové komponenty sú súčasťou servletov alebo webových stránok, ktoré sú vytvorené JavaServer Faces technológiu\footnote{http://cs.wikipedia.org/wiki/JavaServer\_Faces}(JSF) and JavaServer pages(JSP)\footnote{http://cs.wikipedia.org/wiki/JavaServer\_Pages} technológiou.
+Servlety sú javovské triedy , ktoré dynamicky spracovávajú požiadavky a tvoria odpovede. JSP stránky sú textové dokumenty, ktoré pracúvajú ako servlety ale umožňujú prirodzenejší prístup k vytváraniu statického obsahu. JavaServer Faces technológia stavia na servlety a JSP technológie a poskytuje užívateľské rozhranie komponentný framework pre webové aplikácie.
+
+
+\subsection{Web Services}
+Webové služby sú klientske a serverové aplikácie, ktoré komunikujú cez Hypertext Transfer Protocol (HTTP)\footnote{http://cs.wikipedia.org/wiki/Hypertext\_Transfer\_Protocol}. Webové služby poskytujú štandardné prostriedky, ktoré sú interoperabilné medzi softvérovými aplikáciami bežiacich na rôznych platformách. Webové služby sa vyznačujú veľkou interoperabilitou a rozšíriteľnosťou, rovnako ako ich strojovým spracovaním, vďaka použitiu XML. Webové služby môžu byť kombinované vo voľne spojených spôsoboch, ako dosiahnuť zložité operácie. Programy poskytujúce jednoduché služby môžu na seba vzájomne a poskytovať sofistikované služby.
+
+\section{JavaServer Faces}
+JavaServer Faces zodpovedá serverovej strane frameworku pre užívatelské rozhrania vychádzajúce z Javy. JavaServer Faces(JSF) vytvára aplikácie na základe MVC - Model-View Controller\footnote{http://en.wikipedia.org/wiki/Model-view-controller}. Ďalej treba spomenúť, že pomáha previazať užívatelské údaje so serverom, rovnako ako aj komponenty, ktoré sú znova použitelné.
+
+\indent Aplikácia, ktorá je vytvára týmto frameworkom pozostáva z webových stránok, grafických komponent, sadou komponent naviazané na serverovú časť. Môže obsahovať rôzne desktriptory a konfiguračné súbory, ktoré nám pomáhujú pri nasadzovaní aplikácie. Základom JavaServer Faces je Facelets, čo je vlastne výzorovo deklaračný jazyk pre JSF. Facelets stránky používajú XHTML 1 a CSS\footnote{http://en.wikipedia.org/wiki/Cascading\_Style\_Sheets}. 
+
+\section{Enterprise JavaBeans}
+Enterprise JavaBeans(EJB) je používaný na vývoj a nasadzovanie komponentne založených aplikácií, ktoré sú škálovatelné a zabezpečené. Typicky obsahuje podnikovú logiku, ktorá pracuje s podnikovou databázou. Informácie o transakčných a bezpečnostných atribútoch býva typicky uložená v metadátach alebo v samostatnom XML súbore. Inštancia sa typicky spravuje za behu kontajnerom. Tento kontajner je prístupný klientovi. JavaBeans poskytuje všetky postriedky, ktorý súvisia s transakciami stavovým spravovaním, takže ponúkajú možnosť sa sústrediť na podnikovú logiku. 
+
+V ďalšej časti sa zameriame na JBoss a OptaPlanner.
+
+
+\chapter{JBoss} 
+JBoss, čo je vlastne skratka pre JavaBeans Open Source Applicatom Server, v súčastní nazývaný WildFly je aplikačný server, ktorý je založený na platforme Java a Java Enterprise Edition.\cite{jbossWeb} Keďže je tento server napísaný v Jave je možnosť ho používať naprieč rôznym platformám. Tento server slúži na vývoj a nasadzovanie podnikových aplikácií, webových aplikácií, služieb a portálov. Tento server je licensovaný pod GNU Lesser General Public License(GNU PL).
+
+\section{História JBoos-u}
+Všetko naštartoval v roku 1999 Marc Fleury. Pre podporu vývoja middleware InterBohemia sebe rozhodol implementovať jeden zo štandardov J2EE , EJB kontajner. Tým sa zrodil prvý projekt - EJBoss, ktorý sa neskôr premenoval na JBoss. TO niekoľko rokov neskôr sa stal prvým certifikovaným  J2EE  open source aplikačným serverom. Ďalej by som rád ukázal na vývoj rôznych verzií JBossu:
+
+
+\begin{itemize}
+\item JBoss AS 4.0 , Java EE aplikačný server 1.4 , je vybavený vloženým Apache Tomcat 5.5 servlet kontajnerom. JBoss môže bežať na mnohých operačných systémoch , vrátane mnohých POSIX platformách (ako GNU/Linux , FreeBSD a Mac OS X) , Microsoft Windows a ďalšie,.
+\item JBoss AS 5.1 , povolený v roku 2009 , pracuje ako Java EE 5 aplikačný server. Je to menšia aktualizácia hlavnej verzie JBoss AS 5.0, ktorý bol vo vývoji po dobu najmenej troch rokov a bol postavený na vrchole novej JBoss microcontainer.
+
+\item JBoss AS 6.0 , bol neoficiálne implementáciou Java EE 6 , vydané 28. decembra 2010 .
+
+\item JBoss AS 7 , bola vydané 12. júla 2011 , len šesť mesiacov po poslednej hlavnej verzie , JBoss AS 6. JBoss AS 7 podporuje rovnaké špecifikáciu Java EE ako posledná verzia, a to Java EE 6. Java EE profil je iba čiastočne implementovaný v JBoss AS 7. Hlavné zmeny viditeľné pre užívateľa sú : oveľa menšiu veľkosť ( menej než polovica z JBoss AS 6 ) a násobné zníženie v čase spustenia.
+
+\item JBoss AS 7.1 , aktuálna stabilná verzia bola vydaná vo februári 2012 . Zostávajúce časti EE špecifikácie boli realizované , a táto verzia bola certifikovaná pre EE plnom profile.
+
+\item WildFly 8 je priamym pokračovaním na JBoss AS projektu .
+
+\end{itemize}
+
+V ďalšej časti sa zameriame na OptaPlanner\footnote{http://www.optaplanner.org/}, čo je vlastne systém, pre ktorý je rozhranie navrhované.
+
+
+\section{OptaPlanner}
+OptaPlanner je open source software a ďalšie prokračovanie frameworku JBoss Drools. Optaplanner je framework, kde si môžete vytvoriť pravidlá, ktoré určujú, kedy by mali byť vykonané špecifické akcie. To by mohlo byť vykonané v kóde za použitia podmienok. Vytvorenie je pomocou pravidiel  môže robiť  oveľa jednoduchšie spájať mnoho pravidiel s mnohými akciami. Tieto pravidlá bývajú typicky definované pomocou XML súboru.
+
+OptaPlanner pomáha  programátori riešiť obmedzenie problémov spokojnosti efektívne. Pod kapotou sa kombinuje optimalizačné heuristiky na výpočet skóre.
+
+
+
+
+Všetky prípady použitia sú pravdepodobne NP - úplné. Laicky povedané, to znamená :
+Neexistuje žiadneoptimálne riešenie problému v primeranej lehote.
+
+
+
+Brute force algoritmus  bude trvať príliš dlho .
+Rýchly algoritmus nie je zďaleka optimálny.
+Pri použití pokročilých optimalizačných algoritmov je možné nájsť dobré riešenie v primeranom čase po týchto problémoch.
+
+\subsection{Princíp plánovania}
+Obvykle , problém plánovanie má aspoň 2 úrovne obmedzenia :
+\begin{itemize}
+\item Negatívne obmedzenia
+\item Pozitívne obmedzenia
+\end{itemize}
+
+Tieto obmedzenia definujú výpočetné skóre problému plánovania. Každé riešenie problému plánovanie môže byť odstupňovaná so skóre. 
+
+Plánovanie problému má niekoľko riešení . Existuje niekoľko kategórií riešení:
+
+Možným riešením je nejaké riešenie, či je alebo nie je ľubovoľný počet obmedzení. Problémy plánovanie mávajú neuveriteľne veľké množstvo možných riešení. Mnoho z týchto riešení sú bezcenné .
+Uskutočniteľným riešením je riešenie, ktoré neporušuje žiadne (negatívne) tvrdé obmedzenia. Niekedy nie sú realizovateľné riešenie. Každý uskutočniteľné riešenie je možné riešenie.
+Optimálnym riešením je riešenie s najvyšším počtom bodov . Problémy plánovanie mávajú jedno alebo niekoľko optimálnych riešení. K dispozícii je vždy aspoň 1 optimálnym riešením, a to aj v prípade , že neexistujú žiadne uskutočniteľné riešenie, a optimálne riešenie nie je možné .
+Najlepším riešením je nájsť riešenie s najvyšším skóre zistené implementáciou v danom čase.
+
+OptaPlanner podporuje niekoľko optimalizačných algoritmov ako efektívne prehrýzť týmto neuveriteľne veľkým množstvom možných riešení. V závislosti na prípade použitia, niektoré optimalizačné algoritmy dosahujú lepšie výsledky ako ostatné, ale to je nemožné povedať dopredu. Pri plánovaní , je ľahké prepnúť algoritmus optimalizácie, zmenou konfigurácie Solver na niekoľkých riadkov XML alebo kódu.
+
+
+V ďalšej kapitole by som rád uviedol problematiku užívateľského rozhrania.
+\chapter{Grafické užívateľské rozhranie}
+V tejto kapitole sa zameráme na problematiku užívateľského rozhrania, ktoré vlastne je reprezentované Web services. Toto rozhranie bude umožňovať nahrávať pravidlá, zobrazovať výsledky, spúšťať, pozastovať a zobrazovať detaily úloh. Keďže táto výsledná aplikácia by mala byť použíteľná aj na mobilnom telefóne bol vybratý štýlovací framework Twitter Bootstrap, ktorý značne uľahčenie tvorbu takéhoto rozhrania.
+
+\section{Twitter Bootstrap}
+Twitter Bootstrapje veľmi jednoduchý a voľne dostupný súbor nástrojov pre vytváranie moderného webu a webových aplikácií.\cite{boot} Ponúka podporu najrôznejších webových technológií HTML , CSS , JavaScript\footnote{http://en.wikipedia.org/wiki/Javascript} a mnoho prvkov , ktoré je možné ľahko implementovať do svojej stránky. Pre použitie Twitter Bootstrap sú nutné základné znalosti HTML a CSS. Interaktívne prvky ako sú tlačidlá, boxy , menu a ďalšie kompletne nastavené a graficky spracované elementy je možné vložiť iba pomocou HTML a CSS .
+
+\subsection{História}
+Mark Otto a Jacob Thornton z Twitteru vyvinuli Twitter Bootstrap ako framework pre podporu konzistencie interných nástrojov. Pred vyvinutím Twitter bootstrap , boli v spoločnosti používané rôzne knižnice pre vývoj rozhrania, čo viedlo k nejednotnosti zdrojových kódov a vysokým nákladom na údržbu.
+
+
+\subsection{Výhody}
+Výhodou tohto súboru nástrojov je jednoduché spracovanie akéhokoľvek používateľského rozhrania vo webovej aplikácii a nerozhoduje , či to je napríklad používateľské rozhranie v administrácii back-endových alebo front-endových aplikácií.
+
+\subsection{Komponenty}
+Dohromady poskytujú komponenty a JavaScript pluginy nasledujúce elementy užívateľského prostredia:
+\begin{itemize}
+\item Button groups - Skupiny tlačidiel
+\item Button dropdowns - Vysúvacia tlačidla
+\item Navigational tabs, pills, and lists - Záložky, pilulky a zoznamy pre navigáciu
+\item Navbar - navigačné položky
+\item Labels - štítky
+\item Badges - "odznáčiky"
+\item Page headers and hero unit - hlavičky stránky a "hero unit"
+\item Thumbnails - náhľady
+\item Alerts - výstrahy
+\item progress bars
+\item Modals
+\item Dropdowns - vysúvacie menu
+\item Tooltips
+\item Popovers
+\item Accordion
+\item Carousel - posuvný slider
+\item Typeahead
+\end{itemize}
+
+Podrobné vysvetlenie jednotlivých komponent nájdete na nasledujúcej adrese http://getbootstrap.com/, rovnako aj s príkladmi použitia. V nasledujúcej časti prejdem na samotný návrh užívateľského rozhrania.
+
+\section{Návrh rozhrania}
+Výsledné rozhranie kladie dôraz na jednoduchosť a prehľadnosť zobrazených úloh. Rozhranie je rozdelené na 2 časti. Prvá časť, obrázok č.\ref{nahratie} popisuje spôsob nahratia xml súboru zo súborového systému. Užívateľ stlačí tlačidlo na nahratie xml, kde sa následne zobrazí obsah súborového systému a užívateľ zvolí príslušný xml súbor. Následne sa vyplnia údaje o názve súboru a počtu pravidiel v xml. Následne užívateľ potvrdí výber tlačidom "OK" a prejde na hlavné okno,ktoré priebežne zobrazuje stav vykonávania úlohy a informácie o úlohe.
+\begin{figure}[!htb]
+
+\begin{center}
+
+\includegraphics[scale=0.8]{NahratieSuboru.jpg} 
+\caption{Ukážka nahratia súboru}
+\label{nahratie}
+
+\end{center}
+
+\end{figure}
+
+Ďalej by som rád ukázal na obrázku č. \ref{zobrazenie} spôsob zobrazovania úloh spolu s jeho stavom. Toho rozhranie sa dá rozdeliť na 2 časti: Prvá časť je reprezentovaná tlačidlami, ktoré reprezentujú spôsob na : 
+\begin{itemize}
+\item Pridávanie nových úloh, ktoré po stlačení zobrazí okno, ktoré je reprezentované obr. č. \ref{nahratie}
+\item Editovanie skončenej úlohy
+\item Zrušenie vybranej úlohy
+\item Spravovanie užívateľov(platí pre rolu Administrátor)
+\item Pozostavenie bežiacej úlohy
+
+\end{itemize}
+
+Ďalšia časť zobrazuje úlohy. Každá úloha je reprezentovaná rôznymi informáciami, ktoré sú rozdelé do stĺpcov. Každý záznam je prezentovaný položkou ID, ktorá reprezentuje jedinečný identifikátor v rámci systému spracovania, názvu úlohy, ktorá bola vyextrahovaná z xml súboru, statusu úlohy, ktoré je reprezentovaný 3 položkami:
+\begin{itemize}
+\item Dokončená úloha - finished
+\item Running - bežiaca úloha
+\item Paused - pozastavená úloha
+\end{itemize}
+, ukazateľom spracovania úloh, ktorá ukazuje aktuálne spracovania úlohy a položkou ETA, ktorá ukazuje odhadovaný čas do konca spracovania úlohy. Daná tabuľka obsahuje viacero položiek, ktoré rôzne zobrazujú stavy úloh. Úlohy v stave "finished" je možné otvoriť a zobraziť detaily spracovania, zmeniť parametre a spustiť nový beh úlohy, pričom pôvodná úloha zostane zachovaná. Pridávanie úloh možno realizovať aj za behu iných úloh, rovnako pozastavené úlohy možno znova spustiť z inými detailami.
+
+\begin{figure}[h]
+
+\begin{center}
+
+\includegraphics[scale=0.8]{Zobrazenie.jpg} 
+\caption{Ukážka zobrazenie stavu úloh}
+\label{zobrazenie}
+
+\end{center}
+
+\end{figure}
+
+
+
+
+
+\chapter{Záver}
+Táto práca je zameraná na priblíženie technológie Java EE 6, JBoss, OptaPlanner a výsledného rozhrania. Bežnému užívateľovi sú krok po kroku vysvetlované všetky používané metódy. Všetky tieto technológie sú voľne dostupné na internete, preto užívateľ má možnosť sa naučené veci vyskúšať si aj svojpomocne. Výsledný návrh rozhrania kladie dôraz na jednoduchosť, prehľadnosť a širokú podporu. Všetky tieto nové technológie mi pomohli zlepšiť rozhľad v IT technológiách a ukázali mne aj iným  princíp podnikových apikácií, ktoré sa dnes vyvíjajú a používajú.
+
+
+
