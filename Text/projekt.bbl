@@ -12,17 +12,39 @@
 {Arun Gupta}: \emph{Java EE 6 Pocet Guide}. O'REILLY, 2012,
   iSBN~978-1-449-33668-4.
 
+\bibitem{optabook}
+Bali, M.: \emph{Drools JBoss Rules 5.X Developer's Guide}. Packt Publishing,
+  2013, iSBN~978-1782161264.
+
+\bibitem{jbossbook}
+Davis, T. M.~S.: \emph{JBoss at Work: A Practical Guide}. O'Reilly Media, 2006,
+  iSBN~978-596-00734-8.
+
 \bibitem{fitWeb}
 Jendrock, E.; Cervera-Navarro, R.; Evans, I.; aj.: The Java EE 6 Tutorial
   [online]. {\tt http://docs.oracle.com/javaee/6/tutorial/doc/}, 2013-11-03
   [cit. 2013-10-25].
+
+\bibitem{npbook}
+Johnson, M. R. G. D.~S.: \emph{Computers and Intractability: A Guide to the
+  Theory of NP-Completeness (Series of Books in the Mathematical Sciences)}.
+  Macmillan Higher Education, 1979, iSBN~978-0716710455.
+
+\bibitem{algobook}
+Michiels, J. K. E. A.~W.: \emph{Theoretical Aspects of Local Search}. Springer,
+  2007, iSBN~978-3540358534.
+
+\bibitem{optaweb}
+Thilo, M. O. J. T. C. R.~J.: Twitter Bootstrap [online]. {\tt
+  hhttp://getbootstrap.com/}, 2013-12-16 [cit. 2013-12-27].
 
 \bibitem{boot}
 Thilo, M. O. J. T. C. R.~J.: Twitter Bootstrap [online]. {\tt
   hhttp://getbootstrap.com/}, 2013-12-16 [cit. 2013-12-27].
 
 \bibitem{jbossWeb}
-{WWW stránky}: JBoss. {\tt http://www.jboss.org/}, 2013-12-16 [cit.
+{WWW stránky}: JBoss. {\tt
+  https://docs.jboss.org/author/display/AS71/Documentation}, 2013-12-16 [cit.
   2013-12-27].
 
 \end{thebibliography}

@@ -1,7 +1,7 @@
 # vychozi obrazky
-SRC=  Zobrazenie.jpg NahratieSuboru.jpg
+SRC=  Zobrazenie.jpg NahratieSuboru.jpg seCaseOveriew.png
 # pozadovany format pro LaTeX
-DEST= NahratieSuboru.eps Zobrazenie.eps
+DEST= NahratieSuboru.eps Zobrazenie.eps useCaseOverview.eps
 
 .SUFFIXES: .fig .eps .png .jpg
 

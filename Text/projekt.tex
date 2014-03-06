@@ -37,7 +37,10 @@
 \ifWis
 \ifx\pdfoutput\undefined % nejedeme pod pdflatexem
 \else
+  \usepackage{geometry}
+  \usepackage{listings}
   \usepackage{color}
+  \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
   \usepackage[unicode,colorlinks,hyperindex,plainpages=false,pdftex]{hyperref}
   \definecolor{links}{rgb}{0.4,0.5,0}
   \definecolor{anchors}{rgb}{1,0,0}

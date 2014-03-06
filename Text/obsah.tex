@@ -106,14 +106,45 @@ Enterprise JavaBeans(EJB) je používaný na vývoj a nasadzovanie komponentne z
 
 V ďalšej časti sa zameriame na JBoss a OptaPlanner.
 
+\section{Web Service}
+Web Service je sú klientské a serverové aplikácie, ktoré komunikujú prostredníctvom HTTP protokolu vymenieňaním XML správ. Tieto aplikácie poskystujú interoperabilitu medzi rôznymi platformami naprieč počítačou sieťou. Web Service umožňuje komunikáciu medzi rôznymi aplikáciami, ktoré bežia na rôznych platformách, napr. Java aplikácie založené na Windowse komunikujú s Net. aplikácia bežiaci na Linuxe. Webo services  sa delia na 2 kategórie "big" web services a "RESTFul" web services.
+
+\subsection{"Big" Web Services}
+V Jave EE 6 existuje API, ktoré sa nazýva JAX-WS, ktoré umožňuje vytvorenie práve tohto typu web servici.\cite{fitWeb} "Big" web service využíva XML správy, spolu so SOAP a XML jazykom, ktorý definuje architekrúru a formát správ. Tento typ Web Service obsahuje definíciu pre Web Service vo formáte WSDL, ktorý je čitatelný aj počítačom. Formát SOAP správ a definíciu jazyka WSDL rozhrania môže znížiť zložitosť vývoja aplikácií, webových služieb. Design založený na SOAP musí obsahovať:
+\begin{itemize}
 
 
+\item    Musí byť stanovený formálný kontrakt pre popis rozhrania, ktoré web service ponúka . WSDL môže byť používaný na popis detailov, ktoré môžu zahŕňať správy, operácie, viazanie a umiestnenie webovej služby. 
 
-\chapter{JBoss} 
-JBoss, čo je vlastne skratka pre JavaBeans Open Source Applicatom Server, v súčastní nazývaný WildFly je aplikačný server, ktorý je založený na platforme Java a Java Enterprise Edition.\cite{jbossWeb} Keďže je tento server napísaný v Jave je možnosť ho používať naprieč rôznym platformám. Tento server slúži na vývoj a nasadzovanie podnikových aplikácií, webových aplikácií, služieb a portálov. Tento server je licensovaný pod GNU Lesser General Public License(GNU PL).
+\item    Architektúra musí riešiť zložité nefunkčné požiadavky. Mnoho špecifikácií web servicemusia riešiť takéto požiadavky a vytvoriť spoločný slovník pre nich. Príklady zahŕňajú transakcie , zabezpečenia, riešenie atď. .
+
+\item    Architektúra musí zvládnuť asynchrónne spracovanie a vyvolanie  V takých prípadoch, infraštruktúra poskytuje štandardy , ako sú Web Services Reliable Messaging ( WSRM ) ,a API napr. JAX - WS.
+
+\end{itemize}
+
+
+\subsection{RESTful Web Service}
+V Java EE 6 existuje pre druhý typ web service API, ktoré sa nazýva JAX - RS. Tento typ web serrvice je vhodný pre základné , ad hoc integračné scenáre. REST webové služby, často lepšie integrované s HTTP ako službami založenými na SOAP je , nevyžadujú XML správ alebo definície WSDL služby - API.
+
+Tento typ web service je vhodný pokiaľ sú splnené nasledujúce kritéria:
+\begin{itemize}
+  \item  Web service sú bezstatové a potrebné zvážiť, či interakcia môže prežiť reštart servera .
+
+  \item Využitie cache, pre dáta ktorá vracia web service nie je dynamicky generované a možno ich uložiť do vyrovnávacej pamäte , medzipamäte infraštruktúry , ktoré webové servery. O použitie sa musí postaráť programátor, pretože tieto cache sú obmedzené metódou HTTP GET.
+
+   \item   Výrobca služby a služby pre spotrebiteľov majú vzájomné porozumenie kontextu a obsahu  ktorý je odovzdaný spolu. Neexistuje žiadny formálny spôsob, ako opísať rozhranie webových služieb, musie strany sa dorozumieť ako si budú vymieňať správy a čím aj správne rozumejú.
+
+  \item  Web service alebo agregáciu do existujúcich webových stránok môže byť povolená ľahko pokojný štýl . Vývojári môžu používať také technológie ako JAX - RS a Asynchronous JavaScript s XML ( AJAX ) a také sady nástrojov , ako Direct Web Remoting ( DWR ) konzumovať služby vo svojich webových aplikáciách . Skôr než začínať od nuly , služby môžu byť vystavené s XML a spotrebované HTML stránok , bez toho, aby výrazne refactoring existujúce webové stránky architektúry . Existujúce vývojári budú viac produktívne , pretože sa pridá k niečomu , že sú už oboznámení s tým , skôr než by ste museli začať od nuly s novou technológiou.
+
+
+\end{itemize}
+\chapter{JBoss Aplication Server} 
+JBoss, čo je vlastne skratka pre JavaBeans Open Source Applicatom Server, v súčastní nazývaný WildFly je aplikačný server, ktorý je založený na platforme Java a Java Enterprise Edition.\cite{jbossbook} Aplikačný server tvorí vrstvu medzi aplikáciami a operačným systémom, pričom rovnako poskytuje aplikácia často využívané funkcie, napr. spracovanie transakcií, výmená správ, atď. . Aplikačné servery podobne ako JBoss Aplication Server(JBoss AS) je open source. JBoss AS je od verzie 5 postavený na JBoss Microcontaineru(JBoss MC), čo je vlastne jadro, ktoré registruje služby(managed beans). Takto pre správu služieb tento server implementuje Java Management Extension(JMX).
+
+ JBoss AS je napísaný v Jave, preto existuje možnosť  ho používať naprieč rôznym platformám. Tento server slúži na vývoj a nasadzovanie podnikových aplikácií, webových aplikácií, služieb a portálov. Tento server je licensovaný pod GNU Lesser General Public License(GNU PL).
 
 \section{História JBoos-u}
-Všetko naštartoval v roku 1999 Marc Fleury. Pre podporu vývoja middleware InterBohemia sebe rozhodol implementovať jeden zo štandardov J2EE , EJB kontajner. Tým sa zrodil prvý projekt - EJBoss, ktorý sa neskôr premenoval na JBoss. TO niekoľko rokov neskôr sa stal prvým certifikovaným  J2EE  open source aplikačným serverom. Ďalej by som rád ukázal na vývoj rôznych verzií JBossu:
+Všetko naštartoval v roku 1999 Marc Fleury. Pre podporu vývoja middleware InterBohemia sebe rozhodol implementovať jeden zo štandardov J2EE , EJB kontajner. Tým sa zrodil prvý projekt - EJBoss, ktorý sa neskôr premenoval na JBoss. TO niekoľko rokov neskôr sa stal prvým certifikovaným  J2EE  open source aplikačným serverom. Ďalej by som rád ukázal na vývoj rôznych verzií JBossu:\cite{jbossWeb}
 
 
 \begin{itemize}
@@ -133,40 +164,144 @@ Všetko naštartoval v roku 1999 Marc Fleury. Pre podporu vývoja middleware Int
 V ďalšej časti sa zameriame na OptaPlanner\footnote{http://www.optaplanner.org/}, čo je vlastne systém, pre ktorý je rozhranie navrhované.
 
 
+
+
 \section{OptaPlanner}
-OptaPlanner je open source software a ďalšie prokračovanie frameworku JBoss Drools. Optaplanner je framework, kde si môžete vytvoriť pravidlá, ktoré určujú, kedy by mali byť vykonané špecifické akcie. To by mohlo byť vykonané v kóde za použitia podmienok. Vytvorenie je pomocou pravidiel  môže robiť  oveľa jednoduchšie spájať mnoho pravidiel s mnohými akciami. Tieto pravidlá bývajú typicky definované pomocou XML súboru.
+ Optaplanner je framework, kde si môžete vytvoriť pravidlá, ktoré určujú, kedy by mali byť vykonané špecifické akcie. To by mohlo byť vykonané v kóde za použitia podmienok.
+OptaPlanner je odĺahčený open source software a ďalšie prokračovanie frameworku JBoss Drools, ktoré optimalizuje plánovacie problémy.\cite{optaweb} Tieto plánovacie problémy môžu byť nasledujúceho charakteru: 
+\begin{itemize}
+\item Plánovanie agendy: plánovanie schôdzok, vymenovanie, práca údržby, reklama, ...
+\item Plánovanie vzdelávania: plánovanie lekcie, kurzov, skúškov, prezentácie na konferenciách, ...
+\end{itemize}
+\begin{figure}[htb]
+
+\begin{center}
+
+\includegraphics[scale=0.5]{fig/useCaseOverview.jpg} 
+\caption{Job  Shop scheluding, prevzaté z  }
+\label{obrazokUseCase}
+
+\end{center}
+
+\end{figure}
+Obrázok č. \ref{obrazokUseCase} zobrazuje typické použitie OptaPlanner-u. Môžme vidieť v nasledujúcom obrázku vystupú 4 osoby, ktoré vykonávajú nejakú činnosť. Ich činnosť je špecifická a silne závisí od práce predchádzajúcich. Optaplanner sa snaží ich činnosti maximálne optimalizovať a jednotlivé činnosti zvoliť v následnosti tak, aby výsledná práca bola spravená za najkratší možný čas vzhľadom na činnosť, ktorá sa optimalizuje.
+
+
+OptaPlanner pomáha Java programátorom riešiť  constraint satisfaction efektívne.
+
+\subsection{NP-úplný problém}
+Každý plánovací problém je NP-úplný problém.\cite{npbook} NP-úplné problémy sú nedeterministicky polynomiálne problémny, na ktoré sú redukovateľné všetky ostatné NP problémy. Tieto problémy nie sú riešitelné v dostupnom čase, pretože sa nepodarilo nájsť deterministický algoritmus. Príkladom NP úloh môžme považovať: problém obchodné cestujúceho, hľadanie nezávislej množiny, atď. . 
+
+Riešenia poskytnutým týmto frameworkom, ktorý využíva pokročilé optimalizačné algoritmy, sú dosiahnuteľné v reálnom čase. Dosiahnutie v reálnom čase znamená nájdenie 1 alebo viacerých riešení, alebo nenájdenie žiadneho riešenia vzhľadom na poskytnutý čas a optimalizačné algoritmy.
+
+Každý plánovací rpbolém je definovaný na základe obmedzení, ktoré musia minimálne spĺnať: \cite{optabook}
+\begin{itemize}
+\item Negatívne "hard" obmedzenie, ktoré nesmie byť porušené
+\item Negatívne "soft" obmedzenie, ktoré by nemali byť porušené pokiaľ sa dá tomu vyhnúť.
+\end{itemize}
+
+Niektoré problémy môžu obsahovať aj pozitívne podmienky alebo odmeny, ktoré by mali byť splnené pokiaľ je možné ich splniť.
+
+Tieto podmienky definujú skóre kalkuláciu plánovacieho problému. Tieto podmienky môžu byť zapísané v Jave alebo v Drools pravidlách, ktoré značne zjednodušujú kód.
+
+
+
+
+ Vytvorenie je pomocou pravidiel  môže robiť  oveľa jednoduchšie spájať mnoho pravidiel s mnohými akciami. Tieto pravidlá bývajú typicky definované pomocou XML súboru.
 
 OptaPlanner pomáha  programátori riešiť obmedzenie problémov spokojnosti efektívne. Pod kapotou sa kombinuje optimalizačné heuristiky na výpočet skóre.
 
 
 
 
-Všetky prípady použitia sú pravdepodobne NP - úplné. Laicky povedané, to znamená :
-Neexistuje žiadneoptimálne riešenie problému v primeranej lehote.
 
 
-
-Brute force algoritmus  bude trvať príliš dlho .
-Rýchly algoritmus nie je zďaleka optimálny.
-Pri použití pokročilých optimalizačných algoritmov je možné nájsť dobré riešenie v primeranom čase po týchto problémoch.
-
-\subsection{Princíp plánovania}
-Obvykle , problém plánovanie má aspoň 2 úrovne obmedzenia :
-\begin{itemize}
-\item Negatívne obmedzenia
-\item Pozitívne obmedzenia
-\end{itemize}
+\subsection{Výsledky plánovacieho problému}
 
 Tieto obmedzenia definujú výpočetné skóre problému plánovania. Každé riešenie problému plánovanie môže byť odstupňovaná so skóre. 
 
 Plánovanie problému má niekoľko riešení . Existuje niekoľko kategórií riešení:
+\begin{itemize}
+\item Možným riešením je nejaké riešenie, či je alebo nie je ľubovoľný počet obmedzení. Problémy plánovanie mávajú neuveriteľne veľké množstvo možných riešení. Mnoho z týchto riešení sú bezcenné .
+\item Uskutočniteľným riešením je riešenie, ktoré neporušuje žiadne (negatívne) tvrdé obmedzenia. Niekedy nie sú realizovateľné riešenie. Každý uskutočniteľné riešenie je možné riešenie.
 
-Možným riešením je nejaké riešenie, či je alebo nie je ľubovoľný počet obmedzení. Problémy plánovanie mávajú neuveriteľne veľké množstvo možných riešení. Mnoho z týchto riešení sú bezcenné .
-Uskutočniteľným riešením je riešenie, ktoré neporušuje žiadne (negatívne) tvrdé obmedzenia. Niekedy nie sú realizovateľné riešenie. Každý uskutočniteľné riešenie je možné riešenie.
-Optimálnym riešením je riešenie s najvyšším počtom bodov . Problémy plánovanie mávajú jedno alebo niekoľko optimálnych riešení. K dispozícii je vždy aspoň 1 optimálnym riešením, a to aj v prípade , že neexistujú žiadne uskutočniteľné riešenie, a optimálne riešenie nie je možné .
-Najlepším riešením je nájsť riešenie s najvyšším skóre zistené implementáciou v danom čase.
+\item Optimálnym riešením je riešenie s najvyšším počtom bodov . Problémy plánovanie mávajú jedno alebo niekoľko optimálnych riešení. K dispozícii je vždy aspoň 1 optimálnym riešením, a to aj v prípade , že neexistujú žiadne uskutočniteľné riešenie, a optimálne riešenie nie je možné .
+\item Najlepším riešením je nájsť riešenie s najvyšším skóre zistené implementáciou v danom čase.
+
+\end{itemize}
 
 OptaPlanner podporuje niekoľko optimalizačných algoritmov ako efektívne prehrýzť týmto neuveriteľne veľkým množstvom možných riešení. V závislosti na prípade použitia, niektoré optimalizačné algoritmy dosahujú lepšie výsledky ako ostatné, ale to je nemožné povedať dopredu. Pri plánovaní , je ľahké prepnúť algoritmus optimalizácie, zmenou konfigurácie Solver na niekoľkých riadkov XML alebo kódu.
+
+
+\newpage
+\subsection{Ukážka XML configuračného súboru}
+V nasledujúcom obrázku by som rád ukázal príklad XML configuračného súboru pre OptaPlanner.
+ \lstset{
+    language=xml,
+    tabsize=3,
+    %frame=lines,
+    caption=Test,
+    label=code:sample,
+    frame=shadowbox,
+    rulesepcolor=\color{gray},
+    xleftmargin=20pt,
+    framexleftmargin=15pt,
+    keywordstyle=\color{blue}\bf,
+    commentstyle=\color{OliveGreen},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny,
+    numbersep=5pt,
+    breaklines=true,
+    showstringspaces=false,
+    basicstyle=\footnotesize,
+    emph={food,name,price},emphstyle={\color{magenta}}}
+    \lstinputlisting{cloudBalancingSolverConfig.xml}
+
+\newpage
+Konfigurácie solveru pozostáva z 3 častí: 
+\begin{itemize}
+\item Domail model configuration: Musíme Optaplanneru uviesť hlávnú triedu.
+\item Configurácia skóre, ktorá hovoŕí Optaplanneru ako ma optimalizova premenné. Pokiaľ používame hard a soft obmedzenia, pouźijeme "HardSoftScore". Musíme tiež povedať, Planner, ako vypočítať také skóre, v závislosti na našich obchodných požiadavok. Ďalej sa, sme musíme  pozrieť do 2 alternatívy pre výpočet skóre: pomocou jednoduchej implementácie Java, alebo pomocou Drols DRL.Plánovanie bude hľadať riešenie s najvyšším skóre. Budeme používať HardSoftScore, čo znamená, plánovač bude hľadať riešenie s žiadnymi tvrdými obmedzeniami členenie (spĺňajú požiadavky na hardvér) a pokiaľ možno čo najmenej mäkkých obmedzenia členenie (minimalizovať náklady na údržbu).
+\item Konfigurácia Optimalizačné algoritmy: Ako by Plánovanie optimalizovať? Nebojte sa o tom teraz: je to dobrý východiskový nastavenie, ktoré funguje na väčšine problémov, plánovanie. To sa už predčí ľudské plánovača a väčšina in-house implementáciou. Použitie Planner porovnávacie toolkit, môžete vyladiť, aby to bolo ešte lepšie výsledky.
+
+\end{itemize}
+
+\subsection{Optimalizačné algoritmy}
+\begin{itemize}
+\item First FIT - To je veľmi jednoduché greedy algoritmus aproximácie. Algoritmus spracováva položky v ľubovoľnom poradí . Pre každú položku , pokúsi sa umiestniť na položku v prvom koši , ktorý sa môže ubytovať položku . Ak nie je nájdený žiadny bin , otvára novú priehradku a kladie položku v rámci nového zásobníka .
+
+To je pomerne jednoduché zobrazenie tento algoritmus dosahuje aproximačnou faktor 2 , to znamená , že počet nádob , ktoré tento algoritmus je viac ako dvojnásobok optimálny počet zásobníkov . To je spôsobené tým , zistenie , že v danom čase , že je nemožné , 2 nádoby , aby sa maximálne polovice plná . Dôvodom je , že ak by to bolo možné , znamenalo by to , že v určitom okamihu presne jeden bin bol najviac polovicu plné a nový bol otvorený ubytovať položiek o veľkosti nanajvýš V / 2. Ale od tej doby prvý , kto má aspoň priestor V / 2 , algoritmus nebude otvárať nové kôš pre každú položku , ktorej veľkosť je nanajvýš V / 2. Až po bin naplní viac ako V / 2 alebo chcete položku s veľkosťou väčšou ako V / 2 dorazí , môže algoritmus otvoriť novú priehradku .
+
+Ak teda máme koša B , aspoň B - 1 koše sú viac než z polovice plná .
+\item Firt FIT Decreasing
+\item Firt FIT Decreasing + heurestic local search(
+
+\begin{itemize}
+\item Hill Climbing -horolezectvo je matematická optimalizácia technika , ktorá patrí do rodiny miestneho vyhľadávania . Jedná sa o iteratívny algoritmus , ktorý začína s ľubovoľným riešenie problému, potom sa pokúsi nájsť lepšie riešenie tým , že postupne mení jeden prvok riešenia . Ak zmena vytvára lepšie riešenie , postupné zmeny je , aby nové riešenie , opakovať až do žiadne ďalšie zlepšenie možno nájsť .
+
+Napríklad , horolezectvo môžu byť použité k problému obchodného cestujúceho . Je ľahké nájsť prvé riešenie , ktoré navštívi všetky miesta , ale bude veľmi zlá v porovnaní s optimálne riešenie . Algoritmus začína s takýmto riešením a robí drobné vylepšenia k nemu , ako napríklad prepínanie poradí , v ktorom sú navštívili dve mestá . Nakoniec , oveľa kratšia cesta je pravdepodobné , že bude získaný.
+
+Hill lezenie je dobré pre nájdenie lokálneho optima ( riešenie , ktoré nemôže byť zlepšená tým , že zvažuje susedné konfiguráciu ) , ale nie je zaručené , že nájsť najlepšie možné riešenie (globálne optimálne ) zo všetkých možných riešení ( priestor hľadania ) . Charakteristické , že iba lokálne optima sú zaručené môže byť vyliečených pomocou reštartuje ( opakované miestne vyhľadávanie ) , alebo zložitejšie schémy na základe iterácií , ako iteratívny lokálne vyhľadávanie v pamäti , rovnako ako reaktívne optimalizácia pre vyhľadávače a Tabu prehľadávanie , alebo pamäť , menej náhodných zmien , rovnako ako simulované žíhanie . \cite{algobook}
+
+
+
+
+\item Tabu Search - Tabu prehľadávanie používa miestnej alebo susedstve vyhľadávanie postup iteratívne presunúť z jedného možného riešenia x k lepšiemu riešeniu x  v susedstve x , kým sa niektorá zastavenie kritériom bol splnený ( Všeobecne platí , že obmedzenia pokus alebo prah skóre ) . Miestne postupy vyhľadávania sa často stávajú uviazol v zlej bodovania oblastiach alebo v oblastiach, kde skóre plošine . V snahe vyhnúť sa týmto nástrahám a preskúmať oblasti hľadaného miesta , ktorá by mala zostať bez prehliadky inými miestnymi postupmi vyhľadávanie , tabu search starostlivo skúma okolí každého roztoku ako hľadanie postupuje . Riešenie prijatí do novej štvrti , $N ^ * ( x )$ , sú určené pomocou pamäťových štruktúr . Pomocou týchto pamäťových štruktúr , 
+F
+Tieto pamäťové štruktúry tvorí to , čo je známe ako zoznam tabu , súborom pravidiel a zakázaných riešenie slúži na filtrovanie , ktoré riešenie bude prijatý do susedstva $N ^ * ( x )$ , ktoré majú byť skúmané vyhľadávanie . Vo svojej najjednoduchšej forme , zoznam tabu je krátkodobý sadu riešení , ktoré boli navštívené v nedávnej minulosti ( menej ako n iterácií pred , kde n je počet predchádzajúcich riešeniach , ktoré možno uložiť - je tiež nazývaný tabu držba ) . Všeobecnejšie , zoznam tabu sa skladá z riešení , ktoré boli zmenené v procese prechodu od jedného do druhého roztoku . Je vhodný pre ľahké popisu pochopiť " riešenie " , ktorý má byť kódovaný a predstavované týmito atribútmi .
+
+\item Simulated Annealing - Simulované žíhanie ( SA ) je všeobecný pravdepodobnostné metaheuristic pre globálne optimalizačné problém lokalizovať dobré priblíženie k globálnej optimálnej danej funkcie vo veľkom vyhľadávacieho priestoru . To sa často používa pri hľadaní priestorov je diskrétne ( napr. všetky výlety , ktoré navštevujú danú množinu miest ) . U niektorých problémov , môže simulované žíhanie byť účinnejšie ako vyčerpávajúci zoznam - za predpokladu , že cieľom je iba nájsť prijateľne dobré riešenie v stanovenú dobu , skôr ako tým najlepším možným riešením .
+
+Názov a inšpirácia pochádza z žíhanie v metalurgii , technika zahŕňajúce vykurovania a riadeného ochladzovania materiálu k zvýšeniu veľkosti svojich kryštálov a znížiť ich vady . Obaja sú vlastnosti materiálu , ktorý závisí na jeho termodynamickej voľnej energie . Vykurovanie a chladenie materiálu má vplyv na teplotu a termodynamickú voľnú energiu . Aj keď rovnaké množstvo chladenie prináša rovnaké množstvo poklesu teploty je prinesie väčší alebo menší pokles termodynamickej voľnej energie v závislosti na rýchlosti , ktorá sa vyskytuje , s pomalším tempom produkujúce väčší pokles .
+
+Tento pojem pomalého ochladzovania sa vykonáva v simulované žíhanie algoritmu , ktorý je pomalý pokles v pravdepodobnosti prijatia horšie riešenie , ako sa zaoberá riešenie priestoru . Prijatie horšie riešenie je základná vlastnosť metaheuristics , pretože to umožňuje rozsiahlejšie hľadanie optimálneho riešenia .
+
+Táto metóda bola nezávisle opísal Scott Kirkpatrick , C. Daniel Gelatt a Mario P. Vecchi v roku 1983 , [ 1 ] a Vlado Černý v roku 1985 . [ 2 ] Táto metóda je adaptáciou Metropolis - Hastings algoritmus , metóda Monte Carlo generovať vzorové stavy termodynamického systému , vynájdený MN Rosenbluth a publikované v dokumente N. Metropolis et al . v roku 1953 . [ 3 ]
+
+\end{itemize}
+
+\end{itemize}
 
 
 V ďalšej kapitole by som rád uviedol problematiku užívateľského rozhrania.
