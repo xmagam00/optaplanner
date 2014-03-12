@@ -1,0 +1,32 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from ConvertorService WSDL service -->
+
+  <service name="Convertor" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://root"/>
+      <parameter name="wsdlServiceElement" value="ConvertorService"/>
+      <parameter name="schemaQualified" value="http://root"/>
+      <parameter name="wsdlServicePort" value="Convertor"/>
+      <parameter name="className" value="root.ConvertorSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="Convertor"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="farenheitToCelsius" qname="operNS:farenheitToCelsius" xmlns:operNS="http://root" returnQName="retNS:farenheitToCelsiusReturn" xmlns:retNS="http://root" returnType="rtns:float" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:farenheit" xmlns:pns="http://root" type="tns:float" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="celsiusToFarenheit" qname="operNS:celsiusToFarenheit" xmlns:operNS="http://root" returnQName="retNS:celsiusToFarenheitReturn" xmlns:retNS="http://root" returnType="rtns:float" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:celsius" xmlns:pns="http://root" type="tns:float" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="celsiusToFarenheit farenheitToCelsius"/>
+
+  </service>
+</deployment>
