@@ -1,5 +1,5 @@
 create if not exists user (
-	id_user int(8) NOT NULL,
+	id_user int(8) NOT NULL AUTO_INCREMENT,
 	user_name varchar2(30),
 	password varchar2(30),
 	name_of_organization varchar2(30),
@@ -11,7 +11,7 @@ create if not exists user (
 );
 
 create if not exists role (
-	id_role int(8) NOT NULL,
+	id_role int(8) NOT NULL AUTO_INCREMENT,
 	name_of_role varchar2(30),
 	PRIMARY KEY(id_role)
 
@@ -19,8 +19,8 @@ create if not exists role (
 
 );
 
-create if not exists tasks (
-	id_task int(8) NOT NULL,
+create if not exists task (
+	id_task int(8) NOT NULL AUTO_INCREMENT,
 	xml_file varchar2(60000),
 	state_of_task int(8) NOT NULL,
 	progress_of_task int(20) NOT NULL,
@@ -29,7 +29,7 @@ create if not exists tasks (
 );
 
 create if not exists state_task (
-	id_task int(8) NOT NULL,
+	id_state int(8) NOT NULL AUTO_INCREMENT,
 	state varchar2(30),
 	PRIMARY KEY(id_task)
 );
