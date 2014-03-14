@@ -29,7 +29,7 @@ public class Operation {
 
             //Creating a statement object
             Statement stmt = ( connection).createStatement();
-
+fdsf
             //Executing the query and getting the result set
             ResultSet rs =  stmt.executeQuery("select * from item");
 
