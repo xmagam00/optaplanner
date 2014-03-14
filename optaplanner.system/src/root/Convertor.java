@@ -1,14 +1,16 @@
 package root;
 
+import javax.xml.ws.Endpoint;
+
+
+
 public class Convertor
 {
-  public float celsiusToFarenheit ( float celsius )
-  {
-    return (celsius * 9 / 5) + 32;
-  }
-
-  public float farenheitToCelsius ( float farenheit )
-  {
-    return (farenheit - 32) * 5 / 9;
-  }
+	public static void main(String[] args) {
+		 
+        Endpoint.publish("http://localhost:9090/HelloWeb", new Service());
+ 
+        System.out.println("HelloWeb service is ready");
+ 
+    }
 }
