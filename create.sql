@@ -3,6 +3,8 @@ create if not exists user (
 	user_name varchar2(30),
 	password varchar2(30),
 	name_of_organization varchar2(30),
+	user_role int(8) NOT NULL,
+	task int(8) NOT NULL,
     PRIMARY KEY(id_user)
 
 
@@ -31,3 +33,7 @@ create if not exists state_task (
 	state varchar2(30),
 	PRIMARY KEY(id_task)
 );
+
+alter table user add foreign key user_role references role(id_role);
+alter table user add foreign key task references task(id_task);
+alter table task add foreign key state_of_task references state_task(id_task);
