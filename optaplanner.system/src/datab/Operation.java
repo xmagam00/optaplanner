@@ -303,7 +303,70 @@ public class Operation {
  		
  		
  	}
+	
+	/**
+	 * Method delete specified user
+	 * @param username
+	 * @return true if operation succeed
+	 */
+	public boolean deleteUser(String username)
+ 	{
+ 		
+ 		try {
+ 	   //Creating a statement object
+        Statement stmt =  this.connection.createStatement();
 
+        //Executing the query and getting the result set
+        stmt.executeQuery("DELETE user_name from user where user_name=" + username);
+     
+        stmt.close();
+        connection.close();
+ 		
+ 		
+ 	 } catch (SQLException e) {
+         e.printStackTrace();
+         return false;
+ 	 }catch (Exception e)
+ 	 {
+ 		 e.printStackTrace();
+ 		 return false;
+ 	 }
+ 		return true;
+ 	}
+	
+
+
+	public boolean changePasswordForUser(String username,String password)
+ 	{
+ 		
+ 		try {
+ 	   //Creating a statement object
+        Statement stmt =  this.connection.createStatement();
+
+        //Executing the query and getting the result set
+        stmt.executeQuery("UPDATE password SET password="+ password +" where user_name=" + username);
+     
+        stmt.close();
+        connection.close();
+ 		
+ 		
+ 	 } catch (SQLException e) {
+         e.printStackTrace();
+         return false;
+ 	 }catch (Exception e)
+ 	 {
+ 		 e.printStackTrace();
+ 		 return false;
+ 	 }
+ 		return true;
+ 	}
+	
+	
+  
+  
+	
+	
+	
 	
 }
  	
