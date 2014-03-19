@@ -12,9 +12,14 @@ public class Service
 {
 	@WebMethod
 	 
-    public String sayGreeting(String name) {
- 
-        return "Greeting " + name + "!";
- 
-    }
+
+		    public String sayHello()
+		    {
+	        return "Hello";
+		    }
+
+	public Service getHelloWebServicePort() {
+		
+		return null;
+	}
 }

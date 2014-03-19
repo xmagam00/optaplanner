@@ -10,7 +10,7 @@ insert into user(id_user,user_name,password,name_of_organization,user_role,task)
 insert into user(id_user,user_name,password,name_of_organization,user_role,task) values(2,'david','david','IBM',2,2);
 insert into user(id_user,user_name,password,name_of_organization,user_role,task) values(3,'peter','peter','IBM',3,3);
 
-insert into task(id_task,xml_file,state_of_task,progress_of_task,url) values (1,"<?xml version="1.0" encoding="UTF-8"?>
+insert into task(id_task,xml_file,state_of_task,progress_of_task,url_flag,url,user) values (1,"<?xml version="1.0" encoding="UTF-8"?>
 <solver>
   <!--<environmentMode>FAST_ASSERT</environmentMode>-->
   <!-- Domain model configuration -->
@@ -40,9 +40,9 @@ insert into task(id_task,xml_file,state_of_task,progress_of_task,url) values (1,
       <acceptedCountLimit>1000</acceptedCountLimit>
     </forager>
   </localSearch>
-</solver>",2,0,"http://www.google.sk");
+</solver>",2,0,0,"http://www.google.sk",1);
 
-insert into task(id_task,xml_file,state_of_task,progress_of_task,url) values (2,"<?xml version="1.0" encoding="UTF-8"?>
+insert into task(id_task,xml_file,state_of_task,progress_of_task,url_flag,url,user) values (2,"<?xml version="1.0" encoding="UTF-8"?>
 <solver>
   <!--<environmentMode>FAST_ASSERT</environmentMode>-->
   <!-- Domain model configuration -->
@@ -72,10 +72,10 @@ insert into task(id_task,xml_file,state_of_task,progress_of_task,url) values (2,
       <acceptedCountLimit>1000</acceptedCountLimit>
     </forager>
   </localSearch>
-</solver>",2,0,"http://www.google3.sk");
+</solver>",2,0,0,"http://www.google3.sk",2);
 
 
-insert into task(id_task,xml_file,state_of_task,progress_of_task,url) values (3,"<?xml version="1.0" encoding="UTF-8"?>
+insert into task(id_task,xml_file,state_of_task,progress_of_task,url_flag,url,user) values (3,"<?xml version="1.0" encoding="UTF-8"?>
 <solver>
   <!--<environmentMode>FAST_ASSERT</environmentMode>-->
   <!-- Domain model configuration -->
@@ -105,4 +105,4 @@ insert into task(id_task,xml_file,state_of_task,progress_of_task,url) values (3,
       <acceptedCountLimit>1000</acceptedCountLimit>
     </forager>
   </localSearch>
-</solver>",2,0,"http://www.google2.sk");
+</solver>",2,0,0,"http://www.google2.sk",3);
