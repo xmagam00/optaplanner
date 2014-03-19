@@ -334,8 +334,44 @@ public class Operation {
  		return true;
  	}
 	
+	/**
+	 * 
+	 * This method delete task
+	 * @param username
+	 * @return
+	 */
+	public boolean deleteTask(int idTask)
+ 	{
+ 		
+ 		try {
+ 	   //Creating a statement object
+        Statement stmt =  this.connection.createStatement();
 
+        //Executing the query and getting the result set
+        stmt.executeQuery("DELETE * from task where id_task=" + idTask);
+     
+        stmt.close();
+        connection.close();
+ 		
+ 		
+ 	 } catch (SQLException e) {
+         e.printStackTrace();
+         return false;
+ 	 }catch (Exception e)
+ 	 {
+ 		 e.printStackTrace();
+ 		 return false;
+ 	 }
+ 		return true;
+ 	}
+	
 
+	/**
+	 * This method change userpassword
+	 * @param username
+	 * @param password
+	 * @return
+	 */
 	public boolean changePasswordForUser(String username,String password)
  	{
  		
@@ -361,8 +397,74 @@ public class Operation {
  		return true;
  	}
 	
+	/**
+	 * Return all available userRoles
+	 * @return
+	 */
+	ResultSet selectUserRoles()
+ 	{
+ 		ResultSet rs = null;
+ 		try {
+ 	 	   //Creating a statement object
+ 	        Statement stmt =  this.connection.createStatement();
+
+ 	        //Executing the query and getting the result set
+ 	        rs =  stmt.executeQuery("select name_of_role from role");
+ 	      
+ 	        
+ 	        
+ 	     
+ 	        //close the resultset, statement and connection.
+ 	        rs.close();
+ 	        stmt.close();
+ 	        connection.close();
+ 	 		
+ 	 	
+ 	 	 } catch (SQLException e) {
+ 	         e.printStackTrace();
+ 	 	 }
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		return rs;
+ 		
+ 		
+ 	}
 	
-  
+	/**
+	 * Change userRole for specified user by parameter username
+	 * @param username
+	 * @param userRole
+	 * @return
+	 */
+	public boolean changeUserRole(String username,int userRole)
+ 	{
+ 		
+ 		try {
+ 	   //Creating a statement object
+        Statement stmt =  this.connection.createStatement();
+
+        //Executing the query and getting the result set
+        stmt.executeQuery("UPDATE user SET user_role="+ Integer.toString(userRole) +" where user_name=" + username);
+     
+        stmt.close();
+        connection.close();
+ 		
+ 		
+ 	 } catch (SQLException e) {
+         e.printStackTrace();
+         return false;
+ 	 }catch (Exception e)
+ 	 {
+ 		 e.printStackTrace();
+ 		 return false;
+ 	 }
+ 		return true;
+ 	}
+	
+	
   
 	
 	

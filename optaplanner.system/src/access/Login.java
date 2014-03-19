@@ -1,5 +1,10 @@
 package access;
 
+import java.io.IOException;
+
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+
 public class Login {
     private String username;
     private String password;
@@ -83,6 +88,13 @@ public class Login {
             isPasswordValid = true;
         }
         validationComplete = true;
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext(); 
+        try {
+			context.redirect("reader.jsp");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return "success";
     }
 }
