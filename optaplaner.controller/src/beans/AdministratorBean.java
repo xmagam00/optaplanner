@@ -1,57 +1,45 @@
 package beans;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 
-import javax.annotation.ManagedBean;
-import javax.faces.bean.SessionScoped;
+
+
+import javax.faces.application.FacesMessage;
+
+import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
-@ManagedBean
-@SessionScoped
+import java.util.*;
+
+import javax.servlet.http.Part;
+
+
+
+
 public class AdministratorBean {
-				
+	  public Part file;
+	  public String fileContent;		
 	
 		 
-		private static final Order[] orderList = new Order[] {
-			 
-			new Order("A0001", "Intel CPU", 
-					new BigDecimal("700.00"), 1),
-			new Order("A0002", "Harddisk 10TB", 
-					new BigDecimal("500.00"), 2),
-			new Order("A0003", "Dell Laptop", 
-					new BigDecimal("11600.00"), 8),
-			new Order("A0004", "Samsung LCD", 
-					new BigDecimal("5200.00"), 3),
-			new Order("A0005", "A4Tech Mouse", 
-					new BigDecimal("100.00"), 10)
-		};
+
 	 
-		public Order[] getOrderList() {
+	  public void upload() {
+	    try {
+	      fileContent = new Scanner(file.getInputStream()).useDelimiter("\\A").next();
+	    } catch (IOException e) {
+	      // Error handling
+	    }
+	  }
 	 
-			return orderList;
+	  public Part getFile() {
+	    return file;
+	  }
 	 
-		}
-	 
-		public static class Order{
-	 
-			String orderNo;
-			String productName;
-			BigDecimal price;
-			int qty;
-	 
-			public Order(String orderNo, String productName, 
-	                                BigDecimal price, int qty) {
-	 
-				this.orderNo = orderNo;
-				this.productName = productName;
-				this.price = price;
-				this.qty = qty;
-			}
-	 
-			//getter and setter methods
-		}
+	  public void setFile(Part file) {
+	    this.file = file;
+	  }
 		
 		public void logout()
 		{
@@ -64,8 +52,26 @@ public class AdministratorBean {
 				e.printStackTrace();
 			}
 		}
-	
+		public void validateFile(FacesContext ctx,
+                UIComponent comp,
+                Object value) {
+List<FacesMessage> msgs = new ArrayList<FacesMessage>();
+Part file = (Part)value;
+if (file.getSize() > 1024) {
+msgs.add(new FacesMessage("file too big"));
 }
+if (!"text/plain".equals(file.getContentType())) {
+msgs.add(new FacesMessage("not a text file"));
+}
+if (!msgs.isEmpty()) {
+throw new ValidatorException(msgs);
+}
+}
+
+
+}
+
+
 	
 	
 
