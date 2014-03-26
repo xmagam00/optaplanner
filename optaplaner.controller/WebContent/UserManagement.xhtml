@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"></link>
+  <script src="http://code.jquery.com/jquery.js"></script>
+
+<title>Administrator</title>
+</head>
+<body>
+<div style="margin:0px auto;">
+<h1>User Management</h1>
+<f:view>
+
+
+
+    <h:outputLabel value="User:" />
+    <h:outputText value="#{LoginBean.username}" />
+
+  
+  
+<h:dataTable value="#{AdministratorBean.user}" var="o"
+      styleClass="todo" headerClass="todoheader"
+      columnClasses="first, rest">
+      
+      <h:column>
+
+        <f:facet name="header">
+          <h:column>
+            <h:outputText value="Name"></h:outputText>
+          </h:column>
+        </f:facet>
+        <h:outputText value="#{o.username}"></h:outputText>
+
+      </h:column>
+
+      <h:column>
+
+        <f:facet name="header">
+          <h:column>
+            <h:outputText value="Password"></h:outputText>
+          </h:column>
+        </f:facet>
+        <h:outputText value="#{o.password}"></h:outputText>
+      </h:column>
+ <h:column>
+    
+        <f:facet name="header">
+          <h:column>
+            <h:outputText value="Role"></h:outputText>
+          </h:column>
+        </f:facet>
+  <h:outputText value="#{o.role}"></h:outputText>
+
+      </h:column>
+      
+       <h:column>
+
+        <f:facet name="header">
+          <h:column>
+            <h:outputText value="Organization"></h:outputText>
+          </h:column>
+        </f:facet>
+        <h:outputText value="#{o.organization}"></h:outputText>
+      </h:column>
+      
+      <h:column>
+      
+        <f:facet name="header">
+          <h:column>
+            <h:outputText value="Action"></h:outputText>
+          </h:column>
+        </f:facet>
+        <h:panelGrid columns="1">
+         <h:commandButton value="edit user" action="#{AdministratorBean.editUser()}"/>
+          
+        </h:panelGrid>
+      </h:column>
+
+    </h:dataTable>
+
+</f:view>
+</div>
+</body>
+</html>

@@ -15,24 +15,30 @@
    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"></link>
   <script src="http://code.jquery.com/jquery.js"></script>
 
-<title>Insert title here</title>
+<title>Administrator</title>
 </head>
 <body>
+<div style="margin:0px auto;">
+<h1>Administrator Controller</h1>
 <f:view>
-<h:commandButton value="Login"
+<h:commandButton value="Logout"
 action="#{AdministratorBean.logout}"/>
+
+
+    <h:outputLabel value="User:" />
+    <h:outputText value="#{LoginBean.username}" />
 
      <h:form id="form" enctype="multipart/form-data">
   <h:inputFile id="file" value="#{AdministratorBean.file}"
       validator="#{AdministratorBean.validateFile}"/>
   <h:commandButton value="Upload"
       action="#{AdministratorBean.upload}">
-    <f:ajax execute="file" render="@all"/>
+   
   </h:commandButton>
  
 </h:form>
   
-<h:dataTable value="#{todoController.todos}" var="todo"
+<h:dataTable value="#{AdministratorBean.task}" var="o"
       styleClass="todo" headerClass="todoheader"
       columnClasses="first, rest">
       <h:column>
@@ -42,16 +48,16 @@ action="#{AdministratorBean.logout}"/>
             <h:outputText value="ID"></h:outputText>
           </h:column>
         </f:facet>
-        <h:outputText value="#{todo.priority}"></h:outputText>
+        <h:outputText value="#{o.id}"></h:outputText>
       </h:column>
       <h:column>
 
         <f:facet name="header">
           <h:column>
-            <h:outputText value="Title"></h:outputText>
+            <h:outputText value="Name"></h:outputText>
           </h:column>
         </f:facet>
-        <h:outputText value="#{todo.title}"></h:outputText>
+        <h:outputText value="#{o.name}"></h:outputText>
 
       </h:column>
 
@@ -59,10 +65,10 @@ action="#{AdministratorBean.logout}"/>
 
         <f:facet name="header">
           <h:column>
-            <h:outputText value="ETA"></h:outputText>
+            <h:outputText value="State"></h:outputText>
           </h:column>
         </f:facet>
-        <h:outputText value="#{todo.description}"></h:outputText>
+        <h:outputText value="#{o.state}"></h:outputText>
       </h:column>
  <h:column>
     
@@ -71,9 +77,20 @@ action="#{AdministratorBean.logout}"/>
             <h:outputText value="Progress bar"></h:outputText>
           </h:column>
         </f:facet>
-	<rich:progressBar value="70" id="progrs"  enabled="true"/>
-	
+ <rich:progressBar value="#{AdministratorBean.updateProgress()}" enabled="true" interval="100"/>
+
       </h:column>
+      
+       <h:column>
+
+        <f:facet name="header">
+          <h:column>
+            <h:outputText value="ETA"></h:outputText>
+          </h:column>
+        </f:facet>
+        <h:outputText value="#{o.estimatedTime}"></h:outputText>
+      </h:column>
+      
       <h:column>
       
         <f:facet name="header">
@@ -82,15 +99,16 @@ action="#{AdministratorBean.logout}"/>
           </h:column>
         </f:facet>
         <h:panelGrid columns="4">
-         <h:commandButton value="edit" action="#{AdministratorBean.logout}"/>
-          <h:commandButton value="stop task" action="#{AdministratorBean.logout}"/>
-           <h:commandButton value="run task" action="#{AdministratorBean.logout}"/>
-           <h:commandButton value="publish task" action="#{AdministratorBean.logout}"/>
+         <h:commandButton value="edit task" action="#{AdministratorBean.editTask()}"/>
+          <h:commandButton value="stop task" action="#{AdministratorBean.stopTask()}"/>
+           <h:commandButton value="run task" action="#{AdministratorBean.runTask()}"/>
+           <h:commandButton value="publish task" action="#{AdministratorBean.publishTask()}"/>
         </h:panelGrid>
       </h:column>
-	
+
     </h:dataTable>
-  
+
 </f:view>
+</div>
 </body>
 </html>

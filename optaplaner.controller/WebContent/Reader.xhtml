@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"></link>
+  <script src="http://code.jquery.com/jquery.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+<title>Reader</title>
+</head>
+<body>
+<h1>Reader Controller</h1>
+<f:view>
+<h:outputText value="#{LoginBean.username}" />
+<h:outputText value="#{LoginBean.password}" />
+<h:commandButton value="Login"
+action="#{AdministratorBean.logout}"/>
+</f:view>
+</body>
+</html>

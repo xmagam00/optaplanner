@@ -108,7 +108,7 @@ public class LoginBean  {
 	        validationComplete = true;
 	       ExternalContext context = FacesContext.getCurrentInstance().getExternalContext(); 
 	        try {
-				context.redirect("Administrator.jsp");
+				context.redirect("Administrator.xhtml");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
