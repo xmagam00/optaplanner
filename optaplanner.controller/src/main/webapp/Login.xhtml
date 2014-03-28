@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"></link>
+  <script src="http://code.jquery.com/jquery.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+<title>Optaplanner.Controller</title>
+</head>
+<body>
+<h1 style="margin:0px auto;">Welcome to Optaplanner.Controller</h1>
+<f:view>
+<h:form>
+<h:panelGroup rendered="#{LoginBeanBean.validationComplete and (!LoginBean.isUsernameValid or !LoginBean.isPasswordValid)}">
+<h:outputText value="Username is a Required Field" rendered="#{!LoginBean.isUsernameValid}" style="color:red"></h:outputText>
+<br/>
+<h:outputText value="Password is a Required Field" rendered="#{!LoginBean.isPasswordValid}" style="color:red"></h:outputText>
+</h:panelGroup>
+<h:panelGroup rendered="#{LoginBean.validationComplete and (LoginBean.isUsernameValid and LoginBean.isPasswordValid)}">
+<h:outputText value="Username and Password are valid" style="color:green"></h:outputText>
+</h:panelGroup>
+<table style="margin:0px auto;">
+<tr>
+<td><h:outputText value="Enter Username: " /></td>
+<td><h:inputText id="username"
+value="#{LoginBean.username}" />
+</td>
+</tr>
+<tr>
+<td><h:outputText value="Enter Password: " /></td>
+<td><h:inputSecret id="password"
+value="#{LoginBean.password}" />
+</td>
+</tr>
+<tr>
+<td></td>
+<td><h:commandButton value="Login"
+action="#{LoginBean.checkValidity}"/>
+</td>
+</tr>
+</table>
+</h:form>
+<rich:tab>nieco</rich:tab>
+</f:view>
+</body>
+</html>
