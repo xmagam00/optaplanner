@@ -36,6 +36,7 @@
     </licenses>
 
     <properties>
+      <org.richfaces.bom.version>4.1.0.Final</org.richfaces.bom.version>
         <!-- Explicitly declaring the source encoding eliminates the following 
             message: -->
         <!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered 
@@ -66,6 +67,19 @@
 
     <dependencyManagement>
         <dependencies>
+         <dependency>
+
+            <groupId>org.richfaces</groupId>
+
+            <artifactId>richfaces-bom</artifactId>
+
+            <version>${org.richfaces.bom.version}</version>
+
+            <type>pom</type>
+
+            <scope>import</scope>
+
+        </dependency>
             <!-- JBoss distributes a complete set of Java EE 6 APIs including a Bill 
                 of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection) 
                 of artifacts. We use this here so that we always get the correct versions 
@@ -199,6 +213,24 @@
             <scope>test</scope>
         </dependency>
 
+
+      <dependency>
+
+        <groupId>org.richfaces.ui</groupId>
+
+        <artifactId>richfaces-components-ui</artifactId>
+
+      </dependency>
+
+     
+
+      <dependency>
+
+        <groupId>org.richfaces.core</groupId>
+
+        <artifactId>richfaces-core-impl</artifactId>
+
+      </dependency>
     </dependencies>
 
     <build>
@@ -301,4 +333,16 @@
         </profile>
 
     </profiles>
+    
+     
+
+           
+
+
+
+
+  
+
+          
+
 </project>
