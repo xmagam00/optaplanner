@@ -18,8 +18,8 @@ public class LoginBean  {
 
 		
 	
-	    private String username;
-	    private String password;
+	    public String username;
+	    public String password;
 	    private boolean isUsernameValid;
 	    private boolean isPasswordValid;
 	    private boolean validationComplete = false;

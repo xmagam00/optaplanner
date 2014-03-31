@@ -9,37 +9,39 @@
     
 
 
-<head>
+<h:head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
 <script src="bootstrap/js/bootstrap.min.js"></script>
    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"></link>
   <script src="http://code.jquery.com/jquery.js"></script>
 
 <title>Administrator</title>
-</head>
+</h:head>
 <body>
-<div style="margin:0px auto;">
-<h1>Administrator Controller</h1>
 <f:view>
+<h:form>
+<rich:tabPanel>
+<rich:tab name="Tasks">
+
+<h2>Administrator Controller</h2>
+
+
 <h:commandButton value="Logout"
 action="#{AdministratorBean.logout}"/>
 
 
     <h:outputLabel value="User:" />
     <h:outputText value="#{LoginBean.username}" />
+    
+<rich:fileUpload uploadData="#{data}" fileUploadListener="#{AdministratorBean.upload}" immediateUpload="true"/>
 
-     <h:form id="form" enctype="multipart/form-data">
+<a4j:poll interval="1000" enabled="true" reRender="tab"/>
 
-  <h:commandButton value="Upload"
-      action="#{AdministratorBean.upload}">
    
-  </h:commandButton>
- 
-</h:form>
   
 <h:dataTable value="#{AdministratorBean.task}" var="o"
       styleClass="todo" headerClass="todoheader"
-      columnClasses="first, rest">
+      columnClasses="first, rest" id="tab" >
       <h:column>
        
         <f:facet name="header">
@@ -76,7 +78,7 @@ action="#{AdministratorBean.logout}"/>
             <h:outputText value="Progress bar"></h:outputText>
           </h:column>
         </f:facet>
- <rich:progressBar value="#{AdministratorBean.updateProgress()}" enabled="true" interval="100"/>
+
 
       </h:column>
       
@@ -97,17 +99,109 @@ action="#{AdministratorBean.logout}"/>
             <h:outputText value="Actions"></h:outputText>
           </h:column>
         </f:facet>
-        <h:panelGrid columns="4">
-         <h:commandButton value="edit task" action="#{AdministratorBean.editTask()}"/>
+        <h:panelGrid columns="6">
+         <h:commandButton value="edit task" actionListener="#{AdministratorBean.editTask()}"/>
           <h:commandButton value="stop task" action="#{AdministratorBean.stopTask()}"/>
            <h:commandButton value="run task" action="#{AdministratorBean.runTask()}"/>
            <h:commandButton value="publish task" action="#{AdministratorBean.publishTask()}"/>
+              <h:commandButton value="unpublish task" action="#{AdministratorBean.unpublishTask()}"/>
+               <h:commandButton value="delete task" action="#{AdministratorBean.deleteTask()}"/>
+        </h:panelGrid>
+      </h:column>
+
+    </h:dataTable>
+</rich:tab>
+<rich:tab name="User Management">
+
+<rich:panel>
+<table>
+<tr><td>Username:</td><td> <h:inputText  value="#{username}" /> </td></tr>
+<tr><td>Password:</td> <td><h:inputText  value="#{password}" /> </td></tr>
+<tr><td>Re-type password:</td> <td><h:inputText  value="#{passwordValidate}" /> </td></tr>
+<tr><td>Organization:</td><td> <h:inputText  value="#{role}" /> </td></tr>
+<tr><td>Role:</td> <td><h:inputText  value="#{orgnization}" /> </td></tr>
+</table>
+<h:commandButton value="Create User" action="#{AdministratorBean.createUser()}"/>
+</rich:panel>
+
+
+
+<h:dataTable value="#{AdministratorBean.user}" var="o"
+      styleClass="todo" headerClass="todoheader"
+      columnClasses="first, rest" id="user">
+      <h:column>
+       
+        <f:facet name="header">
+          <h:column>
+            <h:outputText value="Username"></h:outputText>
+          </h:column>
+        </f:facet>
+        <h:outputText value="#{o.username}"></h:outputText>
+      </h:column>
+      <h:column>
+
+        <f:facet name="header">
+          <h:column>
+            <h:outputText value="Password"></h:outputText>
+          </h:column>
+        </f:facet>
+        <h:outputText value="#{o.password}"></h:outputText>
+
+      </h:column>
+
+      <h:column>
+
+        <f:facet name="header">
+          <h:column>
+            <h:outputText value="Role"></h:outputText>
+          </h:column>
+        </f:facet>
+        <h:outputText value="#{o.role}"></h:outputText>
+      </h:column>
+ 
+      
+       <h:column>
+
+        <f:facet name="header">
+          <h:column>
+            <h:outputText value="Orgnization"></h:outputText>
+          </h:column>
+        </f:facet>
+        <h:outputText value="#{o.organization}"></h:outputText>
+      </h:column>
+      
+      <h:column>
+      
+        <f:facet name="header">
+          <h:column>
+            <h:outputText value="Actions"></h:outputText>
+          </h:column>
+        </f:facet>
+        <h:panelGrid columns="6">
+         <h:commandButton value="Edit user" actionListener="#{AdministratorBean.editUser()}"/>
+          
+           <h:commandButton value="Delete user" action="#{AdministratorBean.deleteUser()}"/>
+          
         </h:panelGrid>
       </h:column>
 
     </h:dataTable>
 
+
+</rich:tab>
+<rich:tab name="Change password">
+<h:panelGrid column="1">
+<h:inputText id="Password" value="#{password}" />
+ 
+
+<h:inputText id="sd" value="#{passwordValidate}" />
+ 
+<h:commandButton action="#{AdministratorBean.changePassword()}" value="Change password" />
+</h:panelGrid>
+</rich:tab>
+</rich:tabPanel>
+</h:form>
 </f:view>
-</div>
+
 </body>
 </html>
