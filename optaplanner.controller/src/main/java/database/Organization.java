@@ -6,11 +6,12 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="organization")
-public class OrganizationTable{
+public class Organization{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_organization;
 	private String name_of_organization;
+	
 	
 	public long getIdOrganization() {
 	    return id_organization;
@@ -27,6 +28,7 @@ public class OrganizationTable{
 	  public void setNameOfOrganization(String NameOfOrganization) {
 		    this.name_of_organization = NameOfOrganization;
 		  }
+	  
 
 
 }

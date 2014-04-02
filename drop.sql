@@ -1,4 +1,5 @@
-drop state_task;
-drop role;
-drop user;
-drop task;
+
+drop table if exists task;
+
+drop table user;
+drop table organization;

@@ -121,6 +121,12 @@
             <scope>provided</scope>
         </dependency>
         
+       <dependency>
+	<groupId>javax.servlet</groupId>
+	<artifactId>servlet-api</artifactId>
+	<version>2.5</version>
+	<scope>provided</scope>
+  </dependency>
         
         <!-- First declare the APIs we depend on and need for compilation. All 
             of them are provided by JBoss AS 7 -->
@@ -197,7 +203,9 @@
             <artifactId>hibernate-jpamodelgen</artifactId>
             <scope>provided</scope>
         </dependency>
-
+		
+	
+		
         <!-- Annotation processor that raising compilation errors whenever constraint 
             annotations are incorrectly used. -->
         <dependency>
@@ -227,7 +235,11 @@
             <artifactId>arquillian-protocol-servlet</artifactId>
             <scope>test</scope>
         </dependency>
+	
 
+	
+	
+	
     </dependencies>
 
     <build>
@@ -250,6 +262,7 @@
                 <artifactId>jboss-as-maven-plugin</artifactId>
                 <version>${version.jboss.maven.plugin}</version>
             </plugin>
+            
         </plugins>
     </build>
 

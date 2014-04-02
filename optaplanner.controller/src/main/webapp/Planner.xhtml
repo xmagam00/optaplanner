@@ -6,18 +6,125 @@
     xmlns:a4j="http://richfaces.org/a4j"
     xmlns:rich="http://richfaces.org/rich"
     xmlns:ui="http://java.sun.com/jsf/facelets">
-<head>
+    
+
+
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
 <script src="bootstrap/js/bootstrap.min.js"></script>
    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"></link>
   <script src="http://code.jquery.com/jquery.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-<title>Planner</title>
-</head>
+
+<title>Administrator</title>
+</h:head>
 <body>
-<h1>Planner Controller</h1>
 <f:view>
-<h:commandButton value="Login"
-action="#{AdministratorBean.logout}"/>
+<h:form>
+<rich:tabPanel>
+<rich:tab name="Tasks">
+
+<h2>Administrator Controller</h2>
+
+
+<h:commandButton value="Logout"
+action="#{PlannerBean.logout}"/>
+
+
+    <h:outputLabel value="User:" />
+    <h:outputText value="#{LoginBean.username}" />
+    
+<rich:fileUpload uploadData="#{data}" fileUploadListener="#{PlannerBean.upload}" immediateUpload="true"/>
+
+<a4j:poll interval="1000" enabled="true" reRender="tab"/>
+
+   
+  
+<h:dataTable value="#{PlannerBean.tasks}" var="o"
+      styleClass="todo" headerClass="todoheader"
+      columnClasses="first, rest" id="tab" binding="#{table}">
+      <h:column>
+       
+        <f:facet name="header">
+          <h:column>
+            <h:outputText value="ID"></h:outputText>
+          </h:column>
+        </f:facet>
+        <h:outputText value="#{o.id}"></h:outputText>
+      </h:column>
+      <h:column>
+
+        <f:facet name="header">
+          <h:column>
+            <h:outputText value="Name"></h:outputText>
+          </h:column>
+        </f:facet>
+        <h:outputText value="#{o.name}"></h:outputText>
+
+      </h:column>
+
+      <h:column>
+
+        <f:facet name="header">
+          <h:column>
+            <h:outputText value="State"></h:outputText>
+          </h:column>
+        </f:facet>
+        <h:outputText value="#{o.state}"></h:outputText>
+      </h:column>
+ <h:column>
+    
+        <f:facet name="header">
+          <h:column>
+            <h:outputText value="Progress"></h:outputText>
+          </h:column>
+        </f:facet>
+<h:outputText value="#{o.progress}">%</h:outputText>%
+
+      </h:column>
+      
+       <h:column>
+
+        <f:facet name="header">
+          <h:column>
+            <h:outputText value="ETA"></h:outputText>
+          </h:column>
+        </f:facet>
+        <h:outputText value="#{o.estimatedTime}"></h:outputText>
+      </h:column>
+      
+      <h:column>
+      
+        <f:facet name="header">
+          <h:column>
+            <h:outputText value="Actions"></h:outputText>
+          </h:column>
+        </f:facet>
+        <h:panelGrid columns="6">
+         <h:commandButton value="edit task" actionListener="#{PlannerBean.editTask()}"/>
+          <h:commandButton value="stop task" action="#{PlannerBean.stopTask()}"/>
+           <h:commandButton value="run task" action="#{PlannerBean.runTask()}"/>
+           <h:commandButton value="publish task" action="#{PlannerBean.publishTask()}"/>
+              <h:commandButton value="unpublish task" action="#{PlannerBean.unpublishTask()}"/>
+               <h:commandButton value="delete task" action="#{PlannerBean.deleteTask()}"/>
+        </h:panelGrid>
+      </h:column>
+
+    </h:dataTable>
+</rich:tab>
+
+<rich:tab name="Change password">
+<h:panelGrid column="1">
+<h:inputText id="Password" value="#{password}" />
+ 
+
+<h:inputText id="sd" value="#{passwordValidate}" />
+ 
+<h:commandButton action="#{PlannerBean.changePassword()}" value="Change password" />
+</h:panelGrid>
+</rich:tab>
+</rich:tabPanel>
+</h:form>
 </f:view>
+
 </body>
 </html>

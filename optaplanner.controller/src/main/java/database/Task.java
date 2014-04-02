@@ -4,16 +4,20 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="task")
-public class TaskTable {
+public class Task {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_task;
 	private String xml_file;
-	private String state;
-	private int progress;
+	private String state_of_task;
+	private int progress_of_task;
 	private int ifpublic;
 	private long eta;
 	private String name;
+	
+	@ManyToOne
+	@JoinColumn(name="user",referencedColumnName="id_user")
+	private User user;
 	
 	public void setIdTask(long idTask)
 	{
@@ -25,7 +29,7 @@ public class TaskTable {
 		return id_task;
 	}
 	
-	public void SetXmlFile(String xmlFile)
+	public void setXmlFile(String xmlFile)
 	{
 		this.xml_file = xmlFile;
 	}
@@ -36,14 +40,14 @@ public class TaskTable {
 		
 	}
 	
-	public void setState(String state)
+	public void setStateOfTask(String state_of_task_of_task)
 	{
-		this.state = state;
+		this.state_of_task = state_of_task_of_task;
 	}
 	
-	public String getState()
+	public String getstate_of_task_of_task()
 	{
-		return state;
+		return state_of_task;
 	}
 	
 	public void setIfPublic(int ifPublic)
@@ -58,12 +62,12 @@ public class TaskTable {
 	
 	public void setProgress(int progress)
 	{
-		this.progress = progress;
+		this.progress_of_task = progress;
 	}
 	
 	public int getProgress()
 	{
-		return progress;
+		return progress_of_task;
 	}
 	
 	public long getETA()
@@ -85,6 +89,17 @@ public class TaskTable {
 	{
 		return name;
 	}
+	
+	public User getUser()
+	{
+		return user;
+	}
+	
+	public void setUser(User user)
+	{
+		this.user = user;
+	}
+	
 	
 	
 

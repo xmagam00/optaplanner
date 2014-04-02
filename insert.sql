@@ -1,108 +1,184 @@
-insert into role(id_role,name_of_role) values (1,'administrator');
-insert into role(id_role,name_of_role) values (2,'reader');
-insert into role(id_role,name_of_role) values (3,'planner');
+insert into organization(name_of_organization) values('Red Hat');
+insert into organization(name_of_organization) values('IBM');
+insert into organization(name_of_organization) values('Oracle');
 
-insert into state_task(id_state,state) values (1,'paused');
-insert into state_task(id_state,state) values (2,'stopped');
-insert into state_task(id_state,state) values (3,'running');
+insert into user(user_name,password,role,email,organization) values('martin','martin','Administrator','martin@martin.cz',1);
+insert into user(user_name,password,role,email,organization) values('david','david','Reader','david@david.cz',2);
+insert into user(user_name,password,role,email,organization) values('peter','peter','Planner','peter@peter.cz',3);
 
-insert into user(id_user,user_name,password,name_of_organization,user_role,task) values(1,'martin','martin','Red Hat',1,1);
-insert into user(id_user,user_name,password,name_of_organization,user_role,task) values(2,'david','david','IBM',2,2);
-insert into user(id_user,user_name,password,name_of_organization,user_role,task) values(3,'peter','peter','IBM',3,3);
+insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user) values('<NQueens id="1">
+  <id>0</id>
+  <n>4</n>
+  <columnList id="2">
+    <Column id="3">
+      <id>0</id>
+      <index>0</index>
+    </Column>
+    <Column id="4">
+      <id>1</id>
+      <index>1</index>
+    </Column>
+    <Column id="5">
+      <id>2</id>
+      <index>2</index>
+    </Column>
+    <Column id="6">
+      <id>3</id>
+      <index>3</index>
+    </Column>
+  </columnList>
+  <rowList id="7">
+    <Row id="8">
+      <id>0</id>
+      <index>0</index>
+    </Row>
+    <Row id="9">
+      <id>1</id>
+      <index>1</index>
+    </Row>
+    <Row id="10">
+      <id>2</id>
+      <index>2</index>
+    </Row>
+    <Row id="11">
+      <id>3</id>
+      <index>3</index>
+    </Row>
+  </rowList>
+  <queenList id="12">
+    <Queen id="13">
+      <id>0</id>
+      <column reference="3"/>
+    </Queen>
+    <Queen id="14">
+      <id>1</id>
+      <column reference="4"/>
+    </Queen>
+    <Queen id="15">
+      <id>2</id>
+      <column reference="5"/>
+    </Queen>
+    <Queen id="16">
+      <id>3</id>
+      <column reference="6"/>
+    </Queen>
+  </queenList>
+</NQueens>','CREATED',0,0,120,'NQUEEN',2);
+  insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user) values('<NQueens id="1">
+  <id>0</id>
+  <n>4</n>
+  <columnList id="2">
+    <Column id="3">
+      <id>0</id>
+      <index>0</index>
+    </Column>
+    <Column id="4">
+      <id>1</id>
+      <index>1</index>
+    </Column>
+    <Column id="5">
+      <id>2</id>
+      <index>2</index>
+    </Column>
+    <Column id="6">
+      <id>3</id>
+      <index>3</index>
+    </Column>
+  </columnList>
+  <rowList id="7">
+    <Row id="8">
+      <id>0</id>
+      <index>0</index>
+    </Row>
+    <Row id="9">
+      <id>1</id>
+      <index>1</index>
+    </Row>
+    <Row id="10">
+      <id>2</id>
+      <index>2</index>
+    </Row>
+    <Row id="11">
+      <id>3</id>
+      <index>3</index>
+    </Row>
+  </rowList>
+  <queenList id="12">
+    <Queen id="13">
+      <id>0</id>
+      <column reference="3"/>
+    </Queen>
+    <Queen id="14">
+      <id>1</id>
+      <column reference="4"/>
+    </Queen>
+    <Queen id="15">
+      <id>2</id>
+      <column reference="5"/>
+    </Queen>
+    <Queen id="16">
+      <id>3</id>
+      <column reference="6"/>
+    </Queen>
+  </queenList>
+</NQueens>','CREATED',0,0,140,'NQUEEN',3);
+      insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user) values('<NQueens id="1">
+  <id>0</id>
+  <n>4</n>
+  <columnList id="2">
+    <Column id="3">
+      <id>0</id>
+      <index>0</index>
+    </Column>
+    <Column id="4">
+      <id>1</id>
+      <index>1</index>
+    </Column>
+    <Column id="5">
+      <id>2</id>
+      <index>2</index>
+    </Column>
+    <Column id="6">
+      <id>3</id>
+      <index>3</index>
+    </Column>
+  </columnList>
+  <rowList id="7">
+    <Row id="8">
+      <id>0</id>
+      <index>0</index>
+    </Row>
+    <Row id="9">
+      <id>1</id>
+      <index>1</index>
+    </Row>
+    <Row id="10">
+      <id>2</id>
+      <index>2</index>
+    </Row>
+    <Row id="11">
+      <id>3</id>
+      <index>3</index>
+    </Row>
+  </rowList>
+  <queenList id="12">
+    <Queen id="13">
+      <id>0</id>
+      <column reference="3"/>
+    </Queen>
+    <Queen id="14">
+      <id>1</id>
+      <column reference="4"/>
+    </Queen>
+    <Queen id="15">
+      <id>2</id>
+      <column reference="5"/>
+    </Queen>
+    <Queen id="16">
+      <id>3</id>
+      <column reference="6"/>
+    </Queen>
+  </queenList>
+</NQueens>','CREATED',0,0,150,'NQUEEN',1);
 
-insert into task(id_task,xml_file,state_of_task,progress_of_task,url_flag,url,user) values (1,"<?xml version="1.0" encoding="UTF-8"?>
-<solver>
-  <!--<environmentMode>FAST_ASSERT</environmentMode>-->
-  <!-- Domain model configuration -->
-  <solutionClass>org.optaplanner.examples.cloudbalancing.domain.CloudBalance</solutionClass>
-  <planningEntityClass>org.optaplanner.examples.cloudbalancing.domain.CloudProcess</planningEntityClass>
-  <!-- Score configuration -->
-  <scoreDirectorFactory>
-    <scoreDefinitionType>HARD_SOFT</scoreDefinitionType>
-    <simpleScoreCalculatorClass>org.optaplanner.examples.cloudbalancing.solver.score.CloudBalancingSimpleScoreCalculator</simpleScoreCalculatorClass>
-    <!--<scoreDrl>/org/optaplanner/examples/cloudbalancing/solver/cloudBalancingScoreRules.drl</scoreDrl>-->
-  </scoreDirectorFactory>
-  <!-- Optimization algorithms configuration -->
-  <termination>
-    <maximumSecondsSpend>120</maximumSecondsSpend>
-  </termination>
-  <constructionHeuristic>
-    <constructionHeuristicType>FIRST_FIT_DECREASING</constructionHeuristicType>
-    <!--forager-->
-      <pickEarlyType>FIRST_NON_DETERIORATING_SCORE</pickEarlyType>
-    <!--/forager-->
-  </constructionHeuristic>
-  <localSearch>
-    <acceptor>
-      <entityTabuSize>7</entityTabuSize>
-    </acceptor>
-    <forager>
-      <acceptedCountLimit>1000</acceptedCountLimit>
-    </forager>
-  </localSearch>
-</solver>",2,0,0,"http://www.google.sk",1);
 
-insert into task(id_task,xml_file,state_of_task,progress_of_task,url_flag,url,user) values (2,"<?xml version="1.0" encoding="UTF-8"?>
-<solver>
-  <!--<environmentMode>FAST_ASSERT</environmentMode>-->
-  <!-- Domain model configuration -->
-  <solutionClass>org.optaplanner.examples.cloudbalancing.domain.CloudBalance</solutionClass>
-  <planningEntityClass>org.optaplanner.examples.cloudbalancing.domain.CloudProcess</planningEntityClass>
-  <!-- Score configuration -->
-  <scoreDirectorFactory>
-    <scoreDefinitionType>HARD_SOFT</scoreDefinitionType>
-    <simpleScoreCalculatorClass>org.optaplanner.examples.cloudbalancing.solver.score.CloudBalancingSimpleScoreCalculator</simpleScoreCalculatorClass>
-    <!--<scoreDrl>/org/optaplanner/examples/cloudbalancing/solver/cloudBalancingScoreRules.drl</scoreDrl>-->
-  </scoreDirectorFactory>
-  <!-- Optimization algorithms configuration -->
-  <termination>
-    <maximumSecondsSpend>120</maximumSecondsSpend>
-  </termination>
-  <constructionHeuristic>
-    <constructionHeuristicType>FIRST_FIT_DECREASING</constructionHeuristicType>
-    <!--forager-->
-      <pickEarlyType>FIRST_NON_DETERIORATING_SCORE</pickEarlyType>
-    <!--/forager-->
-  </constructionHeuristic>
-  <localSearch>
-    <acceptor>
-      <entityTabuSize>7</entityTabuSize>
-    </acceptor>
-    <forager>
-      <acceptedCountLimit>1000</acceptedCountLimit>
-    </forager>
-  </localSearch>
-</solver>",2,0,0,"http://www.google3.sk",2);
-
-
-insert into task(id_task,xml_file,state_of_task,progress_of_task,url_flag,url,user) values (3,"<?xml version="1.0" encoding="UTF-8"?>
-<solver>
-  <!--<environmentMode>FAST_ASSERT</environmentMode>-->
-  <!-- Domain model configuration -->
-  <solutionClass>org.optaplanner.examples.cloudbalancing.domain.CloudBalance</solutionClass>
-  <planningEntityClass>org.optaplanner.examples.cloudbalancing.domain.CloudProcess</planningEntityClass>
-  <!-- Score configuration -->
-  <scoreDirectorFactory>
-    <scoreDefinitionType>HARD_SOFT</scoreDefinitionType>
-    <simpleScoreCalculatorClass>org.optaplanner.examples.cloudbalancing.solver.score.CloudBalancingSimpleScoreCalculator</simpleScoreCalculatorClass>
-    <!--<scoreDrl>/org/optaplanner/examples/cloudbalancing/solver/cloudBalancingScoreRules.drl</scoreDrl>-->
-  </scoreDirectorFactory>
-  <!-- Optimization algorithms configuration -->
-  <termination>
-    <maximumSecondsSpend>120</maximumSecondsSpend>
-  </termination>
-  <constructionHeuristic>
-    <constructionHeuristicType>FIRST_FIT_DECREASING</constructionHeuristicType>
-    <!--forager-->
-      <pickEarlyType>FIRST_NON_DETERIORATING_SCORE</pickEarlyType>
-    <!--/forager-->
-  </constructionHeuristic>
-  <localSearch>
-    <acceptor>
-      <entityTabuSize>7</entityTabuSize>
-    </acceptor>
-    <forager>
-      <acceptedCountLimit>1000</acceptedCountLimit>
-    </forager>
-  </localSearch>
-</solver>",2,0,0,"http://www.google2.sk",3);

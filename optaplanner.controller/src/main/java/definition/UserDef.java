@@ -1,37 +1,29 @@
-package database;
-
+package definition;
 import java.io.Serializable;
 
-import javax.persistence.*;
-
-import org.hibernate.validator.constraints.Email;
-
-@Entity
-@Table(name="user")
-public class UserTable implements Serializable {
-	
-	 private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long user_id;
+public class UserDef implements Serializable{
+	private String id;
 	private String username;
 	private String password;
 	private String role;
-	@Email
+	private String organization;
 	private String email;
-	@ManyToOne
-	@JoinColumn(name="id_organization")
-	private OrganizationTable organization;
 	
+	 private static final long serialVersionUID = -8349963947101031982L;
 	
-	public void setUserId(long userId)
+	public UserDef(String id,String username,  String password, String role, String organization, String email)
 	{
-		this.user_id = userId;
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.role = role;
+		this.organization = organization;
+		this.email = email;
 	}
 	
-	public long getUserId()
+	public String getId()
 	{
-		return user_id;
+		return id;
 	}
 	
 	public void setUsername(String username)
@@ -64,6 +56,16 @@ public class UserTable implements Serializable {
 		return role;
 	}
 	
+	public void setOrganization(String organization)
+	{
+		this.organization = organization;
+	}
+	
+	public String getOrganization()
+	{
+		return organization;
+	}
+	
 	public String getEmail()
 	{
 		return email;
@@ -73,10 +75,5 @@ public class UserTable implements Serializable {
 	{
 		this.email = email;
 	}
-	
-	
-	
-	
-	
 	
 }

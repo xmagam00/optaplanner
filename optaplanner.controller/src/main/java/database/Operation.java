@@ -1,11 +1,13 @@
 package database;
 
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.*;
+import java.util.List;
 
+import javax.persistence.*;
 
+import database.Task;
+import database.User;
+import database.Organization;
 /**
  * 
  * @author martin Maga
@@ -14,27 +16,20 @@ import java.sql.*;
 
 public class Operation {
 	
-	protected Connection connection;
-	
+	private static final String PERSISTENCE_UNIT_NAME = "optaplanner";
+
+	private static EntityManagerFactory factory;
+	private EntityManager eManager;
 	
 	public Operation()
 	{
 		
-        try {
-            //Loading the JDBC driver for MySql
-            Class.forName("com.mysql.jdbc.Driver");
-
-            //Getting a connection to the database. Change the URL parameters
-            connection =  DriverManager.getConnection("jdbc:mysql://Server/Schema", "root", "root");
-
-            
-            
+    
+        	factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+            eManager = factory.createEntityManager();
+                   
           
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+       
 	}
 	
 	
@@ -46,38 +41,27 @@ public class Operation {
 	 * @param urlflag
 	 * @return
 	 */
-	public boolean createTask(String username,String xmlfile,boolean urlflag)
+	public void createTask(String username,String xmlfile,int ifPublic,long eta,int user,String name)
 	{   
-	
-	  int id = 0;
-	  try {
+		User usertab = eManager.getReference(User.class,user);
+		
+		
+	 
 		  
-	  
-		Statement statement = connection.createStatement();
-		
-		
-		ResultSet rs =  statement.executeQuery("SELECT id_user FROM user where user_name=" + username);
-		while (rs.next()) {
-	            id = Integer.parseInt(rs.getString(1));
-	            	
-	        }
-		statement.executeUpdate("INSERT INTO task(xml_file,state_of_task,progress_of_task,url_flag,url) " + 
-                "VALUES (" + xmlfile +"0, 0," + convertUrlFlag(urlflag)  +",'null',"+ id  +")");
-	        //close the resultset, statement and connection.
-	        rs.close();
-	        statement.close();
-	        connection.close();
-		
-		
-		
-        connection.close();
-	  } catch (Exception e)
-	  {
-		  System.err.println("Got an exception! "); 
-          System.err.println(e.getMessage()); 
-          return false;
-	  }
-	  return true;
+		Task task = new Task();
+		task.setXmlFile(xmlfile);
+		task.setStateOfTask("CREATED");
+		task.setIfPublic(0);
+		task.setProgress(0);
+		task.setETA(0);
+		task.setUser(usertab);
+		task.setName(name);
+		eManager.getTransaction().begin();
+		eManager.persist(task);
+		eManager.getTransaction().commit();
+		eManager.close();
+			
+        
 	}
 	
 	/**
@@ -87,43 +71,28 @@ public class Operation {
 	 * @param urlflag
 	 * @return
 	 */
-	public boolean createUser(String username,String password,String NameOfOrganization, String UserRole)
+	public void createUser(String username,String password,String NameOfOrganization, String UserRole, String email, int organization)
 	{   
-	
+		Organization org = eManager.getReference(Organization.class,organization);
+		
+		User user = new User();
+		user.setUsername(username);
+		user.setPassword(password);
+		user.setRole(UserRole);
+		user.setEmail(email);
+		user.setOrganization(org);
+		
+		eManager.getTransaction().begin();
+		eManager.persist(user);
+		eManager.getTransaction().commit();
+		eManager.close();
+		
 	  
-	  try {
-		  
 	  
-		Statement statement = connection.createStatement();
-		
-		
-		statement.executeUpdate("INSERT INTO user(user_name,password,name_of_organization,user_role) " + 
-                "VALUES("+username +","+ password +","+ NameOfOrganization+","+UserRole);
-	        //close the resultset, statement and connection.
-	        
-	        statement.close();
-	        connection.close();
-		
-		
-		
-        connection.close();
-	  } catch (Exception e)
-	  {
-		  System.err.println("Got an exception! "); 
-          System.err.println(e.getMessage()); 
-          return false;
-	  }
-	  return true;
 	}
 	
 	
-	protected int convertUrlFlag(boolean url_flag)
-	{
-		if (url_flag == true)
-			return 1;
-		else
-			return 0;
-	}
+	
 	
 
 	/**
@@ -134,34 +103,22 @@ public class Operation {
 	 */
  	public boolean validatePassword(String username, String password)
  	{
- 		boolean answer = false;
- 		try {
- 	   //Creating a statement object
-        Statement stmt =  this.connection.createStatement();
-
-        //Executing the query and getting the result set
-        ResultSet rs =  stmt.executeQuery("select user_name from user where user_name=" + username);
-
-        //Iterating the resultset and printing the 3rd column
-        while (rs.next()) {
-            if (rs.getString(1).equals(password))
-            	answer = true;
-            else
-            	answer = false;
-        }
-        //close the resultset, statement and connection.
-        rs.close();
-        stmt.close();
-        connection.close();
+ 		boolean result = false;
  		
  		
- 	 } catch (SQLException e) {
-         e.printStackTrace();
- 	 }catch (Exception e)
- 	 {
- 		 e.printStackTrace();
- 	 }
- 		return answer;
+ 		Query q = eManager.createQuery("select user_name from user where user_name='" + username + "'");
+ 		 List<User> todoList = q.getResultList();
+ 	    for (User passwordDatab : todoList) {
+ 	      if (password.equals(passwordDatab.toString()))
+ 	    		  {
+ 	    		 result = true;
+ 	    		  }
+ 	    }
+       
+
+        eManager.close();
+ 		
+ 	 return result;
  	}
  	
  	/**
@@ -172,31 +129,14 @@ public class Operation {
  	public boolean validateUsername(String username)
  	{
  		boolean answer = false;
- 		try {
- 	   //Creating a statement object
-        Statement stmt =  this.connection.createStatement();
+ 	
+ 		Query q = eManager.createQuery("SELECT username FROM User where user_name='" +username + "'");
+ 		 List<User> todoList = q.getResultList();
+ 		if (todoList.size() > 0)
+ 			answer = true;
 
-        //Executing the query and getting the result set
-        ResultSet rs =  stmt.executeQuery("select user_name from user where user_name=" + username);
-        
-        //return result
-        if (rs.first())
-        	answer = true;
-        else 
-        	answer = false;
-     
-        //close the resultset, statement and connection.
-        rs.close();
-        stmt.close();
-        connection.close();
  		
- 		
- 	 } catch (SQLException e) {
-         e.printStackTrace();
- 	 }catch (Exception e)
- 	 {
- 		 e.printStackTrace();
- 	 }
+ 		eManager.close();
  		return answer;
  	}
  	
@@ -204,66 +144,15 @@ public class Operation {
      * Return all created task
      * @return
      */
- 	 ResultSet  selectAllTasks()
+ 	 List<Task>  selectAllTasks()
  	{
- 		ResultSet rs  = null;
- 		try {
- 	   //Creating a statement object
-        Statement stmt =  this.connection.createStatement();
-
-        //Executing the query and getting the result set
-        rs =  stmt.executeQuery("select * from task");
-        
-        
-     
-        //close the resultset, statement and connection.
-        rs.close();
-        stmt.close();
-        connection.close();
- 		
- 	
- 	 } catch (SQLException e) {
-         e.printStackTrace();
- 	 }
- 		return rs;
+ 		Query q = eManager.createQuery("select * from task");
+ 		List<Task> todoList = q.getResultList();
+ 		 
+ 		 return todoList;
  	}
  	
- 	 /**
- 	  * Method return all tasks which has owner
- 	  * @param username
- 	  * @return
- 	  */
- 	ResultSet selectTaskByUser(String username)
- 	{
- 		ResultSet rs = null;
- 		try {
- 	 	   //Creating a statement object
- 	        Statement stmt =  this.connection.createStatement();
-
- 	        //Executing the query and getting the result set
- 	        rs =  stmt.executeQuery("select * from task T,user U where U.id_user = K.id_task and username=" + username);
- 	        
- 	        
- 	        
- 	     
- 	        //close the resultset, statement and connection.
- 	        rs.close();
- 	        stmt.close();
- 	        connection.close();
- 	 		
- 	 	
- 	 	 } catch (SQLException e) {
- 	         e.printStackTrace();
- 	 	 }
- 		
- 		
- 		
- 		
- 		
- 		return rs;
- 		
- 		
- 	}
+ 	
  	
  	/**
  	 * 
@@ -272,35 +161,9 @@ public class Operation {
  	 */
 	ResultSet selectTaskByUserWithOrganization(String username)
  	{
- 		ResultSet rs = null;
- 		try {
- 	 	   //Creating a statement object
- 	        Statement stmt =  this.connection.createStatement();
-
- 	        //Executing the query and getting the result set
- 	        rs =  stmt.executeQuery("select name_of_organization from user where username=" + username);
- 	        String result = rs.getString(0);
- 	        
- 	        rs = stmt.executeQuery("select * from user where name_of_organization=" + result);
- 	        
- 	        
- 	     
- 	        //close the resultset, statement and connection.
- 	        rs.close();
- 	        stmt.close();
- 	        connection.close();
- 	 		
- 	 	
- 	 	 } catch (SQLException e) {
- 	         e.printStackTrace();
- 	 	 }
- 		
- 		
- 		
- 		
- 		
- 		return rs;
- 		
+ 	
+		Query q  = eManager.createQuery("");
+ 	      return null;
  		
  	}
 	
@@ -309,29 +172,11 @@ public class Operation {
 	 * @param username
 	 * @return true if operation succeed
 	 */
-	public boolean deleteUser(String username)
+	public void deleteUser(String username)
  	{
  		
- 		try {
- 	   //Creating a statement object
-        Statement stmt =  this.connection.createStatement();
-
-        //Executing the query and getting the result set
-        stmt.executeQuery("DELETE user_name from user where user_name=" + username);
-     
-        stmt.close();
-        connection.close();
- 		
- 		
- 	 } catch (SQLException e) {
-         e.printStackTrace();
-         return false;
- 	 }catch (Exception e)
- 	 {
- 		 e.printStackTrace();
- 		 return false;
- 	 }
- 		return true;
+		
+ 		eManager.close();
  	}
 	
 	/**
@@ -340,29 +185,13 @@ public class Operation {
 	 * @param username
 	 * @return
 	 */
-	public boolean deleteTask(int idTask)
+	public void deleteTask(int idTask)
  	{
+		String deleteQuery = "DELETE FROM TASK WHERE id_task=" + idTask;
+		eManager.createQuery(deleteQuery).executeUpdate();
+		eManager.close();
+		
  		
- 		try {
- 	   //Creating a statement object
-        Statement stmt =  this.connection.createStatement();
-
-        //Executing the query and getting the result set
-        stmt.executeQuery("DELETE * from task where id_task=" + idTask);
-     
-        stmt.close();
-        connection.close();
- 		
- 		
- 	 } catch (SQLException e) {
-         e.printStackTrace();
-         return false;
- 	 }catch (Exception e)
- 	 {
- 		 e.printStackTrace();
- 		 return false;
- 	 }
- 		return true;
  	}
 	
 
@@ -372,66 +201,19 @@ public class Operation {
 	 * @param password
 	 * @return
 	 */
-	public boolean changePasswordForUser(String username,String password)
- 	{
- 		
- 		try {
- 	   //Creating a statement object
-        Statement stmt =  this.connection.createStatement();
+	public void changePasswordForUser(String username,String password)
+ 	{	
+		User user = eManager.find(User.class,username);
+ 		user.setPassword(password);
+ 		eManager.persist(user);
+ 	    eManager.getTransaction().commit();
 
-        //Executing the query and getting the result set
-        stmt.executeQuery("UPDATE password SET password="+ password +" where user_name=" + username);
-     
-        stmt.close();
-        connection.close();
+ 	    eManager.close();
+		
  		
- 		
- 	 } catch (SQLException e) {
-         e.printStackTrace();
-         return false;
- 	 }catch (Exception e)
- 	 {
- 		 e.printStackTrace();
- 		 return false;
- 	 }
- 		return true;
  	}
 	
-	/**
-	 * Return all available userRoles
-	 * @return
-	 */
-	ResultSet selectUserRoles()
- 	{
- 		ResultSet rs = null;
- 		try {
- 	 	   //Creating a statement object
- 	        Statement stmt =  this.connection.createStatement();
-
- 	        //Executing the query and getting the result set
- 	        rs =  stmt.executeQuery("select name_of_role from role");
- 	      
- 	        
- 	        
- 	     
- 	        //close the resultset, statement and connection.
- 	        rs.close();
- 	        stmt.close();
- 	        connection.close();
- 	 		
- 	 	
- 	 	 } catch (SQLException e) {
- 	         e.printStackTrace();
- 	 	 }
- 		
- 		
- 		
- 		
- 		
- 		return rs;
- 		
- 		
- 	}
+	
 	
 	/**
 	 * Change userRole for specified user by parameter username
@@ -439,36 +221,85 @@ public class Operation {
 	 * @param userRole
 	 * @return
 	 */
-	public boolean changeUserRole(String username,int userRole)
+	public void changeUserRole(String username,String userRole)
  	{
- 		
- 		try {
- 	   //Creating a statement object
-        Statement stmt =  this.connection.createStatement();
+		User user = eManager.find(User.class,username);
+ 		user.setRole(userRole);
+ 		eManager.persist(user);
+ 	    eManager.getTransaction().commit();
 
-        //Executing the query and getting the result set
-        stmt.executeQuery("UPDATE user SET user_role="+ Integer.toString(userRole) +" where user_name=" + username);
-     
-        stmt.close();
-        connection.close();
- 		
- 		
- 	 } catch (SQLException e) {
-         e.printStackTrace();
-         return false;
- 	 }catch (Exception e)
- 	 {
- 		 e.printStackTrace();
- 		 return false;
- 	 }
- 		return true;
+ 	    eManager.close();
+ 	  
+	
+	
+	
+	
  	}
 	
+	/**
+	 * Method create organization
+	 * @param organization
+	 */
+	public void createOrganization(String organization)
+	{
+		
+		Organization org = new Organization();
+		org.setNameOfOrganization(organization);
+		
+		
+		eManager.getTransaction().begin();
+		eManager.persist(org);
+		eManager.getTransaction().commit();
+		eManager.close();
+	}
 	
-  
+	/**
+	 * Method change name of organization when is needed
+	 * @param oldOrg
+	 * @param newOrg
+	 */
+	public void editOrganization(String oldOrg, String newOrg)
+	{
+		Organization org = eManager.find(Organization.class,oldOrg);
+ 		org.setNameOfOrganization(newOrg);
+ 		eManager.persist(org);
+ 	    eManager.getTransaction().commit();
+
+ 	    eManager.close();
+		
+	}
 	
+	/**
+	 * Delete organization
+	 * @param org
+	 */
+	public void deleteOrganization(String org)
+	{
+		String deleteQuery = "DELETE FROM ORGANIZATION WHERE name_of_organization='" + org +"'";
+		eManager.createQuery(deleteQuery).executeUpdate();
+		eManager.close();
+		
+	}
 	
-	
+	/**
+	 * Method return userrole for username
+	 * @param username
+	 */
+	public String getUserRoleByUsername(String username)
+	{
+		String answer = null;
+		
+ 		Query q = eManager.createQuery("select role from user where user_name='" + username + "'");
+ 		 List<User> todoList = q.getResultList();
+ 		for (User role : todoList) {
+ 	 	    answer = role.toString(); 
+ 	 	    }
+ 		
+ 		
+ 		eManager.close();
+ 		return answer;
+		
+	}
 	
 }
  	

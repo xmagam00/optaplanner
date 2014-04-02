@@ -22,15 +22,21 @@
         http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
    
    <persistence-unit name="optaplanner" transaction-type="RESOURCE_LOCAL">
+     <provider>org.hibernate.ejb.HibernatePersistence</provider>
+   	<class>database.Organization</class>
+   	<class>database.Task</class>
+   	<class>database.User</class>
     <properties>
     <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+     
 <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/optaplanner" />
 <property name="javax.persistence.jdbc.user" value="root" />
 <property name="javax.persistence.jdbc.password" value="root" />
+ <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+<property name="hibernate.show_sql" value="true" />
 
-      <!-- EclipseLink should create the database schema automatically -->
-     <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
-    </properties>
+
+     </properties>
 
   </persistence-unit>
 </persistence>

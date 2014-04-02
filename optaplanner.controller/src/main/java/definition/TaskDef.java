@@ -1,7 +1,7 @@
 package definition;
 import java.io.Serializable;
 
-public class Task implements Serializable{
+public class TaskDef implements Serializable{
 
 	
 	    private static final long serialVersionUID = -8349963947101031989L;
@@ -10,7 +10,7 @@ public class Task implements Serializable{
 	    private String progress;
 	    private String state;
 	    private String estimatedTime;
-	    public Task(String id, String name,String progress, String state,String estimatedTime) {
+	    public TaskDef(String id, String name, String state, String progress,String estimatedTime) {
 	        this.id = id;
 	        this.name = name;
 	        this.state = state;

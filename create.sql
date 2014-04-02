@@ -1,42 +1,30 @@
-  create if not exists user (
+  create table if not exists user (
 	id_user int(8) NOT NULL AUTO_INCREMENT,
-	user_name varchar2(30),
-	password varchar2(30),
-	name_of_organization varchar2(30),
-	user_role int(8) NOT NULL,
+	user_name varchar(30),
+	password varchar(30),
+	role varchar(15) NOT NULL,
+	email varchar(50) NOT NULL,
+	organization int(8) NOT NULL,
 	PRIMARY KEY(id_user)
-
-
 );
 
-create if not exists role (
-	id_role int(8) NOT NULL AUTO_INCREMENT,
-	name_of_role varchar2(30),
-	PRIMARY KEY(id_role)
-
-
-
-);
-
-create if not exists task (
+create table if not exists task (
 	id_task int(8) NOT NULL AUTO_INCREMENT,
-	xml_file varchar2(60000),
-	state_of_task int(8) NOT NULL,
+	xml_file varchar(60000),
+	state_of_task varchar(50) NOT NULL,
 	progress_of_task int(20) NOT NULL,
-	url varchar2(30),
-	url_flag tinyint(1),
-	user int(8) NOT NULL,
-	role int(8),
+	ifpublic tinyint(1),
+	eta int(8),
+	name varchar(10),
+	user int(8),
 	PRIMARY KEY(id_task)
 );
 
-create if not exists state_task (
-	id_state int(8) NOT NULL AUTO_INCREMENT,
-	state varchar2(30),
-	PRIMARY KEY(id_task)
+create table if not exists organization(
+	id_organization int(8) NOT NULL AUTO_INCREMENT,
+	name_of_organization varchar(50),
+	PRIMARY KEY(id_organization)
 );
 
-alter table user add foreign key user_role references role(id_role);
-alter table user add foreign key task references task(id_task);
-alter table task add foreign key state_of_task references state_task(id_task);
-alter table task add foreign key  role references role(id_role);
+alter table task add foreign key (user) references user(id_user);
+alter table user add foreign key  (organization) references organization(id_organization);

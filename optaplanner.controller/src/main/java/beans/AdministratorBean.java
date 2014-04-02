@@ -13,6 +13,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.validator.ValidatorException;
+import javax.servlet.http.HttpServletRequest;
 
 import java.util.*;
 
@@ -33,9 +34,12 @@ public class AdministratorBean {
 	
 	private String fileContent;
 
-	private List<Task> tasks;
+	private List<TaskDef> tasks;
     
-	private List<User> users;
+	private List<UserDef> users;
+	
+	@ManagedProperty(value="#{organizations}")
+	private List<OrganizationDef> organizations;
 	
 	@ManagedProperty(value="#{password}")
 	private String password;
@@ -46,6 +50,7 @@ public class AdministratorBean {
 	@ManagedProperty(value="#{data}")
 	public String data;
 	
+	@ManagedProperty(value="#{table}")
 	private HtmlDataTable table;
 	
 	@ManagedProperty(value="#{username}")
@@ -57,18 +62,29 @@ public class AdministratorBean {
 	@ManagedProperty(value="#{role}")
 	private String role;
 	
+	private String user;
+	
+	HttpServletRequest request;
+	
 	@PostConstruct
     public void init(){
         try{
-            tasks = new ArrayList<Task>();
-            users = new ArrayList<User>();
+        	this.user = request.getParameter("user");
+        	organizations = new ArrayList<OrganizationDef>();
+            tasks = new ArrayList<TaskDef>();
+            users = new ArrayList<UserDef>();
+            
+            for (int i = 0;i< 5 ;i++)
+            {
+            	organizations.add(new OrganizationDef(String.valueOf(i),"Nieco"));
+            }
             
             for(int i=0; i<5; i++){
-                users.add(new User(String.valueOf(i),"martin","tajneheslo","Reader","Red Hat"));
+                users.add(new UserDef(String.valueOf(i),"martin","tajneheslo","Reader","Red Hat","martin.maga@centrum.sk"));
             }
          
             for(int i=0; i<5; i++){
-                tasks.add(new Task(String.valueOf(i),"nieco","nieco","uloha","nieco"));
+                tasks.add(new TaskDef(String.valueOf(i),"name","CREATED","0","2:00"));
             }
 
            
@@ -77,34 +93,52 @@ public class AdministratorBean {
         }
     }   
     
-	public List<Task> updateProgress()
+	public List<TaskDef> updateProgress()
 	{
 		return this.tasks;
 	}
 	
-	public List<User> getUser()
+	public List<UserDef> getUser()
 	{
 		return this.users;
 	}
 	
-	public List<Task> getTask()
+	public List<TaskDef> getTask()
 	{
 		return this.tasks;
 	}
 	
-	public void publishTask()
+	public void publishTask(ActionEvent evt)
 	{
-		
+		   // We get the table object
+	    HtmlDataTable table = getParentDatatable((UIComponent) evt.getSource());
+	    // We get the object on the selected line.
+	    Object o = table.getRowData();
+	    // Eventually, if you need the index of the line, simply do:
+	    int index = table.getRowIndex();
+	    System.out.println(index);
 	}
 	
-	public void runTask()
+	public void runTask(ActionEvent evt)
 	{
-		
+		   // We get the table object
+	    HtmlDataTable table = getParentDatatable((UIComponent) evt.getSource());
+	    // We get the object on the selected line.
+	    Object o = table.getRowData();
+	    // Eventually, if you need the index of the line, simply do:
+	    int index = table.getRowIndex();
+	    System.out.println(index);
 	}
 	
-	public void stopTask()
+	public void stopTask(ActionEvent evt)
 	{
-		
+		   // We get the table object
+	    HtmlDataTable table = getParentDatatable((UIComponent) evt.getSource());
+	    // We get the object on the selected line.
+	    Object o = table.getRowData();
+	    // Eventually, if you need the index of the line, simply do:
+	    int index = table.getRowIndex();
+	    System.out.println(index);
 	}
 	
 	public void editTask(ActionEvent evt) {
@@ -114,7 +148,7 @@ public class AdministratorBean {
 	    Object o = table.getRowData();
 	    // Eventually, if you need the index of the line, simply do:
 	    int index = table.getRowIndex();
-	    // ...
+	    System.out.println(index);
 	}
 	
 	public void createUser()
@@ -152,6 +186,22 @@ public class AdministratorBean {
 	{
 	
 	}
+	
+	public void createOrganization()
+	{
+		
+	}
+	
+	public void editOrganization()
+	{
+		
+	}
+	
+	public void deleteOrganization()
+	{
+		
+	}
+	
 	
 	// Method to get the HtmlDataTable.
 	private HtmlDataTable getParentDatatable(UIComponent compo) {
