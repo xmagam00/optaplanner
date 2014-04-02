@@ -19,7 +19,11 @@ public class PlannerBean {
 	
 	String user;
 	HttpServletRequest request;
-	ArrayList<TaskDef> tasks;
+	public ArrayList<TaskDef> tasks;
+	
+	public String password;
+	
+	public String passwordValidate;
 	
 	@PostConstruct
     public void init(){
@@ -31,7 +35,7 @@ public class PlannerBean {
           
          
             for(int i=0; i<5; i++){
-                tasks.add(new TaskDef(String.valueOf(i),"name","CREATED","0","2:00"));
+                tasks.add(new TaskDef(String.valueOf(i),"name","CREATED","0","2:00","False"));
             }
 
            
@@ -100,7 +104,7 @@ public class PlannerBean {
 	FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 	 ExternalContext context = FacesContext.getCurrentInstance().getExternalContext(); 
         try {
-			context.redirect("Login.jsp");
+			context.redirect("Login.xhtml");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

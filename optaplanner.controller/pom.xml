@@ -170,7 +170,19 @@
             <artifactId>jboss-ejb-api_3.1_spec</artifactId>
             <scope>provided</scope>
         </dependency>
+		
+			<dependency>
+<groupId>org.jboss.spec.javax.jms</groupId>
+<artifactId>jboss-jms-api_1.1_spec</artifactId>
+<scope>provided</scope>
+</dependency>
 
+	<dependency>
+<groupId>org.jboss.spec.javax.annotation</groupId>
+<artifactId>jboss-annotations-api_1.1_spec</artifactId>
+<scope>provided</scope>
+</dependency>
+		
         <!-- JSR-303 (Bean Validation) Implementation -->
         <!-- Provides portable constraints such as @Email -->
         <!-- Hibernate Validator is shipped in JBoss AS 7 -->
@@ -185,7 +197,9 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+	
+		
+		
         <!-- Import the JSF API, we use provided scope as the API is included in 
             JBoss AS 7 -->
         <dependency>
@@ -203,6 +217,9 @@
             <artifactId>hibernate-jpamodelgen</artifactId>
             <scope>provided</scope>
         </dependency>
+        
+       
+        
 		
 	
 		

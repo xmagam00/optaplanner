@@ -25,8 +25,7 @@ import definition.*;
 
 
 
-
-@ManagedBean(eager=true)
+@ManagedBean
 @SessionScoped
 public class AdministratorBean {
 	  
@@ -34,7 +33,7 @@ public class AdministratorBean {
 	
 	private String fileContent;
 
-	private List<TaskDef> tasks;
+	private List<TaskDef> task;
     
 	private List<UserDef> users;
 	
@@ -69,9 +68,9 @@ public class AdministratorBean {
 	@PostConstruct
     public void init(){
         try{
-        	this.user = request.getParameter("user");
+        	//this.user = request.getParameter("user");
         	organizations = new ArrayList<OrganizationDef>();
-            tasks = new ArrayList<TaskDef>();
+            task = new ArrayList<TaskDef>();
             users = new ArrayList<UserDef>();
             
             for (int i = 0;i< 5 ;i++)
@@ -84,7 +83,7 @@ public class AdministratorBean {
             }
          
             for(int i=0; i<5; i++){
-                tasks.add(new TaskDef(String.valueOf(i),"name","CREATED","0","2:00"));
+                task.add(new TaskDef(String.valueOf(i),"name","CREATED","0","2:00","False"));
             }
 
            
@@ -95,7 +94,7 @@ public class AdministratorBean {
     
 	public List<TaskDef> updateProgress()
 	{
-		return this.tasks;
+		return this.task;
 	}
 	
 	public List<UserDef> getUser()
@@ -105,7 +104,7 @@ public class AdministratorBean {
 	
 	public List<TaskDef> getTask()
 	{
-		return this.tasks;
+		return this.task;
 	}
 	
 	public void publishTask(ActionEvent evt)

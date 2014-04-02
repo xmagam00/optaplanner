@@ -10,12 +10,14 @@ public class TaskDef implements Serializable{
 	    private String progress;
 	    private String state;
 	    private String estimatedTime;
-	    public TaskDef(String id, String name, String state, String progress,String estimatedTime) {
+	    private String ifPublic;
+	    public TaskDef(String id, String name, String state, String progress,String estimatedTime,String ifPublic) {
 	        this.id = id;
 	        this.name = name;
 	        this.state = state;
 	        this.progress = progress;
 	        this.estimatedTime = estimatedTime;
+	        this.ifPublic = ifPublic;
 	    }
 	    public String getId() {
 	        return id;
@@ -61,6 +63,15 @@ public class TaskDef implements Serializable{
 	    	return estimatedTime; 
 	    }
 	    
+	    public String getIfPublic()
+	    {
+	    	return ifPublic;
+	    }
+	    
+	    public void setIfPublic(String ifPublic)
+	    {
+	    	this.ifPublic = ifPublic;
+	    }
 	    
 	}
 

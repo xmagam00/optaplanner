@@ -33,6 +33,19 @@ action="#{AdministratorBean.logout}"/>
     <h:outputLabel value="User:" />
     <h:outputText value="#{LoginBean.username}" />
     
+    
+     <h:form id="form" enctype="multipart/form-data">
+  <h:inputFile id="file" value="#{bean.file}"/>
+  <h:commandButton value="Upload"
+      action="#{bean.upload}"/>
+</h:form>
+    
+    
+    
+    
+    
+    
+    
 <rich:fileUpload uploadData="#{data}" fileUploadListener="#{AdministratorBean.upload}" immediateUpload="true"/>
 
 <a4j:poll interval="1000" enabled="true" reRender="tab"/>
@@ -92,6 +105,16 @@ action="#{AdministratorBean.logout}"/>
         <h:outputText value="#{o.estimatedTime}"></h:outputText>
       </h:column>
       
+       <h:column>
+
+        <f:facet name="header">
+          <h:column>
+            <h:outputText value="Permission"></h:outputText>
+          </h:column>
+        </f:facet>
+        <h:outputText value="#{o.ifPublic}"></h:outputText>
+      </h:column>
+      
       <h:column>
       
         <f:facet name="header">
@@ -103,9 +126,64 @@ action="#{AdministratorBean.logout}"/>
          <h:commandButton value="edit task" actionListener="#{AdministratorBean.editTask()}"/>
           <h:commandButton value="stop task" action="#{AdministratorBean.stopTask()}"/>
            <h:commandButton value="run task" action="#{AdministratorBean.runTask()}"/>
-           <h:commandButton value="publish task" action="#{AdministratorBean.publishTask()}"/>
-              <h:commandButton value="unpublish task" action="#{AdministratorBean.unpublishTask()}"/>
+          <h:commandButton value="UnPublish Task" action="#{PlannerBean.publishTask()}">
+                 <h:commandButton value="Publish Task" action="#{PlannerBean.publishTask()}"> 
                <h:commandButton value="delete task" action="#{AdministratorBean.deleteTask()}"/>
+               
+               
+    
+        <rich:componentControl target="popup2" operation="show" />
+    </h:commandButton>
+    <rich:popupPanel id="popup2" modal="false" autosized="true"
+        resizeable="false">
+        <f:facet name="header">
+            <h:outputText value="Simple popup panel" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#"
+                onclick="#{rich:component('popup')}.hide(); return false;">
+                    X
+                </h:outputLink>
+        </f:facet>
+       
+       
+       
+        <p> <a href="#"
+            onclick="#{rich:component('popup')}.hide()">hide this panel</a>: <f:verbatim>&#35;</f:verbatim>{rich:component('popup')}.hide()</p>
+    </rich:popupPanel>           
+               
+               
+               
+
+        <rich:componentControl target="popup" operation="show" />
+    </h:commandButton>
+    <rich:popupPanel id="popup" modal="false" autosized="true"
+        resizeable="false">
+        <f:facet name="header">
+            <h:outputText value="Simple popup panel" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#"
+                onclick="#{rich:component('popup')}.hide(); return false;">
+                    X
+                </h:outputLink>
+        </f:facet>
+       
+       
+       
+        <p> <a href="#"
+            onclick="#{rich:component('popup')}.hide()">hide this panel</a>: <f:verbatim>&#35;</f:verbatim>{rich:component('popup')}.hide()</p>
+    </rich:popupPanel>
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
         </h:panelGrid>
       </h:column>
 
