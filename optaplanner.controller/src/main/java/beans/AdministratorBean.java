@@ -33,33 +33,33 @@ public class AdministratorBean {
 	
 	private String fileContent;
 
-	private List<TaskDef> task;
+	public List<TaskDef> task;
     
-	private List<UserDef> users;
+	public List<UserDef> users;
 	
-	@ManagedProperty(value="#{organizations}")
-	private List<OrganizationDef> organizations;
 	
-	@ManagedProperty(value="#{password}")
-	private String password;
+	public List<OrganizationDef> organizations;
 	
-	@ManagedProperty(value="#{passwordValidate}")
-	private String passwordValidate;
 	
-	@ManagedProperty(value="#{data}")
+	public String password;
+	
+	
+	public String passwordValidate;
+	
+	
 	public String data;
 	
-	@ManagedProperty(value="#{table}")
-	private HtmlDataTable table;
 	
-	@ManagedProperty(value="#{username}")
-	private String username;
+	public HtmlDataTable table;
 	
-	@ManagedProperty(value="#{organization}")
-	private String organization;
 	
-	@ManagedProperty(value="#{role}")
-	private String role;
+	public String username;
+	
+	
+	public String organization;
+	
+	
+	public String role;
 	
 	private String user;
 	
@@ -152,7 +152,6 @@ public class AdministratorBean {
 	
 	public void createUser()
 	{
-		
 	}
 	
 	public void editUser()
@@ -178,7 +177,11 @@ public class AdministratorBean {
 	
 	public void changePassword()
 	{
-		
+		if (this.password.equals(this.passwordValidate))
+				{
+			System.out.println("ZHODA");
+			
+				}
 	}
 	
 	public void upload()

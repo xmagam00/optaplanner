@@ -34,11 +34,6 @@ action="#{AdministratorBean.logout}"/>
     <h:outputText value="#{LoginBean.username}" />
     
     
-     <h:form id="form" enctype="multipart/form-data">
-  <h:inputFile id="file" value="#{bean.file}"/>
-  <h:commandButton value="Upload"
-      action="#{bean.upload}"/>
-</h:form>
     
     
     
@@ -54,7 +49,7 @@ action="#{AdministratorBean.logout}"/>
   
 <h:dataTable value="#{AdministratorBean.task}" var="o"
       styleClass="todo" headerClass="todoheader"
-      columnClasses="first, rest" id="tab" binding="#{table}">
+      columnClasses="first, rest" id="tab" binding="#{AdministratorBean.table}">
       <h:column>
        
         <f:facet name="header">
@@ -270,12 +265,12 @@ action="#{AdministratorBean.logout}"/>
 </rich:tab>
 <rich:tab name="Change password">
 <h:panelGrid column="1">
-<h:inputText id="Password" value="#{password}" />
+<h:inputText id="Password" value="#{AdministratorBean.password}" />
  
 
 <h:inputText id="sd" value="#{passwordValidate}" />
  
-<h:commandButton action="#{AdministratorBean.changePassword()}" value="Change password" />
+<h:commandButton action="#{AdministratorBean.changePassword()}"  />
 </h:panelGrid>
 </rich:tab>
 <rich:tab name ="Organization management">
