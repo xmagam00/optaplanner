@@ -19,6 +19,7 @@ import java.util.*;
 
 import javax.annotation.PostConstruct;
 
+import database.Operation;
 import definition.*;
 
 
@@ -55,6 +56,7 @@ public class AdministratorBean {
 	
 	public String username;
 	
+	public String changeOrg;
 	
 	public String organization;
 	
@@ -65,9 +67,12 @@ public class AdministratorBean {
 	
 	HttpServletRequest request;
 	
+	Operation op;
+	
 	@PostConstruct
     public void init(){
         try{
+        	op = new Operation();
         	//this.user = request.getParameter("user");
         	organizations = new ArrayList<OrganizationDef>();
             task = new ArrayList<TaskDef>();
@@ -172,7 +177,7 @@ public class AdministratorBean {
 	
 	public void deleteTask()
 	{
-	
+		
 	}
 	
 	public void changePassword()
@@ -191,17 +196,17 @@ public class AdministratorBean {
 	
 	public void createOrganization()
 	{
-		
+		op.createOrganization(this.organization);
 	}
 	
 	public void editOrganization()
 	{
-		
+		op.editOrganization(this.organization,this.changeOrg);
 	}
 	
 	public void deleteOrganization()
 	{
-		
+		op.deleteOrganization(this.organization);
 	}
 	
 	
@@ -222,9 +227,9 @@ public class AdministratorBean {
 		ExternalContext context = FacesContext.getCurrentInstance()
 				.getExternalContext();
 		try {
-			context.redirect("Login.jsp");
+			context.redirect("Login.xhtml");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}

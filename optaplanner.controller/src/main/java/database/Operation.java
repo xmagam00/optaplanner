@@ -130,7 +130,7 @@ public class Operation {
  	{
  		boolean answer = false;
  	
- 		Query q = eManager.createQuery("SELECT username FROM User where user_name='" +username + "'");
+ 		Query q = eManager.createQuery("SELECT user_name FROM User where user_name='" +username + "'");
  		 List<User> todoList = q.getResultList();
  		if (todoList.size() > 0)
  			answer = true;

@@ -14,7 +14,7 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_user;
-	private String username;
+	private String user_name;
 	private String password;
 	private String role;
 	@Email
@@ -35,14 +35,14 @@ public class User implements Serializable {
 		return id_user;
 	}
 	
-	public void setUsername(String username)
+	public void setUsername(String user_name)
 	{
-		this.username = username;
+		this.user_name = user_name;
 	}
 	
 	public String getUsername()
 	{
-		return username;
+		return user_name;
 	}
 	
 	public void setPassword(String password)
