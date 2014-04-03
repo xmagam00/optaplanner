@@ -11,51 +11,46 @@
 
 <h:head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-<script src="bootstrap/js/bootstrap.min.js"></script>
-   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"></link>
-  <script src="http://code.jquery.com/jquery.js"></script>
+
+<h:outputStylesheet library="js" name="js/jquery-2.1.0.js"  />
+  <h:outputStylesheet library="css" name="css/bootstrap.css"  />
+  <h:outputStylesheet library="js" name="js/bootstrap.js"  />
 
 <title>Administrator</title>
 </h:head>
 <body>
 <f:view>
 <h:form>
-<rich:tabPanel>
-<rich:tab name="Tasks">
-
 <h2>Administrator Controller</h2>
-
-
 <h:commandButton value="Logout"
 action="#{AdministratorBean.logout}"/>
 
 
     <h:outputLabel value="User:" />
     <h:outputText value="#{LoginBean.username}" />
-    
-    
-    
-    
-    
-    
-    
-    
-    
-<rich:fileUpload uploadData="#{data}" fileUploadListener="#{AdministratorBean.upload}" immediateUpload="true"/>
+<rich:tabPanel>
+<rich:tab name="Tasks">
+<h:outputText value="Create task" />
+<h:panelGrid columns="2">    
 
+<h:outputText value="Name of task:" /><h:inputText value="task" />
+<h:commandButton value="Create task" action="#{AdministratorBean.createTask()}" />
+<h:outputText value="Upload task" /><rich:fileUpload uploadData="#{data}" fileUploadListener="#{AdministratorBean.upload}" immediateUpload="true"/>
+
+</h:panelGrid>
 <a4j:poll interval="1000" enabled="true" reRender="tab"/>
 
    
   
 <h:dataTable value="#{AdministratorBean.task}" var="o"
       styleClass="todo" headerClass="todoheader"
-      columnClasses="first, rest" id="tab" binding="#{AdministratorBean.table}">
+      columnClasses="first, rest" id="tab" >
       <h:column>
        
         <f:facet name="header">
-          <h:column>
+  
             <h:outputText value="ID"></h:outputText>
-          </h:column>
+       
         </f:facet>
         <h:outputText value="#{o.id}"></h:outputText>
       </h:column>
@@ -118,59 +113,77 @@ action="#{AdministratorBean.logout}"/>
           </h:column>
         </f:facet>
         <h:panelGrid columns="6">
-         <h:commandButton value="edit task" actionListener="#{AdministratorBean.editTask()}"/>
+        <a4j:commandButton value="Edit Task"  oncomplete="#{rich:component('popup55')}.show()"> </a4j:commandButton>
           <h:commandButton value="stop task" action="#{AdministratorBean.stopTask()}"/>
-           <h:commandButton value="run task" action="#{AdministratorBean.runTask()}"/>
-          <h:commandButton value="UnPublish Task" action="#{PlannerBean.publishTask()}">
-                 <h:commandButton value="Publish Task" action="#{PlannerBean.publishTask()}"> 
-               <h:commandButton value="delete task" action="#{AdministratorBean.deleteTask()}"/>
+           <h:commandButton value="run task" action="#{AdministratorBean.runTask()}" />   
+          <h:commandButton value="UnPublish Task" action="#{PlannerBean.unpublishTask()}">
+                 <h:commandButton value="Publish Task" action="#{PlannerBean.publishTask()}">
                
+               <h:commandButton value="delete task" action="#{AdministratorBean.deleteTask()}"/>
+          
+      
                
     
         <rich:componentControl target="popup2" operation="show" />
     </h:commandButton>
     <rich:popupPanel id="popup2" modal="false" autosized="true"
         resizeable="false">
-        <f:facet name="header">
-            <h:outputText value="Simple popup panel" />
-        </f:facet>
-        <f:facet name="controls">
+        
+        <h:panelGrid columns="2">
+        <h:outputText value=" Task has been published.  " />
+          <h:outputText value="Link:http://localhost/nieco   " />
             <h:outputLink value="#"
-                onclick="#{rich:component('popup')}.hide(); return false;">
-                    X
+                onclick="#{rich:component('popup2')}.hide(); return false;">
+                    Close Window
                 </h:outputLink>
-        </f:facet>
+               
+       </h:panelGrid>
        
        
-       
-        <p> <a href="#"
-            onclick="#{rich:component('popup')}.hide()">hide this panel</a>: <f:verbatim>&#35;</f:verbatim>{rich:component('popup')}.hide()</p>
-    </rich:popupPanel>           
+        
+    </rich:popupPanel>
                
                
                
 
         <rich:componentControl target="popup" operation="show" />
     </h:commandButton>
+  
     <rich:popupPanel id="popup" modal="false" autosized="true"
         resizeable="false">
-        <f:facet name="header">
-            <h:outputText value="Simple popup panel" />
-        </f:facet>
-        <f:facet name="controls">
+        <h:panelGrid columns="1">
+            <h:outputText value="Task has been unpublished." />
+     		
+       
             <h:outputLink value="#"
                 onclick="#{rich:component('popup')}.hide(); return false;">
-                    X
+                    Close Window
                 </h:outputLink>
-        </f:facet>
+      
        
-       
-       
-        <p> <a href="#"
-            onclick="#{rich:component('popup')}.hide()">hide this panel</a>: <f:verbatim>&#35;</f:verbatim>{rich:component('popup')}.hide()</p>
+    </h:panelGrid>   
+    
     </rich:popupPanel>
                
                
+        
+ 
+  
+    <rich:popupPanel id="popup55" modal="false" autosized="true"
+        resizeable="false">
+        <h:panelGrid columns="1">
+            <h:outputText value="Task has been unpublished." />
+     		
+       
+            <h:outputLink value="#"
+                onclick="#{rich:component('popup55')}.hide(); return false;">
+                    Close Window
+                </h:outputLink>
+      
+       
+    </h:panelGrid>   
+    
+    </rich:popupPanel>      
                
                
                
@@ -188,142 +201,190 @@ action="#{AdministratorBean.logout}"/>
 
 <rich:panel>
 <table>
-<tr><td>Username:</td><td> <h:inputText  value="#{username}" /> </td></tr>
-<tr><td>Password:</td> <td><h:inputText  value="#{password}" /> </td></tr>
-<tr><td>Re-type password:</td> <td><h:inputText  value="#{passwordValidate}" /> </td></tr>
-<tr><td>Organization:</td><td> <h:inputText  value="#{role}" /> </td></tr>
-<tr><td>Role:</td> <td><h:inputText  value="#{orgnization}" /> </td></tr>
+<tr><td>Username:</td><td> <h:inputText value="#{username}" /> </td></tr>
+<tr><td>Password:</td> <td><h:inputText value="#{password}" /> </td></tr>
+<tr><td>Re-type password:</td> <td><h:inputText value="#{passwordValidate}" /> </td></tr>
+<tr><td>Organization:</td><td> <h:inputText value="#{role}" /> </td></tr>
+<tr><td>Role:</td> <td> <rich:inplaceSelect value="Reader"
+        defaultLabel="Click here to edit">
+        <f:selectItem itemValue="Reader" itemLabel="Reader" />
+        <f:selectItem itemValue="Administrator" itemLabel="Administrator" />
+        <f:selectItem itemValue="Planner" itemLabel="Planner" />
+   
+    </rich:inplaceSelect> </td></tr>
 </table>
 <h:commandButton value="Create User" action="#{AdministratorBean.createUser()}"/>
 </rich:panel>
 
+    		<h:dataTable value="#{AdministratorBean.user}" var="po"
+    			styleClass="order-table"
+    			headerClass="order-table-header"
+    			rowClasses="order-table-odd-row,order-table-even-row"
+    		>
 
-
-<h:dataTable value="#{AdministratorBean.user}" var="o"
-      styleClass="todo" headerClass="todoheader"
-      columnClasses="first, rest" id="user">
-      <h:column>
+    			<h:column>
+    			
+    				<f:facet name="header">Username</f:facet>
+    				
+    				<h:inputText value="#{po.username}" size="10" rendered="#{po.editable}" />
+    				
+    				<h:outputText value="#{po.username}" rendered="#{not po.editable}" />
+					
+    			</h:column>
+    			
+    			<h:column>
+    			
+    				<f:facet name="header">password</f:facet>
+    				
+    				
+    				
+    				<h:outputText value="#{po.password}"  />
+					
+    			</h:column>
+    			<h:column>
+    			
+    				<f:facet name="header">Role</f:facet>
+    				
+    				<rich:inplaceSelect value="#{po.role}"
+        defaultLabel="Click here to edit" rendered="#{po.editable}">
+        <f:selectItem itemValue="Reader" itemLabel="Reader" />
+        <f:selectItem itemValue="Administrator" itemLabel="Administrator" />
+        <f:selectItem itemValue="Planner" itemLabel="Planner" />
+   
+    </rich:inplaceSelect>
+    				
+    				<h:outputText value="#{po.role}" rendered="#{not po.editable}" />
+					
+    			</h:column>
+    			
+    			<h:column>
+    			
+    				<f:facet name="header">Organization</f:facet>
+    				
+    				<rich:inplaceSelect value="#{po.organization}"
+        defaultLabel="Click here to edit" rendered="#{po.editable}">
+        <f:selectItem itemValue="IBM" itemLabel="IBM" />
+        <f:selectItem itemValue="Red Hat" itemLabel="Red Hat" />
+        
+   
+    </rich:inplaceSelect>
+    				
+    				<h:outputText value="#{po.organization}" rendered="#{not po.editable}" />
+					
+    			</h:column>
+    		
+    			<h:column>
+    				
+    				<f:facet name="header">Action</f:facet>
+    				
+    				<h:panelGrid columns="3">
+<h:commandButton value="Edit User" action="#{AdministratorBean.editAction(po)}" rendered="#{not po.editable}" />
+<h:commandButton value="Delete User" action="#{AdministratorBean.deleteUser()}"/>
+<h:commandButton value="Change Password" show="popup5" >
+ <rich:componentControl target="popup5" operation="show" />
+    </h:commandButton>
+    <rich:popupPanel id="popup5" modal="false" autosized="true"
+        resizeable="false">
        
-        <f:facet name="header">
-          <h:column>
-            <h:outputText value="Username"></h:outputText>
-          </h:column>
-        </f:facet>
-        <h:outputText value="#{o.username}"></h:outputText>
-      </h:column>
-      <h:column>
+            <h:panelGrid columns="2">
+            <h:outputText value="Password" /> <h:inputText value="nieco" ></h:inputText>
+            <h:outputText value="Re-type Password" /> <h:inputText value="ble" ></h:inputText>
+             </h:panelGrid>
+            <h:commandButton value="Change password" action="#{AdministratorBean.changePasswordForUser()}"  onclick="#{rich:component('popup5')}.hide(); return false;" />
+           
+       
+            <h:outputLink value="#"
+                onclick="#{rich:component('popup5')}.hide(); return false;">
+                    Close Window
+                </h:outputLink>
+                
+       
+       
+       
+       
+       
+    </rich:popupPanel>
+</h:panelGrid>
+    				
+    			</h:column>
 
-        <f:facet name="header">
-          <h:column>
-            <h:outputText value="Password"></h:outputText>
-          </h:column>
-        </f:facet>
-        <h:outputText value="#{o.password}"></h:outputText>
+    		</h:dataTable>
+    		
+    		<h:commandButton value="Save Changes" action="#{AdministratorBean.saveAction}" />
 
-      </h:column>
 
-      <h:column>
 
-        <f:facet name="header">
-          <h:column>
-            <h:outputText value="Role"></h:outputText>
-          </h:column>
-        </f:facet>
-        <h:outputText value="#{o.role}"></h:outputText>
-      </h:column>
- 
-      
-       <h:column>
 
-        <f:facet name="header">
-          <h:column>
-            <h:outputText value="Orgnization"></h:outputText>
-          </h:column>
-        </f:facet>
-        <h:outputText value="#{o.organization}"></h:outputText>
-      </h:column>
-      
-    
-      <h:column>
-      
-        <f:facet name="header">
-          <h:column>
-            <h:outputText value="Actions"></h:outputText>
-          </h:column>
-        </f:facet>
-        <h:panelGrid columns="6">
-         <h:commandButton value="Edit user" actionListener="#{AdministratorBean.editUser()}"/>
-          
-           <h:commandButton value="Delete user" action="#{AdministratorBean.deleteUser()}"/>
-          
-        </h:panelGrid>
-      </h:column>
 
-    </h:dataTable>
 
 
 </rich:tab>
 <rich:tab name="Change password">
 <h:panelGrid column="1">
-<h:inputText id="Password" value="#{AdministratorBean.password}" />
+<h:inputText id="Password" value="#{password}" />
  
 
 <h:inputText id="sd" value="#{passwordValidate}" />
  
-<h:commandButton action="#{AdministratorBean.changePassword()}"  />
+<h:commandButton value="Change password" action="#{AdministratorBean.changePassword()}" />
 </h:panelGrid>
 </rich:tab>
 <rich:tab name ="Organization management">
-<h:panelGrid column="1">
-<h:inputText id="Organization" value="#{organization}" />
- 
-<h:commandButton action="#{AdministratorBean.createOrganization()}" value="Create organization" />
+<h:panelGrid column="2">
+<h:outputText value="Organization" /><h:inputText id="Organization" value="#{organization}" />
+<h:outputText value="Re-type organization" /><h:inputText id="Organization2" value="#{reOrganization}" />
 </h:panelGrid>
 <!-- 
-<h:dataTable value="#{AdministratorBean.organizations}" var="o"
-      styleClass="todo" headerClass="todoheader"
-      columnClasses="first, rest" id="user">
-      <h:column>
-       
-        <f:facet name="header">
-          <h:column>
-            <h:outputText value="ID"></h:outputText>
-          </h:column>
-        </f:facet>
-        <h:outputText value="#{o.id_organization}"></h:outputText>
-      </h:column>
-      <h:column>
+<h:commandButton action="#{AdministratorBean.createOrganization()}" value="Create organization" />
+	<h:dataTable value="#{AdministratorBean.organizations}" var="org"
+    			styleClass="order-table"
+    			headerClass="order-table-header"
+    			rowClasses="order-table-odd-row,order-table-even-row"
+    		>
 
-        <f:facet name="header">
-          <h:column>
-            <h:outputText value="Organization"></h:outputText>
-          </h:column>
-        </f:facet>
-        <h:outputText value="#{o.name_of_organization}"></h:outputText>
+    			<h:column>
+    			
+    				<f:facet name="header">ID organization</f:facet>
+    				
+    			
+    				
+    				<h:outputText value="#{org.id_organization}"  />
+					
+    			</h:column>
+    			
+    			    			
+    			<h:column>
+    			
+    				<f:facet name="header">Name Of Organization</f:facet>
+    				
+    				<rich:inplaceSelect value="#{org.name_of_organization}"
+        defaultLabel="Click here to edit" rendered="#{org.editable}">
+        <f:selectItem itemValue="IBM" itemLabel="IBM" />
+        <f:selectItem itemValue="Red Hat" itemLabel="Red Hat" />
+        
+   
+    </rich:inplaceSelect>
+    				
+    				<h:outputText value="#{org.name_of_organization}" rendered="#{not org.editable}" />
+					
+    			</h:column>
+    		
+    			<h:column>
+    				
+    				<f:facet name="header">Action</f:facet>
+    				
+    				<h:panelGrid columns="3">
+<h:commandButton value="Edit User" action="#{AdministratorBean.editActionOrganization(org)}" rendered="#{not org.editable}" />
+<h:commandButton value="Delete User" action="#{AdministratorBean.deleteOrganization()}"/>
 
-      </h:column>
+</h:panelGrid>
+    				
+    			</h:column>
 
-      
-      
-      <h:column>
-      
-        <f:facet name="header">
-          <h:column>
-            <h:outputText value="Actions"></h:outputText>
-          </h:column>
-        </f:facet>
-        <h:panelGrid columns="6">
-         <h:commandButton value="Edit organization" actionListener="#{AdministratorBean.editOrganization()}"/>
-          
-           <h:commandButton value="Delete organization" action="#{AdministratorBean.deleteOrganization()}"/>
-          
-        </h:panelGrid>
-      </h:column>
-
-    </h:dataTable>
-
- -->
-
+    		</h:dataTable>
+    		
+    		<h:commandButton value="Save Changes" action="#{AdministratorBean.saveActionOrganization}" />
+    		 -->
 </rich:tab>
 </rich:tabPanel>
 </h:form>

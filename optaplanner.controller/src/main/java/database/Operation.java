@@ -71,7 +71,7 @@ public class Operation {
 	 * @param urlflag
 	 * @return
 	 */
-	public void createUser(String username,String password,String NameOfOrganization, String UserRole, String email, int organization)
+	public void createUser(String username,String password, String UserRole, String email, long organization)
 	{   
 		Organization org = eManager.getReference(Organization.class,organization);
 		
@@ -106,7 +106,7 @@ public class Operation {
  		boolean result = false;
  		
  		
- 		Query q = eManager.createQuery("select user_name from user where user_name='" + username + "'");
+ 		Query q = eManager.createQuery("select user_name from User where user_name='" + username + "'");
  		 List<User> todoList = q.getResultList();
  	    for (User passwordDatab : todoList) {
  	      if (password.equals(passwordDatab.toString()))
@@ -146,7 +146,7 @@ public class Operation {
      */
  	 List<Task>  selectAllTasks()
  	{
- 		Query q = eManager.createQuery("select * from task");
+ 		Query q = eManager.createQuery("select * from Task");
  		List<Task> todoList = q.getResultList();
  		 
  		 return todoList;
@@ -187,7 +187,7 @@ public class Operation {
 	 */
 	public void deleteTask(int idTask)
  	{
-		String deleteQuery = "DELETE FROM TASK WHERE id_task=" + idTask;
+		String deleteQuery = "delete from Task where id_task=" + idTask;
 		eManager.createQuery(deleteQuery).executeUpdate();
 		eManager.close();
 		
@@ -275,7 +275,7 @@ public class Operation {
 	 */
 	public void deleteOrganization(String org)
 	{
-		String deleteQuery = "DELETE FROM ORGANIZATION WHERE name_of_organization='" + org +"'";
+		String deleteQuery = "delete from Organization where name_of_organization='" + org +"'";
 		eManager.createQuery(deleteQuery).executeUpdate();
 		eManager.close();
 		
@@ -289,7 +289,7 @@ public class Operation {
 	{
 		String answer = null;
 		
- 		Query q = eManager.createQuery("select role from user where user_name='" + username + "'");
+ 		Query q = eManager.createQuery("select role from User where user_name='" + username + "'");
  		 List<User> todoList = q.getResultList();
  		for (User role : todoList) {
  	 	    answer = role.toString(); 
@@ -299,6 +299,36 @@ public class Operation {
  		eManager.close();
  		return answer;
 		
+	}
+	
+	public long getIdOrganization(String organization)
+	{
+		long answer = 0;
+		
+		Query q = eManager.createQuery("select id_organization from Organization where name_of_organization='" + organization +"'");
+		List<Organization> todoList= q.getResultList();
+		for (Organization name : todoList) {
+ 	 	    answer = Long.valueOf(name.toString()).longValue(); 
+ 	 	    }
+ 		
+ 		
+ 		eManager.close();
+		return answer;
+	}
+	
+	public long getIdUser(String username)
+	{
+		long answer = 0;
+		
+		Query q = eManager.createQuery("select id_user from User where user_name='" + username +"'");
+		List<User> todoList= q.getResultList();
+		for (User id : todoList) {
+ 	 	    answer = Long.valueOf(id.toString()).longValue(); 
+ 	 	    }
+ 		
+ 		
+ 		eManager.close();
+		return answer;
 	}
 	
 }

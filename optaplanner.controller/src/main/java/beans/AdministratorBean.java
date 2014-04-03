@@ -41,6 +41,7 @@ public class AdministratorBean {
 	
 	public List<OrganizationDef> organizations;
 	
+	public String email;
 	
 	public String password;
 	
@@ -56,10 +57,13 @@ public class AdministratorBean {
 	
 	public String username;
 	
+	public String changeUsername;
+	
 	public String changeOrg;
 	
 	public String organization;
 	
+	public String reOrganization;
 	
 	public String role;
 	
@@ -112,6 +116,53 @@ public class AdministratorBean {
 		return this.task;
 	}
 	
+	
+	public String saveAction() {
+		 
+		//get all existing value but set "editable" to false 
+		for (UserDef order : users){
+			order.setEditable(false);
+		}
+		//return to current page
+		return null;
+ 
+	}
+	
+	
+	public String editAction(UserDef user) {
+		 
+		user.setEditable(true);
+		return null;
+	}
+	
+	
+	public String saveActionOrganization() {
+		 
+		//get all existing value but set "editable" to false 
+		for (UserDef order : users){
+			order.setEditable(false);
+		}
+		//return to current page
+		return null;
+ 
+	}
+	
+	
+	public String editActionOrganization(UserDef user) {
+		 
+		user.setEditable(true);
+		return null;
+	}
+	
+	
+	
+	public void changePasswordForUser()
+	{
+		op.changePasswordForUser(this.username,this.password);
+	}
+	
+	
+	
 	public void publishTask(ActionEvent evt)
 	{
 		   // We get the table object
@@ -156,12 +207,14 @@ public class AdministratorBean {
 	}
 	
 	public void createUser()
-	{
+	{	
+		long org = op.getIdOrganization(this.organization);
+		op.createUser(this.user,this.password,this.role,this.email,org);
 	}
 	
 	public void editUser()
 	{
-		
+		long id = op.getIdUser(this.username);
 	}
 	
 	public void deleteUser()
@@ -169,6 +222,10 @@ public class AdministratorBean {
 		
 	}
 	
+	public void createTask()
+	{
+		
+	}
 	
 	public void unpublishTask()
 	{

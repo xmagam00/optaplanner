@@ -8,6 +8,7 @@ public class UserDef implements Serializable{
 	private String role;
 	private String organization;
 	private String email;
+	boolean editable = false;
 	
 	 private static final long serialVersionUID = -8349963947101031982L;
 	
@@ -75,5 +76,14 @@ public class UserDef implements Serializable{
 	{
 		this.email = email;
 	}
+	
+	public boolean isEditable() {
+		return editable;
+	}
+	public void setEditable(boolean editable) {
+		this.editable = editable;
+	}
+	
+	
 	
 }
