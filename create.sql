@@ -17,6 +17,7 @@ create table if not exists task (
 	eta int(8),
 	name varchar(10),
 	user int(8),
+	organization int(8),
 	PRIMARY KEY(id_task)
 );
 
@@ -28,3 +29,4 @@ create table if not exists organization(
 
 alter table task add foreign key (user) references user(id_user);
 alter table user add foreign key  (organization) references organization(id_organization);
+alter table task add foreign key (organization) references organization(id_organization);

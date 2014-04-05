@@ -137,7 +137,7 @@ public class LoginBean  {
 	        }
 	        
 	        
-	        request.getSession().setAttribute("user", this.username);
+	        //request.getSession().setAttribute("user", this.username);
 	        String role = op.getUserRoleByUsername(this.username);
 	        
 	        if (role.equals("Administrator"))

@@ -10,6 +10,7 @@ import java.io.Serializable;
 		  private static final long serialVersionUID = -8349963947101031989L;
 		  private String id_organization;
 		  private String name_of_organization;
+	
 		  boolean editable;
 
 	  
@@ -39,6 +40,8 @@ import java.io.Serializable;
 	  {
 		  return id_organization;
 	  }
+	  
+	 
 	  
 	  public boolean isEditable() {
 			return editable;

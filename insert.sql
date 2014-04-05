@@ -6,7 +6,7 @@ insert into user(user_name,password,role,email,organization) values('martin','ma
 insert into user(user_name,password,role,email,organization) values('david','david','Reader','david@david.cz',2);
 insert into user(user_name,password,role,email,organization) values('peter','peter','Planner','peter@peter.cz',3);
 
-insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user) values('<NQueens id="1">
+insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user,organization) values('<NQueens id="1">
   <id>0</id>
   <n>4</n>
   <columnList id="2">
@@ -63,8 +63,8 @@ insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user)
       <column reference="6"/>
     </Queen>
   </queenList>
-</NQueens>','CREATED',0,0,120,'NQUEEN',2);
-  insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user) values('<NQueens id="1">
+</NQueens>','CREATED',0,0,120,'NQUEEN',2,1);
+  insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user,organization) values('<NQueens id="1">
   <id>0</id>
   <n>4</n>
   <columnList id="2">
@@ -121,8 +121,8 @@ insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user)
       <column reference="6"/>
     </Queen>
   </queenList>
-</NQueens>','CREATED',0,0,140,'NQUEEN',3);
-      insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user) values('<NQueens id="1">
+</NQueens>','CREATED',0,0,140,'NQUEEN',3,2);
+      insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user,organization) values('<NQueens id="1">
   <id>0</id>
   <n>4</n>
   <columnList id="2">
@@ -179,6 +179,6 @@ insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user)
       <column reference="6"/>
     </Queen>
   </queenList>
-</NQueens>','CREATED',0,0,150,'NQUEEN',1);
+</NQueens>','CREATED',0,0,150,'NQUEEN',1,3);
 
 

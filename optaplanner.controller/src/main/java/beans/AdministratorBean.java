@@ -8,10 +8,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ComponentSystemEvent;
 import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,10 +45,10 @@ public class AdministratorBean {
 	
 	public String email;
 	
-	public String password;
+	private String password;
 	
 	
-	public String passwordValidate;
+	private String passwordValidate;
 	
 	
 	public String data;
@@ -61,10 +63,10 @@ public class AdministratorBean {
 	
 	public String changeOrg;
 	
-	public String organization;
+	private String organization;
 	
-	public String reOrganization;
-	
+	private List<String> editableOrganizations;
+
 	public String role;
 	
 	private String user;
@@ -73,27 +75,44 @@ public class AdministratorBean {
 	
 	Operation op;
 	
+	
+	
+	
 	@PostConstruct
     public void init(){
         try{
         	op = new Operation();
-        	//this.user = request.getParameter("user");
+        	
         	organizations = new ArrayList<OrganizationDef>();
             task = new ArrayList<TaskDef>();
             users = new ArrayList<UserDef>();
-            
-            for (int i = 0;i< 5 ;i++)
-            {
-            	organizations.add(new OrganizationDef(String.valueOf(i),"Nieco"));
+    
+            editableOrganizations = new ArrayList<String>();
+            List<OrganizationDef> resultsOrg = op.getOrganizations();
+            for (Object item : resultsOrg)
+            {	
+            	Object[] obj = (Object[]) item;  
+            	organizations.add(new OrganizationDef(obj[0].toString(),obj[1].toString()));
+            	editableOrganizations.add(obj[1].toString());
             }
             
-            for(int i=0; i<5; i++){
-                users.add(new UserDef(String.valueOf(i),"martin","tajneheslo","Reader","Red Hat","martin.maga@centrum.sk"));
+            List<TaskDef> resultsTask = op.getAllTasks();
+            for (Object item : resultsTask)
+            {	
+            	Object[] obj = (Object[]) item;  
+            	task.add(new TaskDef(obj[0].toString(),obj[1].toString(),obj[2].toString(),obj[3].toString(),obj[4].toString(),convertIfPublic(obj[5].toString()),obj[6].toString()));
+            	
             }
+            
+            List<UserDef> resultsUser = op.getAllUsers();
+            for (Object item : resultsUser)
+            {	
+            	Object[] obj = (Object[]) item;  
+            	users.add(new UserDef(obj[0].toString(),obj[1].toString(),obj[2].toString(),obj[3].toString(),obj[4].toString(),obj[5].toString()));
+            	
+            }
+            
          
-            for(int i=0; i<5; i++){
-                task.add(new TaskDef(String.valueOf(i),"name","CREATED","0","2:00","False"));
-            }
 
            
         }catch(Exception e){
@@ -101,6 +120,64 @@ public class AdministratorBean {
         }
     }   
     
+	public void updateEditableOrganizations()
+	{ 	this.editableOrganizations = null;
+		List<String> org = new ArrayList<String>();
+		List<OrganizationDef> resultsOrg  = op.getOrganizations();
+        for (Object item : resultsOrg)
+        {	
+        	Object[] obj = (Object[]) item;  
+        	
+        	org.add(obj[1].toString());
+        }
+        this.editableOrganizations = org;
+	}
+	public void updateTasks()
+	{
+
+		 List<TaskDef> org = new ArrayList<TaskDef>();
+		 List<TaskDef> resultsOrg = op.getAllTasks();
+        for (Object item : resultsOrg)
+        {	
+        	Object[] obj = (Object[]) item;  
+        	org.add(new TaskDef(obj[0].toString(),obj[1].toString(),obj[2].toString(),obj[3].toString(),obj[4].toString(),convertIfPublic(obj[5].toString()),obj[6].toString()));
+        	
+        }
+        this.task = org;
+	}
+	
+	public  void setTasks(List<TaskDef> tasks)
+	{
+		this.task = tasks;
+	}
+	
+	/**
+	 * Method convert number from database to Private|Public
+	 * @param ifPublic
+	 * @return
+	 */
+	private String convertIfPublic(String ifPublic)
+	{
+		if(ifPublic.equals("0"))
+		{
+			return "Private";
+		}
+		else
+		{
+			return "Public";
+		}
+	}
+	
+	public List<OrganizationDef> getOrganizations()
+	{
+		return organizations;
+	}
+	
+	public void setOrganizations(List<OrganizationDef> organizations)
+	{
+		this.organizations = organizations;
+	}
+	
 	public List<TaskDef> updateProgress()
 	{
 		return this.task;
@@ -252,8 +329,24 @@ public class AdministratorBean {
 	}
 	
 	public void createOrganization()
-	{
+	{   
 		op.createOrganization(this.organization);
+		updateOrganization();
+		
+	}
+	
+	public void updateOrganization()
+	{	 
+		
+		 List<OrganizationDef> org = new ArrayList<OrganizationDef>();
+		 List<OrganizationDef> resultsOrg = op.getOrganizations();
+         for (Object item : resultsOrg)
+         {	
+         	Object[] obj = (Object[]) item;  
+         	org.add(new OrganizationDef(obj[0].toString(),obj[1].toString()));
+         	
+         }
+         this.organizations = org;
 	}
 	
 	public void editOrganization()
@@ -291,9 +384,77 @@ public class AdministratorBean {
 		}
 	}
 
+	public String getPassword()
+	{
+		return password;
+	}
 	
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
 	
+	public String getValidatePassword()
+	{
+		return passwordValidate;
+	}
 	
+	public void setValidatePassword(String passwordValidate)
+	{
+		this.passwordValidate = passwordValidate;
+	}
+	
+	public void validatePassword(ComponentSystemEvent event) {
+		 
+		  FacesContext fc = FacesContext.getCurrentInstance();
+	 
+		  UIComponent components = event.getComponent();
+	 
+		  // get password
+		  UIInput uiInputPassword = (UIInput) components.findComponent("Password");
+		  String password = uiInputPassword.getLocalValue() == null ? ""
+			: uiInputPassword.getLocalValue().toString();
+		  String passwordId = uiInputPassword.getClientId();
+	 
+		  // get confirm password
+		  UIInput uiInputConfirmPassword = (UIInput) components.findComponent("confirmPassword");
+		  String confirmPassword = uiInputConfirmPassword.getLocalValue() == null ? ""
+			: uiInputConfirmPassword.getLocalValue().toString();
+	 
+		  // Let required="true" do its job.
+		  if (password.isEmpty() || confirmPassword.isEmpty()) {
+			return;
+		  }
+	 
+		  if (!password.equals(confirmPassword)) {
+	 
+			FacesMessage msg = new FacesMessage("Password must match confirm password");
+			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+			fc.addMessage(passwordId, msg);
+			fc.renderResponse();
+	 
+		  }
+	 
+		}
+	public String getOrganization()
+	{
+		return organization;
+	}
+	
+	public void setOrganization(String organization)
+	{
+		this.organization = organization;
+	}
+	
+	public void setEditableOrganizations(List<String> org)
+	{
+		this.editableOrganizations = org;
+	}
+	
+	public List<String> getEditableOrganizations()
+	{
+		return editableOrganizations;
+	}
 	
 
 }

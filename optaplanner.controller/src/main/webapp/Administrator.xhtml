@@ -38,13 +38,19 @@ action="#{AdministratorBean.logout}"/>
 <h:outputText value="Upload task" /><rich:fileUpload uploadData="#{data}" fileUploadListener="#{AdministratorBean.upload}" immediateUpload="true"/>
 
 </h:panelGrid>
-<a4j:poll interval="1000" enabled="true" reRender="tab"/>
-
-   
+ <a4j:region id="pollRegion" selfRendered="true" renderRegionOnly="true">
+        <a4j:poll action="#{AdministratorBean.updateTasks()}"
+             interval="100"
+            ajaxSingle="true" limitToList="true"  bypassUpdates="true">
+        </a4j:poll>
+        <a4j:poll reRender="userTab"             interval="100"
+            ajaxSingle="true" limitToList="true"  bypassUpdates="true">
+        </a4j:poll>
+    </a4j:region>
   
 <h:dataTable value="#{AdministratorBean.task}" var="o"
       styleClass="todo" headerClass="todoheader"
-      columnClasses="first, rest" id="tab" >
+      columnClasses="first, rest" id="userTab" >
       <h:column>
        
         <f:facet name="header">
@@ -81,7 +87,8 @@ action="#{AdministratorBean.logout}"/>
             <h:outputText value="Progress"></h:outputText>
           </h:column>
         </f:facet>
-<h:outputText value="#{o.progress}">%</h:outputText>%
+        <rich:progressBar interval="1000" value="#{o.progress}"></rich:progressBar>
+
 
       </h:column>
       
@@ -103,6 +110,15 @@ action="#{AdministratorBean.logout}"/>
           </h:column>
         </f:facet>
         <h:outputText value="#{o.ifPublic}"></h:outputText>
+      </h:column>
+         <h:column>
+
+        <f:facet name="header">
+          <h:column>
+            <h:outputText value="Owner"></h:outputText>
+          </h:column>
+        </f:facet>
+        <h:outputText value="#{o.owner}"></h:outputText>
       </h:column>
       
       <h:column>
@@ -213,14 +229,24 @@ action="#{AdministratorBean.logout}"/>
    
     </rich:inplaceSelect> </td></tr>
 </table>
+
+
 <h:commandButton value="Create User" action="#{AdministratorBean.createUser()}"/>
 </rich:panel>
-
+ <a4j:region id="ren" selfRendered="true" renderRegionOnly="true">
+        <a4j:poll action="#{AdministratorBean.updateEditableOrganizations()}"
+             interval="100"
+            ajaxSingle="true" limitToList="true"  bypassUpdates="true">
+        </a4j:poll>
+        <a4j:poll reRender="editOrg"             interval="100"
+            ajaxSingle="true" limitToList="true"  bypassUpdates="true">
+        </a4j:poll>
+    </a4j:region>
     		<h:dataTable value="#{AdministratorBean.user}" var="po"
     			styleClass="order-table"
     			headerClass="order-table-header"
-    			rowClasses="order-table-odd-row,order-table-even-row"
-    		>
+    			rowClasses="order-table-odd-row,order-table-even-row"> 			
+    		
 
     			<h:column>
     			
@@ -232,6 +258,9 @@ action="#{AdministratorBean.logout}"/>
 					
     			</h:column>
     			
+    			
+    			
+    			
     			<h:column>
     			
     				<f:facet name="header">password</f:facet>
@@ -239,6 +268,15 @@ action="#{AdministratorBean.logout}"/>
     				
     				
     				<h:outputText value="#{po.password}"  />
+					
+    			</h:column>
+    			<h:column>
+    			
+    				<f:facet name="header">Email</f:facet>
+    				
+    				<h:inputText value="#{po.email}" size="10" rendered="#{po.editable}" />
+    				
+    				<h:outputText value="#{po.email}" rendered="#{not po.editable}" />
 					
     			</h:column>
     			<h:column>
@@ -261,13 +299,19 @@ action="#{AdministratorBean.logout}"/>
     			
     				<f:facet name="header">Organization</f:facet>
     				
+    				
+    				
+    				
     				<rich:inplaceSelect value="#{po.organization}"
-        defaultLabel="Click here to edit" rendered="#{po.editable}">
-        <f:selectItem itemValue="IBM" itemLabel="IBM" />
-        <f:selectItem itemValue="Red Hat" itemLabel="Red Hat" />
+            
+            showControls="true" rendered="#{po.editable}">
+           
+      
+            <f:selectItems value="#{AdministratorBean.editableOrganizations}" id="editOrg" />
+        </rich:inplaceSelect>
         
    
-    </rich:inplaceSelect>
+   
     				
     				<h:outputText value="#{po.organization}" rendered="#{not po.editable}" />
 					
@@ -280,15 +324,15 @@ action="#{AdministratorBean.logout}"/>
     				<h:panelGrid columns="3">
 <h:commandButton value="Edit User" action="#{AdministratorBean.editAction(po)}" rendered="#{not po.editable}" />
 <h:commandButton value="Delete User" action="#{AdministratorBean.deleteUser()}"/>
-<h:commandButton value="Change Password" show="popup5" >
- <rich:componentControl target="popup5" operation="show" />
-    </h:commandButton>
+<a4j:commandButton value="Change Password"  oncomplete="#{rich:component('popup5')}.show()"> </a4j:commandButton>
+
+ 
     <rich:popupPanel id="popup5" modal="false" autosized="true"
         resizeable="false">
        
             <h:panelGrid columns="2">
-            <h:outputText value="Password" /> <h:inputText value="nieco" ></h:inputText>
-            <h:outputText value="Re-type Password" /> <h:inputText value="ble" ></h:inputText>
+            <h:outputText value="Password" /> <h:inputText value="#{AdministratorBean.password}" ></h:inputText>
+            <h:outputText value="Re-type Password" /> <h:inputText value="#{AdministratorBean.validatePassword}" ></h:inputText>
              </h:panelGrid>
             <h:commandButton value="Change password" action="#{AdministratorBean.changePasswordForUser()}"  onclick="#{rich:component('popup5')}.hide(); return false;" />
            
@@ -320,26 +364,42 @@ action="#{AdministratorBean.logout}"/>
 
 </rich:tab>
 <rich:tab name="Change password">
-<h:panelGrid column="1">
-<h:inputText id="Password" value="#{password}" />
- 
+<h:panelGrid column="2">
+<f:event listener="#{AdministratorBean.validatePassword()}" type="postValidate" />
 
-<h:inputText id="sd" value="#{passwordValidate}" />
+
  
-<h:commandButton value="Change password" action="#{AdministratorBean.changePassword()}" />
+	<h:outputLabel for="password" value="Password : " />
+	<h:inputSecret id="password" value="#{AdministratorBean.password}" required="true"
+		requiredMessage="Please enter password" />
+	<h:message for="password" style="color: red;" />
+ 
+	<h:outputLabel for="confirmPassword" value="Confirm password : " />
+	<h:inputSecret id="confirmPassword" required="true"
+		requiredMessage="Please enter confirm password" />
+	<h:message for="confirmPassword" style="color: red;" />
+<h:commandButton action="thanks" value="register" />
+ 
 </h:panelGrid>
 </rich:tab>
 <rich:tab name ="Organization management">
 <h:panelGrid column="2">
-<h:outputText value="Organization" /><h:inputText id="Organization" value="#{organization}" />
-<h:outputText value="Re-type organization" /><h:inputText id="Organization2" value="#{reOrganization}" />
+<h:outputText value="Organization" /><h:inputText id="Organization" value="#{AdministratorBean.organization}" />
+
 </h:panelGrid>
-<!-- 
-<h:commandButton action="#{AdministratorBean.createOrganization()}" value="Create organization" />
+
+<h:commandButton action="#{AdministratorBean.createOrganization}" value="Create organization" />
+<a4j:region>
+        <h:form>
+            <a4j:poll id="poll" interval="50" enabled="true"
+                reRender="poll,tabOrg" />
+        </h:form>
+    </a4j:region>
 	<h:dataTable value="#{AdministratorBean.organizations}" var="org"
     			styleClass="order-table"
     			headerClass="order-table-header"
     			rowClasses="order-table-odd-row,order-table-even-row"
+    			id="tabOrg"
     		>
 
     			<h:column>
@@ -348,7 +408,7 @@ action="#{AdministratorBean.logout}"/>
     				
     			
     				
-    				<h:outputText value="#{org.id_organization}"  />
+    				<h:outputText value="#{org.idOrganization}"  />
 					
     			</h:column>
     			
@@ -357,7 +417,7 @@ action="#{AdministratorBean.logout}"/>
     			
     				<f:facet name="header">Name Of Organization</f:facet>
     				
-    				<rich:inplaceSelect value="#{org.name_of_organization}"
+    				<rich:inplaceSelect value="#{org.nameOfOrganization}"
         defaultLabel="Click here to edit" rendered="#{org.editable}">
         <f:selectItem itemValue="IBM" itemLabel="IBM" />
         <f:selectItem itemValue="Red Hat" itemLabel="Red Hat" />
@@ -365,7 +425,7 @@ action="#{AdministratorBean.logout}"/>
    
     </rich:inplaceSelect>
     				
-    				<h:outputText value="#{org.name_of_organization}" rendered="#{not org.editable}" />
+    				<h:outputText value="#{org.nameOfOrganization}" rendered="#{not org.editable}" />
 					
     			</h:column>
     		
@@ -375,7 +435,7 @@ action="#{AdministratorBean.logout}"/>
     				
     				<h:panelGrid columns="3">
 <h:commandButton value="Edit User" action="#{AdministratorBean.editActionOrganization(org)}" rendered="#{not org.editable}" />
-<h:commandButton value="Delete User" action="#{AdministratorBean.deleteOrganization()}"/>
+<h:commandButton value="Delete User" action="#{AdministratorBean.deleteOrganization}"/>
 
 </h:panelGrid>
     				
@@ -384,7 +444,7 @@ action="#{AdministratorBean.logout}"/>
     		</h:dataTable>
     		
     		<h:commandButton value="Save Changes" action="#{AdministratorBean.saveActionOrganization}" />
-    		 -->
+    		
 </rich:tab>
 </rich:tabPanel>
 </h:form>

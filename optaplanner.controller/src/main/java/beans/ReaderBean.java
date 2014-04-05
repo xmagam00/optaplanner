@@ -49,7 +49,7 @@ public class ReaderBean {
           
          
             for(int i=0; i<5; i++){
-                tasks.add(new TaskDef(String.valueOf(i),"name","CREATED","0","2:00","False"));
+                tasks.add(new TaskDef(String.valueOf(i),"name","CREATED","0","2:00","False","Martin"));
             }
 
            

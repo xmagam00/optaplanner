@@ -47,5 +47,5 @@
 
     <!-- Write your navigation rules here. You are encouraged to use CDI 
         for creating @Named managed beans. -->
-
+	
 </faces-config>

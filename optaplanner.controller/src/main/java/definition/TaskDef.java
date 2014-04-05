@@ -11,13 +11,15 @@ public class TaskDef implements Serializable{
 	    private String state;
 	    private String estimatedTime;
 	    private String ifPublic;
-	    public TaskDef(String id, String name, String state, String progress,String estimatedTime,String ifPublic) {
+	    private String owner;
+	    public TaskDef(String id, String name, String state, String progress,String estimatedTime,String ifPublic,String owner) {
 	        this.id = id;
 	        this.name = name;
 	        this.state = state;
 	        this.progress = progress;
 	        this.estimatedTime = estimatedTime;
 	        this.ifPublic = ifPublic;
+	        this.owner = owner;
 	    }
 	    public String getId() {
 	        return id;
@@ -73,5 +75,14 @@ public class TaskDef implements Serializable{
 	    	this.ifPublic = ifPublic;
 	    }
 	    
+	    public void setOwner(String owner)
+	    {
+	    	this.owner = owner;
+	    }
+	    
+	    public String getOwner()
+	    {
+	    	return owner;
+	    }
 	}
 

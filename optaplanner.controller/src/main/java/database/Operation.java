@@ -8,6 +8,9 @@ import javax.persistence.*;
 import database.Task;
 import database.User;
 import database.Organization;
+import definition.OrganizationDef;
+import definition.TaskDef;
+import definition.UserDef;
 /**
  * 
  * @author martin Maga
@@ -19,6 +22,8 @@ public class Operation {
 	private static final String PERSISTENCE_UNIT_NAME = "optaplanner";
 
 	private static EntityManagerFactory factory;
+	
+	@PersistenceContext
 	private EntityManager eManager;
 	
 	public Operation()
@@ -40,11 +45,11 @@ public class Operation {
 	 * @param xmlfile
 	 * @param urlflag
 	 * @return
-	 */
-	public void createTask(String username,String xmlfile,int ifPublic,long eta,int user,String name)
+	*/	
+	public void createTask(String username,String xmlfile,int ifPublic,long eta,int user,String name,int organization)
 	{   
 		User usertab = eManager.getReference(User.class,user);
-		
+		Organization orgtab = eManager.getReference(Organization.class,organization);
 		
 	 
 		  
@@ -56,10 +61,11 @@ public class Operation {
 		task.setETA(0);
 		task.setUser(usertab);
 		task.setName(name);
+		task.setOrganization(orgtab);
 		eManager.getTransaction().begin();
 		eManager.persist(task);
 		eManager.getTransaction().commit();
-		eManager.close();
+		
 			
         
 	}
@@ -85,13 +91,23 @@ public class Operation {
 		eManager.getTransaction().begin();
 		eManager.persist(user);
 		eManager.getTransaction().commit();
-		eManager.close();
+		
 		
 	  
 	  
 	}
 	
-	
+	/**
+	 * Method return all users in database
+	 * @return
+	 */
+	public List<UserDef> getAllUsers()
+	{
+		Query q = eManager.createQuery("SELECT  u.id_user,u.user_name, u.password,u.role, o.name_of_organization,u.email FROM User u,Organization o where u.organization=o.id_organization");
+ 		List<UserDef> todoList = q.getResultList();
+ 		 
+ 		 return todoList;
+	}
 	
 	
 
@@ -106,17 +122,16 @@ public class Operation {
  		boolean result = false;
  		
  		
- 		Query q = eManager.createQuery("select user_name from User where user_name='" + username + "'");
- 		 List<User> todoList = q.getResultList();
- 	    for (User passwordDatab : todoList) {
- 	      if (password.equals(passwordDatab.toString()))
- 	    		  {
- 	    		 result = true;
- 	    		  }
- 	    }
+ 		Query q = eManager.createQuery("select user_name from User where user_name='" + username +"'");
+ 		 Object pass = q.getSingleResult();
+ 		 if (pass.toString().equals(password))
+ 		 {
+ 			 result = true;
+ 		 }
+ 	  
        
 
-        eManager.close();
+        
  		
  	 return result;
  	}
@@ -136,7 +151,7 @@ public class Operation {
  			answer = true;
 
  		
- 		eManager.close();
+ 		
  		return answer;
  	}
  	
@@ -144,10 +159,11 @@ public class Operation {
      * Return all created task
      * @return
      */
- 	 List<Task>  selectAllTasks()
+ 	public List<TaskDef>  getAllTasks()
  	{
- 		Query q = eManager.createQuery("select * from Task");
- 		List<Task> todoList = q.getResultList();
+ 		Query q = eManager.createQuery("select t.id_task,t.name,t.state_of_task,t.progress_of_task,t.eta,t.ifpublic, u.user_name from Task t,User u where t.user = u.id_user");
+
+ 		List<TaskDef> todoList = q.getResultList();
  		 
  		 return todoList;
  	}
@@ -176,7 +192,7 @@ public class Operation {
  	{
  		
 		
- 		eManager.close();
+ 		
  	}
 	
 	/**
@@ -189,7 +205,7 @@ public class Operation {
  	{
 		String deleteQuery = "delete from Task where id_task=" + idTask;
 		eManager.createQuery(deleteQuery).executeUpdate();
-		eManager.close();
+		
 		
  		
  	}
@@ -208,7 +224,7 @@ public class Operation {
  		eManager.persist(user);
  	    eManager.getTransaction().commit();
 
- 	    eManager.close();
+ 	    
 		
  		
  	}
@@ -228,13 +244,26 @@ public class Operation {
  		eManager.persist(user);
  	    eManager.getTransaction().commit();
 
- 	    eManager.close();
+ 	    
  	  
 	
 	
 	
 	
  	}
+	
+	/**
+	 * Method return all organizations
+	 * @return
+	 */
+	public List<OrganizationDef> getOrganizations()
+	{	
+		Query query = eManager.createQuery("select id_organization,name_of_organization  from Organization");
+		List<OrganizationDef> todoList = query.getResultList();
+ 		 
+ 		 
+ 		 return todoList;
+	}
 	
 	/**
 	 * Method create organization
@@ -250,7 +279,7 @@ public class Operation {
 		eManager.getTransaction().begin();
 		eManager.persist(org);
 		eManager.getTransaction().commit();
-		eManager.close();
+		
 	}
 	
 	/**
@@ -265,7 +294,7 @@ public class Operation {
  		eManager.persist(org);
  	    eManager.getTransaction().commit();
 
- 	    eManager.close();
+ 	    
 		
 	}
 	
@@ -277,7 +306,7 @@ public class Operation {
 	{
 		String deleteQuery = "delete from Organization where name_of_organization='" + org +"'";
 		eManager.createQuery(deleteQuery).executeUpdate();
-		eManager.close();
+		
 		
 	}
 	
@@ -290,13 +319,13 @@ public class Operation {
 		String answer = null;
 		
  		Query q = eManager.createQuery("select role from User where user_name='" + username + "'");
- 		 List<User> todoList = q.getResultList();
- 		for (User role : todoList) {
+ 		 Object role= q.getSingleResult();
+ 		
  	 	    answer = role.toString(); 
- 	 	    }
+ 	 	
  		
  		
- 		eManager.close();
+ 		
  		return answer;
 		
 	}
@@ -312,7 +341,7 @@ public class Operation {
  	 	    }
  		
  		
- 		eManager.close();
+ 		
 		return answer;
 	}
 	
@@ -326,8 +355,9 @@ public class Operation {
  	 	    answer = Long.valueOf(id.toString()).longValue(); 
  	 	    }
  		
+		
  		
- 		eManager.close();
+ 		
 		return answer;
 	}
 	

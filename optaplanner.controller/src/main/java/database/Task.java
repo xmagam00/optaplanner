@@ -19,6 +19,10 @@ public class Task {
 	@JoinColumn(name="user",referencedColumnName="id_user")
 	private User user;
 	
+	@ManyToOne
+	@JoinColumn(name="organization",referencedColumnName="id_organization")
+	private Organization organization;
+	
 	public void setIdTask(long idTask)
 	{
 		this.id_task = idTask;
@@ -98,6 +102,16 @@ public class Task {
 	public void setUser(User user)
 	{
 		this.user = user;
+	}
+	
+	public Organization getOrganization()
+	{
+		return organization;
+	}
+	
+	public void setOrganization(Organization organization)
+	{
+		this.organization = organization;
 	}
 	
 	
