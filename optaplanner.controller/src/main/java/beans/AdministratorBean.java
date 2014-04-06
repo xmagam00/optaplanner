@@ -40,6 +40,7 @@ public class AdministratorBean {
     
 	public List<UserDef> users;
 	
+	private List<UserDef> oldUsers;
 	
 	public List<OrganizationDef> organizations;
 	
@@ -47,6 +48,7 @@ public class AdministratorBean {
 	
 	private String password;
 	
+	private String pass;
 	
 	private String passwordValidate;
 	
@@ -195,20 +197,78 @@ public class AdministratorBean {
 	
 	
 	public String saveAction() {
-		 
+		
 		//get all existing value but set "editable" to false 
 		for (UserDef order : users){
 			order.setEditable(false);
+			
+		
+			
 		}
+		updateUsers(this.oldUsers,this.users);
 		//return to current page
 		return null;
  
 	}
 	
+	/**
+	 * Method update information about users in database
+	 * @param user
+	 * @param userChanged
+	 */
+	private void updateUsers(List<UserDef> user, List<UserDef> userChanged)
+	{
+		int index = 0;
+		  for (UserDef element : user) {
+			    if ((element.getUsername()).equals(userChanged.get(index).getUsername()) 
+			    &((element.getEmail()).equals(userChanged.get(index).getEmail()))
+			    &((element.getRole()).equals(userChanged.get(index).getRole()))
+			    &((element.getOrganization()).equals(userChanged.get(index).getOrganization()))
+			    )
+			    {
+			    	
+			    	continue;
+			    }
+			    else
+			    {	
+			    	if (!(element.getUsername()).equals(userChanged.get(index).getUsername()))
+			    	{
+			    		op.changeUsername(element.getUsername(),userChanged.get(index).getUsername());
+			    	}
+			    	
+			    	if (!(element.getEmail()).equals(userChanged.get(index).getEmail()))
+			    	{
+			    		op.changeEmail(element.getUsername(),element.getEmail());
+			    	}
+			    	if (!(element.getOrganization()).equals(userChanged.get(index).getOrganization()))
+			    	{
+			    		op.changeOrganization(userChanged.get(index).getOrganization(),element.getOrganization());
+			    		
+			    		
+			    	}
+			    	if (!(element.getRole()).equals(userChanged.get(index).getRole()))
+			    	{
+			    		op.changeUserRole(element.getRole(),userChanged.get(index).getRole());
+			    	}
+			   
+			    	
+			    }
+			    index++;
+			}
+	}
 	
 	public String editAction(UserDef user) {
-		 
+		
+		 this.oldUsers = null;
+		 this.oldUsers = new ArrayList<UserDef>();
+		 int index = 0;
+		
 		user.setEditable(true);
+		for (UserDef u : users)
+		{
+			this.oldUsers.add(new UserDef(users.get(index).getId(),users.get(index).getUsername(),users.get(index).getPassword(),users.get(index).getRole(),users.get(index).getEmail(),users.get(index).getOrganization()));
+			index++;
+		}
 		return null;
 	}
 	
@@ -218,7 +278,7 @@ public class AdministratorBean {
 		//get all existing value but set "editable" to false 
 		for (UserDef order : users){
 			order.setEditable(false);
-		}
+					}
 		//return to current page
 		return null;
  
@@ -283,10 +343,26 @@ public class AdministratorBean {
 	    System.out.println(index);
 	}
 	
+	
+	
 	public void createUser()
 	{	
-		long org = op.getIdOrganization(this.organization);
-		op.createUser(this.user,this.password,this.role,this.email,org);
+		long org = op.getIdOrganization(getOrganization());
+		
+		op.createUser(getUsername(),getPass(),getRole(),getEmail(),org);
+		
+		
+		List<UserDef> user = new ArrayList<UserDef>();
+		 List<UserDef> resultsUsers = op.getAllUsers();
+        for (Object item : resultsUsers)
+        {	
+        	Object[] obj = (Object[]) item;  
+        	user.add(new UserDef(obj[0].toString(),obj[1].toString(),obj[2].toString(),obj[3].toString(),obj[4].toString(),obj[5].toString()));
+        	
+        }
+        this.users = user;
+		
+		
 	}
 	
 	public void editUser()
@@ -351,7 +427,7 @@ public class AdministratorBean {
 	
 	public void editOrganization()
 	{
-		op.editOrganization(this.organization,this.changeOrg);
+		op.changeOrganization(this.organization,this.changeOrg);
 	}
 	
 	public void deleteOrganization()
@@ -383,7 +459,17 @@ public class AdministratorBean {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public String getUsername()
+	{
+		return username;
+	}
+	
+	public void setUsername(String username)
+	{
+		this.username = username;
+	}
+	
 	public String getPassword()
 	{
 		return password;
@@ -394,12 +480,12 @@ public class AdministratorBean {
 		this.password = password;
 	}
 	
-	public String getValidatePassword()
+	public String getPasswordValidate()
 	{
 		return passwordValidate;
 	}
 	
-	public void setValidatePassword(String passwordValidate)
+	public void setPasswordValidate(String passwordValidate)
 	{
 		this.passwordValidate = passwordValidate;
 	}
@@ -456,5 +542,34 @@ public class AdministratorBean {
 		return editableOrganizations;
 	}
 	
-
+	public String getRole()
+	{
+		return role;
+	}
+	
+	public void setRole(String role)
+	{
+		this.role = role;
+	}
+	
+	public void setEmail(String email)
+	{
+		this.email = email;
+	}
+	
+	public String getEmail()
+	{
+		return email;
+	}
+	
+	public String getPass()
+	{
+		return this.pass;
+	}
+	
+	public void setPass(String password)
+	{
+		this.pass = password;
+	}
+	
 }

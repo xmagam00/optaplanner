@@ -1,7 +1,7 @@
   create table if not exists user (
 	id_user int(8) NOT NULL AUTO_INCREMENT,
-	user_name varchar(30),
-	password varchar(30),
+	user_name varchar(30) NOT NULL,
+	password varchar(30) NOT NULL,
 	role varchar(15) NOT NULL,
 	email varchar(50) NOT NULL,
 	organization int(8) NOT NULL,
@@ -10,20 +10,20 @@
 
 create table if not exists task (
 	id_task int(8) NOT NULL AUTO_INCREMENT,
-	xml_file varchar(60000),
+	xml_file varchar(60000) NOT NULL,
 	state_of_task varchar(50) NOT NULL,
 	progress_of_task int(20) NOT NULL,
-	ifpublic tinyint(1),
-	eta int(8),
-	name varchar(10),
-	user int(8),
-	organization int(8),
+	ifpublic tinyint(1) NOT NULL,
+	eta int(8) NOT NULL,
+	name varchar(10) NOT NULL,
+	user int(8)NOT NULL,
+	organization int(8) NOT NULL,
 	PRIMARY KEY(id_task)
 );
 
 create table if not exists organization(
 	id_organization int(8) NOT NULL AUTO_INCREMENT,
-	name_of_organization varchar(50),
+	name_of_organization varchar(50) NOT NULL,
 	PRIMARY KEY(id_organization)
 );
 

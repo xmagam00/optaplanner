@@ -243,14 +243,35 @@ public class Operation {
  		user.setRole(userRole);
  		eManager.persist(user);
  	    eManager.getTransaction().commit();
-
- 	    
- 	  
-	
-	
-	
-	
+ 		
  	}
+	
+	/**
+	 * Method change email for username
+	 * @param username
+	 * @param email
+	 */
+	public void changeEmail(String username,String email)
+	{
+		User user = eManager.find(User.class,username);
+ 		user.setEmail(email);
+ 		eManager.persist(user);
+ 	    eManager.getTransaction().commit();
+	}
+	
+	/**
+	 * Method set username as usernameNew in database
+	 * @param usernameOld
+	 * @param usernameNew
+	 */
+	public void changeUsername(String usernameOld,String usernameNew)
+	{
+		User user = eManager.find(User.class,usernameOld);
+ 		user.setUsername(usernameNew);
+ 		eManager.persist(user);
+ 	    eManager.getTransaction().commit();
+	}
+	
 	
 	/**
 	 * Method return all organizations
@@ -287,7 +308,7 @@ public class Operation {
 	 * @param oldOrg
 	 * @param newOrg
 	 */
-	public void editOrganization(String oldOrg, String newOrg)
+	public void changeOrganization(String oldOrg, String newOrg)
 	{
 		Organization org = eManager.find(Organization.class,oldOrg);
  		org.setNameOfOrganization(newOrg);
@@ -330,15 +351,20 @@ public class Operation {
 		
 	}
 	
+	
+	
+	
+	
+	
 	public long getIdOrganization(String organization)
 	{
 		long answer = 0;
 		
 		Query q = eManager.createQuery("select id_organization from Organization where name_of_organization='" + organization +"'");
-		List<Organization> todoList= q.getResultList();
-		for (Organization name : todoList) {
- 	 	    answer = Long.valueOf(name.toString()).longValue(); 
- 	 	    }
+		Object result = q.getSingleResult();
+		
+ 	 	    answer = Long.valueOf(result.toString()).longValue(); 
+ 	 	  
  		
  		
  		

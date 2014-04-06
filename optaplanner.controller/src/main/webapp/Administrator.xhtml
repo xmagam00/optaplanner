@@ -216,12 +216,21 @@ action="#{AdministratorBean.logout}"/>
 <rich:tab name="User Management">
 
 <rich:panel>
+
 <table>
-<tr><td>Username:</td><td> <h:inputText value="#{username}" /> </td></tr>
-<tr><td>Password:</td> <td><h:inputText value="#{password}" /> </td></tr>
-<tr><td>Re-type password:</td> <td><h:inputText value="#{passwordValidate}" /> </td></tr>
-<tr><td>Organization:</td><td> <h:inputText value="#{role}" /> </td></tr>
-<tr><td>Role:</td> <td> <rich:inplaceSelect value="Reader"
+<tr><td>Username:</td><td> <h:inputText value="#{AdministratorBean.username}" /> </td></tr>
+<tr><td>Password:</td> <td><h:inputText value="#{AdministratorBean.pass}" /> </td></tr>
+<tr><td>Re-type password:</td> <td><h:inputText value="#{AdministratorBean.passwordValidate}" /> </td></tr>
+<tr><td>Email:</td><td> <h:inputText value="#{AdministratorBean.email}" /> </td></tr>
+<tr><td>Organization:</td><td> <rich:inplaceSelect value="#{AdministratorBean.organization}"
+            
+            showControls="true" >
+           
+      
+            <f:selectItems value="#{AdministratorBean.editableOrganizations}" id="editOrg" />
+        </rich:inplaceSelect>
+         </td></tr>
+<tr><td>Role:</td> <td> <rich:inplaceSelect value="#{AdministratorBean.role}"
         defaultLabel="Click here to edit">
         <f:selectItem itemValue="Reader" itemLabel="Reader" />
         <f:selectItem itemValue="Administrator" itemLabel="Administrator" />
@@ -235,12 +244,13 @@ action="#{AdministratorBean.logout}"/>
 </rich:panel>
  <a4j:region id="ren" selfRendered="true" renderRegionOnly="true">
         <a4j:poll action="#{AdministratorBean.updateEditableOrganizations()}"
-             interval="100"
+             interval="300"
             ajaxSingle="true" limitToList="true"  bypassUpdates="true">
         </a4j:poll>
-        <a4j:poll reRender="editOrg"             interval="100"
+        <a4j:poll reRender="editOrg"             interval="300"
             ajaxSingle="true" limitToList="true"  bypassUpdates="true">
         </a4j:poll>
+         
     </a4j:region>
     		<h:dataTable value="#{AdministratorBean.user}" var="po"
     			styleClass="order-table"
@@ -332,7 +342,7 @@ action="#{AdministratorBean.logout}"/>
        
             <h:panelGrid columns="2">
             <h:outputText value="Password" /> <h:inputText value="#{AdministratorBean.password}" ></h:inputText>
-            <h:outputText value="Re-type Password" /> <h:inputText value="#{AdministratorBean.validatePassword}" ></h:inputText>
+            <h:outputText value="Re-type Password" /> <h:inputText value="#{AdministratorBean.passwordValidate}" ></h:inputText>
              </h:panelGrid>
             <h:commandButton value="Change password" action="#{AdministratorBean.changePasswordForUser()}"  onclick="#{rich:component('popup5')}.hide(); return false;" />
            
