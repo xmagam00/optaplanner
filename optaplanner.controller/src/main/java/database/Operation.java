@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.transaction.UserTransaction;
 
 import database.Task;
 import database.User;
@@ -23,7 +24,8 @@ public class Operation {
 
 	private static EntityManagerFactory factory;
 	
-	@PersistenceContext
+
+    @PersistenceContext
 	private EntityManager eManager;
 	
 	public Operation()
@@ -161,7 +163,7 @@ public class Operation {
      */
  	public List<TaskDef>  getAllTasks()
  	{
- 		Query q = eManager.createQuery("select t.id_task,t.name,t.state_of_task,t.progress_of_task,t.eta,t.ifpublic, u.user_name from Task t,User u where t.user = u.id_user");
+ 		Query q = eManager.createQuery("select t.id_task,t.name,t.state_of_task,t.progress_of_task,t.eta,t.ifpublic, u.user_name,t.xml_file from Task t,User u where t.user = u.id_user");
 
  		List<TaskDef> todoList = q.getResultList();
  		 
@@ -188,9 +190,13 @@ public class Operation {
 	 * @param username
 	 * @return true if operation succeed
 	 */
-	public void deleteUser(String username)
+	public void deleteUser(String username,long id)
  	{
- 		
+		User user = eManager.find(User.class, id);
+		 
+		  eManager.getTransaction().begin();
+		  eManager.remove(user);
+		  eManager.getTransaction().commit();
 		
  		
  	}
@@ -219,15 +225,25 @@ public class Operation {
 	 */
 	public void changePasswordForUser(String username,String password)
  	{	
-		User user = eManager.find(User.class,username);
- 		user.setPassword(password);
- 		eManager.persist(user);
- 	    eManager.getTransaction().commit();
-
- 	    
+		Query query = eManager.createQuery("select id_user from User where user_name='"+username +"'");
+		Object result = query.getSingleResult();
 		
- 		
- 	}
+		
+		User user = eManager.find(User.class,Long.parseLong(result.toString()));
+		eManager.getTransaction().begin();
+		user.setPassword(password);
+		eManager.getTransaction().commit();
+ 	 }
+	
+	public void changePassword(long id, String password)
+	{
+		
+		
+		User user = eManager.getReference(User.class,id);
+		eManager.getTransaction().begin();
+		user.setPassword(password);
+		eManager.getTransaction().commit();
+	}
 	
 	
 	
@@ -237,12 +253,14 @@ public class Operation {
 	 * @param userRole
 	 * @return
 	 */
-	public void changeUserRole(String username,String userRole)
+	public void changeUserRole(Long id,String userRole)
  	{
-		User user = eManager.find(User.class,username);
- 		user.setRole(userRole);
- 		eManager.persist(user);
- 	    eManager.getTransaction().commit();
+		  EntityTransaction entr = eManager.getTransaction();
+	      entr.begin();
+	      User user = eManager.find(User.class, id);
+	      user.setRole(userRole);
+	      
+	      entr.commit();
  		
  	}
 	
@@ -251,12 +269,15 @@ public class Operation {
 	 * @param username
 	 * @param email
 	 */
-	public void changeEmail(String username,String email)
+	public void changeEmail(Long id,String email)
 	{
-		User user = eManager.find(User.class,username);
- 		user.setEmail(email);
- 		eManager.persist(user);
- 	    eManager.getTransaction().commit();
+		
+		  EntityTransaction entr = eManager.getTransaction();
+	      entr.begin();
+	      User user = eManager.find(User.class, id);
+	      user.setEmail(email);
+	      
+	      entr.commit();
 	}
 	
 	/**
@@ -264,12 +285,32 @@ public class Operation {
 	 * @param usernameOld
 	 * @param usernameNew
 	 */
-	public void changeUsername(String usernameOld,String usernameNew)
+	public void changeUsername(Long usernameOld,String usernameNew)
+	{	
+		
+				
+		      EntityTransaction entr = eManager.getTransaction();
+		      entr.begin();
+		      User user = eManager.find(User.class, usernameOld);
+		      user.setUsername(usernameNew);
+		      
+		      entr.commit();
+		   
+		    
+	}
+	
+	public void changeOrganizationForUser(long id,String org)
 	{
-		User user = eManager.find(User.class,usernameOld);
- 		user.setUsername(usernameNew);
- 		eManager.persist(user);
- 	    eManager.getTransaction().commit();
+		  EntityTransaction entr = eManager.getTransaction();
+	      entr.begin();
+	      User user = eManager.find(User.class, id);
+	      Query query = eManager.createQuery("select id_organization from Organization where name_of_organization='"+ org +"'");
+	      Object result = query.getSingleResult();
+	      Organization organization = eManager.getReference(Organization.class,Long.parseLong(result.toString()));
+	      user.setOrganization(organization);
+	      
+	      entr.commit();
+ 		
 	}
 	
 	
@@ -308,13 +349,15 @@ public class Operation {
 	 * @param oldOrg
 	 * @param newOrg
 	 */
-	public void changeOrganization(String oldOrg, String newOrg)
+	public void changeOrganization(Long id, String newOrg)
 	{
-		Organization org = eManager.find(Organization.class,oldOrg);
- 		org.setNameOfOrganization(newOrg);
- 		eManager.persist(org);
- 	    eManager.getTransaction().commit();
 
+	      EntityTransaction entr = eManager.getTransaction();
+	      entr.begin();
+	      Organization org = eManager.find(Organization.class, id);
+	      org.setNameOfOrganization(newOrg);
+	      
+	      entr.commit();
  	    
 		
 	}
@@ -323,10 +366,12 @@ public class Operation {
 	 * Delete organization
 	 * @param org
 	 */
-	public void deleteOrganization(String org)
-	{
-		String deleteQuery = "delete from Organization where name_of_organization='" + org +"'";
-		eManager.createQuery(deleteQuery).executeUpdate();
+	public void deleteOrganization(Long org)
+	{			Organization organization = eManager.getReference(Organization.class, org);
+		 
+		  eManager.getTransaction().begin();
+		  eManager.remove(organization);
+		  eManager.getTransaction().commit();
 		
 		
 	}
@@ -376,10 +421,10 @@ public class Operation {
 		long answer = 0;
 		
 		Query q = eManager.createQuery("select id_user from User where user_name='" + username +"'");
-		List<User> todoList= q.getResultList();
-		for (User id : todoList) {
- 	 	    answer = Long.valueOf(id.toString()).longValue(); 
- 	 	    }
+		Object user= q.getSingleResult();
+		
+ 	 	    answer = Long.valueOf(user.toString()).longValue(); 
+ 	 	   
  		
 		
  		
@@ -387,6 +432,15 @@ public class Operation {
 		return answer;
 	}
 	
+	public void changeNameOfTask(long idTask, String newName)
+	{
+		EntityTransaction entr = eManager.getTransaction();
+	      entr.begin();
+	      Task task = eManager.getReference(Task.class, idTask);
+	     task.setName(newName);
+	      
+	      entr.commit();
+	}
 }
  	
 

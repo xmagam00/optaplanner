@@ -38,30 +38,7 @@ public class TestDatabase {
 			    	
 			    	continue;
 			    }
-			    else
-			    {	
-			    	if (!(element.getUsername()).equals(userChanged.get(index).getUsername()))
-			    	{
-			    		op.changeUsername(element.getUsername(),userChanged.get(index).getUsername());
-			    	}
-			    	
-			    	if (!(element.getEmail()).equals(userChanged.get(index).getEmail()))
-			    	{
-			    		op.changeEmail(element.getUsername(),element.getEmail());
-			    	}
-			    	if (!(element.getOrganization()).equals(userChanged.get(index).getOrganization()))
-			    	{
-			    		op.changeOrganization(userChanged.get(index).getOrganization(),element.getOrganization());
-			    		
-			    		
-			    	}
-			    	if (!(element.getRole()).equals(userChanged.get(index).getRole()))
-			    	{
-			    		op.changeUserRole(element.getRole(),userChanged.get(index).getRole());
-			    	}
-			   
-			    	
-			    }
+			  
 			    index++;
 			}
 		  

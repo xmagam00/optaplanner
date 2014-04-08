@@ -36,17 +36,17 @@ action="#{AdministratorBean.logout}"/>
 <h:outputText value="Name of task:" /><h:inputText value="task" />
 <h:commandButton value="Create task" action="#{AdministratorBean.createTask()}" />
 <h:outputText value="Upload task" /><rich:fileUpload uploadData="#{data}" fileUploadListener="#{AdministratorBean.upload}" immediateUpload="true"/>
-
+<h:inputTextarea value="caucau" column="500" row="500" />																																												
 </h:panelGrid>
  <a4j:region id="pollRegion" selfRendered="true" renderRegionOnly="true">
         <a4j:poll action="#{AdministratorBean.updateTasks()}"
-             interval="100"
-            ajaxSingle="true" limitToList="true"  bypassUpdates="true">
+             interval="1000"
+            ajaxSingle="true" limitToList="true"  >
         </a4j:poll>
-        <a4j:poll reRender="userTab"             interval="100"
-            ajaxSingle="true" limitToList="true"  bypassUpdates="true">
+        <a4j:poll reRender="userTab"             interval="1000"
+            ajaxSingle="true" limitToList="true"  >
         </a4j:poll>
-    </a4j:region>
+    </a4j:region>																																																																																																																																																																											
   
 <h:dataTable value="#{AdministratorBean.task}" var="o"
       styleClass="todo" headerClass="todoheader"
@@ -59,16 +59,15 @@ action="#{AdministratorBean.logout}"/>
        
         </f:facet>
         <h:outputText value="#{o.id}"></h:outputText>
+        
       </h:column>
       <h:column>
 
-        <f:facet name="header">
-          <h:column>
-            <h:outputText value="Name"></h:outputText>
-          </h:column>
-        </f:facet>
-        <h:outputText value="#{o.name}"></h:outputText>
-
+       <f:facet name="header">Name Of Task</f:facet>
+    				
+    				<h:inputText value="#{o.name}" size="10" rendered="#{o.editable}" />
+    				
+    				<h:outputText value="#{o.name}" rendered="#{not o.editable}" />
       </h:column>
 
       <h:column>
@@ -128,8 +127,9 @@ action="#{AdministratorBean.logout}"/>
             <h:outputText value="Actions"></h:outputText>
           </h:column>
         </f:facet>
-        <h:panelGrid columns="6">
-        <a4j:commandButton value="Edit Task"  oncomplete="#{rich:component('popup55')}.show()"> </a4j:commandButton>
+        <h:panelGrid columns="7">
+        <h:commandButton value="Edit Name of Task" action="#{AdministratorBean.editActionTask(o)}" />
+        <a4j:commandButton value="Edit XML FILE"  oncomplete="#{rich:component('popup55')}.show()"> </a4j:commandButton>
           <h:commandButton value="stop task" action="#{AdministratorBean.stopTask()}"/>
            <h:commandButton value="run task" action="#{AdministratorBean.runTask()}" />   
           <h:commandButton value="UnPublish Task" action="#{PlannerBean.unpublishTask()}">
@@ -184,24 +184,26 @@ action="#{AdministratorBean.logout}"/>
                
         
  
-  
+   
     <rich:popupPanel id="popup55" modal="false" autosized="true"
         resizeable="false">
+        
         <h:panelGrid columns="1">
-            <h:outputText value="Task has been unpublished." />
-     		
+         
+            <h:inputTextarea row="100" col="100" value="{o.name}" />
+     	<a4j:commandButton action="AdministratorBean.editXmlFile()" oncomplete="#{rich:component('popup55')}.hide(); return false;"/>	
        
             <h:outputLink value="#"
                 onclick="#{rich:component('popup55')}.hide(); return false;">
                     Close Window
                 </h:outputLink>
-      
+    
        
     </h:panelGrid>   
-    
+
     </rich:popupPanel>      
                
-               
+          
                
                
                
@@ -212,6 +214,7 @@ action="#{AdministratorBean.logout}"/>
       </h:column>
 
     </h:dataTable>
+    <h:commandButton value="Save Name" action="#{AdministratorBean.saveActionTask()}" />
 </rich:tab>
 <rich:tab name="User Management">
 
@@ -242,20 +245,21 @@ action="#{AdministratorBean.logout}"/>
 
 <h:commandButton value="Create User" action="#{AdministratorBean.createUser()}"/>
 </rich:panel>
- <a4j:region id="ren" selfRendered="true" renderRegionOnly="true">
+ <a4j:region id="ren" selfRendered="true" >
         <a4j:poll action="#{AdministratorBean.updateEditableOrganizations()}"
              interval="300"
             ajaxSingle="true" limitToList="true"  bypassUpdates="true">
         </a4j:poll>
-        <a4j:poll reRender="editOrg"             interval="300"
-            ajaxSingle="true" limitToList="true"  bypassUpdates="true">
+        <a4j:poll reRender="editUSER"            interval="100"
+          >
         </a4j:poll>
-         
+          
     </a4j:region>
     		<h:dataTable value="#{AdministratorBean.user}" var="po"
     			styleClass="order-table"
     			headerClass="order-table-header"
-    			rowClasses="order-table-odd-row,order-table-even-row"> 			
+    			rowClasses="order-table-odd-row,order-table-even-row"
+    			id="editUSER"> 			
     		
 
     			<h:column>
@@ -333,18 +337,18 @@ action="#{AdministratorBean.logout}"/>
     				
     				<h:panelGrid columns="3">
 <h:commandButton value="Edit User" action="#{AdministratorBean.editAction(po)}" rendered="#{not po.editable}" />
-<h:commandButton value="Delete User" action="#{AdministratorBean.deleteUser()}"/>
-<a4j:commandButton value="Change Password"  oncomplete="#{rich:component('popup5')}.show()"> </a4j:commandButton>
+<h:commandButton value="Delete User" action="#{AdministratorBean.deleteUser(po)}"/>
+<a4j:commandButton value="Change Password"  oncomplete="#{rich:component('popup5')}.show()" action="#{AdministratorBean.updateUser(po)}"> </a4j:commandButton>
 
- 
+
     <rich:popupPanel id="popup5" modal="false" autosized="true"
         resizeable="false">
-       
+       <h:form>
             <h:panelGrid columns="2">
-            <h:outputText value="Password" /> <h:inputText value="#{AdministratorBean.password}" ></h:inputText>
+            <h:outputText value="Password" /> <h:inputText value="#{AdministratorBean.pass}" ></h:inputText>
             <h:outputText value="Re-type Password" /> <h:inputText value="#{AdministratorBean.passwordValidate}" ></h:inputText>
              </h:panelGrid>
-            <h:commandButton value="Change password" action="#{AdministratorBean.changePasswordForUser()}"  onclick="#{rich:component('popup5')}.hide(); return false;" />
+           <a4j:commandButton value="Change password" action="#{AdministratorBean.changePassword()}" oncomplete="#{rich:component('popup5')}.hide()"/>
            
        
             <h:outputLink value="#"
@@ -354,10 +358,11 @@ action="#{AdministratorBean.logout}"/>
                 
        
        
-       
+       </h:form>
        
        
     </rich:popupPanel>
+     
 </h:panelGrid>
     				
     			</h:column>
@@ -375,20 +380,20 @@ action="#{AdministratorBean.logout}"/>
 </rich:tab>
 <rich:tab name="Change password">
 <h:panelGrid column="2">
-<f:event listener="#{AdministratorBean.validatePassword()}" type="postValidate" />
+
 
 
  
 	<h:outputLabel for="password" value="Password : " />
-	<h:inputSecret id="password" value="#{AdministratorBean.password}" required="true"
-		requiredMessage="Please enter password" />
-	<h:message for="password" style="color: red;" />
+	<h:inputSecret id="password" value="#{AdministratorBean.password}" 
+	 />
+	
  
 	<h:outputLabel for="confirmPassword" value="Confirm password : " />
-	<h:inputSecret id="confirmPassword" required="true"
-		requiredMessage="Please enter confirm password" />
-	<h:message for="confirmPassword" style="color: red;" />
-<h:commandButton action="thanks" value="register" />
+	<h:inputSecret 
+		 value="#{AdministratorBean.passwordValidate}"/>
+	
+<h:commandButton action="#{AdministratorBean.validatePassword()}" value="Change password" />
  
 </h:panelGrid>
 </rich:tab>
@@ -427,13 +432,10 @@ action="#{AdministratorBean.logout}"/>
     			
     				<f:facet name="header">Name Of Organization</f:facet>
     				
-    				<rich:inplaceSelect value="#{org.nameOfOrganization}"
-        defaultLabel="Click here to edit" rendered="#{org.editable}">
-        <f:selectItem itemValue="IBM" itemLabel="IBM" />
-        <f:selectItem itemValue="Red Hat" itemLabel="Red Hat" />
+    				<h:inputText value="#{org.nameOfOrganization}" rendered="#{org.editable}" />
         
    
-    </rich:inplaceSelect>
+
     				
     				<h:outputText value="#{org.nameOfOrganization}" rendered="#{not org.editable}" />
 					
@@ -444,8 +446,8 @@ action="#{AdministratorBean.logout}"/>
     				<f:facet name="header">Action</f:facet>
     				
     				<h:panelGrid columns="3">
-<h:commandButton value="Edit User" action="#{AdministratorBean.editActionOrganization(org)}" rendered="#{not org.editable}" />
-<h:commandButton value="Delete User" action="#{AdministratorBean.deleteOrganization}"/>
+<h:commandButton value="Edit Organization" action="#{AdministratorBean.editActionOrganization(org)}" rendered="#{not org.editable}" />
+<h:commandButton value="Delete Organization" action="#{AdministratorBean.deleteOrganization(org)}"/>
 
 </h:panelGrid>
     				

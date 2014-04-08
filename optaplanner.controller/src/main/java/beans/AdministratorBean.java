@@ -37,12 +37,14 @@ public class AdministratorBean {
 	private String fileContent;
 
 	public List<TaskDef> task;
+	private List<TaskDef> oldTask;
     
 	public List<UserDef> users;
 	
 	private List<UserDef> oldUsers;
 	
 	public List<OrganizationDef> organizations;
+	private List<OrganizationDef> oldOrganizations;
 	
 	public String email;
 	
@@ -52,11 +54,10 @@ public class AdministratorBean {
 	
 	private String passwordValidate;
 	
+	private long idUser;
+
 	
-	public String data;
-	
-	
-	public HtmlDataTable table;
+
 	
 	
 	public String username;
@@ -73,7 +74,7 @@ public class AdministratorBean {
 	
 	private String user;
 	
-	HttpServletRequest request;
+	
 	
 	Operation op;
 	
@@ -102,7 +103,7 @@ public class AdministratorBean {
             for (Object item : resultsTask)
             {	
             	Object[] obj = (Object[]) item;  
-            	task.add(new TaskDef(obj[0].toString(),obj[1].toString(),obj[2].toString(),obj[3].toString(),obj[4].toString(),convertIfPublic(obj[5].toString()),obj[6].toString()));
+            	task.add(new TaskDef(obj[0].toString(),obj[1].toString(),obj[2].toString(),obj[3].toString(),obj[4].toString(),convertIfPublic(obj[5].toString()),obj[6].toString(),obj[7].toString()));
             	
             }
             
@@ -142,11 +143,13 @@ public class AdministratorBean {
         for (Object item : resultsOrg)
         {	
         	Object[] obj = (Object[]) item;  
-        	org.add(new TaskDef(obj[0].toString(),obj[1].toString(),obj[2].toString(),obj[3].toString(),obj[4].toString(),convertIfPublic(obj[5].toString()),obj[6].toString()));
+        	org.add(new TaskDef(obj[0].toString(),obj[1].toString(),obj[2].toString(),obj[3].toString(),obj[4].toString(),convertIfPublic(obj[5].toString()),obj[6].toString(),obj[7].toString()));
         	
         }
         this.task = org;
 	}
+	
+	
 	
 	public  void setTasks(List<TaskDef> tasks)
 	{
@@ -202,14 +205,62 @@ public class AdministratorBean {
 		for (UserDef order : users){
 			order.setEditable(false);
 			
-		
+			
 			
 		}
 		updateUsers(this.oldUsers,this.users);
+		List<UserDef> user = new ArrayList<UserDef>();
+		 List<UserDef> resultsUsers = op.getAllUsers();
+       for (Object item : resultsUsers)
+       {	
+       	Object[] obj = (Object[]) item;  
+       	user.add(new UserDef(obj[0].toString(),obj[1].toString(),obj[2].toString(),obj[3].toString(),obj[4].toString(),obj[5].toString()));
+       	
+       }
+       this.users = user;
 		//return to current page
 		return null;
  
 	}
+	
+	
+	public void updateUser(UserDef user)
+	{
+		setIdUser(Long.parseLong(user.getId()));
+	}
+	
+	
+	private void updateOrganizations(List<OrganizationDef> org, List<OrganizationDef> orgChanged)
+	{
+		int index = 0;
+		  for (OrganizationDef element : org) 
+		  {
+			    if ((org.get(index).getNameOfOrganization()).equals(orgChanged.get(index).getNameOfOrganization())) 
+			    
+			    
+			    {
+			    	
+			    	
+			    }
+			    else
+			    {	
+			    	if (!(org.get(index).getNameOfOrganization()).equals(orgChanged.get(index).getNameOfOrganization()))
+			    	{	
+			    		
+			    		op.changeOrganization(Long.parseLong(org.get(index).getIdOrganization()),org.get(index).getNameOfOrganization());
+			    	}
+			   
+			    	
+			    }
+				//System.out.println(org.get(index).getNameOfOrganization());
+				//System.out.println(orgChanged.get(index).getNameOfOrganization());
+			    index++;
+			}
+	
+		
+		
+	}
+	
 	
 	/**
 	 * Method update information about users in database
@@ -220,42 +271,108 @@ public class AdministratorBean {
 	{
 		int index = 0;
 		  for (UserDef element : user) {
-			    if ((element.getUsername()).equals(userChanged.get(index).getUsername()) 
-			    &((element.getEmail()).equals(userChanged.get(index).getEmail()))
-			    &((element.getRole()).equals(userChanged.get(index).getRole()))
-			    &((element.getOrganization()).equals(userChanged.get(index).getOrganization()))
+			    if ((user.get(index).getUsername()).equals(userChanged.get(index).getUsername()) 
+			    &((user.get(index).getEmail()).equals(userChanged.get(index).getEmail()))
+			    &((user.get(index).getRole()).equals(userChanged.get(index).getRole()))
+			    &((user.get(index).getOrganization()).equals(userChanged.get(index).getOrganization()))
 			    )
 			    {
 			    	
-			    	continue;
+			    	
 			    }
 			    else
 			    {	
-			    	if (!(element.getUsername()).equals(userChanged.get(index).getUsername()))
-			    	{
-			    		op.changeUsername(element.getUsername(),userChanged.get(index).getUsername());
+			    	if (!(user.get(index).getUsername()).equals(userChanged.get(index).getUsername()))
+			    	{	
+			    		
+			    		op.changeUsername(Long.parseLong(user.get(index).getId()),userChanged.get(index).getUsername());
 			    	}
 			    	
-			    	if (!(element.getEmail()).equals(userChanged.get(index).getEmail()))
-			    	{
-			    		op.changeEmail(element.getUsername(),element.getEmail());
+			    	if (!(user.get(index).getEmail()).equals(userChanged.get(index).getEmail()))
+			    	{	
+			    	
+			    		op.changeEmail(Long.parseLong(user.get(index).getId()),element.getEmail());
 			    	}
-			    	if (!(element.getOrganization()).equals(userChanged.get(index).getOrganization()))
-			    	{
-			    		op.changeOrganization(userChanged.get(index).getOrganization(),element.getOrganization());
+			    	if (!(user.get(index).getOrganization()).equals(userChanged.get(index).getOrganization()))
+			    	{	
+			    		
+			    		op.changeOrganizationForUser(Long.parseLong(user.get(index).getId()),userChanged.get(index).getOrganization());
 			    		
 			    		
 			    	}
-			    	if (!(element.getRole()).equals(userChanged.get(index).getRole()))
-			    	{
-			    		op.changeUserRole(element.getRole(),userChanged.get(index).getRole());
+			    	if (!(user.get(index).getRole()).equals(userChanged.get(index).getRole()))
+			    	{		
+			    		op.changeUserRole(Long.parseLong(user.get(index).getId()),userChanged.get(index).getRole());
+			    	}
+			 
+			   
+			
+			    	
+			    }
+			   
+			    index++;
+			}
+	}
+	
+	public String editActionTask(TaskDef task)
+	{	
+		 this.oldTask = null;
+		 this.oldTask = new ArrayList<TaskDef>();
+		 int index = 0;
+		task.setEditable(true);
+		for (TaskDef u : this.task)
+		{
+			this.oldTask.add(new TaskDef(this.task.get(index).getId(),this.task.get(index).getName(),this.task.get(index).getState(),this.task.get(index).getProgress(),this.task.get(index).getEstimatedTime(),this.task.get(index).getIfPublic(),this.task.get(index).getOwner(),this.task.get(index).getXmlFile()));
+			
+			index++;
+		
+		}
+		
+		
+		return null;
+	}
+	
+	public String saveActionTask()
+	{
+		for (TaskDef order : this.task)
+		{
+			order.setEditable(false);
+					}
+		updateTaskName(this.task,this.oldTask);
+		return null;
+	}
+	
+	private void updateTaskName(List<TaskDef> task,List<TaskDef> changedTask)
+	{
+		int index = 0;
+		  for (TaskDef element : task) 
+		  {
+			    if ((task.get(index).getName()).equals(changedTask.get(index).getName())) 
+			    
+			    
+			    {
+			    	
+			    	
+			    }
+			    else
+			    {	
+			    	if (!(task.get(index).getName()).equals(changedTask.get(index).getName()))
+			    	{	
+			    		
+			    		System.out.println(task.get(index).getName());
+			    		System.out.println(changedTask.get(index).getName());
+			    		//op.changeNameOfTask(Long.parseLong(org.get(index).getIdOrganization()),org.get(index).getNameOfOrganization());
 			    	}
 			   
 			    	
 			    }
+				System.out.println(task.get(index).getName());
+				System.out.println(changedTask.get(index).getName());
 			    index++;
 			}
+	
 	}
+	
 	
 	public String editAction(UserDef user) {
 		
@@ -266,81 +383,91 @@ public class AdministratorBean {
 		user.setEditable(true);
 		for (UserDef u : users)
 		{
-			this.oldUsers.add(new UserDef(users.get(index).getId(),users.get(index).getUsername(),users.get(index).getPassword(),users.get(index).getRole(),users.get(index).getEmail(),users.get(index).getOrganization()));
+			this.oldUsers.add(new UserDef(users.get(index).getId(),users.get(index).getUsername(),users.get(index).getPassword(),users.get(index).getRole(),users.get(index).getOrganization(),users.get(index).getEmail()));
+			
 			index++;
+		
 		}
+		
 		return null;
 	}
+	
+	
+	public void deleteUser(UserDef user)
+	{
+		op.deleteUser(user.getUsername(),Long.parseLong(user.getId()));
+		List<UserDef> userList = new ArrayList<UserDef>();
+		 List<UserDef> resultsUsers = op.getAllUsers();
+      for (Object item : resultsUsers)
+      {	
+      	Object[] obj = (Object[]) item;  
+      	userList.add(new UserDef(obj[0].toString(),obj[1].toString(),obj[2].toString(),obj[3].toString(),obj[4].toString(),obj[5].toString()));
+      	
+      }
+      this.users = userList;
+	}
+	
+	
 	
 	
 	public String saveActionOrganization() {
 		 
 		//get all existing value but set "editable" to false 
-		for (UserDef order : users){
+		for (OrganizationDef order : organizations){
 			order.setEditable(false);
 					}
+		updateOrganizations(this.organizations,this.oldOrganizations);
+		
 		//return to current page
 		return null;
  
 	}
 	
 	
-	public String editActionOrganization(UserDef user) {
-		 
-		user.setEditable(true);
+	public String editActionOrganization(OrganizationDef org) {
+		 int index = 0;
+		org.setEditable(true);
+		 this.oldOrganizations = null;
+		 this.oldOrganizations = new ArrayList<OrganizationDef>();
+		for (OrganizationDef u : this.organizations)
+		{
+			this.oldOrganizations.add(new OrganizationDef(organizations.get(index).getIdOrganization(),organizations.get(index).getNameOfOrganization()));
+			
+			index++;
+		
+		}
+		
 		return null;
 	}
 	
 	
 	
 	public void changePasswordForUser()
-	{
-		op.changePasswordForUser(this.username,this.password);
+	{	
+		//op.(this.idUser,this.password);
+		
+	//	op.changePassword(get,this.password);
 	}
 	
 	
 	
 	public void publishTask(ActionEvent evt)
 	{
-		   // We get the table object
-	    HtmlDataTable table = getParentDatatable((UIComponent) evt.getSource());
-	    // We get the object on the selected line.
-	    Object o = table.getRowData();
-	    // Eventually, if you need the index of the line, simply do:
-	    int index = table.getRowIndex();
-	    System.out.println(index);
+		
 	}
 	
 	public void runTask(ActionEvent evt)
 	{
-		   // We get the table object
-	    HtmlDataTable table = getParentDatatable((UIComponent) evt.getSource());
-	    // We get the object on the selected line.
-	    Object o = table.getRowData();
-	    // Eventually, if you need the index of the line, simply do:
-	    int index = table.getRowIndex();
-	    System.out.println(index);
+		
 	}
 	
 	public void stopTask(ActionEvent evt)
 	{
-		   // We get the table object
-	    HtmlDataTable table = getParentDatatable((UIComponent) evt.getSource());
-	    // We get the object on the selected line.
-	    Object o = table.getRowData();
-	    // Eventually, if you need the index of the line, simply do:
-	    int index = table.getRowIndex();
-	    System.out.println(index);
+		
 	}
 	
 	public void editTask(ActionEvent evt) {
-	    // We get the table object
-	    HtmlDataTable table = getParentDatatable((UIComponent) evt.getSource());
-	    // We get the object on the selected line.
-	    Object o = table.getRowData();
-	    // Eventually, if you need the index of the line, simply do:
-	    int index = table.getRowIndex();
-	    System.out.println(index);
+	  
 	}
 	
 	
@@ -350,7 +477,9 @@ public class AdministratorBean {
 		long org = op.getIdOrganization(getOrganization());
 		
 		op.createUser(getUsername(),getPass(),getRole(),getEmail(),org);
-		
+		setUsername("");
+		setPass("");
+		setEmail("");
 		
 		List<UserDef> user = new ArrayList<UserDef>();
 		 List<UserDef> resultsUsers = op.getAllUsers();
@@ -370,10 +499,7 @@ public class AdministratorBean {
 		long id = op.getIdUser(this.username);
 	}
 	
-	public void deleteUser()
-	{
-		
-	}
+	
 	
 	public void createTask()
 	{
@@ -387,16 +513,26 @@ public class AdministratorBean {
 	
 	public void deleteTask()
 	{
-		
+	
 	}
 	
 	public void changePassword()
 	{
-		if (this.password.equals(this.passwordValidate))
-				{
-			System.out.println("ZHODA");
-			
-				}
+		
+
+	op.changePassword(getIdUser(),getPass());	
+	setPass("");
+	setPasswordValidate("");
+	List<UserDef> user = new ArrayList<UserDef>();
+	 List<UserDef> resultsUsers = op.getAllUsers();
+   for (Object item : resultsUsers)
+   {	
+   	Object[] obj = (Object[]) item;  
+   
+   	user.add(new UserDef(obj[0].toString(),obj[1].toString(),obj[2].toString(),obj[3].toString(),obj[4].toString(),obj[5].toString()));
+   	
+   }
+   this.users = user;
 	}
 	
 	public void upload()
@@ -425,28 +561,16 @@ public class AdministratorBean {
          this.organizations = org;
 	}
 	
-	public void editOrganization()
-	{
-		op.changeOrganization(this.organization,this.changeOrg);
-	}
-	
-	public void deleteOrganization()
-	{
-		op.deleteOrganization(this.organization);
-	}
 	
 	
-	// Method to get the HtmlDataTable.
-	private HtmlDataTable getParentDatatable(UIComponent compo) {
-	    if (compo == null) {
-	        return null;
-	    }
-	    if (compo instanceof HtmlDataTable) {
-	        return (HtmlDataTable) compo;
-	    }
-	    return getParentDatatable(compo.getParent());
+	public void deleteOrganization(OrganizationDef org)
+	{   
+	
+		op.deleteOrganization(Long.parseLong(org.getIdOrganization()));
+		updateOrganization();
 	}
-
+	
+	
 	public void logout() {
 		FacesContext.getCurrentInstance().getExternalContext()
 				.invalidateSession();
@@ -490,38 +614,12 @@ public class AdministratorBean {
 		this.passwordValidate = passwordValidate;
 	}
 	
-	public void validatePassword(ComponentSystemEvent event) {
-		 
-		  FacesContext fc = FacesContext.getCurrentInstance();
+	public void validatePassword()
+	{
+		op.changePasswordForUser("martin",this.password);
 	 
-		  UIComponent components = event.getComponent();
 	 
-		  // get password
-		  UIInput uiInputPassword = (UIInput) components.findComponent("Password");
-		  String password = uiInputPassword.getLocalValue() == null ? ""
-			: uiInputPassword.getLocalValue().toString();
-		  String passwordId = uiInputPassword.getClientId();
-	 
-		  // get confirm password
-		  UIInput uiInputConfirmPassword = (UIInput) components.findComponent("confirmPassword");
-		  String confirmPassword = uiInputConfirmPassword.getLocalValue() == null ? ""
-			: uiInputConfirmPassword.getLocalValue().toString();
-	 
-		  // Let required="true" do its job.
-		  if (password.isEmpty() || confirmPassword.isEmpty()) {
-			return;
-		  }
-	 
-		  if (!password.equals(confirmPassword)) {
-	 
-			FacesMessage msg = new FacesMessage("Password must match confirm password");
-			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-			fc.addMessage(passwordId, msg);
-			fc.renderResponse();
-	 
-		  }
-	 
-		}
+	}
 	public String getOrganization()
 	{
 		return organization;
@@ -571,5 +669,16 @@ public class AdministratorBean {
 	{
 		this.pass = password;
 	}
+	
+	public void setIdUser(long id)
+	{
+		this.idUser = id;
+	}
+	
+	public long getIdUser()
+	{
+		return idUser;
+	}
+
 	
 }
