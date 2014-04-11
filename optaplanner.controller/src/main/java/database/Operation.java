@@ -48,27 +48,67 @@ public class Operation {
 	 * @param urlflag
 	 * @return
 	*/	
-	public void createTask(String username,String xmlfile,int ifPublic,long eta,int user,String name,int organization)
+	public void createTask(String name,String xmlfile,String username)
 	{   
-		User usertab = eManager.getReference(User.class,user);
-		Organization orgtab = eManager.getReference(Organization.class,organization);
+		Query query = eManager.createQuery("select id_user from User where user_name='"+username+"'");
+		Object idUser = query.getSingleResult();
+		
+		User usertab = eManager.getReference(User.class,Long.parseLong(idUser.toString()));
+		
+		query = eManager.createQuery("select organization from User where user_name='" + username +"'");
+		Object idOrganization = query.getSingleResult();
+		Organization org = (Organization)(idOrganization);
+		
+		Organization orgtab = eManager.getReference(Organization.class,org.getIdOrganization());
 		
 	 
-		  
+		eManager.getTransaction().begin();
 		Task task = new Task();
 		task.setXmlFile(xmlfile);
-		task.setStateOfTask("CREATED");
+		task.setStateOfTask("NEW");
 		task.setIfPublic(0);
 		task.setProgress(0);
 		task.setETA(0);
 		task.setUser(usertab);
 		task.setName(name);
 		task.setOrganization(orgtab);
-		eManager.getTransaction().begin();
+		
 		eManager.persist(task);
 		eManager.getTransaction().commit();
 		
-			
+		
+        
+	}
+	
+	public void createTaskState(String name,String xmlfile,String username)
+	{   
+		Query query = eManager.createQuery("select id_user from User where user_name='"+username+"'");
+		Object idUser = query.getSingleResult();
+		
+		User usertab = eManager.getReference(User.class,Long.parseLong(idUser.toString()));
+		
+		query = eManager.createQuery("select organization from User where user_name='" + username +"'");
+		Object idOrganization = query.getSingleResult();
+		Organization org = (Organization)(idOrganization);
+		
+		Organization orgtab = eManager.getReference(Organization.class,org.getIdOrganization());
+		
+	 
+		eManager.getTransaction().begin();
+		Task task = new Task();
+		task.setXmlFile(xmlfile);
+		task.setStateOfTask("MODIFIED");
+		task.setIfPublic(0);
+		task.setProgress(0);
+		task.setETA(0);
+		task.setUser(usertab);
+		task.setName(name);
+		task.setOrganization(orgtab);
+		
+		eManager.persist(task);
+		eManager.getTransaction().commit();
+		
+		
         
 	}
 	
@@ -207,10 +247,13 @@ public class Operation {
 	 * @param username
 	 * @return
 	 */
-	public void deleteTask(int idTask)
- 	{
-		String deleteQuery = "delete from Task where id_task=" + idTask;
-		eManager.createQuery(deleteQuery).executeUpdate();
+	public void deleteTask(long idTask)
+ 	{	
+		Task task = eManager.find(Task.class, idTask);
+		 
+		  eManager.getTransaction().begin();
+		  eManager.remove(task);
+		  eManager.getTransaction().commit();
 		
 		
  		
@@ -432,6 +475,18 @@ public class Operation {
 		return answer;
 	}
 	
+	/**
+	 * Method set new xml file
+	 * @param idTask
+	 * @param xmlFile
+	 */
+	public void changeXmlFile(String xmlFile, String name, String owner)
+	{	
+		
+			createTaskState(name,xmlFile,owner);
+	
+	}
+	
 	public void changeNameOfTask(long idTask, String newName)
 	{
 		EntityTransaction entr = eManager.getTransaction();
@@ -441,6 +496,8 @@ public class Operation {
 	      
 	      entr.commit();
 	}
+	
+	
 }
  	
 

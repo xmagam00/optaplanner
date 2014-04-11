@@ -31,10 +31,10 @@ public class LoginBean  {
 		HttpServletRequest request;
 	    public String username;
 	    public String password;
-	    private boolean isUsernameValid;
-	    private boolean isPasswordValid;
-	    private boolean validationComplete = false;
-	    private static final String PERSISTENCE_UNIT_NAME = "user";
+	    private boolean usernameValid = false;
+	    private boolean passwordValid = false;
+	  
+
 	    /**
 	     * @return the username
 	     */
@@ -66,73 +66,47 @@ public class LoginBean  {
 	        this.password = password;
 	    }
 	    /**
-	     * @return the isUsernameValid
-	     */
-	    public boolean getIsUsernameValid() {
-	      return true;
-	    }
-	    /**
 	     * @paramisUsernameValid the isUsernameValid to set
 	     */
 	    public void setUsernameValid(boolean isUsernameValid) {
-	        this.isUsernameValid = isUsernameValid;
+	        this.usernameValid = isUsernameValid;
 	    }
-	    /**
-	     * @return the isPasswordValid
-	     */
-	    public boolean getIsPasswordValid() {
-	      return true;
+	    
+	    public boolean getUsernameValid()
+	    {
+	    	return usernameValid;
 	    }
+	    
 	    /**
 	     * @paramisPasswordValid the isPasswordValid to set
 	     */
 	    public void setPasswordValid(boolean isPasswordValid) {
-	        this.isPasswordValid = isPasswordValid;
+	        this.passwordValid = isPasswordValid;
 	    }
-	    /**
-	     * @return the validationComplete
-	     */
-	    public boolean getValidationComplete() {
-	        return validationComplete;
+	    
+	    public boolean getPasswordValid()
+	    {
+	    	return passwordValid;
 	    }
-	    /**
-	     * @paramvalidationComplete the validationComplete to set
-	     */
-	    public void setValidationComplete(boolean validationComplete) {
-	        this.validationComplete = validationComplete;
-	    }
+	   
 	 
 	    public void checkValidity() {
-	        if (this.username == null || this.username.equals("") ){
-	            isUsernameValid = false;
-	            validationComplete = false;
-	        	return;
-	            
-	        }
-	        else {
-	            isUsernameValid = true;
-	        }
-	        if (this.password == null  || this.password.equals("")) {
-	            isPasswordValid = false;
-	            validationComplete = false;
-	        	return;
-	        }
-	        else {
-	            isPasswordValid = true;
-	        }
-	        validationComplete = true;
+	       
+	       setUsernameValid(false);
 	        
 	        Operation op = new Operation();
 	        
 	        if (!op.validateUsername(this.username))
 	        {
-	        	validationComplete = false;
+	    
+	        	setUsernameValid(true);
 	        	return;
 	        }
 	        
 	        if (!op.validatePassword(this.username,this.password))
 	        {
-	        	validationComplete = false;
+	        
+	        	setPasswordValid(true);
 	        	return;
 	        }
 	        
@@ -172,8 +146,7 @@ public class LoginBean  {
 	  	        try {
 	  				context.redirect("Reader.xhtml");
 	  			} catch (IOException e) {
-	  				// TODO Auto-generated catch block
-	  				e.printStackTrace();
+	  				  				e.printStackTrace();
 	  			}
 	        }
 	        

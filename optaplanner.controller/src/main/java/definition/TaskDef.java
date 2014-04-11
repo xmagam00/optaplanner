@@ -14,7 +14,15 @@ public class TaskDef implements Serializable{
 	    private String owner;
 	    private String xmlfile;
 	    private boolean editable = false;
-	    public TaskDef(String id, String name, String state, String progress,String estimatedTime,String ifPublic,String owner,String xmlfile) {
+	    
+	    private String renderStop;
+	    private String renderRun;
+	    private String renderPublish;
+	    private String renderUnpublish;
+	    private String renderEdit;
+	    private String renderDelete;
+	    
+	    public TaskDef(String id, String name, String state, String progress,String estimatedTime,String ifPublic,String owner,String xmlfile, String renderStop,String renderRun,String renderPublish, String renderUnpublish,String renderEdit, String renderDelete) {
 	        this.id = id;
 	        this.name = name;
 	        this.state = state;
@@ -23,6 +31,12 @@ public class TaskDef implements Serializable{
 	        this.ifPublic = ifPublic;
 	        this.owner = owner;
 	        this.xmlfile = xmlfile;
+	        this.renderDelete = renderDelete;
+	        this.renderEdit = renderEdit;
+	        this.renderStop = renderStop;
+	        this.renderRun = renderRun;
+	        this.renderPublish = renderPublish;
+	        this.renderUnpublish = renderUnpublish;
 	    }
 	    public String getId() {
 	        return id;
@@ -105,6 +119,67 @@ public class TaskDef implements Serializable{
 		public void setEditable(boolean editable)
 		{
 			this.editable = editable;
+		}
+		
+		public void setRenderEdit(String render)
+		{
+			this.renderEdit = render;
+		}
+		
+		public String getRenderEdit()
+		{
+			return renderEdit;
+		}
+		
+		public void setRenderRun(String render)
+		{
+			this.renderRun = render;
+		}
+		
+		public String getRenderRun()
+		{
+			return renderRun;
+		}
+		
+		public void setRenderStop(String render)
+		{
+			this.renderStop = render;
+		}
+		
+		
+		public String getRenderStop()
+		{
+			return renderStop;
+		}
+		
+		public void setRenderPublish(String render)
+		{
+			this.renderPublish = render;
+		}
+		
+		public String getRenderPublish()
+		{
+			return renderPublish;
+		}
+		
+		public void setRenderUnpublosh(String render)
+		{
+			this.renderUnpublish = render;
+		}
+		
+		public String getRenderUnpublish()
+		{
+			return renderUnpublish;
+		}
+		
+		public void setRenderDelete(String render)
+		{
+			this.renderDelete = render;
+		}
+		
+		public  String getRenderDelete()
+		{
+			return renderDelete;
 		}
 		
 	}

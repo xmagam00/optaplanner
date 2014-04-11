@@ -6,54 +6,96 @@
     xmlns:a4j="http://richfaces.org/a4j"
     xmlns:rich="http://richfaces.org/rich"
     xmlns:ui="http://java.sun.com/jsf/facelets">
-<head>
+<h:head>
 
-<h:outputStylesheet library="js" name="js/jquery-2.1.0.js"  />
-  <h:outputStylesheet library="css" name="css/bootstrap.css"  />
-  <h:outputStylesheet library="js" name="js/bootstrap.js"  />
+<meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <meta name="description" content="Optaplanner service"></meta>
+    <meta name="author" content="Martin Maga"></meta>
+
+  <h:outputStylesheet library="css" name="bootstrap.css"  />
+<style>
+body {
+  padding-top: 40px   !important;;
+  padding-bottom: 40px   !important;;
+  background-color: #eee   !important;;
+}
+
+.form-signin {
+  max-width: 330px   !important;;
+  padding: 15px   !important;;
+  margin: 0 auto   !important;;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px   !important;;
+}
+.form-signin .checkbox {
+  font-weight: normal   !important;;
+}
+.form-signin .form-control {
+  position: relative   !important;;
+  height: auto   !important;;
+  -webkit-box-sizing: border-box  !important;;
+     -moz-box-sizing: border-box  !important;;
+          box-sizing: border-box  !important;;
+  padding: 10px  !important;;
+  font-size: 16px  !important;;
+}
+.form-signin .form-control:focus {
+  z-index: 2  !important;;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px  !important;;
+  border-bottom-right-radius: 0  !important;;
+  border-bottom-left-radius: 0  !important;;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px  !important;;
+  border-top-left-radius: 0  !important;;
+  border-top-right-radius: 0  !important;;
+}
+
+
+</style>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
 <title>Optaplanner.Controller</title>
-</head>
-<body>
+</h:head>
+<h:body>
 
-<h1 style="margin:0px auto;">Welcome to Optaplanner.Controller</h1>
+<h1 >Welcome to Optaplanner Controll Service</h1>
 
-<f:view>
-<h:form>
-<h:panelGroup rendered="#{LoginBeanBean.validationComplete and (!LoginBean.isUsernameValid or !LoginBean.isPasswordValid)}">
-<h:outputText value="Username is a Required Field" rendered="#{!LoginBean.isUsernameValid}" style="color:red"></h:outputText>
-<br/>
-<h:outputText value="Password is a Required Field" rendered="#{!LoginBean.isPasswordValid}" style="color:red"></h:outputText>
-</h:panelGroup>
-<h:panelGroup rendered="#{LoginBean.validationComplete and (LoginBean.isUsernameValid and LoginBean.isPasswordValid)}">
-<h:outputText value="Username and Password are valid" style="color:green"></h:outputText>
-</h:panelGroup>
-<table style="margin:0px auto;">
-<tr>
-<td><h:outputText value="Enter Username: " /></td>
-<td><h:inputText id="username"
-value="#{LoginBean.username}" />
-</td>
-</tr>
-<tr>
-<td><h:outputText value="Enter Password: " /></td>
-<td><h:inputSecret id="password"
-value="#{LoginBean.password}" />
-</td>
-</tr>
-<tr>
-<td></td>
-<td><h:commandButton value="Login"
-action="#{LoginBean.checkValidity}"/>
-</td>
-</tr>
+
+
+
+
+
+ <div class="container">
+
+
+
+<table>
+<tr><td><h:outputText value="Username is a Required Field" rendered="#{LoginBean.usernameValid}" style="color:red"></h:outputText></td></tr>
+
+<tr><td><h:outputText value="Password is a Required Field" rendered="#{LoginBean.passwordValid}" style="color:red"></h:outputText></td></tr>
+      <h:form class="form-signin" role="form">
+  <tr><td>      <h2 class="form-signin-heading">Please sign in</h2></td></tr>
+        <tr><td><h:inputText  class="form-control" placeholder="Username" value="#{LoginBean.username}" /></td></tr>
+        <tr><td><h:inputText type="password" class="form-control" placeholder="Re-type Password" value="#{LoginBean.password}"/></td></tr>
+       
+ 
+        <tr><td><button class="btn btn-lg btn-primary btn-block" type="submit" value="#{LoginBean.checkValidity()}">Sign in</button></td></tr>
+      </h:form>
 </table>
+    </div>
 
-
-
-</h:form>
-
-</f:view>
-</body>
+<h:outputScript library="js" name="jquery-2.1.0.js"  />
+  <h:outputScript library="js" name="bootstrap.js"  />
+</h:body>
 </html>
+
+
+
+

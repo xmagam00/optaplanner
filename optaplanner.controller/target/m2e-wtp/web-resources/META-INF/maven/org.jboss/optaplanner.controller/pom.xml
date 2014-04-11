@@ -18,14 +18,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+	
     <groupId>org.jboss</groupId>
     <artifactId>optaplanner.controller</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>optaplanner.controller</name>
     <description>A starter Java EE 6 webapp project for use on JBoss AS 7 / EAP 6, generated from the jboss-javaee6-webapp archetype</description>
-
+	
+	
+	
     <url>http://jboss.org/jbossas</url>
     <licenses>
         <license>
@@ -96,10 +98,19 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+           <dependency>
+                <groupId>org.richfaces.sandbox.ui.bootstrap</groupId>
+                <artifactId>bootstrap-ui</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
+    
+        
+        
         <dependency>
             <groupId>org.richfaces.ui</groupId>
             <artifactId>richfaces-components-ui</artifactId>
@@ -112,7 +123,8 @@
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-api</artifactId>
         </dependency>
-         
+      
+      
           
         
       <dependency>
@@ -170,6 +182,9 @@
             <artifactId>jboss-ejb-api_3.1_spec</artifactId>
             <scope>provided</scope>
         </dependency>
+		
+		
+		
 		
 			<dependency>
 <groupId>org.jboss.spec.javax.jms</groupId>
@@ -258,7 +273,17 @@
             <scope>test</scope>
         </dependency>
 	
-
+<dependency>
+<groupId>javax.faces</groupId>
+<artifactId>jsf-impl</artifactId>
+<version>1.2_15</version>
+</dependency>
+ <dependency>
+<groupId>javax.faces</groupId>
+<artifactId>jsf-api</artifactId>
+<version>2.1</version>
+</dependency>
+	
 	
 	
 	
@@ -284,7 +309,7 @@
                 <artifactId>jboss-as-maven-plugin</artifactId>
                 <version>${version.jboss.maven.plugin}</version>
             </plugin>
-            
+           
         </plugins>
     </build>
 
@@ -363,6 +388,7 @@
                 </plugins>
             </build>
         </profile>
-
+			
+			
     </profiles>
 </project>
