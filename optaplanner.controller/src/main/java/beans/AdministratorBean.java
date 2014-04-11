@@ -5,14 +5,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
 import javax.faces.bean.ManagedBean;
 
 import javax.faces.bean.SessionScoped;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-
 
 import java.util.*;
 
@@ -88,11 +86,15 @@ public class AdministratorBean {
 
 	private String findString;
 
+	private String nieco;
+
 	private boolean sortAscending = true;
 
 	private String owner;
 
 	private String state;
+
+	private String findOption;
 
 	@PostConstruct
 	public void init() {
@@ -268,7 +270,7 @@ public class AdministratorBean {
 
 		return null;
 	}
-	
+
 	public String sortByNameOrganization() {
 
 		if (sortAscending) {
@@ -277,9 +279,10 @@ public class AdministratorBean {
 			Collections.sort(organizations, new Comparator<OrganizationDef>() {
 
 				@Override
-				public int compare(OrganizationDef o1,OrganizationDef o2) {
+				public int compare(OrganizationDef o1, OrganizationDef o2) {
 
-					return o1.getNameOfOrganization().compareTo(o2.getNameOfOrganization());
+					return o1.getNameOfOrganization().compareTo(
+							o2.getNameOfOrganization());
 
 				}
 
@@ -292,9 +295,10 @@ public class AdministratorBean {
 			Collections.sort(organizations, new Comparator<OrganizationDef>() {
 
 				@Override
-				public int compare(OrganizationDef o1,OrganizationDef o2) {
+				public int compare(OrganizationDef o1, OrganizationDef o2) {
 
-					return o2.getNameOfOrganization().compareTo(o1.getNameOfOrganization());
+					return o2.getNameOfOrganization().compareTo(
+							o1.getNameOfOrganization());
 
 				}
 
@@ -304,8 +308,7 @@ public class AdministratorBean {
 
 		return null;
 	}
-	
-	
+
 	public String sortByIdOrg() {
 
 		if (sortAscending) {
@@ -314,9 +317,10 @@ public class AdministratorBean {
 			Collections.sort(organizations, new Comparator<OrganizationDef>() {
 
 				@Override
-				public int compare(OrganizationDef o1,OrganizationDef o2) {
+				public int compare(OrganizationDef o1, OrganizationDef o2) {
 
-					return o1.getIdOrganization().compareTo(o2.getIdOrganization());
+					return o1.getIdOrganization().compareTo(
+							o2.getIdOrganization());
 
 				}
 
@@ -329,9 +333,10 @@ public class AdministratorBean {
 			Collections.sort(organizations, new Comparator<OrganizationDef>() {
 
 				@Override
-				public int compare(OrganizationDef o1,OrganizationDef o2) {
+				public int compare(OrganizationDef o1, OrganizationDef o2) {
 
-					return o2.getIdOrganization().compareTo(o1.getIdOrganization());
+					return o2.getIdOrganization().compareTo(
+							o1.getIdOrganization());
 
 				}
 
@@ -796,8 +801,258 @@ public class AdministratorBean {
 		setRenderTab("false");
 	}
 
-	public void find() {
+	public void showAllUsers() {
+		List<UserDef> resultsUser = op.getAllUsers();
+		List<UserDef> resultsOrg = op.getAllUsers();
+		for (Object item : resultsUser) {
+			Object[] obj = (Object[]) item;
+			resultsOrg.add(new UserDef(obj[0].toString(), obj[1].toString(), obj[2]
+					.toString(), obj[3].toString(), obj[4].toString(), obj[5]
+					.toString()));
+
+		}
+		
+		this.users = resultsOrg;
+		
+	}
+	
+	public void showAllOrganizations()
+	{
+		List<OrganizationDef> list = new ArrayList<OrganizationDef>();
+		List<OrganizationDef> resultsOrg = op.getOrganizations();
+		for (Object item : resultsOrg) {
+			Object[] obj = (Object[]) item;
+			list.add(new OrganizationDef(obj[0].toString(), obj[1]
+					.toString()));
+			
+		}
+		this.organizations = list;
+	}
+	
+	
+	public void findListOrg() {
+		
+		
+
+		int index = 0;
+
+		List<OrganizationDef> find = new ArrayList<OrganizationDef>();
+
+		if (getFindOption().equals("Name of Organization")) {
+
+			for (OrganizationDef element : organizations) {
+				if (((organizations.get(index).getNameOfOrganization()).toUpperCase())
+						.equals(getNieco().toUpperCase())) {
+
+					find.add(new OrganizationDef(organizations.get(index).getIdOrganization(), organizations.get(
+							index).getNameOfOrganization()));
+							
+
+				}
+				index++;
+			}
+
+		} else if (getFindOption().equals("ID")) {
+
+			for (OrganizationDef element : organizations) {
+				if (((organizations.get(index).getIdOrganization()))
+						.equals(getNieco())) {
+
+					find.add(new OrganizationDef(organizations.get(index).getIdOrganization(), organizations.get(
+							index).getNameOfOrganization()));
+							
+
+				}
+				index++;
+			}
+
+		}
+
+		setNieco("");
+		setFindOption("");
+		this.organizations = find;
+	}
+
+	public void findListOrganization() {
 		setRenderPoll("false");
+
+		int index = 0;
+
+		List<UserDef> find = new ArrayList<UserDef>();
+
+		if (getFindOption().equals("Username")) {
+
+			for (UserDef element : users) {
+				if (((users.get(index).getUsername()).toUpperCase())
+						.equals(getNieco().toUpperCase())) {
+
+					find.add(new UserDef(users.get(index).getId(), users.get(
+							index).getUsername(), users.get(index)
+							.getPassword(), users.get(index).getRole(), users
+							.get(index).getOrganization(), users.get(index)
+							.getEmail()));
+
+				}
+				index++;
+			}
+
+		} else if (getFindOption().equals("Organization")) {
+
+			for (UserDef element : users) {
+				if (((users.get(index).getOrganization()).toUpperCase())
+						.equals(getNieco().toUpperCase())) {
+
+					find.add(new UserDef(users.get(index).getId(), users.get(
+							index).getUsername(), users.get(index)
+							.getPassword(), users.get(index).getRole(), users
+							.get(index).getOrganization(), users.get(index)
+							.getEmail()));
+
+				}
+				index++;
+			}
+
+		} else if (getFindOption().equals("Organization")) {
+
+			for (UserDef element : users) {
+				if (((users.get(index).getEmail()).toUpperCase())
+						.equals(getNieco().toUpperCase())) {
+
+					find.add(new UserDef(users.get(index).getId(), users.get(
+							index).getUsername(), users.get(index)
+							.getPassword(), users.get(index).getRole(), users
+							.get(index).getOrganization(), users.get(index)
+							.getEmail()));
+
+				}
+				index++;
+			}
+
+		} else if (getFindOption().equals("Organization")) {
+
+			for (UserDef element : users) {
+				if (((users.get(index).getRole()).toUpperCase())
+						.equals(getNieco().toUpperCase())) {
+
+					find.add(new UserDef(users.get(index).getId(), users.get(
+							index).getUsername(), users.get(index)
+							.getPassword(), users.get(index).getRole(), users
+							.get(index).getOrganization(), users.get(index)
+							.getEmail()));
+
+				}
+				index++;
+			}
+
+		}
+
+		setNieco("");
+		setFindOption("");
+		this.users = find;
+	}
+
+	public void findList() {
+
+		setRenderPoll("false");
+
+		int index = 0;
+
+		List<TaskDef> find = new ArrayList<TaskDef>();
+
+		if (getFindOption().equals("Owner")) {
+
+			for (TaskDef element : task) {
+				if (((task.get(index).getOwner()).toUpperCase())
+						.equals(getNieco().toUpperCase())) {
+
+					find.add(new TaskDef(task.get(index).getId(), task.get(
+							index).getName(), task.get(index).getState(), task
+							.get(index).getProgress(), task.get(index)
+							.getEstimatedTime(), convertIfPublic(task
+							.get(index).getIfPublic()), task.get(index)
+							.getOwner(), task.get(index).getXmlFile(),
+							renderStop(task.get(index).getState()),
+							renderRun(task.get(index).getState()),
+							renderPublish(task.get(index).getIfPublic()),
+							renderUnpublish(task.get(index).getIfPublic()),
+							renderEdit(task.get(index).getState()),
+							renderDelete(task.get(index).getState())));
+
+				}
+				index++;
+			}
+
+		} else if (getFindOption().equals("ID")) {
+			for (TaskDef element : task) {
+				if (((task.get(index).getId())).equals(getNieco())) {
+
+					find.add(new TaskDef(task.get(index).getId(), task.get(
+							index).getName(), task.get(index).getState(), task
+							.get(index).getProgress(), task.get(index)
+							.getEstimatedTime(), convertIfPublic(task
+							.get(index).getIfPublic()), task.get(index)
+							.getOwner(), task.get(index).getXmlFile(),
+							renderStop(task.get(index).getState()),
+							renderRun(task.get(index).getState()),
+							renderPublish(task.get(index).getIfPublic()),
+							renderUnpublish(task.get(index).getIfPublic()),
+							renderEdit(task.get(index).getState()),
+							renderDelete(task.get(index).getState())));
+
+				}
+
+				index++;
+			}
+
+		} else if (getFindOption().equals("Permission")) {
+			for (TaskDef element : task) {
+				if (((task.get(index).getIfPublic()).toUpperCase())
+						.equals(getNieco().toUpperCase())) {
+
+					find.add(new TaskDef(task.get(index).getId(), task.get(
+							index).getName(), task.get(index).getState(), task
+							.get(index).getProgress(), task.get(index)
+							.getEstimatedTime(), convertIfPublic(task
+							.get(index).getIfPublic()), task.get(index)
+							.getOwner(), task.get(index).getXmlFile(),
+							renderStop(task.get(index).getState()),
+							renderRun(task.get(index).getState()),
+							renderPublish(task.get(index).getIfPublic()),
+							renderUnpublish(task.get(index).getIfPublic()),
+							renderEdit(task.get(index).getState()),
+							renderDelete(task.get(index).getState())));
+
+				}
+				index++;
+			}
+
+		} else if (getFindOption().equals("Organization")) {
+			for (TaskDef element : task) {
+				if (((task.get(index).getIfPublic()).toUpperCase())
+						.equals(getNieco().toUpperCase())) {
+
+					find.add(new TaskDef(task.get(index).getId(), task.get(
+							index).getName(), task.get(index).getState(), task
+							.get(index).getProgress(), task.get(index)
+							.getEstimatedTime(), convertIfPublic(task
+							.get(index).getIfPublic()), task.get(index)
+							.getOwner(), task.get(index).getXmlFile(),
+							renderStop(task.get(index).getState()),
+							renderRun(task.get(index).getState()),
+							renderPublish(task.get(index).getIfPublic()),
+							renderUnpublish(task.get(index).getIfPublic()),
+							renderEdit(task.get(index).getState()),
+							renderDelete(task.get(index).getState())));
+
+				}
+				index++;
+			}
+
+		}
+
+		setNieco("");
+		setFindOption("");
+		this.task = find;
 
 	}
 
@@ -984,23 +1239,36 @@ public class AdministratorBean {
 	}
 
 	public void publishTask(TaskDef task) {
-		if (!task.getState().equals("FINISHED")) {
 
-			String output = "Task cannot be publish until it is finished";
-			setPublishInformation(output);
-		} else {
-
-			createPublishPage(task.getName(), task.getXmlFile(), task.getId());
-			String output = "Task has been published" + "with url:"
-					+ "http://localhost:8080/optaplanner.controller/faces/"
-					+ task.getId() + ".html";
-			setPublishInformation(output);
-			task.setIfPublic("1");
-		}
+		setRenderPoll("false");
+		createPublishPage(task.getName(), task.getXmlFile(), task.getId());
+		String output = "http://localhost:8080/optaplanner.controller/faces/"
+				+ task.getId() + ".html";
+		setPublishInformation(output);
+		task.setIfPublic("1");
+		op.changePermission(Long.parseLong(task.getId()), "1");
+		setRenderPoll("true");
 	}
 
-	private void createPublishPage(String name, String xmlfile, String id) {
+	private void createPublishPage(String name, String xml, String id) {
+
 		File file = new File(id + ".html");
+		if (name.equals("not")) {
+			try {
+				file = new File(id + ".html");
+				FileWriter fw2 = new FileWriter(
+						(file.getAbsoluteFile().toString())
+								.replace("bin",
+										"standalone/deployments/optaplanner.controller.war"));
+				BufferedWriter bw2 = new BufferedWriter(fw2);
+				bw2.write("");
+				bw2.close();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			return;
+		}
+
 		try {
 			FileWriter fw = new FileWriter(
 					(file.getAbsoluteFile().toString())
@@ -1013,6 +1281,7 @@ public class AdministratorBean {
 			bw.write("<html>");
 			bw.write("\n");
 			bw.write("<head>");
+			bw.write("<style>* {background:#eee ! important;} </style>");
 			bw.write("\n");
 			bw.write("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/bootstrap.css\">");
 			bw.write("\n");
@@ -1024,17 +1293,15 @@ public class AdministratorBean {
 			bw.write("</head>");
 			bw.write("\n");
 			bw.write("<body>");
-
-			bw.write("<h1>Name of Task:" + name + "</h1>");
-			bw.write("\n");
-			bw.write("<h2>Xml File</h2>");
-			bw.write("\n");
+			bw.write("<div class=\"container\" style=\"margin:0 px auto\">\n");
+			bw.write("<h1>");
+			bw.write(name);
+			bw.write("</h1>");
+			bw.write("<div class=\"jumbotron\">\n");
 			bw.write("<plaintext>");
-			bw.write("\n");
-			bw.write(xmlFile);
-			bw.write("\n");
+			bw.write(xml);
 			bw.write("</plaintext>");
-			bw.write("\n");
+			bw.write("</div>\n");
 			bw.write("</body>");
 			bw.write("\n");
 			bw.write("</html>");
@@ -1087,14 +1354,19 @@ public class AdministratorBean {
 
 	public void unpublishTask(TaskDef task) {
 
-		if (!task.getState().equals("FINISHED")) {
-			setUnpublishInformation("Task cannot be unpublished because it is not in state FINISHED.");
+		setRenderPoll("false");
+		File f = new File(task.getId() + ".html");
 
-		} else {
-			setUnpublishInformation("Task has beann unpublished.");
-			createPublishPage("NOT ", "NOT ", task.getId());
-			task.setIfPublic("0");
+		File file = new File((f.getAbsoluteFile().toString()).replace("bin",
+				"standalone/deployments/optaplanner.controller.war"));
+		if (file.exists()) {
+			file.delete();
 		}
+		setUnpublishInformation("Task has been unpublished.");
+
+		task.setIfPublic("0");
+		op.changePermission(Long.parseLong(task.getId()), "0");
+		setRenderPoll("true");
 	}
 
 	public void deleteTask(TaskDef task) {
@@ -1354,4 +1626,20 @@ public class AdministratorBean {
 		this.state = state;
 	}
 
+	public String getFindOption() {
+		return findOption;
+	}
+
+	public void setFindOption(String option) {
+		this.findOption = option;
+	}
+
+	public void setNieco(String nieco) {
+		this.nieco = nieco;
+
+	}
+
+	public String getNieco() {
+		return nieco;
+	}
 }

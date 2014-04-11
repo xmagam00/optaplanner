@@ -33,14 +33,33 @@ public class LoginBean  {
 	    public String password;
 	    private boolean usernameValid = false;
 	    private boolean passwordValid = false;
+	    private boolean usernameEmpty = false;
+	    private boolean passwordEmpty = false;
 	  
 
 	    /**
 	     * @return the username
 	     */
 	    
-	   
+	   public void setUsernameEmpty(boolean render)
+	   {
+		   this.usernameEmpty = render;
+	   }
 	    
+	   public boolean getUsernameEmpty()
+	   {
+		   return usernameEmpty;
+	   }
+	   
+	   public void setPasswordEmpty(boolean render)
+	   {
+		 this.passwordEmpty = render;  
+	   }
+	   
+	   public boolean getPasswordEmpty()
+	   {
+		   return passwordEmpty;
+	   }
 	    
 	    public String getUsername() {
 	        return username;
@@ -91,8 +110,28 @@ public class LoginBean  {
 	   
 	 
 	    public void checkValidity() {
-	       
-	       setUsernameValid(false);
+	    	setUsernameValid(false);
+	    	setPasswordValid(false);
+	    	setUsernameEmpty(false);
+	    	setPasswordEmpty(false);
+	    	
+	    	if (getUsername() == null || getUsername().isEmpty())
+	    	{
+	    		setUsernameEmpty(true);
+	    		if (getPassword() == null)
+		    	{
+		    		setPasswordEmpty(true);
+		    		
+		    	}
+	    		return;
+	    	}
+	    	
+	    	if (getPassword() == null || getPassword().isEmpty())
+	    	{
+	    		setPasswordEmpty(true);
+	    		return;
+	    	}
+	     
 	        
 	        Operation op = new Operation();
 	        

@@ -81,7 +81,7 @@ public class Operation {
 	}
 	
 	public void createTaskState(String name,String xmlfile,String username)
-	{   
+	{   System.out.println(username);
 		Query query = eManager.createQuery("select id_user from User where user_name='"+username+"'");
 		Object idUser = query.getSingleResult();
 		
@@ -495,6 +495,16 @@ public class Operation {
 	     task.setName(newName);
 	      
 	      entr.commit();
+	}
+	
+	public void changePermission(long idTask,String permission)
+	{
+		   EntityTransaction entr = eManager.getTransaction();
+		      entr.begin();
+		      Task task = eManager.find(Task.class, idTask);
+		      task.setIfPublic(Integer.parseInt(permission));
+		      
+		      entr.commit();
 	}
 	
 	

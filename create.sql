@@ -15,7 +15,7 @@ create table if not exists task (
 	progress_of_task int(20) NOT NULL,
 	ifpublic tinyint(1) NOT NULL,
 	eta int(8) NOT NULL,
-	name varchar(10) NOT NULL,
+	name varchar(300) NOT NULL,
 	user int(8)NOT NULL,
 	organization int(8) NOT NULL,
 	PRIMARY KEY(id_task)

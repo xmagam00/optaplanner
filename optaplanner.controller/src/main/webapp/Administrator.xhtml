@@ -84,20 +84,18 @@ body {
 							<table class="span6">
 								<tr>
 									<td><h:outputText value="Enter String to find:" /></td>
-									<td><h:inputText type="text" class="form-control" value="#{AdministratorBean.findString}" /></td>
+									<td><h:inputText type="text" class="form-control" value="#{AdministratorBean.nieco}" /></td>
 								</tr>
 
 
 
 								<tr>
 									<td><h:outputText value="Select option to find" /></td>
-									<td><rich:inplaceSelect value="ID"
-											defaultLabel="Click here to edit">
-											<f:selectItem itemValue="ID" itemLabel="ID" />
-											<f:selectItem itemValue="OWNER" itemLabel="NAME" />
-											<f:selectItem itemValue="NAME" itemLabel="OWNER" />
-
-										</rich:inplaceSelect></td>
+									<td><rich:select  defaultLabel="Select option" value="#{AdministratorBean.findOption}">
+                <f:selectItem itemValue="ID" itemLabel="ID" />
+                <f:selectItem itemValue="Permission" itemLabel="Permission" />
+                <f:selectItem itemValue="Owner" itemLabel="Owner" />
+            </rich:select></td>
 
 
 								</tr>
@@ -106,7 +104,7 @@ body {
 
 								<tr>
 									<td><h:commandButton class="btn btn-default btn-lg"
-											value="Find" action="#{AdministratorBean.find}" /></td>
+											value="Find" action="#{AdministratorBean.findList}" /></td>
 								</tr>
 							</table>
 
@@ -262,8 +260,9 @@ body {
 									resizeable="false">
 
 									<h:panelGrid columns="1">
-
+										<h:commandLink >
 										<h:outputText value="#{AdministratorBean.publishInformation}" />
+										</h:commandLink>
 										<h:outputLink value="#"
 											onclick="#{rich:component('popup2')}.hide(); return false;">
                     Close Window
@@ -328,20 +327,19 @@ body {
 								<table class="span6">
 									<tr>
 										<td><h:outputText value="Enter String to find:" /></td>
-										<td><h:inputText value="#{AdministratorBean.findString}" /></td>
+										<td><h:inputText value="#{AdministratorBean.nieco}" /></td>
 									</tr>
 
 
 
 									<tr>
 										<td><h:outputText value="Select option to find" /></td>
-										<td><rich:inplaceSelect value="ID"
-												defaultLabel="Click here to edit">
-												<f:selectItem itemValue="Username" itemLabel="Username" />
-												<f:selectItem itemValue="Role" itemLabel="Role" />
-												<f:selectItem itemValue="Email" itemLabel="Email" />
-												<f:selectItem itemValue="Organization" itemLabel="Organization" />
-											</rich:inplaceSelect></td>
+										<td><rich:select  defaultLabel="Select option" value="#{AdministratorBean.findOption}">
+                <f:selectItem itemValue="Username" itemLabel="Username" />
+                <f:selectItem itemValue="Organization" itemLabel="Organization" />
+                <f:selectItem itemValue="Email" itemLabel="Email" />
+                   <f:selectItem itemValue="Role" itemLabel="Role" />
+            </rich:select></td>
 
 
 									</tr>
@@ -350,7 +348,7 @@ body {
 
 									<tr>
 										<td><h:commandButton class="btn btn-default btn-lg"
-												value="Find" action="#{AdministratorBean.find}" /></td>
+												value="Find" action="#{AdministratorBean.findListOrganization}" /></td>
 									</tr>
 								</table>
 
@@ -378,7 +376,7 @@ body {
 									</tr>
 									<tr>
 										<td>Organization:</td>
-										<td><rich:inplaceSelect
+										<td><rich:select
 												value="#{AdministratorBean.organization}"
 												showControls="true">
 
@@ -386,18 +384,18 @@ body {
 												<f:selectItems
 													value="#{AdministratorBean.editableOrganizations}"
 													id="editOrg" />
-											</rich:inplaceSelect></td>
+											</rich:select></td>
 									</tr>
 									<tr>
 										<td>Role:</td>
-										<td><rich:inplaceSelect value="#{AdministratorBean.role}"
+										<td><rich:select value="#{AdministratorBean.role}"
 												defaultLabel="Click here to edit">
 												<f:selectItem itemValue="Reader" itemLabel="Reader" />
 												<f:selectItem itemValue="Administrator"
 													itemLabel="Administrator" />
 												<f:selectItem itemValue="Planner" itemLabel="Planner" />
 
-											</rich:inplaceSelect></td>
+											</rich:select></td>
 									</tr>
 									<tr>
 										<td><h:commandButton class="btn btn-default"
@@ -479,14 +477,14 @@ body {
 									</h:commandLink>
 								</h:column>
 							</f:facet>
-							<rich:inplaceSelect value="#{po.role}"
+							<rich:select value="#{po.role}"
 								defaultLabel="Click here to edit" rendered="#{po.editable}">
 								<f:selectItem itemValue="Reader" itemLabel="Reader" />
 								<f:selectItem itemValue="Administrator"
 									itemLabel="Administrator" />
 								<f:selectItem itemValue="Planner" itemLabel="Planner" />
 
-							</rich:inplaceSelect>
+							</rich:select>
 
 							<h:outputText value="#{po.role}" rendered="#{not po.editable}" />
 						</h:column>
@@ -501,13 +499,13 @@ body {
 								</h:column>
 							</f:facet>
 
-							<rich:inplaceSelect value="#{po.organization}"
+							<rich:select value="#{po.organization}"
 								showControls="true" rendered="#{po.editable}">
 
 
 								<f:selectItems
 									value="#{AdministratorBean.editableOrganizations}" id="editOrg" />
-							</rich:inplaceSelect>
+							</rich:select>
 
 
 
@@ -575,6 +573,7 @@ body {
 							<td><h:commandButton class="btn btn-default"
 									value="Save Changes" action="#{AdministratorBean.saveAction}" /></td>
 						</tr>
+						<tr><td><h:commandButton class="btn btn-default" value="Show all users" action="#{AdministratorBean.showAllUsers}" /></td></tr>
 					</table>
 
 
@@ -592,7 +591,7 @@ body {
 
 						<h:outputLabel for="password" value="Password : " />
 						<h:inputSecret type="text" class="form-control" placeholder="Username" id="password" value="#{AdministratorBean.password}" />
-
+						<h:message id="confirmPassword" />
 
 						<h:outputLabel for="confirmPassword" value="Confirm password : " />
 						<h:inputSecret type="text" class="form-control" placeholder="Username" value="#{AdministratorBean.passwordValidate}" />
@@ -611,20 +610,16 @@ body {
 				<table class="span6">
 								<tr>
 									<td><h:outputText value="Enter String to find:" /></td>
-									<td><h:inputText type="text" class="form-control" value="#{AdministratorBean.findString}" /></td>
+									<td><h:inputText type="text" class="form-control" value="#{AdministratorBean.nieco}" /></td>
 								</tr>
 
 
 
 								<tr>
-									<td><h:outputText value="Select option to find" /></td>
-									<td><rich:inplaceSelect value="ID"
-											defaultLabel="Click here to edit">
-											<f:selectItem itemValue="ID Organization" itemLabel="ID organization" />
-											<f:selectItem itemValue="OWNER" itemLabel="Name of Organization" />
-											
-
-										</rich:inplaceSelect></td>
+									<td><rich:select  defaultLabel="Select option" value="#{AdministratorBean.findOption}">
+                <f:selectItem itemValue="ID" itemLabel="ID" />
+                <f:selectItem itemValue="Name of Organization" itemLabel="Name of Organization" />
+              </rich:select></td>
 
 
 								</tr>
@@ -633,7 +628,7 @@ body {
 
 								<tr>
 									<td><h:commandButton class="btn btn-default btn-lg"
-											value="Find" action="#{AdministratorBean.find}" /></td>
+											value="Find" action="#{AdministratorBean.findListOrg}" /></td>
 								</tr>
 							</table>
 						
@@ -714,10 +709,11 @@ body {
 						</h:column>
 
 					</h:dataTable>
-				<rich:dataScroller for="tabOrg" maxPages="10" />
-					<h:commandButton class="btn btn-default" value="Save Changes"
-						action="#{AdministratorBean.saveActionOrganization}" />
-
+					<table>
+				<tr><td><rich:dataScroller for="tabOrg" maxPages="10" /></td></tr>
+					<tr><td><h:commandButton class="btn btn-default" value="Save Changes" action="#{AdministratorBean.saveActionOrganization}" /> </td></tr>
+		<tr><td><h:commandButton value="Show all organization" class="btn btn-default" action="#{AdministratorBean.showAllOrganizations()}" /></td></tr>
+		</table>
 				</rich:tab>
 				<rich:tab name="Edit" label="Edit"
 					disabled="#{AdministratorBean.renderTab}">
@@ -727,11 +723,11 @@ body {
 									value="#{AdministratorBean.name}" /></td>
 						</tr>
 						<tr>
-							<td><h:outputText value="Owner" /> <rich:inplaceSelect
+							<td><h:outputText value="Owner" /> <rich:select
 									value="#{AdministratorBean.owner}"
 									defaultLabel="Click here to edit">
 									<f:selectItems value="#{AdministratorBean.editableOwner}" />
-								</rich:inplaceSelect></td>
+								</rich:select></td>
 						</tr>
 						<tr>
 							<td><h:inputTextarea value="#{AdministratorBean.xmlFile}"
@@ -743,6 +739,7 @@ body {
 									value="Save XML File"
 									action="#{AdministratorBean.saveXmlFile()}" /></td>
 						</tr>
+						
 					</table>
 				</rich:tab>
 			</rich:tabPanel>

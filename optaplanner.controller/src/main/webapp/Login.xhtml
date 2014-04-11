@@ -65,7 +65,7 @@ body {
 </h:head>
 <h:body>
 
-<h1 >Welcome to Optaplanner Controll Service</h1>
+
 
 
 
@@ -77,13 +77,14 @@ body {
 
 
 <table>
-<tr><td><h:outputText value="Username is a Required Field" rendered="#{LoginBean.usernameValid}" style="color:red"></h:outputText></td></tr>
-
-<tr><td><h:outputText value="Password is a Required Field" rendered="#{LoginBean.passwordValid}" style="color:red"></h:outputText></td></tr>
+<tr><td><h:outputText value="Unknown username" rendered="#{LoginBean.usernameValid}" style="color:red"></h:outputText></td></tr>
+<tr><td><h:outputText value="Username required" rendered="#{LoginBean.usernameEmpty}" style="color:red"></h:outputText></td></tr>
+<tr><td><h:outputText value="Password required" rendered="#{LoginBean.passwordEmpty}" style="color:red"></h:outputText></td></tr>
+<tr><td><h:outputText value="Unknown password" rendered="#{LoginBean.passwordValid}" style="color:red"></h:outputText></td></tr>
       <h:form class="form-signin" role="form">
   <tr><td>      <h2 class="form-signin-heading">Please sign in</h2></td></tr>
         <tr><td><h:inputText  class="form-control" placeholder="Username" value="#{LoginBean.username}" /></td></tr>
-        <tr><td><h:inputText type="password" class="form-control" placeholder="Re-type Password" value="#{LoginBean.password}"/></td></tr>
+        <tr><td><h:inputSecret type="password" class="form-control" placeholder="Re-type Password" value="#{LoginBean.password}"/></td></tr>
        
  
         <tr><td><button class="btn btn-lg btn-primary btn-block" type="submit" value="#{LoginBean.checkValidity()}">Sign in</button></td></tr>
