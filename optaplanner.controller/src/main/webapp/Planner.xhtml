@@ -1,130 +1,466 @@
 <!DOCTYPE html>
-<html lang="en"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:a4j="http://richfaces.org/a4j"
-    xmlns:rich="http://richfaces.org/rich"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
-    
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://richfaces.org/sandbox/bootstrap">
+
 
 
 <h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-<script src="bootstrap/js/bootstrap.min.js"></script>
-   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"></link>
-  <script src="http://code.jquery.com/jquery.js"></script>
+<meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <meta name="description" content="Optaplanner service"></meta>
+    <meta name="author" content="Martin Maga"></meta>
 
-<title>Administrator</title>
+  <h:outputStylesheet library="css" name="bootstrap.css"  />
+
+	<style>
+body {
+	
+	background-color: #eee !important;;
+  margin: 0; 
+    padding: 0;
+    text-align: center;
+    height:900px;
+}
+
+html, body {
+    width: 100%;
+}
+table {
+    margin: 0 auto;
+}
+
+tr.spaceUnder > td
+{
+  padding-bottom: 1em;
+}
+
+</style>
+	<title>Planner</title>
 </h:head>
-<body>
-<f:view>
+<h:body class="bodyclass">
+
+		<f:view>
+
+
+
 <h:form>
-<rich:tabPanel>
-<rich:tab name="Tasks">
-
-<h2>Administrator Controller</h2>
-
-
-<h:commandButton value="Logout"
-action="#{PlannerBean.logout}"/>
+			<h:commandButton class="btn pull-right" value="Logout"
+				action="#{PlannerBean.logout}"></h:commandButton>
+			<h:outputText style="margin-right:10px;" value="#{LoginBean.username}" class="pull-right" />
+			<h:outputLabel style="margin-left:5px;" value="User:" class="pull-right" />
+		</h:form>	
 
 
-    <h:outputLabel value="User:" />
-    <h:outputText value="#{LoginBean.username}" />
-    
-<rich:fileUpload uploadData="#{data}" fileUploadListener="#{PlannerBean.upload}" immediateUpload="true"/>
-
-<a4j:poll interval="1000" enabled="true" reRender="tab"/>
-
-   
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#task" data-toggle="tab">Tasks</a></li>
   
-<h:dataTable value="#{PlannerBean.tasks}" var="o"
-      styleClass="todo" headerClass="todoheader"
-      columnClasses="first, rest" id="tab" binding="#{table}">
-      <h:column>
-       
-        <f:facet name="header">
-          <h:column>
-            <h:outputText value="ID"></h:outputText>
-          </h:column>
-        </f:facet>
-        <h:outputText value="#{o.id}"></h:outputText>
-      </h:column>
-      <h:column>
+  <li><a href="#changepassword" data-toggle="tab">Change Password</a></li>
 
-        <f:facet name="header">
-          <h:column>
-            <h:outputText value="Name"></h:outputText>
-          </h:column>
-        </f:facet>
-        <h:outputText value="#{o.name}"></h:outputText>
+</ul>
 
-      </h:column>
+<div class="tab-content">
+			
 
-      <h:column>
+			 <div class="tab-pane active" id="task">
+<!-- Modal -->
 
-        <f:facet name="header">
-          <h:column>
-            <h:outputText value="State"></h:outputText>
-          </h:column>
-        </f:facet>
-        <h:outputText value="#{o.state}"></h:outputText>
-      </h:column>
- <h:column>
-    
-        <f:facet name="header">
-          <h:column>
-            <h:outputText value="Progress"></h:outputText>
-          </h:column>
-        </f:facet>
-<h:outputText value="#{o.progress}">%</h:outputText>%
+ <h:form>
 
-      </h:column>
-      
-       <h:column>
 
-        <f:facet name="header">
-          <h:column>
-            <h:outputText value="ETA"></h:outputText>
-          </h:column>
-        </f:facet>
-        <h:outputText value="#{o.estimatedTime}"></h:outputText>
-      </h:column>
-      
-      <h:column>
-      
-        <f:facet name="header">
-          <h:column>
-            <h:outputText value="Actions"></h:outputText>
-          </h:column>
-        </f:facet>
-        <h:panelGrid columns="6">
-         <h:commandButton value="edit task" actionListener="#{PlannerBean.editTask()}"/>
-          <h:commandButton value="stop task" action="#{PlannerBean.stopTask()}"/>
-           <h:commandButton value="run task" action="#{PlannerBean.runTask()}"/>
-           <h:commandButton value="publish task" action="#{PlannerBean.publishTask()}"/>
-              <h:commandButton value="unpublish task" action="#{PlannerBean.unpublishTask()}"/>
-               <h:commandButton value="delete task" action="#{PlannerBean.deleteTask()}"/>
-        </h:panelGrid>
-      </h:column>
+			
+<table style="display: inline-block;margin-top:50px;text-align:left;">
 
-    </h:dataTable>
-</rich:tab>
+								<tr class="spaceUnder">
+									<td><h:outputText  value="Name of task:" /> <h:inputText type="text" class="form-control"
+											value="#{PlannerBean.name}" maxlength="100" width="20"/> </td>
+								</tr>
+								<tr  class="spaceUnder">
+									<td><h:outputText value="Load XML FILE" /></td>
+								</tr>
 
-<rich:tab name="Change password">
-<h:panelGrid column="1">
-<h:inputText id="Password" value="#{password}" />
- 
 
-<h:inputText id="sd" value="#{passwordValidate}" />
- 
-<h:commandButton action="#{PlannerBean.changePassword()}" value="Change password" />
-</h:panelGrid>
-</rich:tab>
-</rich:tabPanel>
+								<tr class="spaceUnder">
+									<td><rich:fileUpload
+											fileUploadListener="#{PlannerBean.listener}"
+											id="upload" maxFilesQuantity="1" /></td>
+								</tr>
+								<tr>
+									<td><h:commandButton class="btn btn-default"
+											value="Create task"
+											action="#{PlannerBean.createTask()}" /></td>
+								</tr>
+							</table>
+
+							<table style="float: left;margin-top:50px;margin-left:100px;margin-right:50px;" >
+								<tr>
+									<td><h:outputText value="Enter String to find:" /></td>
+									<td><h:inputText type="text" class="form-control" value="#{PlannerBean.nieco}" /></td>
+								</tr>
+
+
+
+								<tr>
+									<td><h:outputText value="Select option to find" style="margin-right:10px;"/></td>
+									<td><rich:select  defaultLabel="Select option" value="#{PlannerBean.findOption}">
+                <f:selectItem itemValue="ID" itemLabel="ID" />
+                <f:selectItem itemValue="Permission" itemLabel="Permission" />
+                <f:selectItem itemValue="Owner" itemLabel="Owner" />
+            </rich:select></td>
+
+
+								</tr>
+
+
+
+								<tr>
+									<td><h:commandButton class="btn btn-default btn-lg"
+											value="Find" action="#{PlannerBean.findList}" /></td>
+								</tr>
+							</table>
+
+						
+			
+
+
+
+   </h:form>
+
+
+
+
+<h:form>
+					<a4j:poll action="#{PlannerBean.updateTasks()}"
+						interval="100" reRender="userTab"
+						enabled="#{PlannerBean.renderPoll}">
+					</a4j:poll>
+					<a4j:poll interval="100" reRender="editUser" enabled="true">
+					</a4j:poll>
 </h:form>
-</f:view>
+<h:form>
 
-</body>
+					<h:dataTable value="#{PlannerBean.task}" var="o"
+						class="table table-hover" id="userTab" rows="5">
+										
+						<h:column>
+
+							<f:facet name="header">
+				
+						<h:commandLink  action="#{PlannerBean.sortById}" >	
+							
+									<h:outputText value="ID"></h:outputText>
+							</h:commandLink>
+						
+							</f:facet>
+							<h:outputText value="#{o.id}"></h:outputText>
+
+						</h:column>
+						<h:column>
+
+							<f:facet name="header">
+				
+								<h:commandLink action="#{PlannerBean.sortByName}">
+									<h:outputText value="Name"></h:outputText>
+								</h:commandLink>
+				
+							</f:facet>
+
+
+							<h:outputText value="#{o.name}" />
+
+						</h:column>
+
+						<h:column>
+
+							<f:facet name="header">
+								<h:column>
+							
+									<h:commandLink action="#{PlannerBean.sortByState}">
+										<h:outputText value="State"></h:outputText>
+									</h:commandLink>
+					
+								</h:column>
+							</f:facet>
+							<h:outputText value="#{o.state}"></h:outputText>
+						</h:column>
+						<h:column>
+
+							<f:facet name="header">
+								<h:column>
+									<h:outputText value="Progress"></h:outputText>
+								</h:column>
+							</f:facet>
+							<rich:progressBar interval="100" value="#{o.progress}"></rich:progressBar>
+
+
+						</h:column>
+
+						<h:column>
+
+							<f:facet name="header">
+								<h:column>
+								
+									<h:commandLink action="#{PlannerBean.sortByETA}">
+										<h:outputText value="ETA"></h:outputText>
+									</h:commandLink>
+						
+								</h:column>
+							</f:facet>
+
+							<h:outputText value="#{o.estimatedTime}"></h:outputText>
+
+						</h:column>
+
+						<h:column>
+
+							<f:facet name="header">
+								<h:column>
+							
+									<h:commandLink action="#{PlannerBean.sortByPermission}">
+										<h:outputText value="Permission"></h:outputText>
+									</h:commandLink>
+							
+								</h:column>
+							</f:facet>
+							<h:outputText value="#{o.ifPublic}"></h:outputText>
+						</h:column>
+
+						<h:column>
+
+							<f:facet name="header">
+								<h:column>
+								
+									<h:commandLink action="#{PlannerBean.sortByOwner}">
+										<h:outputText value="Owner"></h:outputText>
+									</h:commandLink>
+						
+								</h:column>
+							</f:facet>
+							<h:outputText value="#{o.owner}"></h:outputText>
+
+
+
+						</h:column>
+
+						<h:column>
+
+							<f:facet name="header">
+								<h:column>
+									<h:outputText value="Actions"></h:outputText>
+								</h:column>
+							</f:facet>
+							<h:panelGrid columns="6">
+				
+								<a4j:commandButton styleClass="btn btn-default" value="Edit Task"
+									action="#{PlannerBean.editXmlFile(o)}"
+									rendered="#{o.renderEdit}" oncomplete="$('#myModal3').modal('show')" data-toggle="modal" data-target="#myModal3" />
+								<a4j:commandButton styleClass="btn btn-default" value="Stop task"
+									action="#{PlannerBean.stopTask(o)}"
+									rendered="#{o.renderStop}" oncomplete="$('#myModal5').modal('show')" data-toggle="modal" data-target="#myModal5" />
+								<a4j:commandButton styleClass="btn btn-default" value="Run task"
+									action="#{PlannerBean.runTask(o)}"
+									rendered="#{o.renderRun}" oncomplete="$('#myModal4').modal('show')"  data-toggle="modal" data-target="#myModal4" />
+								
+								<a4j:commandButton styleClass="btn btn-default"
+									value="Publish Task"
+									action="#{PlannerBean.publishTask(o)}"
+									oncomplete="$('#myModal').modal('show')"
+									rendered="#{o.renderPublish}" data-toggle="modal" data-target="#myModal" />
+
+								<a4j:commandButton styleClass="btn btn-default" value="delete task"
+									action="#{PlannerBean.deleteTask(o)}"
+									rendered="#{o.renderDelete}" />
+<a4j:commandButton styleClass="btn btn-default"
+									value="UnPublish Task"
+									action="#{PlannerBean.unpublishTask(o)}"
+									
+									rendered="#{o.renderUnpublish}" data-toggle="modal" data-target="#myModal2" oncomplete="$('#myModal2').modal('show')"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+							</h:panelGrid>
+						</h:column>
+
+					</h:dataTable>
+					
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+      Task has been publish. Link: <h:outputText value="#{PlannerBean.publishInformation}" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       
+      </div>
+    </div>
+  </div>
+</div>	
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+     Task has been unpublished.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       
+      </div>
+    </div>
+  </div>
+</div>	
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+     <table>
+     <tr><td>  <h:outputText value="Name of Task:" /></td><td>
+      <h:inputText type="text" class="form-control" value="#{PlannerBean.name}" /></td></tr>
+     <tr><td><h:outputText value="Enter owner" /></td><td> <rich:select>
+       <f:selectItems value="#{PlannerBean.editableOwner}"  />
+      
+      </rich:select></td></tr>
+      <tr><td><h:inputTextarea cols="20" rows="20" value="#{PlannerBean.xmlFile}" /></td></tr>
+      </table>
+     
+      <a4j:commandButton value="Save Changes" oncomplete="$('#myModal3').modal('hide')" styleClass="btn btn-default" action="#{PlannerBean.saveXmlFile}"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" styleClass="btn btn-default" data-dismiss="modal">Close</button>
+       
+      </div>
+    </div>
+  </div>
+</div>			
+
+<!-- Modal -->
+<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+     Task has been running.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+   
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        Task has been stopped.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+		
+					
+					</h:form>
+					<table>
+						<tr>
+							<td><rich:dataScroller for="userTab" maxPages="5" /></td>
+						</tr>
+
+						<tr>
+							<td><h:form><h:commandButton class="btn btn-default"
+									value="Show all tasks"
+									action="#{PlannerBean.saveActionTask()}" /></h:form></td>
+						</tr>
+					</table>
+				
+					</div>
+				
+		
+
+				
+				 <div class="tab-pane" id="changepassword">
+					<div class="container">
+					<h:panelGrid column="1">
+
+
+
+
+						<h:outputLabel for="password" value="Password : " />
+						<h:inputSecret type="text" class="form-control" placeholder="Username" id="password" value="#{PlannerBean.password}" />
+						<h:message id="confirmPassword" />
+					<br></br>
+						<h:outputLabel for="confirmPassword" value="Confirm password : " />
+						<h:inputSecret type="text" class="form-control" placeholder="Username" value="#{PlannerBean.passwordValidate}" />
+			<br></br>
+						<h:commandButton class="btn btn-default" action="#{PlannerBean.validatePassword()}"
+							value="Change password" />
+
+					</h:panelGrid>
+					</div>
+				</div>
+			 
+				
+</div>
+
+<h:outputScript library="js" name="jquery-2.1.0.js"  />
+  <h:outputScript library="js" name="bootstrap.js"  />
+</f:view>
+</h:body>
 </html>
