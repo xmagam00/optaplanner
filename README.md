@@ -1,4 +1,4 @@
 optaplanner
 ===========
 
-BP_FIT_VUT_REDHAT
+Bacherlor thesis for Red Hat Brno. Name: Planning Task Monitoring System. 

@@ -7,24 +7,17 @@
 
 
 \chapter{Java Enterprise edition 6}
-V posledných rokoch prevláda tendencia tvorby komplexných systémov, ktoré spracovávajú veľké množstvá dát.
- 
+V posledných rokoch prevláda tendencia tvorby komplexných informačných systémov, ktoré spracovávajú veľké množstvo dát. Preto sa zvyšuje tak na vývojárov na tvorbu prostriedku, ktoré dokáže takéto systémy ľahko a rýchlo vytvárať. Jedným z takýchto protriedkov je Java Enterprise Edittion 6(Java EE 6).
+Java EE 6 predstavuje platformu určenú na vývoj webových a podnikových aplikácií.\cite{fitWeb}Tieto aplikácie sú viacvrstvové z dôvodu lepšej prenositeľnosti, nasaditeľnosti a modifikovateľnosti. Frontend, predstavujúci užívateľské rozhranie a logiku na jeho ovládanie, pozostáva z webových frameworkov, stredná vrsta poskytuje bezpečnosť a transakcie. Najnižšia vrstva poskytuje pripojenie k databázam. Java EE 6 je vhodná pre implementáciu podnikovej logiky, ktorá dokáže byť riadená alebo interagovať s inými podnikovými aplikáciami. Java EE 6 je platformou, ktorá poskytuje širokú škálu aplikačných programových rozhraní(API), ktoré zjednodušujú, zkracujú a znižujú komplexnosť výslednej aplikácie. Jej vývoj neustále napreduje a je spravovaný Java Comunnity process(JCP).
 
 
-Java Enterprise Edition 6(Java EE 6) predstavuje platformu určenú na vývoj webových a podnikových aplikácií.\cite{fitWeb}Tieto aplikácie sú viacvrstvové z dôvodu lepšej prenositeľnosti,nasaditeľnosti a modifikovateľnosti. Frontend, predstavujúci užívateľské rozhranie a logiku na jeho ovládanie, pozostáva z webových frameworkov, stredná vrsta poskytuje bezpečnosť a transakcie. Najnižšia vrstva poskytuje pripojenie k databázam. Java EE 6 je vhodná pre implementáciu podnikovej logiky, ktorá dokáže byť riadená alebo interagovať s inými podnikovými aplikáciami. Java Enterprise Edition 6 je platformou, ktorá poskytuje širokú škálu aplikačných programových rozhraní(API), ktoré zjednodušujú, zkracujú a znižujú komplexnosť výslednej aplikácie. Jej vývoj neustále napreduje a je spravovaný Java Comunnity process(JCP).
-
-
-\indent Java EE 6 bola uvoľnená v decembri 2009 a poskytuje ľahké používanie a kompletnú sadu nástrojov na tvorbu podnikových aplikácií. V súčastnosti vyšla ďalšia verzia, ktorá priniesla ďalšie novinky, ktoré môžte dohľadať v online dokumentácií. V ďalších kapitolách si rozoberieme aplikaný model jazyka, ktoré je veľmi dôležitý pre pochopenie princípu činnosti aplikácií vyvinutých touto platformou. Následne sa zameriame na JBoss a OptaPlanner, pre ktoré je určené užívateľské rozhranie. 
+\indent Java EE 6 bola uvoľnená v decembri 2009 a poskytuje ľahké používanie a kompletnú sadu nástrojov na tvorbu podnikových aplikácií. V súčastnosti vyšla ďalšia verzia, ktorá priniesla ďalšie novinky, ktoré môžte dohľadať v online dokumentácií. V ďalších kapitolách si rozoberieme aplikaný model jazyka, ktoré je veľmi dôležitý pre pochopenie princípu činnosti aplikácií vyvinutých touto platformou. V ďalšej kapitole rozobereme aplikačný model platformy Java EE 6. 
 
 
 \section{Aplikačný model}
 Java EE je určená pre implementáciu služieb pre zákazníkov, zamestnancov, dodávateľov kohokoľvek, kto prispieva do podniku. Takéto aplikácie sú komplexné a môže byť k nim pristupované z rozličných zdrojov. Pre lepšie zvládanie sú sústredené do stupňov.
 
-\indent Java EE definuje spôsob implementácie služieb, ktoré sú škálovateľné, prístupné a spravovateľné podnikovou aplikáciou. Tento model implementuje viacstupňový model do nasledujúcich častí:
-\begin{itemize}
-\item Podniková a prezentačná logika poskytovaná Java EE platformou
-\item Štandardná systémová platforma 
-\end{itemize}
+\indent Java EE definuje spôsob implementácie služieb, ktoré sú škálovateľné a prístupné.
 
 \section{Distribuovaná viacstupňová aplikácia}
 Java EE používa aplikácie, ktoré sú viacvrstvové(multitier). Aplikačná logika je rozdelená medzi komponenty podľa funkcie.\cite{Pravidla} Jednotlivé komponenty sa následne rôzne inštalujú v závislosti, do ktorého stupňa patria. Jednotlivé stupňe sa skladajú z rôznych komponent:
@@ -35,7 +28,7 @@ Java EE používa aplikácie, ktoré sú viacvrstvové(multitier). Aplikačná l
 \item Enterprise Information System software bežiaci na EIS serveri
 \end{itemize}
 
-Napriek tomúto rozloženiu býva aplikácia rozložená len do 3 stupňov: Java EE server, klient, databázy na pozadí. Typicky beží medzi klientskom a databázou častou viac-vláknový Java EE server, ktorý býva označovaný skratkou EIS. Viacstupňovérozloženie môžete názorne vidieť na obrázku č. \ref{model}.
+Napriek tomúto rozloženiu býva aplikácia rozložená len do 3 stupňov: Java EE server, klient, databáze. Typicky beží medzi klientskom a databázou častou viac-vláknový Java EE server, ktorý býva označovaný skratkou EIS. Viacstupňovérozloženie môžete názorne vidieť na obrázku č. \ref{model}.
 \begin{figure}[htb]
 
 \begin{center}
@@ -47,13 +40,15 @@ Napriek tomúto rozloženiu býva aplikácia rozložená len do 3 stupňov: Java
 \end{center}
 
 \end{figure}
-Java EE aplikácia beží na klientskej stanici, býva obykle reprezentovaná tenkým klientom(webovým prehliadačom), nazývaným \uv{thin client}, alebo hrubým klientom, do ktoré je vložená logika aplikácia. V strednej časti obrázku sa nachádza Java EE server, na ktorom môžu bežať rôzne technológie v závislosti od požiadavky výslednej aplikácie. Java EE server môže by reprezentovaný rôznymi dostupnými technológiami, či už sa jedná o open-source riešenia (JBoss, Tomcat, GlassFish) alebo komerčné riešenia (IBM WebSphere,BEA WebLogic), ten obsahuje rôzne komponenty, ktoré so sebou rôzne komunikujú a interaugujú na požiadavky klienta a na druhej strane komunikujú s databázovým systémom. Tieto komponenty predstavujú logiku aplikáciu. Posledná časť predstavuje databázový systém, ktorý obsahuju dáta, ktoré klient požaduje pri svojom požiadavku, tento server sa nazýva "EIS" 
+Java EE aplikácia beží na klientskej stanici, býva obykle reprezentovaná tenkým klientom(webovým prehliadačom), nazývaným \uv{thin client}, alebo hrubým klientom, do ktoré je čiastočne vložená logika aplikácia. V strednej časti obrázku sa nachádza Java EE server, na ktorom môžu bežať rôzne technológie v závislosti od požiadavky výslednej aplikácie a možností daného servera. Java EE server môže by reprezentovaný rôznymi dostupnými technológiami, či už sa jedná o open-source riešenia (JBoss, Tomcat, GlassFish) alebo komerčné riešenia (IBM WebSphere,BEA WebLogic), ten obsahuje rôzne komponenty, ktoré so sebou rôzne komunikujú a interagujú na požiadavky klienta a na druhej strane komunikujú s databázovým systémom. Tieto komponenty predstavujú logiku aplikáciu. Posledná časť predstavuje databázový systém, ktorý obsahuju dáta, ktoré klient požaduje pri svojom požiadavku, tento server sa nazýva "EIS".
 \newpage
 \section{Bezpečnosť}
 
 Java EE  vytvára prostriedky, ktoré sú prenositeľné a tak je možné systémy nasadzovať naprieč rôznymi platformami. Poskytuje mechanizmus  prístupovej kontroly pravidiel, ktoré sú interpretované, keď je aplikácia nasadzovaná na server. Java implementuje mechanizmus prihlasovania štandardne, čím odpadá programátori povinnosti túto časť dodatočne implementovať.
 
-V ďalšej časti sa zameriame na podrobné vysvetlenie jednotlivých Java EE komponent, pretože ich pochopenie bude nevyhnuté.
+V ďalšej časti sa zameriame na podrobné vysvetlenie jednotlivých Java EE komponent, pretože ich pochopenie bude nevyhnuté pre výslednú aplikáciu.
+
+
 \chapter{Java EE komponenty}
 Java EE pozostáva z komponent, čo je vlastne sada sebestačného softwaru, ktorý je zhromaždený do Java EE aplikácií a komunikujú s inými komponentami. Java EE definuje nasledujúce komponenty: 
 \begin{itemize}
@@ -79,7 +74,7 @@ Aplikační klienti bežia na klientských počítačoch, kde poskytujú bohatš
 Typicky býva vytváraný technológiou Swing\footnote{http://cs.wikipedia.org/wiki/Swing\_(Java)} alebo Abstract Window Toolkit(AWT)\footnote{http://en.wikipedia.org/wiki/Abstract\_Window\_Toolkit}, občas sa vyskytuje aj prikázový riadok ako rozhranie.
 
 \section{The JavaBeans Component Architecture}
-Server a klient tiež zahŕňa komponenty založené na JavaBeans component architecture(JavaBeans components)\footnote{http://docs.oracle.com/javaee/1.4/tutorial/doc/JSPIntro8.html}, ktoré správujú toky dát medzi:
+Server a klient tiež zahŕňa komponenty založené na JavaBeans component architecture(JavaBeans components), ktoré správujú toky dát medzi:
 \begin{itemize}
 \item Aplikačným klientom,alebo apletom a komponentami bežiacimi na Java EE serveri
 \item Serverovými komponentami a databázami
@@ -89,8 +84,26 @@ Server a klient tiež zahŕňa komponenty založené na JavaBeans component arch
 Komunikácia medzi klientom s podnikovým stupňom, ktorý sa nachádza na Java EE serveri, v prípade, že klient beží v prehliadači.
 
 \section{Webové komponenty}
-Java EE webové komponenty sú súčasťou servletov alebo webových stránok, ktoré sú vytvorené JavaServer Faces technológiu\footnote{http://cs.wikipedia.org/wiki/JavaServer\_Faces}(JSF) and JavaServer pages(JSP)\footnote{http://cs.wikipedia.org/wiki/JavaServer\_Pages} technológiou.
+Java EE webové komponenty sú súčasťou servletov alebo webových stránok, ktoré sú vytvorené JavaServer Faces technológiu(JSF) and JavaServer pages(JSP) technológiou.
 Servlety sú javovské triedy , ktoré dynamicky spracovávajú požiadavky a tvoria odpovede. JSP stránky sú textové dokumenty, ktoré pracúvajú ako servlety ale umožňujú prirodzenejší prístup k vytváraniu statického obsahu. JavaServer Faces technológia stavia na servlety a JSP technológie a poskytuje užívateľské rozhranie komponentný framework pre webové aplikácie.
+
+
+\subsection{Java Persistence API}
+Java Persistence API(JPA) je framework jazyku Java, ktorý poskytuje objektovo relačné mapovanie.
+
+\subsection{Enterprise Bean}
+Enterprise Bean(WB) sú Java EE komponenty, ktoré implementujú Enterprise JavaBeans(EJB) technológie. Enterprise bean beží v kontajneri EJB. EB je server-side komponentu, ktorá zapuzdruje obchodnej logiky aplikácie. Obchodná logika je kód, ktorý spĺňa účel použitia.Z niekoľkých dôvodov , EB zjednodušiť vývoj rozsiahlych , distribuovaných aplikácií . Po prvé , pretože kontajner EJB poskytuje služby na úrovni systému k firme fazuľa , fazuľa vývojár môže sústrediť na riešenie obchodných problémov . Kontajner EJB , je zodpovedný za služby na úrovni systému , ako je riadenie transakcií a autorizácie zabezpečenia.
+
+Po druhé , EB skôr než klientov obsahujú obchodné logiku aplikácie , klient môže developer sústrediť na prezentáciu klienta . Klient developer nemusí kód rutiny , ktoré implementujú obchodných pravidiel alebo prístup k databázam . V dôsledku toho , že klienti sú tenšie , výhoda , ktorá je dôležitá najmä pre klientov , ktorí beží na malých zariadeniach .
+
+Po tretie, pretože WB sú prenosné komponenty , môže aplikácia assembler budovanie nových aplikácií z existujúcich fazule . Za predpokladu , že používate štandardné rozhranie API , môžu tieto aplikácie beží na ľubovoľnom kompatibilnom Java EE servera .
+
+EB sa delia na 2 kategórie:
+\begin{itemize}
+\item Message-driven - Vykoná úloha pre klienta; voliteľne môže implementovať webové služby
+\item Session - Pôsobí ako poslucháča pre určitý typ správ, ako je API Java Message Service
+
+\end{itemize}
 
 
 \subsection{Web Services}
@@ -107,39 +120,26 @@ Enterprise JavaBeans(EJB) je používaný na vývoj a nasadzovanie komponentne z
 V ďalšej časti sa zameriame na JBoss a OptaPlanner.
 
 \section{Web Service}
-Web Service je sú klientské a serverové aplikácie, ktoré komunikujú prostredníctvom HTTP protokolu vymenieňaním XML správ. Tieto aplikácie poskystujú interoperabilitu medzi rôznymi platformami naprieč počítačou sieťou. Web Service umožňuje komunikáciu medzi rôznymi aplikáciami, ktoré bežia na rôznych platformách, napr. Java aplikácie založené na Windowse komunikujú s Net. aplikácia bežiaci na Linuxe. Webo services  sa delia na 2 kategórie "big" web services a "RESTFul" web services.
+Web Service  sú klientské a serverové aplikácie, ktoré komunikujú prostredníctvom HTTP protokolu vymenieňaním XML správ. Tieto aplikácie poskystujú interoperabilitu medzi rôznymi platformami naprieč počítačou sieťou. Web Service umožňuje komunikáciu medzi rôznymi aplikáciami, ktoré bežia na rôznych platformách, napr. Java aplikácie založené na Windowse komunikujú s Net. aplikácia bežiaci na Linuxe. Webo services  sa delia na 2 kategórie "big" web services a "RESTFul" web services.
 
 \subsection{"Big" Web Services}
-V Jave EE 6 existuje API, ktoré sa nazýva JAX-WS, ktoré umožňuje vytvorenie práve tohto typu web servici.\cite{fitWeb} "Big" web service využíva XML správy, spolu so SOAP a XML jazykom, ktorý definuje architekrúru a formát správ. Tento typ Web Service obsahuje definíciu pre Web Service vo formáte WSDL, ktorý je čitatelný aj počítačom. Formát SOAP správ a definíciu jazyka WSDL rozhrania môže znížiť zložitosť vývoja aplikácií, webových služieb. Design založený na SOAP musí obsahovať:
-\begin{itemize}
-
-
-\item    Musí byť stanovený formálný kontrakt pre popis rozhrania, ktoré web service ponúka . WSDL môže byť používaný na popis detailov, ktoré môžu zahŕňať správy, operácie, viazanie a umiestnenie webovej služby. 
-
-\item    Architektúra musí riešiť zložité nefunkčné požiadavky. Mnoho špecifikácií web servicemusia riešiť takéto požiadavky a vytvoriť spoločný slovník pre nich. Príklady zahŕňajú transakcie , zabezpečenia, riešenie atď. .
-
-\item    Architektúra musí zvládnuť asynchrónne spracovanie a vyvolanie  V takých prípadoch, infraštruktúra poskytuje štandardy , ako sú Web Services Reliable Messaging ( WSRM ) ,a API napr. JAX - WS.
-
-\end{itemize}
-
+V Jave EE 6 existuje API, ktoré sa nazýva JAX-WS, ktoré umožňuje vytvorenie práve tohto typu web servici.\cite{fitWeb} "Big" web service využíva XML správy, spolu so SOAP a XML jazykom, ktorý definuje architekrúru a formát správ. Tento typ Web Service obsahuje definíciu pre Web Service vo formáte WSDL, ktorý je čitatelný aj počítačom. Formát SOAP správ a definíciu jazyka WSDL rozhrania môže znížiť zložitosť vývoja aplikácií, webových služieb. 
 
 \subsection{RESTful Web Service}
 V Java EE 6 existuje pre druhý typ web service API, ktoré sa nazýva JAX - RS. Tento typ web serrvice je vhodný pre základné , ad hoc integračné scenáre. REST webové služby, často lepšie integrované s HTTP ako službami založenými na SOAP je , nevyžadujú XML správ alebo definície WSDL služby - API.
 
-Tento typ web service je vhodný pokiaľ sú splnené nasledujúce kritéria:
-\begin{itemize}
-  \item  Web service sú bezstatové a potrebné zvážiť, či interakcia môže prežiť reštart servera .
+\subsection{Maven}
+Maven  je založený na centrálnej konceptu životného cyklu zostavenie. Čo to znamená, že proces budovania a distribúciu určitého artefaktu (projektu) je jasne definovaná.Závislosť management je jedným z rysov Maven, ktorý je najlepšie známy pre užívateľa a je jednou z oblastí, kde Maven vyniká. Tam nie je moc ťažké riadenie závislosťou na jednom projekte, ale keď začnete dostať do činenia s projektmi multi-modul a aplikácie, ktoré sa skladajú z desiatok či stoviek modulov toto je miesto, kde Maven vám môže pomôcť veľa pri zachovaní vysokej stupeň kontroly a stability.
 
-  \item Využitie cache, pre dáta ktorá vracia web service nie je dynamicky generované a možno ich uložiť do vyrovnávacej pamäte , medzipamäte infraštruktúry , ktoré webové servery. O použitie sa musí postaráť programátor, pretože tieto cache sú obmedzené metódou HTTP GET.
+Postava Životný cyklus pozostáva z fáz. Každá z týchto zostavenie životný cyklus je definovaný iným zoznamu zostavenie fáz, pričom fáza zostavenie predstavuje fázu životného cyklu.Maven vám pomôže generovať dokumentáciu projektu a vytvoriť stavbu. Nielen, že to generuje kód servera, ale môže nasadiť webové stránky na serveri. Maven má niekoľko správ, ktoré môžete pridať na vaše webové stránky sa zobrazí aktuálny stav projektu. Tieto správy majú formu pluginov, rovnako ako tie používané na zostavenie projektu.
 
-   \item   Výrobca služby a služby pre spotrebiteľov majú vzájomné porozumenie kontextu a obsahu  ktorý je odovzdaný spolu. Neexistuje žiadny formálny spôsob, ako opísať rozhranie webových služieb, musie strany sa dorozumieť ako si budú vymieňať správy a čím aj správne rozumejú.
+Internacionalizácia v Maven je veľmi jednoduché, ak správy používate si, že najmä locale definovaná.\cite{mavenbook}
 
-  \item  Web service alebo agregáciu do existujúcich webových stránok môže byť povolená ľahko pokojný štýl . Vývojári môžu používať také technológie ako JAX - RS a Asynchronous JavaScript s XML ( AJAX ) a také sady nástrojov , ako Direct Web Remoting ( DWR ) konzumovať služby vo svojich webových aplikáciách . Skôr než začínať od nuly , služby môžu byť vystavené s XML a spotrebované HTML stránok , bez toho, aby výrazne refactoring existujúce webové stránky architektúry . Existujúce vývojári budú viac produktívne , pretože sa pridá k niečomu , že sú už oboznámení s tým , skôr než by ste museli začať od nuly s novou technológiou.
+\subsection{Arquillian}
 
 
-\end{itemize}
 \chapter{JBoss Aplication Server} 
-JBoss, čo je vlastne skratka pre JavaBeans Open Source Applicatom Server, v súčastní nazývaný WildFly je aplikačný server, ktorý je založený na platforme Java a Java Enterprise Edition.\cite{jbossbook} Aplikačný server tvorí vrstvu medzi aplikáciami a operačným systémom, pričom rovnako poskytuje aplikácia často využívané funkcie, napr. spracovanie transakcií, výmená správ, atď. . Aplikačné servery podobne ako JBoss Aplication Server(JBoss AS) je open source. JBoss AS je od verzie 5 postavený na JBoss Microcontaineru(JBoss MC), čo je vlastne jadro, ktoré registruje služby(managed beans). Takto pre správu služieb tento server implementuje Java Management Extension(JMX).
+JBoss, čo je vlastne skratka pre JavaBeans Open Source Applicatom Server, v súčastní nazývaný WildFly je aplikačný server, ktorý je založený na platforme Java a Java Enterprise Edition.\cite{jbossbook} Aplikačný server tvorí vrstvu medzi aplikáciami a operačným systémom, pričom rovnako poskytuje aplikácia často využívané funkcie, napr. spracovanie transakcií, výmená správ, atď. . Aplikačné servery podobne ako JBoss Aplication Server(JBoss AS) je open source. JBoss je Java EE platforma pre vývoj a nasadzovanie Java aplikáciu, webových aplikácií, služieb a portálov.
 
  JBoss AS je napísaný v Jave, preto existuje možnosť  ho používať naprieč rôznym platformám. Tento server slúži na vývoj a nasadzovanie podnikových aplikácií, webových aplikácií, služieb a portálov. Tento server je licensovaný pod GNU Lesser General Public License(GNU PL).
 
@@ -161,17 +161,17 @@ Všetko naštartoval v roku 1999 Marc Fleury. Pre podporu vývoja middleware Int
 
 \end{itemize}
 
-V ďalšej časti sa zameriame na OptaPlanner\footnote{http://www.optaplanner.org/}, čo je vlastne systém, pre ktorý je rozhranie navrhované.
+V ďalšej časti sa zameriame na OptaPlanner, čo je vlastne systém, pre ktorý je rozhranie navrhované.
 
 
 
 
 \section{OptaPlanner}
- Optaplanner je framework, kde si môžete vytvoriť pravidlá, ktoré určujú, kedy by mali byť vykonané špecifické akcie. To by mohlo byť vykonané v kóde za použitia podmienok.
-OptaPlanner je odĺahčený open source software a ďalšie prokračovanie frameworku JBoss Drools, ktoré optimalizuje plánovacie problémy.\cite{optaweb} Tieto plánovacie problémy môžu byť nasledujúceho charakteru: 
+Optaplanner je framework, kde si môžete vytvoriť pravidlá, ktoré určujú, kedy by mali byť vykonané špecifické akcie. To by mohlo byť vykonané v kóde za použitia podmienok.
+OptaPlanner je odľahčený open source software a ďalšie prokračovanie frameworku JBoss Drools, ktoré optimalizuje plánovacie problémy.\cite{optaweb} Tieto plánovacie problémy môžu byť nasledujúceho charakteru: 
 \begin{itemize}
-\item Plánovanie agendy: plánovanie schôdzok, vymenovanie, práca údržby, reklama, ...
-\item Plánovanie vzdelávania: plánovanie lekcie, kurzov, skúškov, prezentácie na konferenciách, ...
+\item Plánovanie agendy: plánovanie schôdzok, vymenovanie, práca údržby
+\item Plánovanie vzdelávania: plánovanie lekcie, kurzov
 \end{itemize}
 \begin{figure}[htb]
 
@@ -187,14 +187,12 @@ OptaPlanner je odĺahčený open source software a ďalšie prokračovanie frame
 Obrázok č. \ref{obrazokUseCase} zobrazuje typické použitie OptaPlanner-u. Môžme vidieť v nasledujúcom obrázku vystupú 4 osoby, ktoré vykonávajú nejakú činnosť. Ich činnosť je špecifická a silne závisí od práce predchádzajúcich. Optaplanner sa snaží ich činnosti maximálne optimalizovať a jednotlivé činnosti zvoliť v následnosti tak, aby výsledná práca bola spravená za najkratší možný čas vzhľadom na činnosť, ktorá sa optimalizuje.
 
 
-OptaPlanner pomáha Java programátorom riešiť  constraint satisfaction efektívne.
-
 \subsection{NP-úplný problém}
-Každý plánovací problém je NP-úplný problém.\cite{npbook} NP-úplné problémy sú nedeterministicky polynomiálne problémny, na ktoré sú redukovateľné všetky ostatné NP problémy. Tieto problémy nie sú riešitelné v dostupnom čase, pretože sa nepodarilo nájsť deterministický algoritmus. Príkladom NP úloh môžme považovať: problém obchodné cestujúceho, hľadanie nezávislej množiny, atď. . 
+Každý plánovací problém je NP-úplný problém.\cite{npbook} NP-úplné problémy sú nedeterministicky polynomiálne problémny, ktoré nie sú riešitelné v dostupnom čase, pretože sa nepodarilo nájsť deterministický algoritmus. Príkladom NP úloh môžme považovať: problém obchodné cestujúceho, \ldots .
 
-Riešenia poskytnutým týmto frameworkom, ktorý využíva pokročilé optimalizačné algoritmy, sú dosiahnuteľné v reálnom čase. Dosiahnutie v reálnom čase znamená nájdenie 1 alebo viacerých riešení, alebo nenájdenie žiadneho riešenia vzhľadom na poskytnutý čas a optimalizačné algoritmy.
+Riešenia poskytnutým týmto frameworkom, ktorý využíva pokročilé optimalizačné algoritmy, sú dosiahnuteľné v reálnom čase. Dosiahnutie v reálnom čase znamená nájdenie 1 alebo viacerých riešení, alebo nenájdenie žiadneho riešenia vzhľadom na poskytnutý čas a optimalizačné algoritmy, ktoré sú implementované.
 
-Každý plánovací rpbolém je definovaný na základe obmedzení, ktoré musia minimálne spĺnať: \cite{optabook}
+Každý plánovací problém je definovaný na základe obmedzení, ktoré musia minimálne spĺnať: \cite{optabook}
 \begin{itemize}
 \item Negatívne "hard" obmedzenie, ktoré nesmie byť porušené
 \item Negatívne "soft" obmedzenie, ktoré by nemali byť porušené pokiaľ sa dá tomu vyhnúť.
@@ -202,10 +200,7 @@ Každý plánovací rpbolém je definovaný na základe obmedzení, ktoré musia
 
 Niektoré problémy môžu obsahovať aj pozitívne podmienky alebo odmeny, ktoré by mali byť splnené pokiaľ je možné ich splniť.
 
-Tieto podmienky definujú skóre kalkuláciu plánovacieho problému. Tieto podmienky môžu byť zapísané v Jave alebo v Drools pravidlách, ktoré značne zjednodušujú kód.
-
-
-
+Tieto podmienky definujú skóre plánovacieho problému. Tieto podmienky môžu byť zapísané v Jave alebo v Drools pravidlách, ktoré značne zjednodušujú kód.
 
  Vytvorenie je pomocou pravidiel  môže robiť  oveľa jednoduchšie spájať mnoho pravidiel s mnohými akciami. Tieto pravidlá bývajú typicky definované pomocou XML súboru.
 
@@ -213,19 +208,16 @@ OptaPlanner pomáha  programátori riešiť obmedzenie problémov spokojnosti ef
 
 
 
-
-
-
 \subsection{Výsledky plánovacieho problému}
 
 Tieto obmedzenia definujú výpočetné skóre problému plánovania. Každé riešenie problému plánovanie môže byť odstupňovaná so skóre. 
 
-Plánovanie problému má niekoľko riešení . Existuje niekoľko kategórií riešení:
+Plánovanie problému má niekoľko riešení. Existuje niekoľko kategórií riešení:
 \begin{itemize}
-\item Možným riešením je nejaké riešenie, či je alebo nie je ľubovoľný počet obmedzení. Problémy plánovanie mávajú neuveriteľne veľké množstvo možných riešení. Mnoho z týchto riešení sú bezcenné .
+\item Možným riešením je nejaké riešenie, či je alebo nie je ľubovoľný počet obmedzení. Problémy plánovanie mávajú neuveriteľne veľké množstvo možných riešení. Mnoho z týchto riešení sú bezcenné.
 \item Uskutočniteľným riešením je riešenie, ktoré neporušuje žiadne (negatívne) tvrdé obmedzenia. Niekedy nie sú realizovateľné riešenie. Každý uskutočniteľné riešenie je možné riešenie.
 
-\item Optimálnym riešením je riešenie s najvyšším počtom bodov . Problémy plánovanie mávajú jedno alebo niekoľko optimálnych riešení. K dispozícii je vždy aspoň 1 optimálnym riešením, a to aj v prípade , že neexistujú žiadne uskutočniteľné riešenie, a optimálne riešenie nie je možné .
+\item Optimálnym riešením je riešenie s najvyšším počtom bodov. Problémy plánovanie mávajú jedno alebo niekoľko optimálnych riešení. K dispozícii je vždy aspoň 1 optimálnym riešením, a to aj v prípade , že neexistujú žiadne uskutočniteľné riešenie, a optimálne riešenie nie je možné .
 \item Najlepším riešením je nájsť riešenie s najvyšším skóre zistené implementáciou v danom čase.
 
 \end{itemize}
@@ -268,36 +260,22 @@ Konfigurácie solveru pozostáva z 3 častí:
 \end{itemize}
 
 \subsection{Optimalizačné algoritmy}
+V nasledujúcej časti textu si ukážeme optimalizačné algoritmy, ktoré používa optaplanner.
 \begin{itemize}
 \item First FIT - To je veľmi jednoduché greedy algoritmus aproximácie. Algoritmus spracováva položky v ľubovoľnom poradí . Pre každú položku , pokúsi sa umiestniť na položku v prvom koši , ktorý sa môže ubytovať položku . Ak nie je nájdený žiadny bin , otvára novú priehradku a kladie položku v rámci nového zásobníka .
 
-To je pomerne jednoduché zobrazenie tento algoritmus dosahuje aproximačnou faktor 2 , to znamená , že počet nádob , ktoré tento algoritmus je viac ako dvojnásobok optimálny počet zásobníkov . To je spôsobené tým , zistenie , že v danom čase , že je nemožné , 2 nádoby , aby sa maximálne polovice plná . Dôvodom je , že ak by to bolo možné , znamenalo by to , že v určitom okamihu presne jeden bin bol najviac polovicu plné a nový bol otvorený ubytovať položiek o veľkosti nanajvýš V / 2. Ale od tej doby prvý , kto má aspoň priestor V / 2 , algoritmus nebude otvárať nové kôš pre každú položku , ktorej veľkosť je nanajvýš V / 2. Až po bin naplní viac ako V / 2 alebo chcete položku s veľkosťou väčšou ako V / 2 dorazí , môže algoritmus otvoriť novú priehradku .
-
-Ak teda máme koša B , aspoň B - 1 koše sú viac než z polovice plná .
 \item Firt FIT Decreasing
-\item Firt FIT Decreasing + heurestic local search(
+\item Firt FIT Decreasing + heurestic local search
 
 \begin{itemize}
-\item Hill Climbing -horolezectvo je matematická optimalizácia technika , ktorá patrí do rodiny miestneho vyhľadávania . Jedná sa o iteratívny algoritmus , ktorý začína s ľubovoľným riešenie problému, potom sa pokúsi nájsť lepšie riešenie tým , že postupne mení jeden prvok riešenia . Ak zmena vytvára lepšie riešenie , postupné zmeny je , aby nové riešenie , opakovať až do žiadne ďalšie zlepšenie možno nájsť .
-
-Napríklad , horolezectvo môžu byť použité k problému obchodného cestujúceho . Je ľahké nájsť prvé riešenie , ktoré navštívi všetky miesta , ale bude veľmi zlá v porovnaní s optimálne riešenie . Algoritmus začína s takýmto riešením a robí drobné vylepšenia k nemu , ako napríklad prepínanie poradí , v ktorom sú navštívili dve mestá . Nakoniec , oveľa kratšia cesta je pravdepodobné , že bude získaný.
-
-Hill lezenie je dobré pre nájdenie lokálneho optima ( riešenie , ktoré nemôže byť zlepšená tým , že zvažuje susedné konfiguráciu ) , ale nie je zaručené , že nájsť najlepšie možné riešenie (globálne optimálne ) zo všetkých možných riešení ( priestor hľadania ) . Charakteristické , že iba lokálne optima sú zaručené môže byť vyliečených pomocou reštartuje ( opakované miestne vyhľadávanie ) , alebo zložitejšie schémy na základe iterácií , ako iteratívny lokálne vyhľadávanie v pamäti , rovnako ako reaktívne optimalizácia pre vyhľadávače a Tabu prehľadávanie , alebo pamäť , menej náhodných zmien , rovnako ako simulované žíhanie . \cite{algobook}
+\item Hill Climbing - hill climbing je matematická optimalizácia technika, ktorá patrí do rodiny miestneho vyhľadávania. Jedná sa o iteratívny algoritmus, ktorý začína s ľubovoľným riešenie problému, potom sa pokúsi nájsť lepšie riešenie tým , že postupne mení jeden prvok riešenia . Ak zmena vytvára lepšie riešenie , postupné zmeny je , aby nové riešenie , opakovať až do žiadne ďalšie zlepšenie možno nájsť . \cite{algobook}
 
 
 
 
-\item Tabu Search - Tabu prehľadávanie používa miestnej alebo susedstve vyhľadávanie postup iteratívne presunúť z jedného možného riešenia x k lepšiemu riešeniu x  v susedstve x , kým sa niektorá zastavenie kritériom bol splnený ( Všeobecne platí , že obmedzenia pokus alebo prah skóre ) . Miestne postupy vyhľadávania sa často stávajú uviazol v zlej bodovania oblastiach alebo v oblastiach, kde skóre plošine . V snahe vyhnúť sa týmto nástrahám a preskúmať oblasti hľadaného miesta , ktorá by mala zostať bez prehliadky inými miestnymi postupmi vyhľadávanie , tabu search starostlivo skúma okolí každého roztoku ako hľadanie postupuje . Riešenie prijatí do novej štvrti , $N ^ * ( x )$ , sú určené pomocou pamäťových štruktúr . Pomocou týchto pamäťových štruktúr , 
-F
-Tieto pamäťové štruktúry tvorí to , čo je známe ako zoznam tabu , súborom pravidiel a zakázaných riešenie slúži na filtrovanie , ktoré riešenie bude prijatý do susedstva $N ^ * ( x )$ , ktoré majú byť skúmané vyhľadávanie . Vo svojej najjednoduchšej forme , zoznam tabu je krátkodobý sadu riešení , ktoré boli navštívené v nedávnej minulosti ( menej ako n iterácií pred , kde n je počet predchádzajúcich riešeniach , ktoré možno uložiť - je tiež nazývaný tabu držba ) . Všeobecnejšie , zoznam tabu sa skladá z riešení , ktoré boli zmenené v procese prechodu od jedného do druhého roztoku . Je vhodný pre ľahké popisu pochopiť " riešenie " , ktorý má byť kódovaný a predstavované týmito atribútmi .
+\item Tabu Search - Tabu search používa miestnej alebo susedstve vyhľadávanie postup iteratívne presunúť z jedného možného riešenia x k lepšiemu riešeniu x  v susedstve x , kým sa niektorá zastavenie kritériom bol splnený ( Všeobecne platí , že obmedzenia pokus alebo prah skóre ) . Miestne postupy vyhľadávania sa často stávajú uviazol v zlej bodovania oblastiach alebo v oblastiach, kde skóre plošine . V snahe vyhnúť sa týmto nástrahám a preskúmať oblasti hľadaného miesta , ktorá by mala zostať bez prehliadky inými miestnymi postupmi vyhľadávanie , tabu search starostlivo skúma okolí každého roztoku ako hľadanie postupuje . Riešenie prijatí do novej štvrti , $N ^ * ( x )$ , sú určené pomocou pamäťových štruktúr . Pomocou týchto pamäťových štruktúr.
 
-\item Simulated Annealing - Simulované žíhanie ( SA ) je všeobecný pravdepodobnostné metaheuristic pre globálne optimalizačné problém lokalizovať dobré priblíženie k globálnej optimálnej danej funkcie vo veľkom vyhľadávacieho priestoru . To sa často používa pri hľadaní priestorov je diskrétne ( napr. všetky výlety , ktoré navštevujú danú množinu miest ) . U niektorých problémov , môže simulované žíhanie byť účinnejšie ako vyčerpávajúci zoznam - za predpokladu , že cieľom je iba nájsť prijateľne dobré riešenie v stanovenú dobu , skôr ako tým najlepším možným riešením .
-
-Názov a inšpirácia pochádza z žíhanie v metalurgii , technika zahŕňajúce vykurovania a riadeného ochladzovania materiálu k zvýšeniu veľkosti svojich kryštálov a znížiť ich vady . Obaja sú vlastnosti materiálu , ktorý závisí na jeho termodynamickej voľnej energie . Vykurovanie a chladenie materiálu má vplyv na teplotu a termodynamickú voľnú energiu . Aj keď rovnaké množstvo chladenie prináša rovnaké množstvo poklesu teploty je prinesie väčší alebo menší pokles termodynamickej voľnej energie v závislosti na rýchlosti , ktorá sa vyskytuje , s pomalším tempom produkujúce väčší pokles .
-
-Tento pojem pomalého ochladzovania sa vykonáva v simulované žíhanie algoritmu , ktorý je pomalý pokles v pravdepodobnosti prijatia horšie riešenie , ako sa zaoberá riešenie priestoru . Prijatie horšie riešenie je základná vlastnosť metaheuristics , pretože to umožňuje rozsiahlejšie hľadanie optimálneho riešenia .
-
-Táto metóda bola nezávisle opísal Scott Kirkpatrick , C. Daniel Gelatt a Mario P. Vecchi v roku 1983 , [ 1 ] a Vlado Černý v roku 1985 . [ 2 ] Táto metóda je adaptáciou Metropolis - Hastings algoritmus , metóda Monte Carlo generovať vzorové stavy termodynamického systému , vynájdený MN Rosenbluth a publikované v dokumente N. Metropolis et al . v roku 1953 . [ 3 ]
+\item Simulated Annealing - Simulované žíhanie je všeobecný algoritmus pre globálne optimalizačné problémy lokalizovať dobré priblíženie k globálnej optimálnej danej funkcie vo veľkom vyhľadávacieho priestoru. To sa často používa pri hľadaní priestorov je diskrétne ( napr. všetky výlety , ktoré navštevujú danú množinu miest ) . U niektorých problémov , môže simulované žíhanie byť účinnejšie ako vyčerpávajúci zoznam - za predpokladu , že cieľom je iba nájsť prijateľne dobré riešenie v stanovenú dobu , skôr ako tým najlepším možným riešením .
 
 \end{itemize}
 
@@ -309,89 +287,117 @@ V ďalšej kapitole by som rád uviedol problematiku užívateľského rozhrania
 V tejto kapitole sa zameráme na problematiku užívateľského rozhrania, ktoré vlastne je reprezentované Web services. Toto rozhranie bude umožňovať nahrávať pravidlá, zobrazovať výsledky, spúšťať, pozastovať a zobrazovať detaily úloh. Keďže táto výsledná aplikácia by mala byť použíteľná aj na mobilnom telefóne bol vybratý štýlovací framework Twitter Bootstrap, ktorý značne uľahčenie tvorbu takéhoto rozhrania.
 
 \section{Twitter Bootstrap}
-Twitter Bootstrapje veľmi jednoduchý a voľne dostupný súbor nástrojov pre vytváranie moderného webu a webových aplikácií.\cite{boot} Ponúka podporu najrôznejších webových technológií HTML , CSS , JavaScript\footnote{http://en.wikipedia.org/wiki/Javascript} a mnoho prvkov , ktoré je možné ľahko implementovať do svojej stránky. Pre použitie Twitter Bootstrap sú nutné základné znalosti HTML a CSS. Interaktívne prvky ako sú tlačidlá, boxy , menu a ďalšie kompletne nastavené a graficky spracované elementy je možné vložiť iba pomocou HTML a CSS .
+Twitter Bootstrapje veľmi jednoduchý a voľne dostupný súbor nástrojov pre vytváranie moderného webu a webových aplikácií.\cite{boot} Ponúka podporu najrôznejších webových technológií HTML , CSS , JavaScript a mnoho prvkov , ktoré je možné ľahko implementovať do svojej stránky. Pre použitie Twitter Bootstrap sú nutné základné znalosti HTML a CSS. Interaktívne prvky ako sú tlačidlá, boxy , menu a ďalšie kompletne nastavené a graficky spracované elementy je možné vložiť iba pomocou HTML a CSS .
 
-\subsection{História}
-Mark Otto a Jacob Thornton z Twitteru vyvinuli Twitter Bootstrap ako framework pre podporu konzistencie interných nástrojov. Pred vyvinutím Twitter bootstrap , boli v spoločnosti používané rôzne knižnice pre vývoj rozhrania, čo viedlo k nejednotnosti zdrojových kódov a vysokým nákladom na údržbu.
+\section{Rich Faces}
+Rich faces predstavuje open-source Ajax knižnicu, ktorá predstavuje rozšírenie pre JavaServer Faces. Umožňuje integráciu schopností ajaxu do enterprise aplikácií. 
 
 
 \subsection{Výhody}
 Výhodou tohto súboru nástrojov je jednoduché spracovanie akéhokoľvek používateľského rozhrania vo webovej aplikácii a nerozhoduje , či to je napríklad používateľské rozhranie v administrácii back-endových alebo front-endových aplikácií.
 
-\subsection{Komponenty}
-Dohromady poskytujú komponenty a JavaScript pluginy nasledujúce elementy užívateľského prostredia:
-\begin{itemize}
-\item Button groups - Skupiny tlačidiel
-\item Button dropdowns - Vysúvacia tlačidla
-\item Navigational tabs, pills, and lists - Záložky, pilulky a zoznamy pre navigáciu
-\item Navbar - navigačné položky
-\item Labels - štítky
-\item Badges - "odznáčiky"
-\item Page headers and hero unit - hlavičky stránky a "hero unit"
-\item Thumbnails - náhľady
-\item Alerts - výstrahy
-\item progress bars
-\item Modals
-\item Dropdowns - vysúvacie menu
-\item Tooltips
-\item Popovers
-\item Accordion
-\item Carousel - posuvný slider
-\item Typeahead
-\end{itemize}
 
 Podrobné vysvetlenie jednotlivých komponent nájdete na nasledujúcej adrese http://getbootstrap.com/, rovnako aj s príkladmi použitia. V nasledujúcej časti prejdem na samotný návrh užívateľského rozhrania.
 
+
+\section{Rozbor aplikácie}
+Výsledná aplikácia bude zobrazovať priebežné výsledky výpočtu frameworku optaplanner. Tento framework bude pre túto prácu optimalizovaný pre úlohu N Dám, ktorú bude schopný riešiť. Bude sa deliť na aplikáciu, ktorá predstavuje užívateľské rozhranie vytvorené prostredníctvom technológie Java Server Faces v kombinácií s Rich Faces nastylované prostredníctvom frameworku Twitter Boostrap, ktoré zároveň zabezpečuje prenositeľnosť rozhrania na mobilné telefóny. Užívateľské umožňuje zobrazovanie a spravovanie úloh, organizácií, do ktorých náležia jednotliví užívatelia a užívateľov. Každá časť systému bude sprístupnená podľa príslušnosti užívatela k užívateľskej role. Z tohto rozhrania bude môcť užívateľ pokiaľ mu to užívateľská rola dovoľuej pridať úlohu, ktorú môžme následne spustiť alebo pozastaviť. Spustenie prebehia zavolaním služby web service, ktorá obsahuje potrebné prostriedky na spustenie úlohy. Web service následne zavolá enterprise bean, v ktorej prebieha spracovanie danej úlohy. Výsledok výpočtu sa priebežne ukladá do databáze. Výsledku sa následne priebežne zobrazuje v užívateľskom rozhraní. Užívatelia majú prístup k obmedzenému počtu úloh, zároveň môžu vykonávať obmedzené akcie a to nasledovne:
+\begin{itemize}
+\item Administrátor - má prístup ku všetkým úlohám v systéme, úlohy môže editovať vytvárať, mazať, publikovať a odpublikovať , môže vytvárať, mazať a editovať užívateľov, rovnaké môžnosti má aj s organizáciami
+\item Plánovač - má prístup k úlohám v rámci svojej organizácie, môže vytvárať, editovať, mazať úlohy, publikovať a odpublikovať
+\item Čitateľ - úlohy môže len zobrať v rámci svojej organizácie, publikovať , odpublikovať
+\end{itemize}
+
+
+Výsledná aplikácia bude nasadená na aplikačný server JBoss.
+
+\subsection{Databázová technológia}
+Aplikácia potrebuje pre spracovanie úloh, organizácií a užívateľov databázu. Pre potreby bakalárskej práce bol vybratý relačný open-source databázový model MySQL. MySQL databázová technológia je veľmi vhodná pre malé a stredne veľke aplikácie, čo tá naša je, rovnako poskytuje dobrý výkon pri vykonávaní transakcíí, umožňuje vytvárať procedúry, databázové triggere a jej inštalácia je pomerne jednoduchá a nezaberá veľa diskové priestoru, rovnako je MySQL multiplaformová, keďže je možné ju nasadiť na systémy s operačným systémov windows, linux, max os. Medzi nevýhody tejto technológie patrí neefektívna práca s databázovými transakciami, neefektívne ukladanie veľkého množstva dát.
+
+\subsection{Návrh modelu databáze}
+Na nasledujúcom obrázku je ukázaný ER diagram, ktorý bol použitý pre dtabázu:
+\begin{figure}[htb]
+
+\begin{center}
+
+\includegraphics[scale=0.5]{ER.jpg} 
+\caption{ER diagram}
+\label{ER}
+
+\end{center}
+
+\end{figure}
+
+Tento obrázok zobrazuje jednotlivé entity, ktoré sú potrebné na uloženie v databáze, každá z nich ma určité položky. ER diagrama sa skladá z 3 entít: user - entita, ktorá reprezentuje užívateľ, task - entita, ktorá reprezentuje úlohu a organization - entita, ktorá reprezentuje organizáciu. Výsledný návrh odpovedá skutočnosti, že každý užívateľ musí byť súčašťou organizácia, rovnako môže mať vytvorené 0 až N úloh. Taktiež pre zjednodušenie je každa úloha priradená priamo organizácií pre zlepšenie rýchlosti získania výsledkou a zjednodušenia ich nájdenia. Každá entita obsahuje primárny kľúč(jedná sa o silné entitné množiny), ktorý je odvodený od názvu a začína predponou \uv{id\_} a pokračuje názvom entity. Poďme sa pozrieť bližšie na jednotlivé entity. Entitná množina organization obsahuje 2 položky jednou z nich je primárny klúč a ďalšou názov organizácia podľa, ktorej sú zaraďovaný jednotlivý užívatelia. Ďalej prejdime k entitnej množine user. Táto entita má rovnako primárny kľúč. Ďalej obsahuje položku pre užívateľské meno(user\_name), heslo(password), email, užívateľskú rolu(role) a cudzí kľúcč organization, ktorý obsahuje na organizáciu. Nakoniec prejdime k entitnej množine task. Táto entitná množina obsahuje primárny kľúč, ďalej obsahuje xml súbor, ktorý reprezentuje danú úlohu(v našom prípade N dám), stav úloh(state\_of\_task, ktorý reprezentuje rôzne stavy úlohy), ktorý si podrobnejšie rozobereme. Úloha sa môže nachádzať v jednom z nasledujúcich stavov:
+\begin{itemize}
+\item NEW - úloha bola vytvorená
+\item MODIFIED - xml súbor bol modifikovaný
+\item WAITING - úloha čaká na spracovanie
+\item IN\_PROGRESS - práve prebieha výpočet
+\item PAUSED - úloha je pozastavená
+\item COMPLETE - úloha je dokončená
+\end{itemize}
+Entitná množina task ďalej obsahuje položku, ktorá percentuálne hodnotí stav výpočtu úlohy(progress\_of\_task), čas do skončenia výpočtu úlohy(eta), nastavenie úlohy na privátnu alebo verejnú(ifPublic), názov úlohy(name) a cudzie kľúce user, ktorý odkazuje na užívateľa, ktorým bola úloha vytvorená a organization, ktorá odkazuje na organizáciu užívateľa, ktorým bola vytvorená. V ďalšej kapitole sa pozrieme na use case diagram.
+
+
+
+\subsection{Diagram užitia}
+Nasledujúci obrázok ukazuje príprady užitia systému:
+\begin{figure}[htb]
+
+\begin{center}
+
+\includegraphics[scale=0.5]{UseCase.jpg} 
+\caption{UseCase diagram}
+\label{use}
+
+\end{center}
+
+\end{figure}
+Na nasledujúcom obrázku č.\ref{use} môžme identifikovať 4 užívateľov systém. Public user je verejný úžívateľ, ktorý môže čítať úlohy, ktoré sú nastavené ako verejné(public). Systém môže načítať úlohy z databáze pre potreby výpočtu, z ktorými následne pracuje, a potom výsledky ukladá do databáze, teda edituje úlohy(tasky). Čitateľ(Reader) môže úlohy čítať, publikovať a odpublikovať. Plánovač môže úlohy čítať, vytvárať v databáze, mazať, editovať už vytvorené úlohy v rámci svojej organizácie,publikovať a odpublikovať úlohy a meniť vlastné heslo. Administrátor môže vytvárať úlohy, mazať úlohy , editovať úlohy, publikovať a odpublikovať úlohy. Rovnako si môže meniť heslo, vytvárať,mazať editovať organizácie a užívateľov.
+
+
+
+
 \section{Návrh rozhrania}
-Výsledné rozhranie kladie dôraz na jednoduchosť a prehľadnosť zobrazených úloh. Rozhranie je rozdelené na 2 časti. Prvá časť, obrázok č.\ref{nahratie} popisuje spôsob nahratia xml súboru zo súborového systému. Užívateľ stlačí tlačidlo na nahratie xml, kde sa následne zobrazí obsah súborového systému a užívateľ zvolí príslušný xml súbor. Následne sa vyplnia údaje o názve súboru a počtu pravidiel v xml. Následne užívateľ potvrdí výber tlačidom "OK" a prejde na hlavné okno,ktoré priebežne zobrazuje stav vykonávania úlohy a informácie o úlohe.
-\begin{figure}[!htb]
+Výsledné rozhranie kladie dôraz na jednoduchosť a prehľadnosť zobrazených úloh. Z tôhto dôvodu boli implementované mechanizmy vyhľadávanie úloh, organizácií a užívateľov. Rovnako možnosti lexikografického triedenia. Po prihlásení do systému Jednotlivé môžnosti sú následe zakompotované do záložiek, v ktorých je sprístupné príslušná funkčnosť. Výsledné rozhranie je prenositeľné aj na mobilné zaradenie, čo je spôsobené použitím frameworku Twitter Boostrap.
 
-\begin{center}
 
-\includegraphics[scale=0.8]{NahratieSuboru.jpg} 
-\caption{Ukážka nahratia súboru}
-\label{nahratie}
 
-\end{center}
+\section{Implementácie}
+Aplikácie bola rozložená do viacerých tried podľa zodpovednosti daných komponent. Jednotlivé
 
-\end{figure}
 
-Ďalej by som rád ukázal na obrázku č. \ref{zobrazenie} spôsob zobrazovania úloh spolu s jeho stavom. Toho rozhranie sa dá rozdeliť na 2 časti: Prvá časť je reprezentovaná tlačidlami, ktoré reprezentujú spôsob na : 
-\begin{itemize}
-\item Pridávanie nových úloh, ktoré po stlačení zobrazí okno, ktoré je reprezentované obr. č. \ref{nahratie}
-\item Editovanie skončenej úlohy
-\item Zrušenie vybranej úlohy
-\item Spravovanie užívateľov(platí pre rolu Administrátor)
-\item Pozostavenie bežiacej úlohy
 
-\end{itemize}
 
-Ďalšia časť zobrazuje úlohy. Každá úloha je reprezentovaná rôznymi informáciami, ktoré sú rozdelé do stĺpcov. Každý záznam je prezentovaný položkou ID, ktorá reprezentuje jedinečný identifikátor v rámci systému spracovania, názvu úlohy, ktorá bola vyextrahovaná z xml súboru, statusu úlohy, ktoré je reprezentovaný 3 položkami:
-\begin{itemize}
-\item Dokončená úloha - finished
-\item Running - bežiaca úloha
-\item Paused - pozastavená úloha
-\end{itemize}
-, ukazateľom spracovania úloh, ktorá ukazuje aktuálne spracovania úlohy a položkou ETA, ktorá ukazuje odhadovaný čas do konca spracovania úlohy. Daná tabuľka obsahuje viacero položiek, ktoré rôzne zobrazujú stavy úloh. Úlohy v stave "finished" je možné otvoriť a zobraziť detaily spracovania, zmeniť parametre a spustiť nový beh úlohy, pričom pôvodná úloha zostane zachovaná. Pridávanie úloh možno realizovať aj za behu iných úloh, rovnako pozastavené úlohy možno znova spustiť z inými detailami.
 
-\begin{figure}[h]
 
-\begin{center}
+\section{Testovanie}
 
-\includegraphics[scale=0.8]{Zobrazenie.jpg} 
-\caption{Ukážka zobrazenie stavu úloh}
-\label{zobrazenie}
 
-\end{center}
 
-\end{figure}
+
+
+\section{Vyhodnotenie aplikácie}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 
 \chapter{Záver}
-Táto práca je zameraná na priblíženie technológie Java EE 6, JBoss, OptaPlanner a výsledného rozhrania. Bežnému užívateľovi sú krok po kroku vysvetlované všetky používané metódy. Všetky tieto technológie sú voľne dostupné na internete, preto užívateľ má možnosť sa naučené veci vyskúšať si aj svojpomocne. Výsledný návrh rozhrania kladie dôraz na jednoduchosť, prehľadnosť a širokú podporu. Všetky tieto nové technológie mi pomohli zlepšiť rozhľad v IT technológiách a ukázali mne aj iným  princíp podnikových apikácií, ktoré sa dnes vyvíjajú a používajú.
 
 
 
