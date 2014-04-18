@@ -2,5 +2,5 @@
 /.metadata/*
 /RemoteSystemsTempFiles/*
 /optaplanner.controller/target/*
-/optaplanner.controller/target/
+*/optaplanner.controller/target/**
 
