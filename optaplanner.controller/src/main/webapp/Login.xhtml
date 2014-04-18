@@ -5,7 +5,8 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:a4j="http://richfaces.org/a4j"
     xmlns:rich="http://richfaces.org/rich"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
 <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 
@@ -91,29 +92,35 @@ html, body {
 
 
 
- <div id="container">
 
 
 
-<table>
-<tr><td><h:outputText value="Unknown username" rendered="#{LoginBean.usernameValid}" style="color:red"></h:outputText></td></tr>
-<tr><td><h:outputText value="Username required" rendered="#{LoginBean.usernameEmpty}" style="color:red"></h:outputText></td></tr>
-<tr><td><h:outputText value="Password required" rendered="#{LoginBean.passwordEmpty}" style="color:red"></h:outputText></td></tr>
-<tr><td><h:outputText value="Unknown password" rendered="#{LoginBean.passwordValid}" style="color:red"></h:outputText></td></tr>
-      <h:form class="form-signin" role="form">
-  <tr><td>      <h2 class="form-signin-heading">Please sign in</h2></td></tr>
-        <tr><td><h:inputText  class="form-control" placeholder="Username" value="#{LoginBean.username}" /></td></tr>
-        <tr><td><br></br></td></tr>
-        <tr><td><h:inputSecret type="password" class="form-control" placeholder="Re-type Password" value="#{LoginBean.password}"/></td></tr>
-       
- 		<tr><td><br></br></td></tr>
-        <tr><td><button class="btn btn-lg btn-primary btn-block" type="submit" value="#{LoginBean.checkValidity()}">Sign in</button></td></tr>
-      </h:form>
-</table>
-    </div>
+
     
  
+<ui:define name="content">
 
+			<h:messages />
+
+			<h:form id="loginForm">
+				<c:choose>
+					<c:when test="#{identity.loggedIn}">
+						<h:commandButton action="#{identity.logout}" value="Log out" />
+					</c:when>
+					<c:otherwise>
+						<h:panelGrid columns="2">
+							<h:outputLabel value="nick" for="username" />
+							<h:inputText id="username" value="#{credentials.username}" />
+							<h:outputLabel value="Password" for="password" />
+							<h:inputSecret id="password" value="#{credentials.password}" />
+						</h:panelGrid>
+							<h:commandButton action="#{identity.login}" value="Log in" />
+					</c:otherwise>
+				</c:choose>
+				
+			</h:form>
+
+		</ui:define>
 
 
 

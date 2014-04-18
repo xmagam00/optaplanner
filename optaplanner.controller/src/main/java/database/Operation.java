@@ -1,10 +1,15 @@
 package database;
+import org.jboss.seam.security.Credentials;
+import org.picketlink.idm.impl.api.PasswordCredential;
 
 import java.sql.*;
 import java.util.List;
 
 import javax.persistence.*;
 import javax.transaction.UserTransaction;
+
+import org.jboss.seam.security.Credentials;
+import org.picketlink.idm.impl.api.PasswordCredential;
 
 import database.Task;
 import database.User;
@@ -156,17 +161,17 @@ public class Operation {
 	/**
 	 * Method validate if entered password for user existsin database
 	 * @param username
-	 * @param password
+	 * @param string
 	 * @return true if password match with password in database
 	 */
- 	public boolean validatePassword(String username, String password)
+ 	public boolean validatePassword(String username, String string)
  	{
  		boolean result = false;
  		
  		
  		Query q = eManager.createQuery("select user_name from User where user_name='" + username +"'");
  		 Object pass = q.getSingleResult();
- 		 if (pass.toString().equals(password))
+ 		 if (pass.toString().equals(string))
  		 {
  			 result = true;
  		 }
@@ -505,6 +510,19 @@ public class Operation {
 		      task.setIfPublic(Integer.parseInt(permission));
 		      
 		      entr.commit();
+	}
+	
+	/**
+	 * Method return User entity for logging
+	 * @param username
+	 * @return
+	 */
+	public User getUserByUsername(String username)
+	{
+		Query q = eManager.createQuery("select id_user from User where user_name='" + username +"'");
+		Object user= q.getSingleResult();
+		User users = eManager.getReference(User.class,Long.parseLong(user.toString()));
+		return users;
 	}
 	
 	

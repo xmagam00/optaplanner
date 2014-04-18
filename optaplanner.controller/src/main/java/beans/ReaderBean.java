@@ -12,6 +12,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import java.util.*;
@@ -21,6 +22,7 @@ import javax.annotation.PostConstruct;
 import database.Operation;
 import definition.*;
 
+import org.jboss.seam.security.Identity;
 import org.richfaces.event.*;
 import org.richfaces.model.*;
 
@@ -28,7 +30,9 @@ import org.richfaces.model.*;
 @ViewScoped
 @SuppressWarnings("unused")
 public class ReaderBean implements Serializable{
-
+	
+	@Inject
+	private Identity identity;
 	public List<TaskDef> task;
 	private List<TaskDef> oldTask;
 

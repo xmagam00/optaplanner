@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{URL }
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -8,6 +8,10 @@
 \providecommand{\selectlanguage}[1]{\relax}
 \providecommand{\eprint}[2][]{\url{#2}}
 
+\bibitem{arqbook}
+Ament, J.~D.: \emph{Arquillian Testing Guide}. Packt Publishing, 2013,
+  iSBN~978-1782160700.
+
 \bibitem{Pravidla}
 {Arun Gupta}: \emph{Java EE 6 Pocet Guide}. O'REILLY, 2012,
   iSBN~978-1-449-33668-4.
@@ -15,6 +19,10 @@
 \bibitem{optabook}
 Bali, M.: \emph{Drools JBoss Rules 5.X Developer's Guide}. Packt Publishing,
   2013, iSBN~978-1782161264.
+
+\bibitem{mavenbook}
+Company, S.: \emph{Maven: The Definitive Guide}. O'Reilly Media, 2008,
+  iSBN~978-0596517335.
 
 \bibitem{jbossbook}
 Davis, T. M.~S.: \emph{JBoss at Work: A Practical Guide}. O'Reilly Media, 2006,

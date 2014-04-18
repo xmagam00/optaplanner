@@ -19,6 +19,14 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 	
+	<repositories>
+		<repository>
+			<id>JBoss repository</id>
+			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
+	
+	
     <groupId>org.jboss</groupId>
     <artifactId>optaplanner.controller</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -108,8 +116,32 @@
     </dependencyManagement>
 
     <dependencies>
+   <dependency>
+   <groupId>org.jboss.seam.faces</groupId>
+   <artifactId>seam-faces</artifactId>
+   <version>3.1.0.Final</version>
+   
+</dependency>
+		
+		<dependency>
+			<groupId>jboss</groupId>
+			<artifactId>jboss-annotations-ejb3</artifactId>
+			<version>4.2.2.GA</version>
+		</dependency>
     
-        
+    
+        <dependency>
+
+     <groupId>org.jboss.seam.security</groupId>
+
+     <artifactId>seam-security</artifactId>
+
+     <version>3.1.0.Final</version>
+
+     <scope>compile</scope>
+
+</dependency>   
+
         
         <dependency>
             <groupId>org.richfaces.ui</groupId>

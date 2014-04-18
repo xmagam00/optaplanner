@@ -3,6 +3,7 @@ package beans;
 import java.io.IOException;
 
 import database.Operation;
+import database.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,16 +20,25 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.servlet.*;
 
+import login.UserRole;
+
+import org.picketlink.idm.impl.api.PasswordCredential;
+import org.jboss.seam.*;
+import org.jboss.seam.security.BaseAuthenticator;
+import org.jboss.seam.security.Credentials;
 /**
  * @author martin
  * 
  */
 
-public class LoginBean {
+public class LoginBean extends BaseAuthenticator{
 
-	HttpServletRequest request;
+	@Inject
+	private Credentials credentials;
+
 	public String username;
 	public String password;
 	private boolean usernameValid = false;
@@ -104,8 +114,9 @@ public class LoginBean {
 	public boolean getPasswordValid() {
 		return passwordValid;
 	}
-
-	public void checkValidity() {
+	
+	@Override
+	public void authenticate() {
 		setUsernameValid(false);
 		setPasswordValid(false);
 		setUsernameEmpty(false);
@@ -121,31 +132,58 @@ public class LoginBean {
 		}
 
 		if (getPassword() == null || getPassword().isEmpty()) {
+			setStatus(AuthenticationStatus.FAILURE);
 			setPasswordEmpty(true);
 			return;
 		}
 
 		Operation op = new Operation();
 
-		if (!op.validateUsername(this.username)) {
-
+		if (!op.validateUsername(credentials.getUsername())) {
+			setStatus(AuthenticationStatus.FAILURE);
 			setUsernameValid(true);
 			return;
 		}
 
-		if (!op.validatePassword(this.username, this.password)) {
-
+		if (!op.validatePassword(credentials.getUsername(), (((PasswordCredential) credentials
+				.getCredential()).getValue())))  {
+			setStatus(AuthenticationStatus.FAILURE);
 			setPasswordValid(true);
 			return;
 		}
-
-		HttpSession session = 
-		        (HttpSession) FacesContext.getCurrentInstance().
-		        getExternalContext().getSession(false);
-		        session.setAttribute("user",this.username);
+		final User user = op.getUserByUsername(credentials.getUsername());
+		UserRole role = UserRole.ADMIN;
 		
 		// request.getSession().setAttribute("user", this.username);
-		String role = op.getUserRoleByUsername(this.username);
+		String roles = op.getUserRoleByUsername(credentials.getUsername());
+		if (roles.equals("ADMINISTRATOR"))
+		{
+			role = UserRole.ADMIN;
+		}
+		else if (roles.equals("READER"))
+		{
+			role = UserRole.READER;
+		}
+		else if (role.equals("PLANNER"))
+		{
+			role = UserRole.PLANNER;
+		}
+		
+		final UserRole userRole = role;
+		
+		
+		setUser(new org.picketlink.idm.api.User() {
+			@Override
+			public String getId() {
+				return Long.toString(user.getUserId());
+			}
+			@Override
+			public String getKey() {
+				return userRole.toString();
+			}
+		});
+		
+		setStatus(AuthenticationStatus.SUCCESS);
 
 		if (role.equals("Administrator")) {
 			ExternalContext context = FacesContext.getCurrentInstance()
