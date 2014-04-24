@@ -23,7 +23,7 @@ public interface Pages {
         @AccessDeniedView("/Login.xhtml")
 		@RestrictAtPhase({ PhaseIdType.RESTORE_VIEW,
 			PhaseIdType.INVOKE_APPLICATION })
-        ADMIN_ACTIONS,
+        ADMINISTRATOR,
 
 		@ViewPattern("/Planner.xhtml")
 		@LoginView("/Login.xhtml")
@@ -31,7 +31,7 @@ public interface Pages {
 		@Planner
 		@RestrictAtPhase({ PhaseIdType.RESTORE_VIEW,
 				PhaseIdType.INVOKE_APPLICATION })
-		PLANNER_ACTIONS,
+		PLANNER,
 		
 		@ViewPattern("/Reader.xhtml")
 		@LoginView("/Login.xhtml")
@@ -39,7 +39,7 @@ public interface Pages {
 		@Planner
 		@RestrictAtPhase({ PhaseIdType.RESTORE_VIEW,
 				PhaseIdType.INVOKE_APPLICATION })
-		READER_ACTIONS,
+		READER,
 		
 		
 

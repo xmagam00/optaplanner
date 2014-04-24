@@ -19,7 +19,7 @@ public class LoggedUserController implements Serializable{
     private Authorization authorize;
 
     public boolean isAdmin() {
-        return authorize.isAdmin(identity);
+        return authorize.isAdministrator(identity);
     }
 
     public boolean isReader() {

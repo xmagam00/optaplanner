@@ -8,6 +8,8 @@ import java.util.List;
 import javax.persistence.*;
 import javax.transaction.UserTransaction;
 
+import login.ShaEncoder;
+
 import org.jboss.seam.security.Credentials;
 import org.picketlink.idm.impl.api.PasswordCredential;
 
@@ -169,13 +171,14 @@ public class Operation {
  		boolean result = false;
  		
  		
- 		Query q = eManager.createQuery("select user_name from User where user_name='" + username +"'");
+ 		Query q = eManager.createQuery("select password from User where user_name='" + username +"'");
  		 Object pass = q.getSingleResult();
- 		 if (pass.toString().equals(string))
+ 		 if (pass.toString().equals(ShaEncoder.hash(string)))
  		 {
  			 result = true;
+ 			
  		 }
- 	  
+ 		
        
 
         
@@ -279,7 +282,7 @@ public class Operation {
 		
 		User user = eManager.find(User.class,Long.parseLong(result.toString()));
 		eManager.getTransaction().begin();
-		user.setPassword(password);
+		user.setPassword(ShaEncoder.hash(password));
 		eManager.getTransaction().commit();
  	 }
 	
@@ -287,7 +290,7 @@ public class Operation {
 	{
 		
 		
-		User user = eManager.getReference(User.class,id);
+		User user = eManager.find(User.class,id);
 		eManager.getTransaction().begin();
 		user.setPassword(password);
 		eManager.getTransaction().commit();
@@ -523,6 +526,18 @@ public class Operation {
 		Object user= q.getSingleResult();
 		User users = eManager.getReference(User.class,Long.parseLong(user.toString()));
 		return users;
+	}
+	
+	public String getUserById(long id)
+	{
+		Query q = eManager.createQuery("select user_name from User where id_user=" + String.valueOf(id));
+		Object user= q.getSingleResult();
+		
+			
+			
+
+		
+		return user.toString();
 	}
 	
 	

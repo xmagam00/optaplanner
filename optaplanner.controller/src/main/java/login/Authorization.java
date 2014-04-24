@@ -12,13 +12,13 @@ public class Authorization implements Serializable {
 
 	@Secures
 	@Administrator
-	public static boolean isAdmin(Identity identity) {
+	public static boolean isAdministrator(Identity identity) {
 
 		if (!identity.isLoggedIn()) {
 			return false;
 		}
 		
-		return identity.getUser().getKey().equals(UserRole.ADMIN.toString());
+		return identity.getUser().getKey().equals(UserRole.ADMINISTRATOR.toString());
 	}
 
 	@Secures

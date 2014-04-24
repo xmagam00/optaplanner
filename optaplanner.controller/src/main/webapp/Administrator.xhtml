@@ -54,12 +54,12 @@ tr.spaceUnder > td
 <h:form>
 			<h:commandButton class="btn pull-right" value="Logout"
 				action="#{AdministratorBean.logout}"></h:commandButton>
-			<h:outputText style="margin-right:10px;" value="#{LoginBean.username}" class="pull-right" />
+			<h:outputText style="margin-right:10px;" value="#{AdministratorBean.loggedUsername}" class="pull-right" />
 			<h:outputLabel style="margin-left:5px;" value="User:" class="pull-right" />
 		</h:form>	
 
 
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs" id="MyTab">
   <li class="active"><a href="#task" data-toggle="tab">Tasks</a></li>
   <li><a href="#usermanagement" data-toggle="tab">User Management</a></li>
   <li><a href="#changepassword" data-toggle="tab">Change Password</a></li>
@@ -137,17 +137,19 @@ tr.spaceUnder > td
 
 
 <h:form>
-					<a4j:poll action="#{AdministratorBean.updateTasks()}"
-						interval="100" reRender="userTab"
+					<a4j:poll id="poll33" action="#{AdministratorBean.updateTasks()}"
+						interval="1000" reRender="userTab,poll33"     limitToList="true"
 						enabled="#{AdministratorBean.renderPoll}">
+						
 					</a4j:poll>
-					<a4j:poll interval="100" reRender="editUser" enabled="true">
+		
+					<a4j:poll interval="1000" reRender="editUser" enabled="true">
 					</a4j:poll>
 </h:form>
-<h:form>
+<h:form >
 
 					<h:dataTable value="#{AdministratorBean.task}" var="o"
-						class="table table-hover" id="userTab" rows="5">
+						class="table table-hover" id="userTab" rows="5" ajaxRendered="true">
 										
 						<h:column>
 
@@ -469,7 +471,7 @@ tr.spaceUnder > td
 
 
 
-								<table style="float: left;margin-top:50px;margin-left:100px;margin-right:50px;" >
+								<table style="float:left;margin-top:50px;margin-left:100px;margin-right:50px;" >
 									<tr class="spaceUnder">
 										<td>Username:</td>
 										<td><h:inputText type="text" class="form-control" maxlength="100" value="#{AdministratorBean.username}" />
@@ -519,7 +521,7 @@ tr.spaceUnder > td
 								</table>
 </h:form>
 							
-				<h:form>
+				<h:form style="position:relative;top:220px;left:-350px">
 					<a4j:region id="ren" selfRendered="true">
 						<a4j:poll
 							action="#{AdministratorBean.updateEditableOrganizations()}"
@@ -531,9 +533,9 @@ tr.spaceUnder > td
 
 					</a4j:region>
 					<h:dataTable value="#{AdministratorBean.user}" var="po"
-						styleClass="order-table" headerClass="order-table-header"
-						rowClasses="order-table-odd-row,order-table-even-row"
-						id="editUSER" rows="10" class="table">
+						class="table table-hover" 
+						
+						id="editUSER" rows="10" >
 
 						<h:column>
 
@@ -768,13 +770,16 @@ tr.spaceUnder > td
 				</table>
 				</h:form>
 
-		<h:form>
+		<h:form action="Administrator.xhtml#changepassword">
 					<a4j:region>
 						<h:form>
 							<a4j:poll id="poll" interval="50" enabled="true"
 								reRender="poll,tabOrg" />
 						</h:form>
 					</a4j:region>
+					</h:form>
+					
+					<h:form>
 					<h:dataTable value="#{AdministratorBean.organizations}" var="org"
 						class="table table-hover" rows="10"
 						 id="tabOrg">
@@ -783,7 +788,7 @@ tr.spaceUnder > td
 
 							<f:facet name="header">
 							
-								<h:commandLink action="#{AdministratorBean.sortByIdOrg}" onclick="$('#changepassword a').tab('show')">
+								<h:commandLink action="#{AdministratorBean.sortByIdOrg}" >
 									<h:outputText value="ID Organization"></h:outputText>
 								</h:commandLink>
 							</f:facet>
@@ -795,7 +800,7 @@ tr.spaceUnder > td
 						<h:column>
 
 							<f:facet name="header">
-								<h:commandLink action="#{AdministratorBean.sortByNameOrganization}">
+								<h:commandLink action="#{AdministratorBean.sortByNameOrganization}" >
 									<h:outputText value="Name of Organization"></h:outputText>
 								</h:commandLink>
 							</f:facet>
@@ -829,12 +834,11 @@ tr.spaceUnder > td
 						</h:column>
 
 					</h:dataTable>
-					</h:form>
-					<h:form>
+				
 					<table>
 				<tr><td><rich:dataScroller for="tabOrg" maxPages="10" /></td></tr>
 					<tr><td><h:commandButton class="btn btn-default" value="Save Changes" action="#{AdministratorBean.saveActionOrganization}" /> </td></tr>
-		<tr><td><h:commandButton value="Show all organization" class="btn btn-default" action="#{AdministratorBean.showAllOrganizations()}" /></td></tr>
+		<tr><td><a4j:commandButton value="Show all organization" styleClass="btn btn-default" action="#{AdministratorBean.showAllOrganizations()}" onclick="$('#myTab a:last').tab('show')"/></td></tr>
 		</table>
 		</h:form>
 		</div>

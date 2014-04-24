@@ -15,9 +15,12 @@ import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -33,14 +36,14 @@ import org.jboss.seam.security.Credentials;
  * @author martin
  * 
  */
-
+@RequestScoped
 public class LoginBean extends BaseAuthenticator{
 
 	@Inject
 	private Credentials credentials;
 
-	public String username;
-	public String password;
+	private String username;
+	private String password;
 	private boolean usernameValid = false;
 	private boolean passwordValid = false;
 	private boolean usernameEmpty = false;
@@ -122,16 +125,19 @@ public class LoginBean extends BaseAuthenticator{
 		setUsernameEmpty(false);
 		setPasswordEmpty(false);
 
-		if (getUsername() == null || getUsername().isEmpty()) {
+		if (credentials.getUsername() == null || credentials.getUsername().isEmpty()) {
 			setUsernameEmpty(true);
 			if (getPassword() == null) {
 				setPasswordEmpty(true);
-
+				
 			}
+			setStatus(AuthenticationStatus.FAILURE);
 			return;
 		}
 
-		if (getPassword() == null || getPassword().isEmpty()) {
+		if (((PasswordCredential) credentials
+				.getCredential()).getValue() == null || ((PasswordCredential) credentials
+						.getCredential()).getValue().isEmpty()) {
 			setStatus(AuthenticationStatus.FAILURE);
 			setPasswordEmpty(true);
 			return;
@@ -144,7 +150,7 @@ public class LoginBean extends BaseAuthenticator{
 			setUsernameValid(true);
 			return;
 		}
-
+	
 		if (!op.validatePassword(credentials.getUsername(), (((PasswordCredential) credentials
 				.getCredential()).getValue())))  {
 			setStatus(AuthenticationStatus.FAILURE);
@@ -152,13 +158,13 @@ public class LoginBean extends BaseAuthenticator{
 			return;
 		}
 		final User user = op.getUserByUsername(credentials.getUsername());
-		UserRole role = UserRole.ADMIN;
+		UserRole role = UserRole.ADMINISTRATOR;
 		
 		// request.getSession().setAttribute("user", this.username);
 		String roles = op.getUserRoleByUsername(credentials.getUsername());
 		if (roles.equals("ADMINISTRATOR"))
 		{
-			role = UserRole.ADMIN;
+			role = UserRole.ADMINISTRATOR;
 		}
 		else if (roles.equals("READER"))
 		{
@@ -184,38 +190,18 @@ public class LoginBean extends BaseAuthenticator{
 		});
 		
 		setStatus(AuthenticationStatus.SUCCESS);
-
-		if (role.equals("Administrator")) {
-			ExternalContext context = FacesContext.getCurrentInstance()
-					.getExternalContext();
-			try {
-				context.redirect("Administrator.xhtml");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		if (role.equals("Planner")) {
-			ExternalContext context = FacesContext.getCurrentInstance()
-					.getExternalContext();
-			try {
-				context.redirect("Planner.xhtml");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		if (role.equals("Reader")) {
-
-			ExternalContext context = FacesContext.getCurrentInstance()
-					.getExternalContext();
-			try {
-				context.redirect("Reader.xhtml");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		try {
+		
+		externalContext.redirect("Administrator.xhtml");
+	
+			
+				
+				
+			
+		} catch(Exception ex)
+		{
+			ex.printStackTrace();
 		}
 
 	}

@@ -66,6 +66,9 @@ body {
 table {
     margin: 0 auto;
 }
+
+table td{
+margin-left:10px;}
 body {
 	
 	background-color: #eee !important;;
@@ -78,13 +81,17 @@ body {
 html, body {
     width: 100%;
 }
+tr.spaceUnder > td
+{
+  padding-bottom: 1em;
+}
 </style>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
 <title>Optaplanner.Controller</title>
 </h:head>
 <h:body>
-
+<h1>Sign in</h1>
 
 
 
@@ -98,29 +105,26 @@ html, body {
 
     
  
-<ui:define name="content">
 
-			<h:messages />
+
+			
 
 			<h:form id="loginForm">
-				<c:choose>
-					<c:when test="#{identity.loggedIn}">
-						<h:commandButton action="#{identity.logout}" value="Log out" />
-					</c:when>
-					<c:otherwise>
-						<h:panelGrid columns="2">
-							<h:outputLabel value="nick" for="username" />
-							<h:inputText id="username" value="#{credentials.username}" />
-							<h:outputLabel value="Password" for="password" />
-							<h:inputSecret id="password" value="#{credentials.password}" />
-						</h:panelGrid>
-							<h:commandButton action="#{identity.login}" value="Log in" />
-					</c:otherwise>
-				</c:choose>
+				
+						<table>
+						<tr class="spaceUnder"><td>	<h:outputLabel value="Username" for="username" /></td><td>
+							<h:inputText type="text" class="form-control" id="username" value="#{credentials.username}" /></td></tr>
+							
+						<tr class="spaceUnder"><td>	<h:outputLabel value="Password" for="password" /></td><td>
+							<h:inputSecret type="text" class="form-control" id="password" value="#{credentials.password}" /></td></tr>
+							
+				</table>
+							<h:commandButton class="btn btn-primary" action="#{identity.login}" value="Log in" />
+				
 				
 			</h:form>
 
-		</ui:define>
+
 
 
 

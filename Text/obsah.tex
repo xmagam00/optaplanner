@@ -1,99 +1,111 @@
 
 
 \chapter{Úvod}
+V úvode by som Vás rád krátko zoznámil s témou svojej bakalárskej práce, ktorá sa venuje téme Systému monitorovania stavu plánovacích úloh. Tento systém sa skladá z užívateľského rozhrania, ktoré je vytvorené prostredníctvom Java open-source technológií, ktoré bežia na javovskom serveri. Preto sa zameráme na všetky technológie, ktoré potrebujeme pre správne pochopenie a následnú implementáciu užívateľského rozhrania pre tento systém. Rovnako bližšie vysvetlím použitý open-source java server, ktorý je nevyhnutý pre beh aplikácie. Rovnako bude treba správne pochopiť celý plánovací open-source plánovací systém Optaplanner, pre ktoré je užívateľské rozhranie určené. Tento systém umožňuje spúšťať definované užívateľsky definované problémy, ktoré systém prostredníctvom správnych algoritmov naplánuje a dospeje k správnemu riešeniu vhľadom na dostupný čas a dostupné algoritmy. Rovnako sa budem venovať testovaniu a vyhodnoteniu užívateľského rozhrania z hľadiska intuitívnosti, jednoduchosti a splnenia všetkých formálnych požiadavok. Rovnako uvediem testy potrebné k overeniu správnej činnosti aplikácie a použitý framework. Toto téma bolo vybraté z dôvodu môjho osobného záujmu o open-source technológie,rovnako o možnosti ich využitia a veľmi ma zaujala možnosť verejná zdieľania projektu medzi open-source komunitov, ktorá mi môže poskytnúť spätnú vazu, resp. môže túto prácu využívať v praxi, čo cieľ, ktorý by som rád prostredníctvom tejto práce dosiahol.
 
+Dopísať podľa vyhodnotnenie podľa testovania a dotazníka.
 
 
 
 
 \chapter{Java Enterprise edition 6}
-V posledných rokoch prevláda tendencia tvorby komplexných informačných systémov, ktoré spracovávajú veľké množstvo dát. Preto sa zvyšuje tlak na vývojárov na tvorbu prostriedkov, ktoré dokáže takéto systémy ľahko a rýchlo vytvárať. Jedným z takýchto protriedkov je platforma Java Enterprise Edittion 6(Java EE 6).
-Java EE 6 predstavuje platformu určenú na vývoj webových a podnikových aplikácií.\cite{fitWeb}Tieto aplikácie sú viacvrstvové z dôvodu lepšej prenositeľnosti, nasaditeľnosti a modifikovateľnosti. Frontend, predstavujúci užívateľské rozhranie a logiku na jeho ovládanie, pozostáva z webových frameworkov, stredná vrsta poskytuje bezpečnosť a transakcie. Najnižšia vrstva poskytuje pripojenie k databázam. Java EE 6 je vhodná pre implementáciu podnikovej logiky, ktorá dokáže byť riadená alebo interagovať s inými podnikovými aplikáciami. Java EE 6 je platformou, ktorá poskytuje širokú škálu aplikačných programových rozhraní(API), ktoré zjednodušujú, zkracujú a znižujú komplexnosť výslednej aplikácie. Jej vývoj neustále napreduje a je spravovaný Java Comunnity process(JCP).
+\section{Motivácia}
+V posledných rokoch prevláda tendencia tvorby komplexných informačných systémov, ktoré spracovávajú veľké množstvo dát. Preto sa zvyšuje tlak na vývojárov na tvorbu prostriedkov, ktoré dokáže takéto systémy ľahko a rýchlo vytvárať. Jedným z takýchto prostriedkov je platforma Java Enterprise Edittion (Java EE ), ktorá použijeme vo verzii 6, ktorá nám postačuje pre implementáciu aplikácie. Java EE je platformou, ktorá rozširuje základné možnosti jazyka Java o enterprise technológie, ktoré umožňujú tvorbu komplexnejší systémov, ktoré bežia na rôznych aplikačných serveroch. Jazyk Java je open source, rovnako ako aj všetky poskytnuté technológie, preto som sa rozhodol využívať tento programovací jazyk. Platforma Java EE je ďalej tvorená špecifikáciami pre podporu webových technológí, webových aplikácií, podnikovej logiky a \ldots. Nám budú postačovať prvé 3 špefikácie tejto platformy, ktoré rozobereme v nasledujúcej časti spolu s technológiami, ktoré ich reprezentujú. Na základe Javy boli implementované boli implementované rôzne java EE kontajnery, ktoré sú potrebné pre správu a beh aplikácie. My sa zameriame na open-source riešenia z dôvodou šírenia projektu ako open-source. Ďalšou výhodou použitia tejto platformy je použitie anotácií, ktoré zjednodušujú implementáciu výslednej aplikácie a spôsobia konfiguráciu danej komponenty pri nasadzovaní a za behu. Rovnako je zdôraznení princíp POJO(Plain Old Java Objects)\cite{pojobook} a zjednodušenie tvorba balíkov. V poslednom rade musí spomenúť princíp \uv{Convetion over configuration}, ktorý minimalizuje počet konfigurácií pre daný projekt. V nasledujúcej časti rozoberiem všetky potrebné špecifikácie doplnené o rôzne frameworky, bez ktorých by sa vývojový cyklus aplikácie nezaobišiel.
 
 
-\indent Java EE 6 bola uvoľnená v decembri 2009 a poskytuje ľahké používanie a kompletnú sadu nástrojov na tvorbu podnikových aplikácií. V súčastnosti vyšla ďalšia verzia, ktorá priniesla ďalšie novinky, ktoré môžte dohľadať v online dokumentácií. V ďalších kapitolách si rozoberieme aplikaný model jazyka, ktoré je veľmi dôležitý pre pochopenie princípu činnosti aplikácií vyvinutých touto platformou. V ďalšej kapitole rozobereme aplikačný model platformy Java EE 6. 
+\section{Špecifikácia platformy}
+Java EE  predstavuje platformu určenú na vývoj webových a podnikových aplikácií\cite{fitWeb}. Tieto aplikácie sú viacvrstvové z dôvodu lepšej prenositeľnosti, nasaditeľnosti a modifikovateľnosti. Frontend, predstavujúci užívateľské rozhranie a logiku na jeho ovládanie, pozostáva z webových frameworkov, stredná vrsta poskytuje bezpečnosť a transakcie. Najnižšia vrstva poskytuje pripojenie k databázam. Java EE je platformou, ktorá poskytuje širokú škálu aplikačných programových rozhraní(API), ktoré zjednodušujú, zkracujú a znižujú komplexnosť vývoja a nasadenia výslednej aplikácie. Jej vývoj neustále napreduje a je spravovaný Java Comunnity process(JCP). Aplikácie pre platformu Java EE sú vyvíjané prostredníctvom API, ktoré táto plaforma poskytuje. Medzi tieto API patrí napríklad: Java Server Faces, Java Persistence API, Enterprise Java Bean, \ldots.  Behovým prostredím sú aplikačné servery, ktoré pozostávajú zo servletov, JavaServer Pages, EnterpriseJavaBeans a iných technológií, ktoré sa starajú o správu aplikácie a jej nasadenie. Keďže je Java označovaná ako multiplatformovaná musí poskytovať prostriedky, ktoré je možné nasadiť naprieč rôznymi aplikačnými serverami. Medzi takýto prostriedok patrí bezpečnosť, ktorá je v riešená pomocou prístupových pravidiel, ktoré sú interpretované za behu aplikácie.
+ V ďalších kapitolách si rozoberieme aplikaný model jazyka, ktoré je veľmi dôležitý pre pochopenie princípu činnosti aplikácií vyvinutých touto platformou. V ďalšej kapitole rozobereme aplikačný model platformy Java EE.  
 
 
 \section{Aplikačný model}
-Java EE je určená pre implementáciu služieb pre zákazníkov, zamestnancov, dodávateľov kohokoľvek, kto prispieva do podniku. Takéto aplikácie sú komplexné a môže byť k nim pristupované z rozličných zdrojov. Pre lepšie zvládanie sú sústredené do stupňov.
-
-\indent Java EE definuje spôsob implementácie služieb, ktoré sú škálovateľné a prístupné.
-
-\section{Distribuovaná viacstupňová aplikácia}
-Java EE definuje aplikácie, ktoré sú viacvrstvové(multitier). Aplikačná logika je rozdelená medzi komponenty podľa ich funkcie.\cite{Pravidla} Jednotlivé komponenty sa následne rôzne inštalujú v závislosti, do ktorého stupňa patria. Jednotlivé stupňe sa skladajú z rôznych komponent:
+Java EE definuje aplikácie, ktoré sú viacvrstvové(multitier). Aplikačná logika je rozdelená medzi komponenty podľa ich funkcie\cite{Pravidla}. Jednotlivé komponenty sa následne rôzne inštalujú na rôzne zariadenia v závislosti, do ktorého stupňa patria(Keďže každý stupeň môže byť fyzicky na inom aplikačnom serveri). Jednotlivé stupňe sa skladajú z rôznych komponent, pričom stupne sú rozdelené nasledovne:
 \begin{itemize}
-\item Klientská komponenta, ktorá beží na klientskom počítači
-\item Webová komponenta, ktorá beží na Java EE serveri
-\item Podniková komponentna, ktorá beží na Java EE serveri
-\item Enterprise Information System software bežiaci na EIS serveri
+\item Klientský stupeň sa skladá z klientských komponenent, ktoré bežia na klientskom počítači
+\item Java EE server sa skladá z webových a podnikových komponent, ktoré bežia na Java EE serveri
+\item Databázový server ktorý sa skladá z enterprise information system komponent
 \end{itemize}
 
-Napriek tomúto rozloženiu býva aplikácia rozložená len do 3 stupňov: Java EE server, klient, databáze. Typicky beží medzi klientskom a databázou častou viac-vláknový Java EE server, ktorý býva označovaný skratkou EIS. Viacstupňovérozloženie môžete názorne vidieť na obrázku č. \ref{model}.
+Typicky beží medzi klientskom a databázou častou viac-vláknový Java EE server, ktorý býva označovaný skratkou EIS. Viacstupňovérozloženie môžete názorne vidieť na obrázku č. \ref{model}.
 \begin{figure}[htb]
 
 \begin{center}
 
 \includegraphics[scale=0.5]{model.jpg} 
-\caption{Model Java EE, prevzaté z  http://docs.oracle.com/javaee/6/tutorial/doc/}
+\caption{Model Java EE [http://docs.oracle.com/javaee/6/tutorial/doc/]}
 \label{model}
 
 \end{center}
 
 \end{figure}
-Java EE aplikácia beží na klientskej stanici, býva obykle reprezentovaná tenkým klientom(webovým prehliadačom), nazývaným \uv{thin client}, alebo hrubým klientom, do ktoré je čiastočne vložená logika aplikácia. V strednej časti obrázku sa nachádza Java EE server, na ktorom môžu bežať rôzne technológie v závislosti od požiadavky výslednej aplikácie a možností daného servera. Java EE server môže by reprezentovaný rôznymi dostupnými technológiami, či už sa jedná o open-source riešenia (JBoss, Tomcat, GlassFish) alebo komerčné riešenia (IBM WebSphere,BEA WebLogic), ten obsahuje rôzne komponenty, ktoré so sebou rôzne komunikujú a interagujú na požiadavky klienta a na druhej strane komunikujú s databázovým systémom. Tieto komponenty predstavujú logiku aplikáciu. Posledná časť predstavuje databázový systém, ktorý obsahuju dáta, ktoré klient požaduje pri svojom požiadavku, tento server sa nazýva "EIS".
+Java EE aplikácia beží na klientskej stanici, býva obykle reprezentovaná tenkým klientom(webovým prehliadačom), nazývaným \uv{thin client}(pretože sa nedotazuje priamo na databázový server), alebo hrubým klientom, do ktoré je čiastočne vložená logika aplikácia. Klient môže byť reprezentovaný ako webový alebo aplikačný. Typický webový klient pritom pozostáva z:  Webové prehliadača, ktorý zobrazuje stránky a dynamických webových stránok pozostávajúceho  z rôzneho značkovaciehojazyka(HTML,XHTML), ktoré sú generované webovými komponentami. Zložitá logika je vykonávaná strednou vrstvou, pričom klient len posiela požiadavky na Java EE server a ten prípadne sa dotazuje databázové servera a následne predáva výsledok. Klient môže poskytovať aj bohatšie užívateľské rozhranie, ktorá býva vytvárané technológiou Swing alebo Abstract Window Toolkit\cite{guibook}, po prípade sa vyskytuje aj prístup prostredníctvom príkazového riadku. V strednej časti obrázku sa nachádza Java EE server, na ktorom môžu bežať rôzne technológie v závislosti od požiadavky výslednej aplikácie a možností daného servera.  Stredná vrstva sa ešte delí na webový stupeň, ktorý je prezentovaný technológiami JavaServer Faces a Pages. Druhá časť strednej vrstvy takzvaná podniková vrstva býva reprezentovaná technológiu EnterpriseJava Beans, ktoré vytvárajú logiku aplikácie. Java EE server môže by reprezentovaný, ešte okrem spomenutých technológií, rôznymi inými dostupnými technológiami, v závislosti od možnosti aplikačného servera, ktorý môže byť open-source (JBoss, Tomcat, GlassFish) alebo komerčný (IBM WebSphere,BEA WebLogic), ten obsahuje rôzne komponenty, ktoré so sebou rôzne komunikujú a interagujú na požiadavky klienta a na druhej strane komunikujú s databázovým systémom a starajú sa o beh aplikácie a jej nasadenie. Posledná časť predstavuje databázový server, ktorý obsahuju dáta, ktoré klient požaduje pri svojom požiadavku, tento server sa nazýva "EIS". Pre prístup k nemu sa používa buď nový prístup, ktorý sa nazýva objektovo-relačné mapovanie, ktoré využíva rozličné ovládače pre prístup k databázovému systému(napr. JBDC).
 
-\section{Bezpečnosť}
+V nasledujúcej kapitole sa zameriame na technológie strednej vrstvy, ktoré sú nevyhnuté pre tvorbu a pochopenie činnosti navrhnutej aplikácie.
 
-Java EE  vytvára prostriedky, ktoré sú prenositeľné a tak je možné systémy nasadzovať naprieč rôznymi platformami. Poskytuje mechanizmus  prístupovej kontroly pravidiel, ktoré sú interpretované, keď je aplikácia nasadzovaná na server. Java implementuje mechanizmus prihlasovania štandardne, čím odpadá programátori povinnosti túto časť dodatočne implementovať.
-
-V ďalšej časti sa zameriame na podrobné vysvetlenie jednotlivých Java EE komponent, pretože ich pochopenie bude nevyhnuté pre výslednú aplikáciu.
-
-
-\section{Java EE komponenty}
-Java EE pozostáva z komponent, čo je vlastne sada sebestačného softwaru, ktorý je zhromaždený do Java EE aplikácií a komunikujú s inými komponentami. Java EE definuje nasledujúce komponenty: 
-\begin{itemize}
-\item Aplikačný klienti a aplety bežiaci na klientovi
-\item Java Servlet, JavaServer Faces, and JavaServer Pages (JSP) komponenty bežia na Java EE serveri\cite{fitWeb}.
-\item Enterprise JavaBeans (EJB) komponenty bežia na Java EE serveri\cite{fitWeb}.
-\end{itemize}
-
-V nasledujúcej časti sa zameriami na vysvetlenie jednotlivých pojmov, pretože sú doôležité z hľadiska pochopiteľnosti výslednej aplikácie.
-
-\section{Java EE klienti}
-Java EE client je typicky webový klient alebo aplikačný klient.
-
-Typický webový klient pozostáva z dvoch častí:
-\begin{itemize}
-\item Dynamické webové stránky pozostávajúce z rôzneho značkovacieho jazyka(HTML, XML), ktoré sú generované webovými komponentami
-\item Webovým prehliadačom, ktorý zobrazuje stránky
-\end{itemize}
-Typický webový klient sa nazýva "thin" klient, pretože nedotazuje nad databázou, alebo implementuje zložitú bussiness logiku. Všetky tieto činnosti vykonavá Java EE server. Klient len posiela požiadavky Java EE serveru a ten vykonáva dotazovanie a predávanie výsledkov.
-
-
-Aplikační klienti bežia na klientských počítačoch, kde poskytujú bohatšie užívateľské rozhranie ako webový rozhrania značkovacích jazykov.
-Typicky býva vytváraný technológiou Swing\footnote{http://cs.wikipedia.org/wiki/Swing\_(Java)} alebo Abstract Window Toolkit(AWT)\footnote{http://en.wikipedia.org/wiki/Abstract\_Window\_Toolkit}, občas sa vyskytuje aj prikázový riadok ako rozhranie.
-
-\section{The JavaBeans Component Architecture}
-Server a klient tiež zahŕňa komponenty založené na JavaBeans component architecture(JavaBeans components), ktoré správujú toky dát medzi:
-\begin{itemize}
-\item Aplikačným klientom,alebo apletom a komponentami bežiacimi na Java EE serveri
-\item Serverovými komponentami a databázami
-\end{itemize}
-
-
-Komunikácia medzi klientom s podnikovým stupňom, ktorý sa nachádza na Java EE serveri, v prípade, že klient beží v prehliadači.
 
 \section{Webové komponenty}
-Java EE webové komponenty sú súčasťou servletov alebo webových stránok, ktoré sú vytvorené JavaServer Faces technológiu(JSF) and JavaServer pages(JSP) technológiou.
-Servlety sú javovské triedy , ktoré dynamicky spracovávajú požiadavky a tvoria odpovede. JSP stránky sú textové dokumenty, ktoré pracúvajú ako servlety ale umožňujú prirodzenejší prístup k vytváraniu statického obsahu. JavaServer Faces technológia stavia na servlety a JSP technológie a poskytuje užívateľské rozhranie komponentný framework pre webové aplikácie.
+Java EE webové komponenty sú softwarové komponenty, ktoré spracovávajú prichádzajúci HTTP požiadok a poskytujú naň odpoveď. Všetky Java EE webové komponenty sú postavané na servletoch. ervlety sú javovské triedy , ktoré dynamicky spracovávajú požiadavky a tvoria odpovede.Súčasťou servletov alebo webových stránok, ktoré sú technológie JavaServer Faces technológiu(JSF) and JavaServer pages(JSP). Servlety podporujú automatickú správu sedenia, prostriedky pre vytváranie a ničenie servletov.  Technológie JavaServer Faces a JavaServer Pages podporujú spracovanie užívateľských vstupov a ich predanie a spracovanie podnikovou logikou. Pre implementáciu výslednej aplikáciu bola použitá JavaServer Faces technológia, ktorá poskytuje dostatočné možnosti pri tvorbe webových stránok. V rámci webových komponent spomeniem technológiu, ktorá je potrebná pre pochopenie funkčnosti aplikácie. Ide o technológiu Web Service.
 
 
-\subsection{Java Persistence API}
+
+\begin{figure}[htb]
+
+\begin{center}
+
+\includegraphics[scale=0.5]{webtechnology.jpg} 
+\caption{Webové komponenty [http://docs.oracle.com/javaee/6/tutorial/doc/] }
+\label{web}
+
+\end{center}
+
+\end{figure}
+Na nasledujúcom obrázku č.\ref{web} je ukázaný princíp fungovania webových komponent. V hornej časti obrázku sa nachádza klientská vrstva, ktorá obsahuje buď len webový prehliadač po prípade Applety alebo JavaBean komponenty, ktoré čiastočne obsahujú logiku aplikácie. Na druhej strane môže byť klient reprezentoný aplikačným klientom, ktorý obsahuje obsahuje úplnú prezentačnú logiku aplikácie a teda v tom prípade, odpadá potreba spracovania vstupov po prípade nejaké generovania html stránky. Takýto klient komunikuje už len priamo s Java EE serverom, konkrétne podnikovým stupňom, ktorý implementuje zvyšnú logiku aplikácie a je reprezentovaný technológiou Enterprise Java Beans. V prípade, že máme k dispozícií tenkého klienta, klient komunikuje prostredníctvom webové prehliadača s HTML alebo XHTML stránky, ktoré sú vytvorené technológiou, ktoré spracovávajú požiadavok od klienta(vstupy) a následne komunikuje s podnikovým stupňom, ktorý obsahuje logiku reprezentovanú Enterprise Java Beans technológiou, ktorý následne môže komunikovať s databázovým serverom. Odpoveď je následne \uv{predaná} stránkám vytvorené prostredníctvom JavaServer Faces alebo JavaServer Pages technológiou a následne zobrazená užívatelovi v podobe výstupu na webovú stránku. V nasledujúcich dvoch podkapitolách sa bližšie pozreme na technológie JavaServer Faces a JavaServer Pages.
+
+
+\subsection{JavaServer Faces}
+JavaServer Faces(JSF)  je framework pre tvorbu užívateľských rozhraní webových aplikácií. Tento framework beží na Java EE serveri. Tento framework poskytuje sa skladá z ďalšieho frameworku, ktorý obsahuje rôzne komponty pre zobrazenie informácií, užívateľských vstupov, spracovanie udalostí, navigáciu medzi stránkami. JSF vytvára aplikácie na základe MVC - Model-View Controller. Aplikácia, ktorá je vytvára týmto frameworkom pozostáva z webových stránok, grafických komponent, sadou komponent naviazané na serverovú časť. Môže obsahovať rôzne desktriptory a konfiguračné súbory, ktoré nám pomáhujú pri nasadzovaní aplikácie. Základom JavaServer Faces je Facelets, čo je vlastne výzorovo deklaračný jazyk pre JSF. Tento jazyk pomáha vytvárať JSF pohľady prostredníctvom HTML a buduje strom komponent. Facelets využíva XHTML pre vytváranie stránok, rovnako podporuje Facelets tag library, ktoré obsahujú obsahujú rôzne dekláracie komponenty, ktorých použitie je nevyhnuté pokiaľ chceme použiť nejakú komponenty z danej knižnice. Facelets stránky používajú XHTML 1 a CSS. Neoddeliteľnou súčasťou technológiu je Expression Language(EL), ktorý umožňuje dynamicky pristupovať k metódam javovských tried, rovnako dokáže získať a nastaviť hodnotu danej komponenty.Pri preklade sa vygenerejú z facelets a EL html komponenty, ktoré sú viazané na javovské triedy, ktoré sa nazývaju \uv{Managed Bean}. Managed Bean sú javovský trieda, ktoré zabezpečujú predávanie údajov medzi rôznymi podnikovými komponentami(tvorenými EnterpriseJava Bean technológiou) a webovou stránkou. Takáto trieda dokáže za behu spracovávať údaje zadané na webovú stránku, rovnako dokáže obstarať validáciu vstupov,  následne metódy a vlastnosti, ktoré sú volané alebo sú predávané údaje z vygenerovavnej stránky(HTML alebo XHTML) do managed bean-y alebo opačne. Aby bola v aplikácií \uv{známa} daná managed bean-a je potrebnú ju zaregistrovať v súbore faces-config.xml. Faces-config-xml je vlastne konfiguračný súbor, ktorý obsahuje zoznam managed bean a cestu k ním v rámci balíkovania, rovnako aj typ managed beany. Typ managed beany môže byť: 
+\begin{itemize}
+\item @RequestScoped Managed beana pokiaľ prežíva HTTP požiadavok. Vytvára sa pri vytvorený požiadavku a zaniká pri zrušení HTTP požiadavku
+\item @NoneScoped Managed Beana existuje tak dlho ako existuje vyhodnotenie Facelets na stránky, po vyhodnotení zaniká
+\item @ViewScoped Managed beana prežíva pokiaľ existuje interakcia s danou JSF stránkou. Vytvára sa pri žiadosti o danú stránku a zaniká pokiaľ užívateľ prejde na inú JSF stránku
+\item @SessionScoped Managed bean prežíva tak dlho pokiaľ existuje HTTP sedenie. Vytvára sa pri 1.požiadavke o danú stránku a zaniká pri invalidácií daného HTTP sedenia
+\item @ApplicationScoped Managed Bean prežíva dokiaľ existuje aplikácia. Je vytvorená pri prvej interakcii s aplikáciou a zaniká pri ukončení aplikácie
+\item @CustomScoped Managed Bean existuje dokiaľ existuje záznam o bean-e v v custom Map, ktorá je vytvorená pre existenciu danej beany
+\end{itemize}
+Rovnako je možné v tomto konfiguračnom súbore nastaviť validačné triedy, reakcie na chyby a iné. Rovnako každá JSF aplikácia môže obsahovať konfiguračný súbor web.xml, ktorý je webový aplikačný deskriptov nasadenia. Tento súbor definuje všetky informácie, ko ktorých musí server vedieť, napr. použité servlety, inicializačné parametre, uvítacie stránky, \ldots.
+\subsection{JavaServer Pages}
+JavaServer Pages technológia je jazyk, ktorý umožňuje priamo vkladanie Java kódu do HTML kódu. Pre vloženia ohraničenie java kódu v HTML stránke sa používajú nasledujúce značky: <\% \%> medzi, ktoré sa vloží príslušný java kód. Takéto časti v html stránky sa nazývaju skriptlety. Tieto skriplety sú dynamické, to znamená, že sú vykonávané za behu aplikácie. Výhodou tejto technológie, že je napísaná v Java a tento jazyk je komplexnejší a bezpečnejší. Rovnako pri žiadosť o JSP stránku(html stránka s príponou JSP, ktorá obsahuje nejaký skriptlet) je, že pri zmene sa nemení celý obsah stránky ale len jej časť, ktorá bola zmenená. Takže takéto JSP stránky sú dynamické a umožňujú zmenu obsahu za behu.
+
+\begin{figure}[htb]
+
+\begin{center}
+
+\includegraphics[scale=0.5]{architecture.jpg} 
+\caption{JSP architektúra [http://interval.cz/clanky/javaserver-pages-pro-vsechny/] }
+\label{jsp}
+
+\end{center}
+
+\end{figure}
+Na nasledujjúcom obrázku č.\ref{jsp}
+Užívateľ je reprezentovaný webový prehliadačom, ktorý zažiada o JSP stránku. Táto požiadavka je predaná Java EE serveru, ktorý zistí, že sa jedná o požiadavku na JPS stránku. Preto je požiadavok spracovaný JSP servlet strojom. Ten skontroluje početnosť požiadavok na danú stránku, pokiaľ ide o 1. tak stránku vygeneruje v opačnom prípade ju prekontroluje. Následne sa vygeneruje špeciálny servlet, ktorý ako základ použije JSP súbor. Kód tohto servletu je skompilovaný a je vytvorená jeho inštancia. Výstupotom zo servletu, ktorý vznikol ako požiadavka o JSP stránku je html stránka, ktorá je predaná užívateľovi, ktorý si ju zobrazí. 
+
+
+\subsection{Web Service}
+Web Service  sú klientské a serverové aplikácie, ktoré komunikujú prostredníctvom HTTP protokolu vymenieňaním XML správ. Tieto aplikácie poskystujú interoperabilitu medzi rôznymi platformami naprieč počítačou sieťou. Web Service umožňuje komunikáciu medzi rôznymi aplikáciami, ktoré bežia na rôznych platformách, napr. Java aplikácie založené na Windowse komunikujú s Net, aplikáciami bežiaci na Linuxe. Tento aspekt je aspekt je umožnený tým, že aplikácie komunikujú prostredníctov HTTP protokolu. Na konceptuálnej úrovni môžme web service chápať ako softwarové komponenty poskytujúje prístup ku koncovému bodu. Týmto koncovým bodov môžme rozumieť systém inej organizácie, od ktorej potrebuje získať nejaké dáta. Rovnako sa môže jednať aj o systém v rámci organizácie. Komunikácia prostredníctvom web service sa delí na 2 učastníkov. Prvý účastník produkovateľ(producer), ktorý vytvára požiadavok a spotrebiteľ(consumer), ktorý prijíma požiadavok. Komunikácia prebieha medzi týmto dvoma učastníkmi výmenov správ. Web service môže byť technicky implementovaný rôznymi možnosťami a prostredníctvom Big Web Service alebo Restful WebService.
+
+\subsubsection{"Big" Web Services}
+V Jave EE 6 existuje API, ktoré sa nazýva JAX-WS, ktoré umožňuje vytvorenie práve tohto typu web servici.\cite{fitWeb} "Big" web service využíva XML správy, spolu so SOAP a XML jazykom, ktorý definuje architekrúru a formát správ. Tento typ Web Service obsahuje definíciu pre Web Service vo formáte WSDL, ktorý je čitatelný aj počítačom. Formát SOAP správ a definíciu jazyka WSDL rozhrania môže znížiť zložitosť vývoja aplikácií, webových služieb. 
+
+\subsubsection{RESTful Web Service}
+V Java EE 6 existuje pre druhý typ web service API, ktoré sa nazýva JAX - RS. Tento typ web serrvice je vhodný pre základné , ad hoc integračné scenáre. REST webové služby, často lepšie integrované s HTTP ako službami založenými na SOAP je , nevyžadujú XML správ alebo definície WSDL služby - API.
+
+\section{Java Persistence API}
 Java Persistence API(JPA) je špecifikácia jazyku Java, ktorý poskytuje objektovo relačné mapovanie. Java Persistence API využíva pre mapovanie entity, ktoré reprezentujú dáta v databázi. Typicky teda reprezentuju tabuľku databáze a jej každá inštacia riadok tabuľky. Entitná trieda má teda atribúty, ktoré priamo odpovedajú názvu stĺpcov v databázovej schéme. To značne uľahčuje a zprehľadňuje prácu s databázou. Pre prístup k databáze sa používa trieda EntityManager, ktorá spracováva transakcie a zabezpečuje aby boli spĺňali podmienky ACID. Java Persistence API rovnako definuje vlastný jazyk Java Persistence Query Language, čo je jazyk podobný jazyku SQL, ktorý využíva trieda EntityManager pri svojej práci. Výhodou je, že tento jazyk je nezávislý na zvolenej databázovej technológií a má objektové vlastnosti, teda pri dotazoch nepoužívame konkrétne názvy tabuliek ale názvy entitný tried a jej vlastností. 
 
 Medzi konkrétne implementácie JPA patrí: Hibernate, Oracle TopLink, OpenJPA.
 
-\subsection{Enterprise Bean}
+\section{Enterprise Bean}
 Enterprise Bean(WB) sú Java EE komponenty, ktoré implementujú Enterprise JavaBeans(EJB) technológie. Enterprise bean beží v kontajneri EJB. EB je server-side komponentov, ktorá zapuzdruje enterprise logiku aplikácie. Obchodná logika je kód, ktorý spĺňa účel použitia. Z niekoľkých dôvodov, EB zjednodušuhe vývoj rozsiahlych, distribuovaných aplikácií. Po prvé, pretože kontajner EJB poskytuje služby na úrovni systému a vývojár sa môže sústrediť na riešenie obchodných problémov. Kontajner EJB, je zodpovedný za služby na úrovni systému, ako je riadenie transakcií a autorizácie zabezpečenia.
 
 
@@ -106,33 +118,20 @@ EB sa delia na 2 kategórie:
 
 
 
-\section{JavaServer Faces}
-JavaServer Faces zodpovedá serverovej strane frameworku pre užívatelské rozhrania vychádzajúce z Javy. JavaServer Faces(JSF) vytvára aplikácie na základe MVC - Model-View Controller. Ďalej treba spomenúť, že pomáha previazať užívatelské údaje so serverom, rovnako ako aj komponenty, ktoré sú znova použitelné.
-
-\indent Aplikácia, ktorá je vytvára týmto frameworkom pozostáva z webových stránok, grafických komponent, sadou komponent naviazané na serverovú časť. Môže obsahovať rôzne desktriptory a konfiguračné súbory, ktoré nám pomáhujú pri nasadzovaní aplikácie. Základom JavaServer Faces je Facelets, čo je vlastne výzorovo deklaračný jazyk pre JSF. Facelets stránky používajú XHTML 1 a CSS. 
 
 
-V ďalšej časti sa zameriame na JBoss a OptaPlanner.
 
-\section{Web Service}
-Web Service  sú klientské a serverové aplikácie, ktoré komunikujú prostredníctvom HTTP protokolu vymenieňaním XML správ. Tieto aplikácie poskystujú interoperabilitu medzi rôznymi platformami naprieč počítačou sieťou. Web Service umožňuje komunikáciu medzi rôznymi aplikáciami, ktoré bežia na rôznych platformách, napr. Java aplikácie založené na Windowse komunikujú s Net. aplikácia bežiaci na Linuxe. Webo services  sa delia na 2 kategórie "big" web services a "RESTFul" web services.
+\section{Convetion over Configuration}
 
-\subsection{"Big" Web Services}
-V Jave EE 6 existuje API, ktoré sa nazýva JAX-WS, ktoré umožňuje vytvorenie práve tohto typu web servici.\cite{fitWeb} "Big" web service využíva XML správy, spolu so SOAP a XML jazykom, ktorý definuje architekrúru a formát správ. Tento typ Web Service obsahuje definíciu pre Web Service vo formáte WSDL, ktorý je čitatelný aj počítačom. Formát SOAP správ a definíciu jazyka WSDL rozhrania môže znížiť zložitosť vývoja aplikácií, webových služieb. 
-
-\subsection{RESTful Web Service}
-V Java EE 6 existuje pre druhý typ web service API, ktoré sa nazýva JAX - RS. Tento typ web serrvice je vhodný pre základné , ad hoc integračné scenáre. REST webové služby, často lepšie integrované s HTTP ako službami založenými na SOAP je , nevyžadujú XML správ alebo definície WSDL služby - API.
-
-
-\subsection{Iné technológie}
-\subsubsection{Maven}
 Maven  je založený na centrálnej konceptu životného cyklu zostavenie. Čo to znamená, že proces budovania a distribúciu určitého artefaktu(projektu) je jasne definovaná. Depency management je jedným z rysov Maven-u, ktorý je najlepšie známy pre užívateľa a je jednou z oblastí, kde Maven vyniká. Maven sa používa hlavne pre multimodulové aplikácie pre zachovanie vysokého stupňa kontroly a stability.
 
 Životný cyklus pozostáva z fáz. Každá z týchto zostavenie životný cyklus je definovaný iným zoznamu zostavenie fáz, pričom fáza zostavenie predstavuje fázu životného cyklu. Maven môže generovať dokumentáciu projektu a  vytvoriť stavbu. Maven má niekoľko správ, ktoré sa môžu pridať na webové stránky a zobraziť aktuálny stav projektu. Tieto správy majú formu pluginov, rovnako ako tie používané na zostavenie projektu.
 
 Internacionalizácia v Maven je veľmi jednoduché.\cite{mavenbook}
 
-\subsubsection{Arquillian}
+
+\section{Testovanie}
+
 Arquillian je integračne a funkčne testovacia platforma, ktorá môže byť použitá pre testovanie middleware Java. Jej hlavným cieľom je urobiť integráčné(a funkčné) testy tak jednoduché písať unit testy, čo umožňuje vývojárom riadenie behu v rámci testu. 
 Arquillian podporuje integráciu s Java EE kontajnermi, ako je JBoss AS a GlassFish a servlet kontajnerov, ako sú Tomcat a Jetty, a podporuje vykonávanie testov v cloudových službách. Podpora kontajnerov umožňuje vývojárom zamerať sa na rad technologických platforiem, vrátane Java EE 5 a 6, servlet prostredie, OSGI, Embedded EJB a samostatné CDI.\cite{arqbook}
 

@@ -5,9 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -15,36 +13,41 @@ import javax.servlet.http.HttpServletRequest;
 
 import java.util.*;
 
+import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
 
 import database.Operation;
 import definition.*;
 
 import org.jboss.seam.security.Identity;
+import org.picketlink.idm.api.User;
 import org.richfaces.event.*;
 import org.richfaces.model.*;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import login.ShaEncoder;
 @ManagedBean
 @RequestScoped
 @SuppressWarnings("unused")
 public class AdministratorBean {
 	
+	
 	@Inject
 	private Identity identity;
 	
-	public List<TaskDef> task;
+	private List<TaskDef> task;
 	private List<TaskDef> oldTask;
 
-	public List<UserDef> users;
+	private List<UserDef> users;
 
 	private List<UserDef> oldUsers;
 
-	public List<OrganizationDef> organizations;
+	private List<OrganizationDef> organizations;
 	private List<OrganizationDef> oldOrganizations;
 
-	public String email;
+	private String email;
 
 	private String password;
 
@@ -60,11 +63,11 @@ public class AdministratorBean {
 
 	private String idTask;
 
-	public String username;
+	private String username;
 
-	public String changeUsername;
+	private String changeUsername;
 
-	public String changeOrg;
+	private String changeOrg;
 
 	private String organization;
 
@@ -72,7 +75,7 @@ public class AdministratorBean {
 
 	private List<String> editableOwner;
 
-	public String role;
+	private String role;
 
 	private String user;
 
@@ -81,7 +84,7 @@ public class AdministratorBean {
 	private String renderButton;
 
 	private String unpublishInformation;
-
+	
 	private String publishInformation;
 
 	private String name;
@@ -146,7 +149,8 @@ private String renderOption2;
 private String renderOption3;
 	
 	private String renderFind3;
-	
+	private User loggedUser;
+	private String loggedUsername;
 	private static final String EMAIL_PATTERN = 
 			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -154,15 +158,10 @@ private String renderOption3;
 	@PostConstruct
 	public void init() {
 		try {
-			try {
-			String username = FacesContext.getCurrentInstance().
-		       getExternalContext().getUserPrincipal().toString();
-			System.out.println(username);
-			}
-			catch(Exception ex)
-			{
-				System.out.println("CHyba");
-			}
+			
+			
+			
+			
 			setRenderEmailFormat("false");
 			setRenderUsername("false");
 			setRenderPassword("false");
@@ -179,7 +178,13 @@ private String renderOption3;
 
 			setUnpublishInformation("");
 			op = new Operation();
-
+			User user = identity.getUser();
+			System.out.println("tutu");
+			
+			String result = op.getUserById(Long.parseLong(user.getId()));
+			setLoggedUsername(result);
+			System.out.println(result);
+			System.out.println(getLoggedUsername());
 			organizations = new ArrayList<OrganizationDef>();
 			task = new ArrayList<TaskDef>();
 			users = new ArrayList<UserDef>();
@@ -791,6 +796,11 @@ private String renderOption3;
 
 	public List<TaskDef> getTask() {
 		return this.task;
+	}
+	
+	public void setTask(List<TaskDef> task)
+	{
+		this.task = task;
 	}
 
 	public String saveAction() {
@@ -1619,7 +1629,7 @@ private String renderOption3;
 		}
 		
 		
-		op.changePassword(getIdUser(), getPass());
+		op.changePassword(getIdUser(), ShaEncoder.hash(getPass()));
 		setPass("");
 		setPasswordValidate("");
 		List<UserDef> user = new ArrayList<UserDef>();
@@ -2162,7 +2172,45 @@ private String renderOption3;
 		return renderOption3;
 	}
 	
+	public void setUsers(List<UserDef> users)
+	{
+		this.users = users;
+	}
+	
+	public List<UserDef> getUsers()
+	{
+		return users;
+	}
+	
+	public void setChangeUsername(String username)
+	{
+		this.changeUsername = username;
+	}
+	
+	public String getChangeUsername()
+	{
+		return changeUsername;
+	}
+	
+	public void setChangeOrg(String org)
+	{
+		this.changeOrg = org;
+	}
+	
+	public String getChangeOrg()
+	{
+		return changeOrg;
+	}
+	
+	public void setLoggedUsername(String username)
+	{
+		this.loggedUsername = username;
+	}
+	
+	
+	public String getLoggedUsername()
+	{
+		return loggedUsername;
+	}
 
-	
-	
 }

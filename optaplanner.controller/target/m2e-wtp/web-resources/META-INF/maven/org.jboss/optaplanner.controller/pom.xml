@@ -122,14 +122,32 @@
    <version>3.1.0.Final</version>
    
 </dependency>
-		
+		 <dependency>  
+         <groupId>joda-time</groupId>  
+         <artifactId>joda-time</artifactId>  
+         <version>1.6</version>  
+      </dependency>  
 		<dependency>
 			<groupId>jboss</groupId>
 			<artifactId>jboss-annotations-ejb3</artifactId>
 			<version>4.2.2.GA</version>
 		</dependency>
-    
-    
+     <dependency>  
+          <groupId>com.ocpsoft</groupId>  
+          <artifactId>prettyfaces-jsf2</artifactId>  
+          <version>3.2.1</version>  
+     </dependency>  
+  <dependency>
+        <groupId>org.drools</groupId>
+        <artifactId>drools-core</artifactId>
+        <version>5.4.0.Final</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.drools</groupId>
+        <artifactId>drools-compiler</artifactId>
+        <version>5.4.0.Final</version>
+    </dependency>
         <dependency>
 
      <groupId>org.jboss.seam.security</groupId>

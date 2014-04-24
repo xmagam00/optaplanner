@@ -1,7 +1,7 @@
   create table if not exists user (
 	id_user int(8) NOT NULL AUTO_INCREMENT,
 	user_name varchar(30) NOT NULL,
-	password varchar(30) NOT NULL,
+	password varchar(300) NOT NULL,
 	role varchar(15) NOT NULL,
 	email varchar(50) NOT NULL,
 	organization int(8) NOT NULL,
