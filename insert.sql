@@ -1,12 +1,12 @@
-insert into organization(name_of_organization) values('Red Hat');
-insert into organization(name_of_organization) values('IBM');
-insert into organization(name_of_organization) values('Oracle');
+insert into organization(nameOfOrganization) values('Red Hat');
+insert into organization(nameOfOrganization) values('IBM');
+insert into organization(nameOfOrganization) values('Oracle');
 
-insert into user(user_name,password,role,email,organization) values('martin','martin','Administrator','martin@martin.cz',1);
-insert into user(user_name,password,role,email,organization) values('david','david','Reader','david@david.cz',2);
-insert into user(user_name,password,role,email,organization) values('peter','peter','Planner','peter@peter.cz',3);
+insert into user(username,password,role,email,organization) values('martin','martin','Administrator','martin@martin.cz',1);
+insert into user(username,password,role,email,organization) values('david','david','Reader','david@david.cz',2);
+insert into user(username,password,role,email,organization) values('peter','peter','Planner','peter@peter.cz',3);
 
-insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user,organization) values('<NQueens id="1">
+insert into task(xmlFile,stateOfTask,progressOfTask,ifpublic,eta,name,user,organization) values('<NQueens id="1">
   <id>0</id>
   <n>4</n>
   <columnList id="2">
@@ -64,7 +64,7 @@ insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user,
     </Queen>
   </queenList>
 </NQueens>','NEW',0,0,120,'NQUEEN',2,1);
-  insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user,organization) values('<NQueens id="1">
+  insert into task(xmlFile,stateOfTask,progressOfTask,ifpublic,eta,name,user,organization) values('<NQueens id="1">
   <id>0</id>
   <n>4</n>
   <columnList id="2">
@@ -122,7 +122,7 @@ insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user,
     </Queen>
   </queenList>
 </NQueens>','COMPLETE',0,0,140,'NQUEEN',3,2);
-      insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user,organization) values('<NQueens id="1">
+      insert into task(xmlFile,stateOfTask,progressOfTask,ifpublic,eta,name,user,organization) values('<NQueens id="1">
   <id>0</id>
   <n>4</n>
   <columnList id="2">
@@ -181,7 +181,7 @@ insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user,
   </queenList>
 </NQueens>','MODIFIED',0,0,150,'NQUEEN',1,3);
 
-      insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user,organization) values('<NQueens id="1">
+      insert into task(xmlFile,stateOfTask,progressOfTask,ifpublic,eta,name,user,organization) values('<NQueens id="1">
   <id>0</id>
   <n>4</n>
   <columnList id="2">
@@ -240,7 +240,7 @@ insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user,
   </queenList>
 </NQueens>','IN_PROGRESS',0,0,150,'NQUEEN',1,3);
 
-      insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user,organization) values('<NQueens id="1">
+      insert into task(xmlFile,stateOfTask,progressOfTask,ifpublic,eta,name,user,organization) values('<NQueens id="1">
   <id>0</id>
   <n>4</n>
   <columnList id="2">
@@ -299,7 +299,7 @@ insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user,
   </queenList>
 </NQueens>','WAITING',0,0,150,'NQUEEN',1,3);
 
-      insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user,organization) values('<NQueens id="1">
+      insert into task(xmlFile,stateOfTask,progressOfTask,ifpublic,eta,name,user,organization) values('<NQueens id="1">
   <id>0</id>
   <n>4</n>
   <columnList id="2">
@@ -358,7 +358,7 @@ insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user,
   </queenList>
 </NQueens>','MODIFIED',0,0,150,'NQUEEN',1,3);
 
-      insert into task(xml_file,state_of_task,progress_of_task,ifpublic,eta,name,user,organization) values('<NQueens id="1">
+      insert into task(xmlFile,stateOfTask,progressOfTask,ifpublic,eta,name,user,organization) values('<NQueens id="1">
   <id>0</id>
   <n>4</n>
   <columnList id="2">

@@ -30,9 +30,14 @@
     <groupId>org.jboss</groupId>
     <artifactId>optaplanner.controller</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
     <name>optaplanner.controller</name>
-    <description>A starter Java EE 6 webapp project for use on JBoss AS 7 / EAP 6, generated from the jboss-javaee6-webapp archetype</description>
+    
+    <modules>  
+    <module>Entities</module>  
+    
+  </modules>  
+ 
 	
 	
 	
@@ -121,6 +126,14 @@
    <artifactId>seam-faces</artifactId>
    <version>3.1.0.Final</version>
    
+</dependency>
+
+
+<dependency>
+   <groupId>javax</groupId>
+   <artifactId>javaee-api</artifactId>
+   <version>6.0</version>
+   <scope>provided</scope>
 </dependency>
 		 <dependency>  
          <groupId>joda-time</groupId>  

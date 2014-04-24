@@ -5,7 +5,7 @@
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:b="http://richfaces.org/sandbox/bootstrap">
+	>
 
 
 
@@ -18,7 +18,7 @@
     <meta name="description" content="Optaplanner service"></meta>
     <meta name="author" content="Martin Maga"></meta>
 
-  <h:outputStylesheet library="css" name="bootstrap.css"  />
+<h:outputStylesheet library="css" name="bootstrap.css"  />
 
 	<style>
 body {
@@ -765,7 +765,7 @@ tr.spaceUnder > td
 
 
 
-					<tr class="spaceUnder"><td><h:commandButton class="btn btn-default" action="#{AdministratorBean.createOrganization}"
+					<tr class="spaceUnder"><td><h:commandButton class="btn btn-default" action="#{AdministratorBean.createOrganization()}"
 						value="Create organization" /></td></tr>
 				</table>
 				</h:form>

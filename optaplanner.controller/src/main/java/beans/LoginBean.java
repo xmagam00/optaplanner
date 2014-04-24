@@ -2,8 +2,8 @@ package beans;
 
 import java.io.IOException;
 
-import database.Operation;
 import database.User;
+import databaseOp.Operation;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

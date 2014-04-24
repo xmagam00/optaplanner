@@ -9,6 +9,7 @@ import javax.persistence.*;
 
 import org.junit.*;
 
+import databaseOp.Operation;
 import definition.*;
 public class TestDatabase {
 	  

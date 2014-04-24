@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+
+<meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <meta name="description" content="Optaplanner service"></meta>
+    <meta name="author" content="Martin Maga"></meta>
+
+  <h:outputStylesheet library="css" name="bootstrap.css"  />
+<style>
+body {
+
+  background-color: #eee   !important;;
+}
+
+.form-signin {
+  max-width: 330px   !important;;
+  padding: 15px   !important;;
+  margin: 0 auto   !important;;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px   !important;;
+}
+.form-signin .checkbox {
+  font-weight: normal   !important;;
+}
+.form-signin .form-control {
+  position: relative   !important;;
+  height: auto   !important;;
+  -webkit-box-sizing: border-box  !important;;
+     -moz-box-sizing: border-box  !important;;
+          box-sizing: border-box  !important;;
+  padding: 10px  !important;;
+  font-size: 16px  !important;;
+}
+.form-signin .form-control:focus {
+  z-index: 2  !important;;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px  !important;;
+  border-bottom-right-radius: 0  !important;;
+  border-bottom-left-radius: 0  !important;;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px  !important;;
+  border-top-left-radius: 0  !important;;
+  border-top-right-radius: 0  !important;;
+}
+
+#container {
+  margin: 0 auto;
+ 
+  text-align: center;
+}
+table {
+    margin: 0 auto;
+}
+
+table td{
+margin-left:10px;}
+body {
+	
+	background-color: #eee !important;;
+  margin: 0; 
+    padding: 0;
+    text-align: center;
+    height:900px;
+}
+
+html, body {
+    width: 100%;
+}
+tr.spaceUnder > td
+{
+  padding-bottom: 1em;
+}
+</style>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+<title>Optaplanner.Controller</title>
+</h:head>
+<h:body>
+<h1>Sign in</h1>
+
+
+
+
+
+
+
+
+
+
+
+    
+ 
+
+
+			
+
+			<h:form id="loginForm">
+				
+						<table>
+						<tr class="spaceUnder"><td>	<h:outputLabel value="Username" for="username" /></td><td>
+							<h:inputText type="text" class="form-control" id="username" value="#{credentials.username}" /></td></tr>
+							
+						<tr class="spaceUnder"><td>	<h:outputLabel value="Password" for="password" /></td><td>
+							<h:inputSecret type="text" class="form-control" id="password" value="#{credentials.password}" /></td></tr>
+							
+				</table>
+							<h:commandButton class="btn btn-primary" action="#{identity.login}" value="Log in" />
+				
+				
+			</h:form>
+
+
+
+
+
+
+
+
+<h:outputScript library="js" name="jquery-2.1.0.js"  />
+  <h:outputScript library="js" name="bootstrap.js"  />
+</h:body>
+</html>
+
+
+
+
