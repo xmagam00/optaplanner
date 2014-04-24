@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="optaplanner.controller">
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/Controllers/src/main/java"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/Entities/src/main/java"/>
-        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
-        <property name="context-root" value="optaplanner.controller"/>
-        <property name="java-output-path" value="/optaplanner.controller/bin"/>
-    </wb-module>
-</project-modules>
