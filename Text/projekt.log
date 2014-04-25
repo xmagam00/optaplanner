@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.4.18)  23 APR 2014 14:57
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.4.18)  25 APR 2014 11:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -723,7 +723,7 @@ File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 \@vyskartext=\skip51
 \@vyskaobr=\skip52
 
-<fig/vut-zp2.pdf, id=150, 109.40875pt x 109.40875pt>
+<fig/vut-zp2.pdf, id=138, 109.40875pt x 109.40875pt>
 File: fig/vut-zp2.pdf Graphic file (type pdf)
  <use fig/vut-zp2.pdf>
 Package pdftex.def Info: fig/vut-zp2.pdf used on input line 112.
@@ -733,7 +733,7 @@ Overfull \hbox (109.58464pt too wide) in paragraph at lines 112--112
 [][] 
  []
 
-<fig/fit-zp2.pdf, id=151, 120.45pt x 120.45pt>
+<fig/fit-zp2.pdf, id=139, 120.45pt x 120.45pt>
 File: fig/fit-zp2.pdf Graphic file (type pdf)
  <use fig/fit-zp2.pdf>
 Package pdftex.def Info: fig/fit-zp2.pdf used on input line 112.
@@ -782,7 +782,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.34 ...N\IeC {\'a}vrh rozhrania}{21}{section.5.4}
+l.34 ...tenie aplik\IeC {\'a}cie}{25}{section.5.7}
                                                    [1
 
 
@@ -810,86 +810,99 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.26 \begin{itemize}
-                     [4
+l.19 
+      [4
 
-] <model.jpg, id=230, 328.22626pt x 346.29375pt>
+] <model.jpg, id=217, 328.22626pt x 346.29375pt>
 File: model.jpg Graphic file (type jpg)
-
-<use model.jpg>
-Package pdftex.def Info: model.jpg used on input line 38.
+ <use model.jpg>
+Package pdftex.def Info: model.jpg used on input line 34.
 (pdftex.def)             Requested size: 164.11272pt x 173.14644pt.
- [5 <./model.jpg>]
-Overfull \hbox (37.67444pt too wide) in paragraph at lines 79--80
-\T1/cmr/m/n/10.95 Server a kli-ent tieº za-h¯¬a kom-po-nenty za-lo-ºené na Ja-v
-a-Be-ans com-po-nent ar-chi-tecture(JavaBeans
+
+Overfull \hbox (20.69966pt too wide) in paragraph at lines 29--42
+\T1/cmr/m/n/10.95 mic-kých webo-vých strá-nok po-zostá-vaj-úceho z rôzneho zna£
+-ko-va-cie-ho-ja-zyka(HTML,XHTML),
  []
 
-[6] [7] [8] [9]
-Kapitola 3.
-[10
+[5] [6 <./model.jpg>] <webtechnology.jpg, id=230, 297.36093pt x 244.66406pt>
+File: webtechnology.jpg Graphic file (type jpg)
 
-] [11]
+<use webtechnology.jpg>
+Package pdftex.def Info: webtechnology.jpg used on input line 55.
+(pdftex.def)             Requested size: 148.6801pt x 122.33173pt.
+ [7 <./webtechnology.jpg>] [8]
+<architecture.jpg, id=243, 509.905pt x 352.31625pt>
+File: architecture.jpg Graphic file (type jpg)
+ <use architecture.jpg>
+Package pdftex.def Info: architecture.jpg used on input line 103.
+(pdftex.def)             Requested size: 254.95187pt x 176.15768pt.
+
+[9 <./architecture.jpg>] [10] [11] [12]
+Kapitola 3.
+[13
+
+] [14]
 Kapitola 4.
-<fig/useCaseOverview.jpg, id=284, 233.05045pt x 187.5772pt>
+<fig/useCaseOverview.jpg, id=283, 233.05045pt x 187.5772pt>
 File: fig/useCaseOverview.jpg Graphic file (type jpg)
 
 <use fig/useCaseOverview.jpg>
-Package pdftex.def Info: fig/useCaseOverview.jpg used on input line 180.
+Package pdftex.def Info: fig/useCaseOverview.jpg used on input line 197.
 (pdftex.def)             Requested size: 116.52493pt x 93.78836pt.
 
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 190.
+(hyperref)                than one, level fixed on input line 207.
 
-[12
+[15
 
- <./fig/useCaseOverview.jpg>] [13]
+ <./fig/useCaseOverview.jpg>] [16]
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2013/08/26 1.5b listings language file
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2013/08/26 1.5b (Carsten Heinz)
 )
-(./cloudBalancingSolverConfig.xml) [14] [15] [16]
+(./cloudBalancingSolverConfig.xml) [17] [18] [19]
 Kapitola 5.
 
-Overfull \hbox (86.71173pt too wide) in paragraph at lines 295--296
+Overfull \hbox (86.71173pt too wide) in paragraph at lines 312--313
 []\T1/cmr/m/n/10.95 Podrobné vy-svet-le-nie jed-not-li-vých kom-po-nent ná-jdet
 e na na-sle-duj-úcej ad-rese http://getbootstrap.com/,
  []
 
-[17
+[20
 
-] <ER.jpg, id=356, 498.36188pt x 414.79968pt>
+] <ER.jpg, id=357, 498.36188pt x 414.79968pt>
 File: ER.jpg Graphic file (type jpg)
  <use ER.jpg>
-Package pdftex.def Info: ER.jpg used on input line 321.
+Package pdftex.def Info: ER.jpg used on input line 338.
 (pdftex.def)             Requested size: 249.18033pt x 207.39934pt.
- [18] [19 <./ER.jpg>] <UseCase.jpg, id=366, 676.77844pt x 525.46312pt>
+ [21] [22 <./ER.jpg>] <UseCase.jpg, id=368, 676.77844pt x 525.46312pt>
 File: UseCase.jpg Graphic file (type jpg)
  <use UseCase.jpg>
-Package pdftex.def Info: UseCase.jpg used on input line 348.
+Package pdftex.def Info: UseCase.jpg used on input line 365.
 (pdftex.def)             Requested size: 338.3884pt x 262.73091pt.
- [20 <./UseCase.jpg>] [21] [22]
+ [23 <./UseCase.jpg>] [24] [25]
 Kapitola 6.
-) (./projekt.bbl [23
+) (./projekt.bbl [26
 
 ]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 33.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 38.
  (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-)) (./prilohy.tex)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 136.
- [24
+)
+[27
 
-]
+]) (./prilohy.tex)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 136.
+ [28]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 136.
  (./projekt.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 136.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 136.
 Package rerunfilecheck Info: File `projekt.out' has not changed.
-(rerunfilecheck)             Checksum: 6AF510E8F8C19D900CF8A148B2CEBE37;5380.
+(rerunfilecheck)             Checksum: B240821AAF328C8767EFF43C721E4261;4754.
 
 
 LaTeX Font Warning: Size substitutions with differences
@@ -898,33 +911,32 @@ LaTeX Font Warning: Size substitutions with differences
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 136.
  ) 
 Here is how much of TeX's memory you used:
- 13352 strings out of 494994
- 181302 string characters out of 6180200
- 380926 words of memory out of 5000000
- 16238 multiletter control sequences out of 15000+600000
- 40014 words of font info for 70 fonts, out of 8000000 for 9000
+ 13361 strings out of 494994
+ 181430 string characters out of 6180200
+ 381247 words of memory out of 5000000
+ 16242 multiletter control sequences out of 15000+600000
+ 39250 words of font info for 69 fonts, out of 8000000 for 9000
  24 hyphenation exceptions out of 8191
- 49i,8n,49p,4968b,1199s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 49i,8n,49p,4968b,1225s stack positions out of 5000i,500n,10000p,200000b,80000s
  </usr/share/texlive/texmf-dist/fonts/pk/ljfour/jknappen/ec/ectt1095.600pk> <
 /usr/share/texlive/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecbx0900.600pk> </usr
-/share/texlive/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </usr/sha
-re/texlive/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> </usr/share/t
-exlive/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecrm0600.600pk> </usr/share/texli
-ve/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecrm0800.600pk> </usr/share/texlive/t
-exmf-dist/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </usr/share/texlive/texmf
--dist/fonts/pk/ljfour/jknappen/ec/ecbx2074.600pk> </usr/share/texlive/texmf-dis
-t/fonts/pk/ljfour/jknappen/ec/ecbx1095.600pk> </usr/share/texlive/texmf-dist/fo
-nts/pk/ljfour/jknappen/ec/ecbx2488.600pk> </usr/share/texlive/texmf-dist/fonts/
-pk/ljfour/jknappen/ec/ecti1095.600pk> </usr/share/texlive/texmf-dist/fonts/pk/l
-jfour/jknappen/ec/ecrm1095.600pk> </usr/share/texlive/texmf-dist/fonts/pk/ljfou
-r/jknappen/ec/ecbx1728.600pk>{/usr/share/texlive/texmf-dist/fonts/enc/dvips/bas
-e/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on projekt.pdf (28 pages, 445877 bytes).
+/share/texlive/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> </usr/sha
+re/texlive/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecrm0600.600pk> </usr/share/t
+exlive/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </usr/share/texli
+ve/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </usr/share/texlive/t
+exmf-dist/fonts/pk/ljfour/jknappen/ec/ecbx2074.600pk> </usr/share/texlive/texmf
+-dist/fonts/pk/ljfour/jknappen/ec/ecbx1095.600pk> </usr/share/texlive/texmf-dis
+t/fonts/pk/ljfour/jknappen/ec/ecbx2488.600pk> </usr/share/texlive/texmf-dist/fo
+nts/pk/ljfour/jknappen/ec/ecti1095.600pk> </usr/share/texlive/texmf-dist/fonts/
+pk/ljfour/jknappen/ec/ecrm1095.600pk> </usr/share/texlive/texmf-dist/fonts/pk/l
+jfour/jknappen/ec/ecbx1728.600pk>{/usr/share/texlive/texmf-dist/fonts/enc/dvips
+/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
+10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
+Output written on projekt.pdf (32 pages, 653151 bytes).
 PDF statistics:
- 990 PDF objects out of 1000 (max. 8388607)
- 428 compressed objects within 5 object streams
- 113 named destinations out of 1000 (max. 500000)
- 311 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 996 PDF objects out of 1000 (max. 8388607)
+ 426 compressed objects within 5 object streams
+ 117 named destinations out of 1000 (max. 500000)
+ 297 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,38 +1,35 @@
 \select@language {czech}
 \contentsline {chapter}{\numberline {1}\IeC {\'U}vod}{3}{chapter.1}
 \contentsline {chapter}{\numberline {2}Java Enterprise edition 6}{4}{chapter.2}
-\contentsline {section}{\numberline {2.1}Aplika\IeC {\v c}n\IeC {\'y} model}{4}{section.2.1}
-\contentsline {section}{\numberline {2.2}Distribuovan\IeC {\'a} viacstup\IeC {\v n}ov\IeC {\'a} aplik\IeC {\'a}cia}{5}{section.2.2}
-\contentsline {section}{\numberline {2.3}Bezpe\IeC {\v c}nos\IeC {\v t}}{6}{section.2.3}
-\contentsline {section}{\numberline {2.4}Java EE komponenty}{6}{section.2.4}
-\contentsline {section}{\numberline {2.5}Java EE klienti}{6}{section.2.5}
-\contentsline {section}{\numberline {2.6}The JavaBeans Component Architecture}{7}{section.2.6}
-\contentsline {section}{\numberline {2.7}Webov\IeC {\'e} komponenty}{7}{section.2.7}
-\contentsline {subsection}{\numberline {2.7.1}Java Persistence API}{7}{subsection.2.7.1}
-\contentsline {subsection}{\numberline {2.7.2}Enterprise Bean}{7}{subsection.2.7.2}
-\contentsline {section}{\numberline {2.8}JavaServer Faces}{8}{section.2.8}
-\contentsline {section}{\numberline {2.9}Web Service}{8}{section.2.9}
-\contentsline {subsection}{\numberline {2.9.1}"Big" Web Services}{8}{subsection.2.9.1}
-\contentsline {subsection}{\numberline {2.9.2}RESTful Web Service}{8}{subsection.2.9.2}
-\contentsline {subsection}{\numberline {2.9.3}In\IeC {\'e} technol\IeC {\'o}gie}{9}{subsection.2.9.3}
-\contentsline {subsubsection}{Maven}{9}{section*.2}
-\contentsline {subsubsection}{Arquillian}{9}{section*.3}
-\contentsline {chapter}{\numberline {3}JBoss Aplication Server}{10}{chapter.3}
-\contentsline {section}{\numberline {3.1}Hist\IeC {\'o}ria JBoos-u}{10}{section.3.1}
-\contentsline {chapter}{\numberline {4}OptaPlanner}{12}{chapter.4}
-\contentsline {subsection}{\numberline {4.0.1}NP-\IeC {\'u}pln\IeC {\'y} probl\IeC {\'e}m}{12}{subsection.4.0.1}
-\contentsline {subsection}{\numberline {4.0.2}V\IeC {\'y}sledky pl\IeC {\'a}novacieho probl\IeC {\'e}mu}{13}{subsection.4.0.2}
-\contentsline {subsection}{\numberline {4.0.3}Uk\IeC {\'a}\IeC {\v z}ka XML configura\IeC {\v c}n\IeC {\'e}ho s\IeC {\'u}boru}{14}{subsection.4.0.3}
-\contentsline {subsection}{\numberline {4.0.4}Optimaliza\IeC {\v c}n\IeC {\'e} algoritmy}{15}{subsection.4.0.4}
-\contentsline {chapter}{\numberline {5}Grafick\IeC {\'e} u\IeC {\v z}\IeC {\'\i }vate\IeC {\v l}sk\IeC {\'e} rozhranie}{17}{chapter.5}
-\contentsline {section}{\numberline {5.1}Twitter Bootstrap}{17}{section.5.1}
-\contentsline {section}{\numberline {5.2}Rich Faces}{17}{section.5.2}
-\contentsline {section}{\numberline {5.3}Rozbor aplik\IeC {\'a}cie}{18}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}Datab\IeC {\'a}zov\IeC {\'a} technol\IeC {\'o}gia}{18}{subsection.5.3.1}
-\contentsline {subsection}{\numberline {5.3.2}N\IeC {\'a}vrh modelu datab\IeC {\'a}ze}{18}{subsection.5.3.2}
-\contentsline {subsection}{\numberline {5.3.3}Diagram u\IeC {\v z}itia}{20}{subsection.5.3.3}
-\contentsline {section}{\numberline {5.4}N\IeC {\'a}vrh rozhrania}{21}{section.5.4}
-\contentsline {section}{\numberline {5.5}Implement\IeC {\'a}cie}{21}{section.5.5}
-\contentsline {section}{\numberline {5.6}Testovanie}{22}{section.5.6}
-\contentsline {section}{\numberline {5.7}Vyhodnotenie aplik\IeC {\'a}cie}{22}{section.5.7}
-\contentsline {chapter}{\numberline {6}Z\IeC {\'a}ver}{23}{chapter.6}
+\contentsline {section}{\numberline {2.1}Motiv\IeC {\'a}cia}{4}{section.2.1}
+\contentsline {section}{\numberline {2.2}\IeC {\v S}pecifik\IeC {\'a}cia platformy}{4}{section.2.2}
+\contentsline {section}{\numberline {2.3}Aplika\IeC {\v c}n\IeC {\'y} model}{5}{section.2.3}
+\contentsline {section}{\numberline {2.4}Webov\IeC {\'e} komponenty}{6}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}JavaServer Faces}{7}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}JavaServer Pages}{9}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.3}Web Service}{10}{subsection.2.4.3}
+\contentsline {subsubsection}{"Big" Web Services}{10}{section*.2}
+\contentsline {subsubsection}{RESTful Web Service}{10}{section*.3}
+\contentsline {section}{\numberline {2.5}Java Persistence API}{11}{section.2.5}
+\contentsline {section}{\numberline {2.6}Enterprise Bean}{11}{section.2.6}
+\contentsline {section}{\numberline {2.7}Convetion over Configuration}{11}{section.2.7}
+\contentsline {section}{\numberline {2.8}Testovanie}{12}{section.2.8}
+\contentsline {chapter}{\numberline {3}JBoss Aplication Server}{13}{chapter.3}
+\contentsline {section}{\numberline {3.1}Hist\IeC {\'o}ria JBoos-u}{13}{section.3.1}
+\contentsline {chapter}{\numberline {4}OptaPlanner}{15}{chapter.4}
+\contentsline {subsection}{\numberline {4.0.1}NP-\IeC {\'u}pln\IeC {\'y} probl\IeC {\'e}m}{15}{subsection.4.0.1}
+\contentsline {subsection}{\numberline {4.0.2}V\IeC {\'y}sledky pl\IeC {\'a}novacieho probl\IeC {\'e}mu}{16}{subsection.4.0.2}
+\contentsline {subsection}{\numberline {4.0.3}Uk\IeC {\'a}\IeC {\v z}ka XML configura\IeC {\v c}n\IeC {\'e}ho s\IeC {\'u}boru}{17}{subsection.4.0.3}
+\contentsline {subsection}{\numberline {4.0.4}Optimaliza\IeC {\v c}n\IeC {\'e} algoritmy}{18}{subsection.4.0.4}
+\contentsline {chapter}{\numberline {5}Grafick\IeC {\'e} u\IeC {\v z}\IeC {\'\i }vate\IeC {\v l}sk\IeC {\'e} rozhranie}{20}{chapter.5}
+\contentsline {section}{\numberline {5.1}Twitter Bootstrap}{20}{section.5.1}
+\contentsline {section}{\numberline {5.2}Rich Faces}{20}{section.5.2}
+\contentsline {section}{\numberline {5.3}Rozbor aplik\IeC {\'a}cie}{21}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Datab\IeC {\'a}zov\IeC {\'a} technol\IeC {\'o}gia}{21}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}N\IeC {\'a}vrh modelu datab\IeC {\'a}ze}{21}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.3}Diagram u\IeC {\v z}itia}{23}{subsection.5.3.3}
+\contentsline {section}{\numberline {5.4}N\IeC {\'a}vrh rozhrania}{24}{section.5.4}
+\contentsline {section}{\numberline {5.5}Implement\IeC {\'a}cie}{24}{section.5.5}
+\contentsline {section}{\numberline {5.6}Testovanie}{25}{section.5.6}
+\contentsline {section}{\numberline {5.7}Vyhodnotenie aplik\IeC {\'a}cie}{25}{section.5.7}
+\contentsline {chapter}{\numberline {6}Z\IeC {\'a}ver}{26}{chapter.6}

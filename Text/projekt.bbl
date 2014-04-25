@@ -16,6 +16,11 @@ Ament, J.~D.: \emph{Arquillian Testing Guide}. Packt Publishing, 2013,
 {Arun Gupta}: \emph{Java EE 6 Pocet Guide}. O'REILLY, 2012,
   iSBN~978-1-449-33668-4.
 
+\bibitem{pojobook}
+Ashmore, D.~C.: \emph{The Java EE Architect's Handbook, Second Edition: How to
+  be a successful application architect for Java EE applications}. Packt
+  Publishing, 2014, iSBN~978-0972954884.
+
 \bibitem{optabook}
 Bali, M.: \emph{Drools JBoss Rules 5.X Developer's Guide}. Packt Publishing,
   2013, iSBN~978-1782161264.
@@ -41,6 +46,10 @@ Johnson, M. R. G. D.~S.: \emph{Computers and Intractability: A Guide to the
 \bibitem{algobook}
 Michiels, J. K. E. A.~W.: \emph{Theoretical Aspects of Local Search}. Springer,
   2007, iSBN~978-3540358534.
+
+\bibitem{guibook}
+Piroumian, V.: \emph{Java GUI Development (Sams Professional)}. Sams, 1999,
+  iSBN~978-0672315466.
 
 \bibitem{optaweb}
 Thilo, M. O. J. T. C. R.~J.: Twitter Bootstrap [online]. {\tt
