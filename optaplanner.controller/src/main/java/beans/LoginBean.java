@@ -170,7 +170,7 @@ public class LoginBean extends BaseAuthenticator{
 		{
 			role = UserRole.READER;
 		}
-		else if (role.equals("PLANNER"))
+		else if (roles.equals("PLANNER"))
 		{
 			role = UserRole.PLANNER;
 		}
@@ -193,7 +193,19 @@ public class LoginBean extends BaseAuthenticator{
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		try {
 		
-		externalContext.redirect("Administrator.xhtml");
+			if (roles.equals("ADMINISTRATOR"))
+			{
+				externalContext.redirect("Administrator.xhtml");
+			}
+			else if (roles.equals("READER"))
+			{
+				externalContext.redirect("Reader.xhtml");
+			}
+			else if (roles.equals("PLANNER"))
+			{
+				externalContext.redirect("Planner.xhtml");
+			}
+	
 	
 			
 				

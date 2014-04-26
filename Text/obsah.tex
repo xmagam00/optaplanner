@@ -233,45 +233,13 @@ OptaPlanner je odľahčený open source software a ďalšie prokračovanie frame
 Obrázok č. \ref{obrazokUseCase} zobrazuje typické použitie OptaPlanner-u. Môžme vidieť v nasledujúcom obrázku vystupú 4 osoby, ktoré vykonávajú nejakú činnosť. Ich činnosť je špecifická a silne závisí od práce predchádzajúcich. Optaplanner sa snaží ich činnosti maximálne optimalizovať a jednotlivé činnosti zvoliť v následnosti tak, aby výsledná práca bola spravená za najkratší možný čas vzhľadom na činnosť, ktorá sa optimalizuje.
 
 
-\subsection{NP-úplný problém}
-Niektoré plánovacie problémy môžu mať charakter NP-úplný problému\cite{npbook}. Optaplanner je schopný vzhľadom na poskytnutý čas a použité plánovacie algoritmy vyriešiť. Môže ale aj nemusí sa mu takýto typ plánovacieho problému vyriešiť. NP-úplné problémy sú nedeterministicky polynomiálne problémny, ktoré nie sú riešitelné v dostupnom čase, pretože sa nepodarilo nájsť deterministický algoritmus. Príkladom NP úloh môžme považovať: problém obchodné cestujúceho, \ldots .
-
+\subsection{Princíp}
+Riešenie problému je postavené na práci s definícou problému, ktorý je reprezentovaný sml súborom. Ako sa má daný problém riešiť je  dané kódom v Jave, ktorý sa ho snaží vyriešiť. Riešenie je možné ovplyvnoť konfiguráciou Optaplanner-u, v ktorom môžme nastaviť optimalizačné algoritmy plus ďalšie heuristiky. Poslednou radou 
 Riešenia poskytnutým týmto frameworkom, ktorý využíva pokročilé optimalizačné algoritmy, sú dosiahnuteľné v reálnom čase. Dosiahnutie v reálnom čase znamená nájdenie 1 alebo viacerých riešení, alebo nenájdenie žiadneho riešenia vzhľadom na poskytnutý čas a optimalizačné algoritmy, ktoré sú implementované.
 
-Každý plánovací problém je definovaný na základe obmedzení, ktoré musia minimálne spĺnať: \cite{optabook}
-\begin{itemize}
-\item Negatívne "hard" obmedzenie, ktoré nesmie byť porušené
-\item Negatívne "soft" obmedzenie, ktoré by nemali byť porušené pokiaľ sa dá tomu vyhnúť.
-\end{itemize}
-
-Niektoré problémy môžu obsahovať aj pozitívne podmienky alebo odmeny, ktoré by mali byť splnené pokiaľ je možné ich splniť.
-
-Tieto podmienky definujú skóre plánovacieho problému. Tieto podmienky môžu byť zapísané v Jave alebo v Drools pravidlách, ktoré značne zjednodušujú kód.
-
- Vytvorenie je pomocou pravidiel  môže robiť  oveľa jednoduchšie spájať mnoho pravidiel s mnohými akciami. Tieto pravidlá bývajú typicky definované pomocou XML súboru.
-
-OptaPlanner pomáha  programátori riešiť obmedzenie problémov spokojnosti efektívne. Pod kapotou sa kombinuje optimalizačné heuristiky na výpočet skóre.
 
 
 
-\subsection{Výsledky plánovacieho problému}
-
-Tieto obmedzenia definujú výpočetné skóre problému plánovania. Každé riešenie problému plánovanie môže byť odstupňovaná so skóre. 
-
-Plánovanie problému má niekoľko riešení. Existuje niekoľko kategórií riešení:
-\begin{itemize}
-\item Možným riešením je nejaké riešenie, či je alebo nie je ľubovoľný počet obmedzení. Problémy plánovanie mávajú neuveriteľne veľké množstvo možných riešení. Mnoho z týchto riešení sú bezcenné.
-\item Uskutočniteľným riešením je riešenie, ktoré neporušuje žiadne (negatívne) tvrdé obmedzenia. Niekedy nie sú realizovateľné riešenie. Každý uskutočniteľné riešenie je možné riešenie.
-
-\item Optimálnym riešením je riešenie s najvyšším počtom bodov. Problémy plánovanie mávajú jedno alebo niekoľko optimálnych riešení. K dispozícii je vždy aspoň 1 optimálnym riešením, a to aj v prípade , že neexistujú žiadne uskutočniteľné riešenie, a optimálne riešenie nie je možné .
-\item Najlepším riešením je nájsť riešenie s najvyšším skóre zistené implementáciou v danom čase.
-
-\end{itemize}
-
-OptaPlanner podporuje niekoľko optimalizačných algoritmov ako efektívne prehrýzť týmto neuveriteľne veľkým množstvom možných riešení. V závislosti na prípade použitia, niektoré optimalizačné algoritmy dosahujú lepšie výsledky ako ostatné, ale to je nemožné povedať dopredu. Pri plánovaní , je ľahké prepnúť algoritmus optimalizácie, zmenou konfigurácie Solver na niekoľkých riadkov XML alebo kódu.
-
-
-\newpage
 \subsection{Ukážka XML configuračného súboru}
 V nasledujúcom obrázku by som rád ukázal príklad XML configuračného súboru pre OptaPlanner.
  \lstset{
@@ -305,13 +273,16 @@ Konfigurácie solveru pozostáva z 3 častí:
 
 \end{itemize}
 
+
+
+
 \subsection{Optimalizačné algoritmy}
 V nasledujúcej časti textu si ukážeme optimalizačné algoritmy, ktoré používa optaplanner.
 \begin{itemize}
 \item First FIT - To je veľmi jednoduché greedy algoritmus aproximácie. Algoritmus spracováva položky v ľubovoľnom poradí. Pre každú položku, pokúsi sa umiestniť na položku v prvej priehradke, ktorý sa môže ubytovať položku. Ak nie je nájdený žiadna priehradka, otvára novú priehradku a kladie položku v rámci nového zásobníka.
 
-\item Firt FIT Decreasing
-\item Firt FIT Decreasing + heurestic local search
+\item Firt FIT Decreasing  bin-balenie algoritmus: položky sú zoradené podľa non-rastúcou veľkosťou, a potom v tomto poradí Ďalším bodom je vždy zabalené do prvého koša, kde sa hodí. Pre napríklad L nechať FFD (L) FFD (L) a OPT (L) OPT (L) označuje počet zásobníkov používajú algoritmus FFD a optimálnym algoritmom, resp. V tomto článku sme sa dať prvú kompletnú dôkaz nerovnosti
+\item Firt FIT Decreasing + heurestic local search -  bin-balenie algoritmus: položky sú zoradené podľa non-rastúcou veľkosťou, a potom v tomto poradí Ďalším bodom je vždy zabalené do prvého koša, kde sa hodí. Pre napríklad L nechať FFD (L) FFD (L) a OPT (L) OPT (L) označuje počet zásobníkov používajú algoritmus FFD a optimálnym algoritmom, resp. Local search  je metaheuristic metóda pre riešenie výpočtovo zložitých optimalizačných úloh. Miestne vyhľadávanie je možné použiť na problémy, ktoré môžu byť formulované ako hľadanie riešení maximalizuje kritérium medzi niekoľkými kandidátnych riešení. Miestne algoritmy vyhľadávania pohybovať z roztoku do roztoku v priestore kandidátnych riešení (priestor hľadania) za použitia lokálne zmeny, kým roztok považovaný za optimálne je nájdený, alebo je uplynulý čas viazaný.
 
 \begin{itemize}
 \item Hill Climbing - hill climbing je matematická optimalizácia technika, ktorá patrí do rodiny miestneho vyhľadávania. Jedná sa o iteratívny algoritmus, ktorý začína s ľubovoľným riešenie problému, potom sa pokúsi nájsť lepšie riešenie tým, že postupne mení jeden prvok riešenia. Ak zmena vytvára lepšie riešenie zmeny sa opakujú až žiadne ďalšie zlepšenie nie je možno nájsť.\cite{algobook}
@@ -328,23 +299,59 @@ V nasledujúcej časti textu si ukážeme optimalizačné algoritmy, ktoré pou�
 \end{itemize}
 
 
-V ďalšej kapitole by som rád uviedol problematiku užívateľského rozhrania.
-\chapter{Grafické užívateľské rozhranie}
-V tejto kapitole sa zameráme na problematiku užívateľského rozhrania, ktoré vlastne je reprezentované prostredíctvom technológie Java Server Faces v kombinácií frameworkov Rich Faces a Twitter Bootstrap-u. Toto rozhranie bude umožňovať nahrávať pravidlá, zobrazovať výsledky, spúšťať, pozastovať a zobrazovať detaily úloh. Keďže táto výsledná aplikácia by mala byť použíteľná aj na mobilnom telefóne bol vybratý štýlovací framework Twitter Bootstrap, ktorý značne uľahčenie tvorbu takéhoto rozhrania.
-
-\section{Twitter Bootstrap}
-Twitter Bootstrapje veľmi jednoduchý a voľne dostupný súbor nástrojov pre vytváranie moderného webu a webových aplikácií.\cite{boot} Ponúka podporu najrôznejších webových technológií HTML , CSS , JavaScript a mnoho prvkov , ktoré je možné ľahko implementovať do svojej stránky. Pre použitie Twitter Bootstrap sú nutné základné znalosti HTML a CSS. Interaktívne prvky ako sú tlačidlá, boxy , menu a ďalšie kompletne nastavené a graficky spracované elementy je možné vložiť iba pomocou HTML a CSS .
-
-Výhodou tohto súboru nástrojov je jednoduché spracovanie akéhokoľvek používateľského rozhrania vo webovej aplikácii a nerozhoduje , či to je napríklad používateľské rozhranie v administrácii back-endových alebo front-endových aplikácií.
 
 
-Podrobné vysvetlenie jednotlivých komponent nájdete na nasledujúcej adrese http://getbootstrap.com/, rovnako aj s príkladmi použitia. V nasledujúcej časti prejdem na samotný návrh užívateľského rozhrania.
-
-\section{Rich Faces}
-Rich faces predstavuje open-source Ajax knižnicu, ktorá predstavuje rozšírenie pre JavaServer Faces. Umožňuje integráciu schopností ajaxu do enterprise aplikácií. RichFaces obohacuje framework Ajax4jsf v dvoch dôležitých ohľadoch. Po prvé, sa rozširuje množstvo vizuálnych pripravených komponent. Po druhé,  plne implementuje funkciu skinnability rámca Ajax4jsf vrátane veľkého množstva preddefinovaných vzhľadov. Pomocou skinnability, že je oveľa ľahšie riadiť vzhľad aplikácie.
 
 
-\section{Rozbor aplikácie}
+\subsection{Výsledky plánovacieho problému}
+
+
+Každý plánovací problém je definovaný na základe obmedzení, ktoré musia minimálne spĺnať: \cite{optabook}
+\begin{itemize}
+\item Negatívne "hard" obmedzenie, ktoré nesmie byť porušené
+\item Negatívne "soft" obmedzenie, ktoré by nemali byť porušené pokiaľ sa dá tomu vyhnúť.
+\end{itemize}
+
+Niektoré problémy môžu obsahovať aj pozitívne podmienky alebo odmeny, ktoré by mali byť splnené pokiaľ je možné ich splniť.
+
+Tieto podmienky definujú skóre plánovacieho problému. Tieto podmienky môžu byť zapísané v Jave alebo v Drools pravidlách, ktoré značne zjednodušujú kód.
+
+ Vytvorenie je pomocou pravidiel  môže robiť  oveľa jednoduchšie spájať mnoho pravidiel s mnohými akciami. Tieto pravidlá bývajú typicky definované pomocou XML súboru.
+
+OptaPlanner pomáha  programátori riešiť obmedzenie problémov spokojnosti efektívne. Pod kapotou sa kombinuje optimalizačné heuristiky na výpočet skóre.
+
+
+
+
+
+Tieto obmedzenia definujú výpočetné skóre problému plánovania. Každé riešenie problému plánovanie môže byť odstupňovaná so skóre. 
+
+Plánovanie problému má niekoľko riešení. Existuje niekoľko kategórií riešení:
+\begin{itemize}
+\item Možným riešením je nejaké riešenie, či je alebo nie je ľubovoľný počet obmedzení. Problémy plánovanie mávajú neuveriteľne veľké množstvo možných riešení. Mnoho z týchto riešení sú bezcenné.
+\item Uskutočniteľným riešením je riešenie, ktoré neporušuje žiadne (negatívne) tvrdé obmedzenia. Niekedy nie sú realizovateľné riešenie. Každý uskutočniteľné riešenie je možné riešenie.
+
+\item Optimálnym riešením je riešenie s najvyšším počtom bodov. Problémy plánovanie mávajú jedno alebo niekoľko optimálnych riešení. K dispozícii je vždy aspoň 1 optimálnym riešením, a to aj v prípade , že neexistujú žiadne uskutočniteľné riešenie, a optimálne riešenie nie je možné .
+\item Najlepším riešením je nájsť riešenie s najvyšším skóre zistené implementáciou v danom čase.
+
+\end{itemize}
+
+OptaPlanner podporuje niekoľko optimalizačných algoritmov ako efektívne prehrýzť týmto neuveriteľne veľkým množstvom možných riešení. V závislosti na prípade použitia, niektoré optimalizačné algoritmy dosahujú lepšie výsledky ako ostatné, ale to je nemožné povedať dopredu. Pri plánovaní , je ľahké prepnúť algoritmus optimalizácie, zmenou konfigurácie Solver na niekoľkých riadkov XML alebo kódu.
+
+
+\newpage
+
+
+
+
+
+
+
+
+\chapter{Aplikácie}
+V tejto kapitole postupne rozobereme problematiku grafického užívateľského rozhrania, použité technológie Rich Faces a Twitter Bootstrap v kombinácií s JavaServer Faces. Výsledné rozhranie bude môcť nahrávať definície problému, zobrazovať výsledky, spúšťať, pozastovať a zobrazovať detaily úloh a nakoniec vyhľadávať úlohy. Keďže táto výsledná aplikácia by mala byť použíteľná aj na mobilnom telefóne bol vybratý štýlovací framework Twitter Bootstrap, ktorý značne uľahčenie tvorbu takéhoto rozhrania. V nasledujúcih kapitolách rozobereme aplikáciu postupne od analýzy až po vyhodnotenie.
+
+\section{Špecifikácia požiadavkov}
 Výsledná aplikácia bude zobrazovať priebežné výsledky výpočtu frameworku optaplanner. Tento framework bude pre túto prácu optimalizovaný pre úlohu N Dám, ktorú bude schopný riešiť. Bude sa deliť na aplikáciu, ktorá predstavuje užívateľské rozhranie vytvorené prostredníctvom technológie Java Server Faces v kombinácií s Rich Faces nastylované prostredníctvom frameworku Twitter Boostrap, ktoré zároveň zabezpečuje prenositeľnosť rozhrania na mobilné telefóny. Užívateľské umožňuje zobrazovanie a spravovanie úloh, organizácií, do ktorých náležia jednotliví užívatelia a užívateľov. Každá časť systému bude sprístupnená podľa príslušnosti užívatela k užívateľskej role. Z tohto rozhrania bude môcť užívateľ pokiaľ mu to užívateľská rola dovoľuej pridať úlohu, ktorú môžme následne spustiť alebo pozastaviť. Spustenie prebehia zavolaním služby web service, ktorá obsahuje potrebné prostriedky na spustenie úlohy. Web service následne zavolá enterprise bean, v ktorej prebieha spracovanie danej úlohy. Výsledok výpočtu sa priebežne ukladá do databáze. Výsledku sa následne priebežne zobrazuje v užívateľskom rozhraní. Užívatelia majú prístup k obmedzenému počtu úloh, zároveň môžu vykonávať obmedzené akcie a to nasledovne:
 \begin{itemize}
 \item Administrátor - má prístup ku všetkým úlohám v systéme, úlohy môže editovať vytvárať, mazať, publikovať a odpublikovať , môže vytvárať, mazať a editovať užívateľov, rovnaké môžnosti má aj s organizáciami
@@ -354,9 +361,48 @@ Výsledná aplikácia bude zobrazovať priebežné výsledky výpočtu framework
 
 
 Výsledná aplikácia bude nasadená na aplikačný server JBoss.
+Nasledujúci obrázok ukazuje príprady užitia systému:
+\begin{figure}[htb]
 
-\subsection{Databázová technológia}
-Aplikácia potrebuje pre spracovanie úloh, organizácií a užívateľov databázu. Pre potreby bakalárskej práce bol vybratý relačný open-source databázový model MySQL. MySQL databázová technológia je veľmi vhodná pre malé a stredne veľke aplikácie, čo tá naša je, rovnako poskytuje dobrý výkon pri vykonávaní transakcíí, umožňuje vytvárať procedúry, databázové triggere a jej inštalácia je pomerne jednoduchá a nezaberá veľa diskové priestoru, rovnako je MySQL multiplaformová, keďže je možné ju nasadiť na systémy s operačným systémov windows, linux, max os. Medzi nevýhody tejto technológie patrí neefektívna práca s databázovými transakciami, neefektívne ukladanie veľkého množstva dát.
+\begin{center}
+
+\includegraphics[scale=0.5]{UseCase.jpg} 
+\caption{UseCase diagram}
+\label{use}
+
+\end{center}
+
+\end{figure}
+Na nasledujúcom obrázku č.\ref{use} môžme identifikovať 4 užívateľov systém. Public user je verejný úžívateľ, ktorý môže čítať úlohy, ktoré sú nastavené ako verejné(public). Systém môže načítať úlohy z databáze pre potreby výpočtu, z ktorými následne pracuje, a potom výsledky ukladá do databáze, teda edituje úlohy(tasky). Čitateľ(Reader) môže úlohy čítať, publikovať a odpublikovať. Plánovač môže úlohy čítať, vytvárať v databáze, mazať, editovať už vytvorené úlohy v rámci svojej organizácie,publikovať a odpublikovať úlohy a meniť vlastné heslo. Administrátor môže vytvárať úlohy, mazať úlohy , editovať úlohy, publikovať a odpublikovať úlohy. Rovnako si môže meniť heslo, vytvárať,mazať editovať organizácie a užívateľov.
+
+
+\section{Analýza}
+Výsledné aplikácia by mohla byť rozdelená na 3 časti. Výsledné rozhranie by mohlo byť vytvorené prostredníctvom technológie Javaserver Faces, ktoré podporuje množstvo komponent na spracovanie a zobrazenie informácií. Pre spracovanie informácií by sme mohli použiť managed beany, rovnako by mohla byť použitá technológia JavaServer Pages, ktorá podporuje skriplety. Druhou časťou aplikácie by bola Web Service rozhranie, ktoré poskytuje metódy na spustenie a pozastavenie úlohy, ktoré bude volané z užívateľského rozhrania. Výpočet by prebiehal v enterprise beane rovnako by bola možnosť výpočet nechať na metódu web service. Rovnako trebalo zvoliť použitú databázovú technológiu existuje veľa možnosti medzi relačnými a nerelačnými technológiami. Medzi 2 zvolené technológie bola relačná technológia MySQL a nerelačná technológia MongoDB. V poslednom rade trebalo zvoliť správny technológiu pre nastylovanie a zabezpečenie prenositelnosť na mobilný telefón. Existuje komplikovaná možnosť  vytvorenia CSS štýlu alebo zvolenia dostupných frameworkov, ktoré túto prácu vyriešia za nás. Jedným z takýchto frameworkov je Twitter Bootstrap. Aplikácia potrebuje pre spracovanie úloh, organizácií a užívateľov databázu. Pre potreby bakalárskej práce bol vybratý relačný open-source databázový model MySQL. MySQL databázová technológia je veľmi vhodná pre malé a stredne veľke aplikácie, čo tá naša je, rovnako poskytuje dobrý výkon pri vykonávaní transakcíí, umožňuje vytvárať procedúry, databázové triggere a jej inštalácia je pomerne jednoduchá a nezaberá veľa diskové priestoru, rovnako je MySQL multiplaformová, keďže je možné ju nasadiť na systémy s operačným systémov windows, linux, max os. Medzi nevýhody tejto technológie patrí neefektívna práca s databázovými transakciami, neefektívne ukladanie veľkého množstva dát. Pre prenositeľnosť na mobilný telefón, rovnako aj pre rýchlu implementáciu riešenia spolu s jeho rozšírením \uv{Awesome Font}. Pre tvorbu rozhrania a spracovanie a zobrazovanie údajov sme použili technológiu JavaServer Faces, ktorá je v porovnnaí s JavaServer Pages oveľa jednoduchšia, keďže použitie skripletov by bolo veľmi komplikované. Z aplikačných serverov bol použitý JBoss, keďže ide o open-srouce riešenie a implementuje plne platformu Java EE narozdiel od Tomcatu, ktorý predstavuje len Java EE servlet kontajner. Aplikácia bola rozdelená na 3 časti rozhranie, web service a enterprise bean-a.
+
+
+
+\subsubsection{Twitter Bootstrap}
+Twitter Bootstrapje veľmi jednoduchý a voľne dostupný súbor nástrojov pre vytváranie moderného webu a webových aplikácií.\cite{boot} Ponúka podporu najrôznejších webových technológií HTML , CSS , JavaScript a mnoho prvkov , ktoré je možné ľahko implementovať do svojej stránky. Pre použitie Twitter Bootstrap sú nutné základné znalosti HTML a CSS. Interaktívne prvky ako sú tlačidlá, boxy , menu a ďalšie kompletne nastavené a graficky spracované elementy je možné vložiť iba pomocou HTML a CSS .
+
+Výhodou tohto súboru nástrojov je jednoduché spracovanie akéhokoľvek používateľského rozhrania vo webovej aplikácii a nerozhoduje , či to je napríklad používateľské rozhranie v administrácii back-endových alebo front-endových aplikácií.
+
+
+Podrobné vysvetlenie jednotlivých komponent nájdete na nasledujúcej adrese http://getbootstrap.com/, rovnako aj s príkladmi použitia. Výhodou a dôvodom použitia tohto frameworku je lahká integrácia do webovej aplikácie, rovnako aj open source charakter a v poslednom rade množstvo príkladom použitia. V poslednom rade bolo použité rožšírenie Font Awesome, ktoré obsahuje framework, ktorý obsahuje ikonové fonty určen´e pre twitter boostrap.
+
+
+\subsubsection{Rich Faces}
+Rich faces predstavuje open-source Ajax knižnicu, ktorá predstavuje rozšírenie pre JavaServer Faces. Umožňuje integráciu schopností ajaxu do enterprise aplikácií. RichFaces obohacuje framework Ajax4jsf v dvoch dôležitých ohľadoch. Po prvé, sa rozširuje množstvo vizuálnych pripravených komponent. Po druhé,  plne implementuje funkciu skinnability rámca Ajax4jsf vrátane veľkého množstva preddefinovaných vzhľadov. Pomocou skinnability, že je oveľa ľahšie riadiť vzhľad aplikácie.
+
+
+
+
+
+\section{Návrh aplikácie}
+
+
+
+
+
 
 \subsection{Návrh modelu databáze}
 Na nasledujúcom obrázku je ukázaný ER diagram, ktorý bol použitý pre dtabázu:
@@ -383,28 +429,25 @@ Tento obrázok zobrazuje jednotlivé entity, ktoré sú potrebné na uloženie v
 \end{itemize}
 Entitná množina task ďalej obsahuje položku, ktorá percentuálne hodnotí stav výpočtu úlohy(progress\_of\_task), čas do skončenia výpočtu úlohy(eta), nastavenie úlohy na privátnu alebo verejnú(ifPublic), názov úlohy(name) a cudzie kľúce user, ktorý odkazuje na užívateľa, ktorým bola úloha vytvorená a organization, ktorá odkazuje na organizáciu užívateľa, ktorým bola vytvorená. V ďalšej kapitole sa pozrieme na use case diagram.
 
-
-
-\subsection{Diagram užitia}
-Nasledujúci obrázok ukazuje príprady užitia systému:
-\begin{figure}[htb]
-
-\begin{center}
-
-\includegraphics[scale=0.5]{UseCase.jpg} 
-\caption{UseCase diagram}
-\label{use}
-
-\end{center}
-
-\end{figure}
-Na nasledujúcom obrázku č.\ref{use} môžme identifikovať 4 užívateľov systém. Public user je verejný úžívateľ, ktorý môže čítať úlohy, ktoré sú nastavené ako verejné(public). Systém môže načítať úlohy z databáze pre potreby výpočtu, z ktorými následne pracuje, a potom výsledky ukladá do databáze, teda edituje úlohy(tasky). Čitateľ(Reader) môže úlohy čítať, publikovať a odpublikovať. Plánovač môže úlohy čítať, vytvárať v databáze, mazať, editovať už vytvorené úlohy v rámci svojej organizácie,publikovať a odpublikovať úlohy a meniť vlastné heslo. Administrátor môže vytvárať úlohy, mazať úlohy , editovať úlohy, publikovať a odpublikovať úlohy. Rovnako si môže meniť heslo, vytvárať,mazať editovať organizácie a užívateľov.
-
-
-
-
-\section{Návrh rozhrania}
+\subsection{Návrh užívateľského rozhrania}
 Výsledné rozhranie kladie dôraz na jednoduchosť a prehľadnosť zobrazených úloh. Z tôhto dôvodu boli implementované mechanizmy vyhľadávanie úloh, organizácií a užívateľov. Rovnako možnosti lexikografického triedenia. Po prihlásení do systému Jednotlivé môžnosti sú následe zakompotované do záložiek, v ktorých je sprístupné príslušná funkčnosť. Výsledné rozhranie je prenositeľné aj na mobilné zaradenie, čo je spôsobené použitím frameworku Twitter Boostrap.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 \section{Implementácie}
