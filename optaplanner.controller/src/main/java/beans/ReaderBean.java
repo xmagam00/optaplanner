@@ -20,15 +20,19 @@ import databaseOp.Operation;
 import definition.*;
 
 import org.jboss.seam.security.Identity;
+import org.picketlink.idm.api.User;
 import org.richfaces.event.*;
 import org.richfaces.model.*;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import login.ShaEncoder;
 @ManagedBean
 @RequestScoped
 @SuppressWarnings("unused")
 public class ReaderBean {
+	
 	
 	@Inject
 	private Identity identity;
@@ -80,7 +84,7 @@ public class ReaderBean {
 	private String renderButton;
 
 	private String unpublishInformation;
-
+	
 	private String publishInformation;
 
 	private String name;
@@ -145,7 +149,8 @@ private String renderOption2;
 private String renderOption3;
 	
 	private String renderFind3;
-	
+	private User loggedUser;
+	private String loggedUsername;
 	private static final String EMAIL_PATTERN = 
 			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -153,15 +158,10 @@ private String renderOption3;
 	@PostConstruct
 	public void init() {
 		try {
-			try {
-			String username = FacesContext.getCurrentInstance().
-		       getExternalContext().getUserPrincipal().toString();
-			System.out.println(username);
-			}
-			catch(Exception ex)
-			{
-				System.out.println("CHyba");
-			}
+			
+			
+			
+			
 			setRenderEmailFormat("false");
 			setRenderUsername("false");
 			setRenderPassword("false");
@@ -178,7 +178,13 @@ private String renderOption3;
 
 			setUnpublishInformation("");
 			op = new Operation();
-
+			User user = identity.getUser();
+			System.out.println("tutu");
+			
+			String result = op.getUserById(Long.parseLong(user.getId()));
+			setLoggedUsername(result);
+			System.out.println(result);
+			System.out.println(getLoggedUsername());
 			organizations = new ArrayList<OrganizationDef>();
 			task = new ArrayList<TaskDef>();
 			users = new ArrayList<UserDef>();
@@ -200,9 +206,9 @@ private String renderOption3;
 						obj[4].toString(), convertIfPublic(obj[5].toString()),
 						obj[6].toString(), obj[7].toString(), renderStop(obj[2]
 								.toString()), renderRun(obj[2].toString()),
-						renderPublish(obj[5].toString()),
+						renderPublish(obj[5].toString(),obj[2].toString()),
 						renderUnpublish(obj[5].toString()), renderEdit(obj[2]
-								.toString()), renderDelete(obj[2].toString())));
+								.toString()), renderDelete(obj[2].toString()),renderCommand(obj[2].toString())));
 
 			}
 
@@ -247,8 +253,8 @@ private String renderOption3;
 		}
 	}
 
-	private String renderPublish(String state) {
-		if (state.equals("0")) {
+	private String renderPublish(String state,String stat) {
+		if ((state.equals("0") && stat.equals("FINISHED")) || state.equals("0") && stat.equals("MODIFIED")) {
 			return "true";
 		} else {
 			return "false";
@@ -745,15 +751,29 @@ private String renderOption3;
 					convertIfPublic(obj[5].toString()), obj[6].toString(),
 					obj[7].toString(), renderStop(obj[2].toString()),
 					renderRun(obj[2].toString()), renderPublish(obj[5]
-							.toString()), renderUnpublish(obj[5].toString()),
+							.toString(),obj[2].toString()), renderUnpublish(obj[5].toString()),
 					renderEdit(obj[2].toString()), renderDelete(obj[2]
-							.toString())));
+							.toString()),renderCommand(obj[2].toString())));
 
 		}
 
 		this.task = org;
 	}
 
+	
+	private String renderCommand(String render)
+	{
+		if (render.equals("0"))
+		{
+			return "false";
+					
+		}
+		
+		else return "true";
+		
+		
+	}
+	
 	public void setTasks(List<TaskDef> tasks) {
 		this.task = tasks;
 	}
@@ -1109,10 +1129,10 @@ private String renderOption3;
 							.getOwner(), task.get(index).getXmlFile(),
 							renderStop(task.get(index).getState()),
 							renderRun(task.get(index).getState()),
-							renderPublish(task.get(index).getIfPublic()),
+							renderPublish(task.get(index).getIfPublic(),task.get(index).getState()),
 							renderUnpublish(task.get(index).getIfPublic()),
 							renderEdit(task.get(index).getState()),
-							renderDelete(task.get(index).getState())));
+							renderDelete(task.get(index).getState()),renderCommand(task.get(index).getState())));
 
 				}
 				index++;
@@ -1130,10 +1150,10 @@ private String renderOption3;
 							.getOwner(), task.get(index).getXmlFile(),
 							renderStop(task.get(index).getState()),
 							renderRun(task.get(index).getState()),
-							renderPublish(task.get(index).getIfPublic()),
+							renderPublish(task.get(index).getIfPublic(),task.get(index).getState()),
 							renderUnpublish(task.get(index).getIfPublic()),
 							renderEdit(task.get(index).getState()),
-							renderDelete(task.get(index).getState())));
+							renderDelete(task.get(index).getState()),renderCommand(task.get(index).getState())));
 
 				}
 
@@ -1153,10 +1173,10 @@ private String renderOption3;
 							.getOwner(), task.get(index).getXmlFile(),
 							renderStop(task.get(index).getState()),
 							renderRun(task.get(index).getState()),
-							renderPublish(task.get(index).getIfPublic()),
+							renderPublish(task.get(index).getIfPublic(),task.get(index).getState()),
 							renderUnpublish(task.get(index).getIfPublic()),
 							renderEdit(task.get(index).getState()),
-							renderDelete(task.get(index).getState())));
+							renderDelete(task.get(index).getState()),renderCommand(task.get(index).getState())));
 
 				}
 				index++;
@@ -1166,7 +1186,6 @@ private String renderOption3;
 			for (TaskDef element : task) {
 				if (((task.get(index).getIfPublic()).toUpperCase())
 						.equals(getNieco().toUpperCase())) {
-
 					find.add(new TaskDef(task.get(index).getId(), task.get(
 							index).getName(), task.get(index).getState(), task
 							.get(index).getProgress(), task.get(index)
@@ -1175,10 +1194,10 @@ private String renderOption3;
 							.getOwner(), task.get(index).getXmlFile(),
 							renderStop(task.get(index).getState()),
 							renderRun(task.get(index).getState()),
-							renderPublish(task.get(index).getIfPublic()),
+							renderPublish(task.get(index).getIfPublic(),task.get(index).getState()),
 							renderUnpublish(task.get(index).getIfPublic()),
 							renderEdit(task.get(index).getState()),
-							renderDelete(task.get(index).getState())));
+							renderDelete(task.get(index).getState()),renderCommand(task.get(index).getState())));
 
 				}
 				index++;
@@ -1263,10 +1282,10 @@ private String renderOption3;
 							.getOwner(), this.task.get(index).getXmlFile(),
 					renderStop(this.task.get(index).getState()),
 					renderRun(this.task.get(index).getState()),
-					renderPublish(this.task.get(index).getIfPublic()),
+					renderPublish(this.task.get(index).getIfPublic(),this.task.get(index).getState()),
 					renderUnpublish(this.task.get(2).getIfPublic()),
 					renderEdit(this.task.get(index).getState()),
-					renderDelete(this.task.get(index).getState())));
+					renderDelete(this.task.get(index).getState()),renderCommand(this.task.get(index).getState())));
 			index++;
 
 		}
@@ -1381,40 +1400,32 @@ private String renderOption3;
 		setRenderPoll("false");
 		
 		createPublishPage(task.getName(), task.getXmlFile(), task.getId());
-		String output = null;
-		output = "http://localhost:8080/optaplanner.controller/faces/"
-				+ task.getId() + ".html";
-		setPublishInformation(output);
-		System.out.println(output);
+		
+		
+		
 		task.setIfPublic("1");
 		op.changePermission(Long.parseLong(task.getId()), "1");
 		setRenderPoll("true");
 	}
 
 	private void createPublishPage(String name, String xml, String id) {
-
-		File file = new File(id + ".html");
-		if (name.equals("not")) {
-			try {
-				file = new File(id + ".html");
-				FileWriter fw2 = new FileWriter(
-						(file.getAbsoluteFile().toString())
-								.replace("bin",
-										"standalone/deployments/optaplanner.controller.war"));
-				BufferedWriter bw2 = new BufferedWriter(fw2);
-				bw2.write("");
-				bw2.close();
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-			return;
+		try {
+		File dir = new File("task");
+		dir.mkdir();
 		}
+		catch (Exception ex)
+		{
+			
+		}
+		finally {
+		File where = new File("Administrator.xhtml");
+		String path = where.getAbsolutePath();
+		File file = new File(id + ".html");
+		path = path.replace("Administrator","task/"+name+".html");
+		File page = new File(path);
 
 		try {
-			FileWriter fw = new FileWriter(
-					(file.getAbsoluteFile().toString())
-							.replace("bin",
-									"standalone/deployments/optaplanner.controller.war"));
+			FileWriter fw = new FileWriter(page);
 
 			BufferedWriter bw = new BufferedWriter(fw);
 			bw.write("<!DOCTYPE html >");
@@ -1452,6 +1463,7 @@ private String renderOption3;
 			bw.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
+		}
 		}
 	}
 
@@ -1623,7 +1635,7 @@ private String renderOption3;
 		}
 		
 		
-		op.changePassword(getIdUser(), getPass());
+		op.changePassword(getIdUser(), ShaEncoder.hash(getPass()));
 		setPass("");
 		setPasswordValidate("");
 		List<UserDef> user = new ArrayList<UserDef>();
@@ -2195,4 +2207,16 @@ private String renderOption3;
 	{
 		return changeOrg;
 	}
+	
+	public void setLoggedUsername(String username)
+	{
+		this.loggedUsername = username;
+	}
+	
+	
+	public String getLoggedUsername()
+	{
+		return loggedUsername;
+	}
+
 }

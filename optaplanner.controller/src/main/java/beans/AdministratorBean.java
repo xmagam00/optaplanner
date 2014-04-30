@@ -10,6 +10,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import java.util.*;
 
@@ -92,7 +93,7 @@ public class AdministratorBean {
 
 	private String tab = "Tasks";
 
-	private String renderTab = "true";
+	private String renderTab ;
 
 	private String findString;
 
@@ -151,6 +152,9 @@ private String renderOption3;
 	private String renderFind3;
 	private User loggedUser;
 	private String loggedUsername;
+	
+	private String loadFunction;
+	
 	private static final String EMAIL_PATTERN = 
 			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -160,8 +164,8 @@ private String renderOption3;
 		try {
 			
 			
-			
-			
+			setRenderTab("false");
+			setLoadFunction("$('#MyTab a:first').tab('show')");
 			setRenderEmailFormat("false");
 			setRenderUsername("false");
 			setRenderPassword("false");
@@ -179,12 +183,11 @@ private String renderOption3;
 			setUnpublishInformation("");
 			op = new Operation();
 			User user = identity.getUser();
-			System.out.println("tutu");
+		
 			
 			String result = op.getUserById(Long.parseLong(user.getId()));
 			setLoggedUsername(result);
-			System.out.println(result);
-			System.out.println(getLoggedUsername());
+			
 			organizations = new ArrayList<OrganizationDef>();
 			task = new ArrayList<TaskDef>();
 			users = new ArrayList<UserDef>();
@@ -206,9 +209,9 @@ private String renderOption3;
 						obj[4].toString(), convertIfPublic(obj[5].toString()),
 						obj[6].toString(), obj[7].toString(), renderStop(obj[2]
 								.toString()), renderRun(obj[2].toString()),
-						renderPublish(obj[5].toString()),
+						renderPublish(obj[5].toString(),obj[2].toString()),
 						renderUnpublish(obj[5].toString()), renderEdit(obj[2]
-								.toString()), renderDelete(obj[2].toString())));
+								.toString()), renderDelete(obj[2].toString()),renderCommand(obj[5].toString())));
 
 			}
 
@@ -253,8 +256,8 @@ private String renderOption3;
 		}
 	}
 
-	private String renderPublish(String state) {
-		if (state.equals("0")) {
+	private String renderPublish(String state,String stat) {
+		if ((state.equals("0") && stat.equals("COMPLETE")) || state.equals("0") && stat.equals("MODIFIED")) {
 			return "true";
 		} else {
 			return "false";
@@ -279,7 +282,7 @@ private String renderOption3;
 	}
 
 	public String sortByName() {
-
+		setLoadFunction("$('#MyTab a:first').tab('show')");
 		if (sortAscending) {
 
 			// ascending order
@@ -315,7 +318,7 @@ private String renderOption3;
 	}
 
 	public String sortByUsername() {
-
+		setLoadFunction("$('#MyTab li:eq(2) a').tab('show')");
 		if (sortAscending) {
 
 			// ascending order
@@ -351,7 +354,7 @@ private String renderOption3;
 	}
 
 	public String sortByNameOrganization() {
-
+		setLoadFunction("$('#MyTab li:eq(4) a').tab('show')");
 		if (sortAscending) {
 
 			// ascending order
@@ -389,7 +392,7 @@ private String renderOption3;
 	}
 
 	public String sortByIdOrg() {
-
+		setLoadFunction("$('#MyTab li:eq(4) a').tab('show')");
 		if (sortAscending) {
 
 			// ascending order
@@ -427,7 +430,7 @@ private String renderOption3;
 	}
 
 	public String sortByEmail() {
-
+		setLoadFunction("$('#MyTab li:eq(2) a').tab('show')");
 		if (sortAscending) {
 
 			// ascending order
@@ -463,7 +466,7 @@ private String renderOption3;
 	}
 
 	public String sortByRole() {
-
+		setLoadFunction("$('#MyTab li:eq(2) a').tab('show')");
 		if (sortAscending) {
 
 			// ascending order
@@ -499,7 +502,7 @@ private String renderOption3;
 	}
 
 	public String sortByOrganization() {
-
+		setLoadFunction("$('#MyTab li:eq(2) a').tab('show')");
 		if (sortAscending) {
 
 			// ascending order
@@ -535,7 +538,7 @@ private String renderOption3;
 	}
 
 	public String sortByPermission() {
-
+		setLoadFunction("$('#MyTab a:first').tab('show')");
 		if (sortAscending) {
 
 			// ascending order
@@ -571,7 +574,7 @@ private String renderOption3;
 	}
 
 	public String sortByOwner() {
-
+		setLoadFunction("$('#MyTab a:first').tab('show')");
 		if (sortAscending) {
 
 			// ascending order
@@ -607,7 +610,7 @@ private String renderOption3;
 	}
 
 	public String sortByState() {
-
+		setLoadFunction("$('#MyTab a:first').tab('show')");
 		if (sortAscending) {
 
 			// ascending order
@@ -643,7 +646,7 @@ private String renderOption3;
 	}
 
 	public String sortByETA() {
-
+		setLoadFunction("$('#MyTab a:first').tab('show')");
 		if (sortAscending) {
 
 			// ascending order
@@ -681,7 +684,7 @@ private String renderOption3;
 	}
 
 	public String sortById() {
-
+		setLoadFunction("$('#MyTab a:first').tab('show')");
 		if (sortAscending) {
 
 			// ascending order
@@ -751,15 +754,29 @@ private String renderOption3;
 					convertIfPublic(obj[5].toString()), obj[6].toString(),
 					obj[7].toString(), renderStop(obj[2].toString()),
 					renderRun(obj[2].toString()), renderPublish(obj[5]
-							.toString()), renderUnpublish(obj[5].toString()),
+							.toString(),obj[2].toString()), renderUnpublish(obj[5].toString()),
 					renderEdit(obj[2].toString()), renderDelete(obj[2]
-							.toString())));
+							.toString()),renderCommand(obj[5].toString())));
 
 		}
 
 		this.task = org;
 	}
 
+	
+	private String renderCommand(String render)
+	{	
+		if (render.equals("0"))
+		{
+			return "false";
+					
+		}
+		
+		else return "true";
+		
+		
+	}
+	
 	public void setTasks(List<TaskDef> tasks) {
 		this.task = tasks;
 	}
@@ -771,6 +788,7 @@ private String renderOption3;
 	 * @return
 	 */
 	private String convertIfPublic(String ifPublic) {
+		
 		if (ifPublic.equals("0")) {
 			return "Private";
 		} else {
@@ -804,7 +822,7 @@ private String renderOption3;
 	}
 
 	public String saveAction() {
-
+		setLoadFunction("$('#MyTab li:eq(2) a').tab('show')");
 		// get all existing value but set "editable" to false
 		for (UserDef order : users) {
 			order.setEditable(false);
@@ -856,7 +874,8 @@ private String renderOption3;
 	}
 
 	public void saveXmlFile() {
-
+		setRenderTab("true");
+		setLoadFunction("$('#MyTab a:first').tab('show')");
 		op.changeXmlFile(getName(), getXmlFile(), getOwner());
 		setRenderPoll("true");
 		setXmlFile("");
@@ -867,6 +886,8 @@ private String renderOption3;
 	}
 
 	public void editXmlFile(TaskDef task) {
+		setRenderTab("true");
+		setLoadFunction("$('#MyTab li:eq(5) a').tab('show')");
 		setState(task.getState());
 		editableOwner = null;
 		editableOwner = new ArrayList<String>();
@@ -878,6 +899,7 @@ private String renderOption3;
 		}
 		setRenderArea("true");
 		setRenderButton("true");
+		System.out.println(task.getXmlFile());
 		setXmlFile(task.getXmlFile());
 		setIdTask(task.getId());
 		setRenderPoll("false");
@@ -886,8 +908,9 @@ private String renderOption3;
 	}
 
 	public void showAllUsers() {
+		setLoadFunction("$('#MyTab li:eq(2) a').tab('show')");
 		List<UserDef> resultsUser = op.getAllUsers();
-		List<UserDef> resultsOrg = op.getAllUsers();
+		List<UserDef> resultsOrg = new ArrayList<UserDef>();
 		for (Object item : resultsUser) {
 			Object[] obj = (Object[]) item;
 			resultsOrg.add(new UserDef(obj[0].toString(), obj[1].toString(), obj[2]
@@ -902,6 +925,7 @@ private String renderOption3;
 	
 	public void showAllOrganizations()
 	{
+		setLoadFunction("$('#MyTab li:eq(4) a').tab('show')");
 		List<OrganizationDef> list = new ArrayList<OrganizationDef>();
 		List<OrganizationDef> resultsOrg = op.getOrganizations();
 		for (Object item : resultsOrg) {
@@ -915,6 +939,7 @@ private String renderOption3;
 	
 	
 	public void findListOrg() {
+		setLoadFunction("$('#MyTab li:eq(4) a').tab('show')");
 		setRenderPoll("false");
 		setRenderOption3("false");
 		setRenderFind3("false");
@@ -980,7 +1005,7 @@ private String renderOption3;
 		setRenderOption("false");
 		setRenderFind("false");
 		
-		
+		setLoadFunction("$('#MyTab li:eq(2) a').tab('show')");
 		if (getNieco() == null | getNieco().isEmpty())
 		{
 			
@@ -1077,7 +1102,7 @@ private String renderOption3;
 		setRenderPoll("false");
 		setRenderOption("false");
 		setRenderFind("false");
-		
+		setLoadFunction("$('#MyTab a:first').tab('show')");
 		
 		if (getNieco() == null | getNieco().isEmpty())
 		{
@@ -1115,10 +1140,10 @@ private String renderOption3;
 							.getOwner(), task.get(index).getXmlFile(),
 							renderStop(task.get(index).getState()),
 							renderRun(task.get(index).getState()),
-							renderPublish(task.get(index).getIfPublic()),
+							renderPublish(task.get(index).getIfPublic(),task.get(index).getState()),
 							renderUnpublish(task.get(index).getIfPublic()),
 							renderEdit(task.get(index).getState()),
-							renderDelete(task.get(index).getState())));
+							renderDelete(task.get(index).getState()),renderCommand(task.get(index).getIfPublic())));
 
 				}
 				index++;
@@ -1136,10 +1161,10 @@ private String renderOption3;
 							.getOwner(), task.get(index).getXmlFile(),
 							renderStop(task.get(index).getState()),
 							renderRun(task.get(index).getState()),
-							renderPublish(task.get(index).getIfPublic()),
+							renderPublish(task.get(index).getIfPublic(),task.get(index).getState()),
 							renderUnpublish(task.get(index).getIfPublic()),
 							renderEdit(task.get(index).getState()),
-							renderDelete(task.get(index).getState())));
+							renderDelete(task.get(index).getState()),renderCommand(task.get(index).getIfPublic())));
 
 				}
 
@@ -1159,10 +1184,10 @@ private String renderOption3;
 							.getOwner(), task.get(index).getXmlFile(),
 							renderStop(task.get(index).getState()),
 							renderRun(task.get(index).getState()),
-							renderPublish(task.get(index).getIfPublic()),
+							renderPublish(task.get(index).getIfPublic(),task.get(index).getState()),
 							renderUnpublish(task.get(index).getIfPublic()),
 							renderEdit(task.get(index).getState()),
-							renderDelete(task.get(index).getState())));
+							renderDelete(task.get(index).getState()),renderCommand(task.get(index).getIfPublic())));
 
 				}
 				index++;
@@ -1172,7 +1197,6 @@ private String renderOption3;
 			for (TaskDef element : task) {
 				if (((task.get(index).getIfPublic()).toUpperCase())
 						.equals(getNieco().toUpperCase())) {
-
 					find.add(new TaskDef(task.get(index).getId(), task.get(
 							index).getName(), task.get(index).getState(), task
 							.get(index).getProgress(), task.get(index)
@@ -1181,10 +1205,10 @@ private String renderOption3;
 							.getOwner(), task.get(index).getXmlFile(),
 							renderStop(task.get(index).getState()),
 							renderRun(task.get(index).getState()),
-							renderPublish(task.get(index).getIfPublic()),
+							renderPublish(task.get(index).getIfPublic(),task.get(index).getState()),
 							renderUnpublish(task.get(index).getIfPublic()),
 							renderEdit(task.get(index).getState()),
-							renderDelete(task.get(index).getState())));
+							renderDelete(task.get(index).getState()),renderCommand(task.get(index).getIfPublic())));
 
 				}
 				index++;
@@ -1269,10 +1293,10 @@ private String renderOption3;
 							.getOwner(), this.task.get(index).getXmlFile(),
 					renderStop(this.task.get(index).getState()),
 					renderRun(this.task.get(index).getState()),
-					renderPublish(this.task.get(index).getIfPublic()),
+					renderPublish(this.task.get(index).getIfPublic(),this.task.get(index).getState()),
 					renderUnpublish(this.task.get(2).getIfPublic()),
 					renderEdit(this.task.get(index).getState()),
-					renderDelete(this.task.get(index).getState())));
+					renderDelete(this.task.get(index).getState()),renderCommand(this.task.get(index).getIfPublic())));
 			index++;
 
 		}
@@ -1282,7 +1306,7 @@ private String renderOption3;
 
 	public String saveActionTask() {
 		updateTasks();
-
+		setLoadFunction("$('#MyTab a:first').tab('show')");
 		setRenderPoll("true");
 
 		return null;
@@ -1317,7 +1341,7 @@ private String renderOption3;
 		this.oldUsers = null;
 		this.oldUsers = new ArrayList<UserDef>();
 		int index = 0;
-
+		setLoadFunction("$('#MyTab li:eq(2) a').tab('show')");
 		user.setEditable(true);
 		for (UserDef u : users) {
 			this.oldUsers.add(new UserDef(users.get(index).getId(), users.get(
@@ -1333,6 +1357,7 @@ private String renderOption3;
 	}
 
 	public void deleteUser(UserDef user) {
+		setLoadFunction("$('#MyTab li:eq(2) a').tab('show')");
 		op.deleteUser(user.getUsername(), Long.parseLong(user.getId()));
 		List<UserDef> userList = new ArrayList<UserDef>();
 		List<UserDef> resultsUsers = op.getAllUsers();
@@ -1347,7 +1372,7 @@ private String renderOption3;
 	}
 
 	public String saveActionOrganization() {
-
+		setLoadFunction("$('#MyTab li:eq(4) a').tab('show')");
 		// get all existing value but set "editable" to false
 		for (OrganizationDef order : organizations) {
 			order.setEditable(false);
@@ -1360,6 +1385,7 @@ private String renderOption3;
 	}
 
 	public String editActionOrganization(OrganizationDef org) {
+		setLoadFunction("$('#MyTab li:eq(4) a').tab('show')");
 		int index = 0;
 		org.setEditable(true);
 		this.oldOrganizations = null;
@@ -1383,44 +1409,41 @@ private String renderOption3;
 	}
 
 	public void publishTask(TaskDef task) {
-		System.out.println("som tu");
+	
 		setRenderPoll("false");
-		
+		setLoadFunction("$('#MyTab a:first').tab('show')");
 		createPublishPage(task.getName(), task.getXmlFile(), task.getId());
-		String output = null;
-		output = "http://localhost:8080/optaplanner.controller/faces/"
-				+ task.getId() + ".html";
-		setPublishInformation(output);
-		System.out.println(output);
+		
+		
+		
 		task.setIfPublic("1");
+		task.setRenderCommand("true");
 		op.changePermission(Long.parseLong(task.getId()), "1");
 		setRenderPoll("true");
 	}
 
 	private void createPublishPage(String name, String xml, String id) {
-
-		File file = new File(id + ".html");
-		if (name.equals("not")) {
-			try {
-				file = new File(id + ".html");
-				FileWriter fw2 = new FileWriter(
-						(file.getAbsoluteFile().toString())
-								.replace("bin",
-										"standalone/deployments/optaplanner.controller.war"));
-				BufferedWriter bw2 = new BufferedWriter(fw2);
-				bw2.write("");
-				bw2.close();
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-			return;
+		
+		String path =  System.getProperty("jboss.home.dir");
+		try {
+		File dir = new File(path + "/standalone/deployments/optaplanner.controller.war/"+"task");
+		dir.mkdir();
 		}
+		catch (Exception ex)
+		{
+			
+		}
+		finally {
+		
+		
+	 
+	 
+		File file = new File(path +"/standalone/deployments/optaplanner.controller.war/task/"+ id + ".html");
+	
+
 
 		try {
-			FileWriter fw = new FileWriter(
-					(file.getAbsoluteFile().toString())
-							.replace("bin",
-									"standalone/deployments/optaplanner.controller.war"));
+			FileWriter fw = new FileWriter(file);
 
 			BufferedWriter bw = new BufferedWriter(fw);
 			bw.write("<!DOCTYPE html >");
@@ -1428,7 +1451,6 @@ private String renderOption3;
 			bw.write("<html>");
 			bw.write("\n");
 			bw.write("<head>");
-			bw.write("<style>* {background:#eee ! important;} html, body {    width: 100%;}table {    margin: 0 auto;}</style>");
 			bw.write("\n");
 			bw.write("<link rel=\"stylesheet\" type=\"text/css\" href=\"css/bootstrap.css\">");
 			bw.write("\n");
@@ -1439,34 +1461,32 @@ private String renderOption3;
 			bw.write("\n");
 			bw.write("</head>");
 			bw.write("\n");
-			bw.write("<body>");
+			bw.write("<body style=\"background-color:#eee\">");
 			
 			
-			bw.write("<div class=\"container\" style=\"margin:0 px auto\">\n");
+			bw.write("<div style=\"margin:0 auto;text-align:center;width:900px;font-weight:bold;\">");
 			bw.write("<h1>");
 			bw.write(name);
 			bw.write("</h1>");
 			bw.write("<div class=\"jumbotron\">\n");
 			bw.write("<plaintext>");
 			bw.write(xml);
-			bw.write("</plaintext>");
-			bw.write("</div>\n");
-			bw.write("</body>");
-			bw.write("\n");
-			bw.write("</html>");
-			bw.write("\n");
+			
 			bw.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		}
 	}
 
 	public void runTask(TaskDef task) {
+		setLoadFunction("$('#MyTab a:first').tab('show')");
 		System.out.println("we call web service method");
 		System.out.println(task.getId());
 	}
 
 	public void stopTask(TaskDef task) {
+		setLoadFunction("$('#MyTab a:first').tab('show')");
 		System.out.println("we call web service method");
 		System.out.println(task.getId());
 	}
@@ -1480,6 +1500,7 @@ private String renderOption3;
 		setRenderOrganization("false");
 		setRenderEmail("false");
 		setRenderRole("false");
+		setLoadFunction("$('#MyTab li:eq(2) a').tab('show')");
 		if (getUsername() == null || getUsername().isEmpty())
 		{
 			setRenderUsername("true");
@@ -1561,9 +1582,10 @@ private String renderOption3;
 	}
 
 	public void createTask() {
+		
 		setRenderName("false");
 		setRenderUpload("false");
-		
+		setLoadFunction("$('#MyTab li:eq(1) a').tab('show')");
 		if (getName() == null || getName().isEmpty())
 		{	
 			setRenderName("true");
@@ -1577,22 +1599,20 @@ private String renderOption3;
 		}
 		
 		
-		op.createTask(getName(), getXmlFile(), "martin");
+		op.createTask(getName(), getXmlFile(), getLoggedUsername());
+	
 	}
 
 	public void unpublishTask(TaskDef task) {
 
 		setRenderPoll("false");
-		File f = new File(task.getId() + ".html");
+		setLoadFunction("$('#MyTab a:first').tab('show')");
+		String path =  System.getProperty("jboss.home.dir");
 
-		File file = new File((f.getAbsoluteFile().toString()).replace("bin",
-				"standalone/deployments/optaplanner.controller.war"));
-		if (file.exists()) {
-			file.delete();
-		}
-		setUnpublishInformation("Task has been unpublished.");
-
+		File file = new File(path +"/standalone/deployments/optaplanner.controller.war/task/" +task.getId() +".html");
+		file.delete();
 		task.setIfPublic("0");
+		task.setRenderCommand("false");
 		op.changePermission(Long.parseLong(task.getId()), "0");
 		setRenderPoll("true");
 	}
@@ -1656,7 +1676,7 @@ private String renderOption3;
 	}
 
 	public void createOrganization() {
-		
+		setLoadFunction("$('#MyTab li:eq(4) a').tab('show')");
 		
 		setRenderOrg("false");
 		if (getOrganization() == null | getOrganization().isEmpty())
@@ -1685,12 +1705,16 @@ private String renderOption3;
 	}
 
 	public void deleteOrganization(OrganizationDef org) {
-
+		setLoadFunction("$('#MyTab li:eq(4) a').tab('show')");
 		op.deleteOrganization(Long.parseLong(org.getIdOrganization()));
 		updateOrganization();
 	}
 
 	public void logout() {
+		identity.logout();
+		 HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+		            .getExternalContext().getSession(false);
+		    session.invalidate();
 		FacesContext.getCurrentInstance().getExternalContext()
 				.invalidateSession();
 		ExternalContext context = FacesContext.getCurrentInstance()
@@ -1728,6 +1752,7 @@ private String renderOption3;
 	}
 
 	public void validatePassword() {
+		setLoadFunction("$('#MyTab li:eq(3) a').tab('show')");
 		setRenderPassword2("false");
 		setRenderPasswordValidate2("false");
 		setRenderPasswordNot2("false");
@@ -2212,5 +2237,17 @@ private String renderOption3;
 	{
 		return loggedUsername;
 	}
+	
+	public void setLoadFunction(String fce)
+	{
+		this.loadFunction=fce;
+	}
+	
+	
+	public String getLoadFunction()
+	{
+		return loadFunction;
+	}
+	
 
 }

@@ -1,42 +1,34 @@
 package beans;
 
-import java.io.IOException;
+
 
 import database.User;
 import databaseOp.Operation;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import java.io.Serializable;
 
-import javax.ejb.Stateless;
+
+
+import javax.ejb.Singleton;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
+
+
+
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.servlet.*;
 
 import login.UserRole;
 
 import org.picketlink.idm.impl.api.PasswordCredential;
-import org.jboss.seam.*;
 import org.jboss.seam.security.BaseAuthenticator;
 import org.jboss.seam.security.Credentials;
 /**
  * @author martin
  * 
  */
-@RequestScoped
+
+
 public class LoginBean extends BaseAuthenticator{
 
 	@Inject
@@ -120,6 +112,7 @@ public class LoginBean extends BaseAuthenticator{
 	
 	@Override
 	public void authenticate() {
+	
 		setUsernameValid(false);
 		setPasswordValid(false);
 		setUsernameEmpty(false);
@@ -190,30 +183,43 @@ public class LoginBean extends BaseAuthenticator{
 		});
 		
 		setStatus(AuthenticationStatus.SUCCESS);
-		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		try {
 		
-			if (roles.equals("ADMINISTRATOR"))
+		try {
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+			FacesContext test = FacesContext.getCurrentInstance();
+			if (test.getResponseComplete()) {
+				return;
+				}
+			externalContext.responseReset();
+			if (externalContext.isResponseCommitted())
+			{
+				
+				return;
+			}
+			if (roles.equals("Administrator"))
 			{
 				externalContext.redirect("Administrator.xhtml");
+			
+				return;
 			}
-			else if (roles.equals("READER"))
+			else if (roles.equals("Reader"))
 			{
 				externalContext.redirect("Reader.xhtml");
+				return;
 			}
-			else if (roles.equals("PLANNER"))
+			else if (roles.equals("Planner"))
 			{
 				externalContext.redirect("Planner.xhtml");
+				return;
 			}
-	
-	
-			
+
+			return;
 				
 				
 			
 		} catch(Exception ex)
 		{
-			ex.printStackTrace();
+			
 		}
 
 	}

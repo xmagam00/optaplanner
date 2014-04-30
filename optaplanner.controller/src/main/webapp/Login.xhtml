@@ -11,12 +11,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 
 <meta charset="utf-8"></meta>
+<link rel="icon" type="image/x-icon" href="#{request.contextPath}/resources/img/favicon.ico" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
     <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
     <meta name="description" content="Optaplanner service"></meta>
     <meta name="author" content="Martin Maga"></meta>
 
   <h:outputStylesheet library="css" name="bootstrap.css"  />
+  
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
+
 <style>
 body {
 
@@ -87,6 +91,8 @@ tr.spaceUnder > td
 }
 </style>
 
+
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
 <title>Optaplanner.Controller</title>
 </h:head>
@@ -113,25 +119,27 @@ tr.spaceUnder > td
 				
 						<table>
 						<tr class="spaceUnder"><td>	<h:outputLabel value="Username" for="username" /></td><td>
-							<h:inputText type="text" class="form-control" id="username" value="#{credentials.username}" /></td></tr>
-							
+									<div class="input-group"><span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+								<h:inputText type="text" class="form-control" id="username" value="#{credentials.username}" required="true" requiredMessage="Please Enter Username"/></div></td><td><h:outputText value="Unknown user" rendered="#{Login.usernameValid}" /></td></tr>
+							<h:message for="username" style="color: red;" />
+			
 						<tr class="spaceUnder"><td>	<h:outputLabel value="Password" for="password" /></td><td>
-							<h:inputSecret type="text" class="form-control" id="password" value="#{credentials.password}" /></td></tr>
+							<div class="input-group"><span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+							<h:inputSecret type="text" class="form-control" id="password" value="#{credentials.password}" required="true" requiredMessage="Please enter password" />	</div></td><td><h:outputText value="Incorrect Password" rendered="#{LoginBean.passwordValid}" /></td></tr>
 							
 				</table>
-							<h:commandButton class="btn btn-primary" action="#{identity.login}" value="Log in" />
+			
 				
-				
+							<h:commandButton class="btn btn-primary" action="#{identity.login}" value="Log in"  ></h:commandButton>
+						
+			
 			</h:form>
 
 
 
 
 
-
-
-
-<h:outputScript library="js" name="jquery-2.1.0.js"  />
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <h:outputScript library="js" name="bootstrap.js"  />
 </h:body>
 </html>

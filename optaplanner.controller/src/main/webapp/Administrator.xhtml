@@ -5,19 +5,27 @@
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	>
+	 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 
 
 <h:head>
 <meta charset="utf-8"></meta>
 <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/img/favicon.ico"/>
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+<meta http-equiv="pragma" content="no-cache" />
+
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
     <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
     <meta name="description" content="Optaplanner service"></meta>
     <meta name="author" content="Martin Maga"></meta>
-
+  
 <h:outputStylesheet library="css" name="bootstrap.css"  />
 
 	<style>
@@ -42,67 +50,80 @@ tr.spaceUnder > td
   padding-bottom: 1em;
 }
 
+
+}
 </style>
+<h:outputScript target="head">
+    $ = jQuery;
+    // Then you can use it
+    $(document).ready(function() {
+       function test()
+       {
+       $('#usermanagement').removeClass('active')
+    });
+</h:outputScript>
+<script>
+function skus()
+{
+
+	window.onload="
+}
+
+
+</script>
+
 	<title>Administrator</title>
 </h:head>
-<h:body class="bodyclass">
+
+
+<h:body class="bodyclass" onload="#{AdministratorBean.loadFunction}" >
 
 		<f:view>
 
 
 
+
 <h:form>
+
+
 			<h:commandButton class="btn pull-right" value="Logout"
 				action="#{AdministratorBean.logout}"></h:commandButton>
 			<h:outputText style="margin-right:10px;" value="#{AdministratorBean.loggedUsername}" class="pull-right" />
-			<h:outputLabel style="margin-left:5px;" value="User:" class="pull-right" />
+			<h:outputLabel style="margin-left:5px;" value="User:" class="pull-right" /><i class="fa fa-user fa-fw pull-right"></i>
 		</h:form>	
 
-
+<h:form>
 <ul class="nav nav-tabs" id="MyTab">
-  <li class="active"><a href="#task" data-toggle="tab">Tasks</a></li>
-  <li><a href="#usermanagement" data-toggle="tab">User Management</a></li>
-  <li><a href="#changepassword" data-toggle="tab">Change Password</a></li>
-  <li><a href="#organizationmanagement" data-toggle="tab">Organization Management</a></li>
+  <li ><a href="#task" data-toggle="tab"><i class="fa fa-home fa-fw"></i>Tasks</a></li>
+  <li><a href="#createtask" data-toggle="tab"><i class="fa fa-pencil fa-fw"></i>Create Task</a></li>
+  <li ><a href="#usermanagement" data-toggle="tab"><i class="fa fa-book fa-fw"></i>User Management</a></li>
+  <li><a href="#changepassword" data-toggle="tab"><i class="fa fa-pencil fa-fw"></i>Change Password</a></li>
+  <li><a href="#organizationmanagement" data-toggle="tab"><i class="fa fa-book fa-fw"></i>Organization Management</a></li>
+    <li><a href="#edittask" data-toggle="tab"><i class="fa fa-pencil fa-fw"></i>Edit Task</a></li>
+
 </ul>
 
+</h:form>
 <div class="tab-content">
-			
 
-			 <div class="tab-pane active" id="task">
+
+
+
+
+
+			 <div class="tab-pane" id="task">
 <!-- Modal -->
 
- <h:form>
+ <h:form >
 
-
-			
-<table style="display: inline-block;margin-top:50px;text-align:left;">
-
-								<tr class="spaceUnder">
-									<td><h:outputText  value="Name of task:" /> <h:inputText type="text" class="form-control"
-											value="#{AdministratorBean.name}" maxlength="100" width="20"/> </td><td><h:outputText value="Enter Name of task"  style="color:red" rendered="#{AdministratorBean.renderName}" /></td>
-								</tr>
-								<tr  class="spaceUnder">
-									<td><h:outputText value="Load XML FILE" /></td><td><h:outputText value="Upload some file"  style="color:red" rendered="#{AdministratorBean.renderUpload}" /></td>
-								</tr>
-
-
-								<tr class="spaceUnder">
-									<td><rich:fileUpload
-											fileUploadListener="#{AdministratorBean.listener}"
-											id="upload" maxFilesQuantity="1" /></td>
-								</tr>
-								<tr>
-									<td><h:commandButton class="btn btn-default"
-											value="Create task"
-											action="#{AdministratorBean.createTask()}" /></td>
-								</tr>
-							</table>
-
-							<table style="float: left;margin-top:50px;margin-left:100px;margin-right:50px;" >
+							<table style="margin-top:50px;margin-left:100px;margin-right:50px;" >
 								<tr>
 									<td><h:outputText value="Enter String to find:" /></td>
-									<td><h:inputText type="text" class="form-control" value="#{AdministratorBean.nieco}" /></td><td><h:outputText value="Enter string to find" style="color:red;" rendered="#{AdministratorBean.renderFind}" /></td>
+									<td>
+									
+									
+										<div class="input-group"><span class="input-group-addon"><i class="fa fa-search"></i></span>
+									<h:inputText type="text" class="form-control" value="#{AdministratorBean.nieco}" /></div></td><td><h:outputText value="Enter string to find" style="color:red;" rendered="#{AdministratorBean.renderFind}" /></td>
 								</tr>
 
 
@@ -121,13 +142,19 @@ tr.spaceUnder > td
 
 
 								<tr>
-									<td><h:commandButton class="btn btn-default btn-lg"
-											value="Find" action="#{AdministratorBean.findList}" /></td>
+									<td>
+									
+									<h:commandButton class="btn btn-default btn-lg"
+											value="Find" action="#{AdministratorBean.findList}" type="submit" >
+											 
+											</h:commandButton>
+											
+											</td>
 								</tr>
 							</table>
 
 						
-			
+
 
 
 
@@ -231,7 +258,14 @@ tr.spaceUnder > td
 							
 								</h:column>
 							</f:facet>
-							<h:outputText value="#{o.ifPublic}"></h:outputText>
+							<h:outputText value="#{o.ifPublic}" rendered="#{not o.renderCommand}" ></h:outputText>
+							<strong><h:outputLink value="#{o.link}" rendered="#{ o.renderCommand}" target="_blank">
+							<h:outputText value="#{o.ifPublic}" />
+							
+							</h:outputLink>
+							</strong>
+							
+							
 						</h:column>
 
 						<h:column>
@@ -260,9 +294,9 @@ tr.spaceUnder > td
 							</f:facet>
 							<h:panelGrid columns="6">
 				
-								<a4j:commandButton styleClass="btn btn-default" value="Edit Task"
+								<h:commandButton class="btn btn-default" value="Edit Task"
 									action="#{AdministratorBean.editXmlFile(o)}"
-									rendered="#{o.renderEdit}" oncomplete="$('#myModal3').modal('show')" data-toggle="modal" data-target="#myModal3" />
+									rendered="#{o.renderEdit}"   />
 								<a4j:commandButton styleClass="btn btn-default" value="Stop task"
 									action="#{AdministratorBean.stopTask(o)}"
 									rendered="#{o.renderStop}" oncomplete="$('#myModal5').modal('show')" data-toggle="modal" data-target="#myModal5" />
@@ -270,11 +304,6 @@ tr.spaceUnder > td
 									action="#{AdministratorBean.runTask(o)}"
 									rendered="#{o.renderRun}" oncomplete="$('#myModal4').modal('show')"  data-toggle="modal" data-target="#myModal4" />
 								
-								<a4j:commandButton styleClass="btn btn-default"
-									value="Publish Task"
-									action="#{AdministratorBean.publishTask(o)}"
-									oncomplete="$('#myModal').modal('show')"
-									rendered="#{o.renderPublish}" data-toggle="modal" data-target="#myModal" />
 
 								<a4j:commandButton styleClass="btn btn-default" value="delete task"
 									action="#{AdministratorBean.deleteTask(o)}"
@@ -284,9 +313,13 @@ tr.spaceUnder > td
 									action="#{AdministratorBean.unpublishTask(o)}"
 									
 									rendered="#{o.renderUnpublish}" data-toggle="modal" data-target="#myModal2" oncomplete="$('#myModal2').modal('show')"/>
+<a4j:commandButton styleClass="btn btn-default"
+									value="Publish Task"
+									action="#{AdministratorBean.publishTask(o)}"
+									oncomplete="$('#myModal3').modal('show')"
+									rendered="#{o.renderPublish}" />
 
-
-
+					
 
 
 
@@ -309,17 +342,18 @@ tr.spaceUnder > td
 						</h:column>
 
 					</h:dataTable>
-					
+
+
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <h4 class="modal-title" id="myModalLabel">Information</h4>
       </div>
       <div class="modal-body">
-      Task has been publish. Link: <h:outputText value="#{AdministratorBean.publishInformation}" />
+     Task has been published. Click on the blue link in the column "Permission" in the same row to show page.
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -330,13 +364,14 @@ tr.spaceUnder > td
 </div>	
 
 
+
 <!-- Modal -->
 <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <h4 class="modal-title" id="myModalLabel">Information</h4>
       </div>
       <div class="modal-body">
      Task has been unpublished.
@@ -350,34 +385,7 @@ tr.spaceUnder > td
 </div>	
 
 
-<!-- Modal -->
-<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-      </div>
-      <div class="modal-body">
-     <table>
-     <tr><td>  <h:outputText value="Name of Task:" /></td><td>
-      <h:inputText type="text" class="form-control" value="#{AdministratorBean.name}" /></td></tr>
-     <tr><td><h:outputText value="Enter owner" /></td><td> <rich:select>
-       <f:selectItems value="#{AdministratorBean.editableOwner}"  />
-      
-      </rich:select></td></tr>
-      <tr><td><h:inputTextarea cols="20" rows="20" value="#{AdministratorBean.xmlFile}" /></td></tr>
-      </table>
-     
-      <a4j:commandButton value="Save Changes" oncomplete="$('#myModal3').modal('hide')" styleClass="btn btn-default" action="#{AdministratorBean.saveXmlFile}"/>
-      </div>
-      <div class="modal-footer">
-        <button type="button" styleClass="btn btn-default" data-dismiss="modal">Close</button>
-       
-      </div>
-    </div>
-  </div>
-</div>			
+		
 
 <!-- Modal -->
 <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -385,7 +393,7 @@ tr.spaceUnder > td
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <h4 class="modal-title" id="myModalLabel">Information</h4>
       </div>
       <div class="modal-body">
      Task has been running.
@@ -404,7 +412,7 @@ tr.spaceUnder > td
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <h4 class="modal-title" id="myModalLabel">Information</h4>
       </div>
       <div class="modal-body">
         Task has been stopped.
@@ -438,12 +446,15 @@ tr.spaceUnder > td
 				
 		
 
-				<div class="tab-pane" id="usermanagement">
+				<div class="tab-pane active" id="usermanagement">
 					<h:form>
 								<table style="display: inline-block;margin-top:50px;text-align:left;">
 									<tr>
 										<td><h:outputText value="Enter String to find:" /></td>
-										<td><h:inputText  type="text" class="form-control" value="#{AdministratorBean.nieco}" /></td><td><h:outputText value="Enter string to find" style="color:red;" rendered="#{AdministratorBean.renderFind2}" /></td>
+										<td>
+										
+										<div class="input-group"><span class="input-group-addon"><i class="fa fa-search"></i></span>
+										<h:inputText  type="text" class="form-control" value="#{AdministratorBean.nieco}" /></div></td><td><h:outputText value="Enter string to find" style="color:red;" rendered="#{AdministratorBean.renderFind2}" /></td>
 									</tr>
 
 
@@ -464,7 +475,12 @@ tr.spaceUnder > td
 
 									<tr>
 										<td><h:commandButton class="btn btn-default btn-lg"
-												value="Find" action="#{AdministratorBean.findListOrganization}" /></td>
+												value="Find" action="#{AdministratorBean.findListOrganization()}" >
+												
+											
+												</h:commandButton>
+												
+												</td>
 									</tr>
 								</table>
 
@@ -474,21 +490,33 @@ tr.spaceUnder > td
 								<table style="float:left;margin-top:50px;margin-left:100px;margin-right:50px;" >
 									<tr class="spaceUnder">
 										<td>Username:</td>
-										<td><h:inputText type="text" class="form-control" maxlength="100" value="#{AdministratorBean.username}" />
+										<td>
+										<div class="input-group"><span class="input-group-addon"><i class="fa fa-user"></i></span>
+										<h:inputText type="text" class="form-control" maxlength="100" value="#{AdministratorBean.username}" /></div>
 										</td><td><h:outputText value="Enter username"  style="color:red" rendered="#{AdministratorBean.renderUsername}"/></td>
 									</tr>
 									<tr class="spaceUnder">
 										<td>Password:</td>
-										<td><h:inputSecret type="text" class="form-control" maxlength="100" value="#{AdministratorBean.pass}" /></td><td><h:outputText  style="color:red"  value="Enter password" rendered="#{AdministratorBean.renderPassword}" /></td>
+										<td>
+										
+										
+										<div class="input-group"><span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+										<h:inputSecret type="text" class="form-control" maxlength="100" value="#{AdministratorBean.pass}" /></div></td><td><h:outputText  style="color:red"  value="Enter password" rendered="#{AdministratorBean.renderPassword}" /></td>
 									</tr>
 									<tr class="spaceUnder">
 										<td>Re-type password:</td>
-										<td><h:inputSecret type="text" class="form-control"
-												value="#{AdministratorBean.passwordValidate}" maxlength="100" /></td><td><h:outputText value="Re-type password"  style="color:red" rendered="#{AdministratorBean.renderPasswordValidate}" /></td><td><h:outputText  style="color:red" value="Password must match" rendered="#{AdministratorBean.renderPasswordNot}" /></td>
+										<td>
+										<div class="input-group"><span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+										<h:inputSecret type="text" class="form-control"
+												value="#{AdministratorBean.passwordValidate}" maxlength="100" /></div></td><td><h:outputText value="Re-type password"  style="color:red" rendered="#{AdministratorBean.renderPasswordValidate}" /></td><td><h:outputText  style="color:red" value="Password must match" rendered="#{AdministratorBean.renderPasswordNot}" /></td>
 									</tr>
 									<tr class="spaceUnder">
 										<td>Email:</td>
-										<td><h:inputText type="text" class="form-control" maxlength="100" value="#{AdministratorBean.email}" /></td><td><h:outputText  style="color:red" value="Enter email" rendered="#{AdministratorBean.renderEmail}" /></td><td><h:outputText value="Email not in correct format" rendered="#{AdministratorBean.renderEmailFormat}" /></td>
+										<td>
+										<div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+										<h:inputText type="text" class="form-control" maxlength="100" value="#{AdministratorBean.email}" />
+										</div>
+										</td><td><h:outputText  style="color:red" value="Enter email" rendered="#{AdministratorBean.renderEmail}" /></td><td><h:outputText value="Email not in correct format" rendered="#{AdministratorBean.renderEmailFormat}" /></td>
 									</tr>
 									<tr class="spaceUnder">
 										<td>Organization:</td>
@@ -558,21 +586,13 @@ tr.spaceUnder > td
 
 
 
-						<h:column>
-
-							<f:facet name="header">password</f:facet>
-
-
-
-							<h:outputText value="#{po.password}" />
-
-						</h:column>
+						
 
 						<h:column>
 
 							<f:facet name="header">
 								<h:column>
-									<h:commandLink action="#{AdministratorBean.sortByEmail}">
+									<h:commandLink action="#{AdministratorBean.sortByEmail}" >
 										<h:outputText value="Email"></h:outputText>
 									</h:commandLink>
 								</h:column>
@@ -661,20 +681,23 @@ tr.spaceUnder > td
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <h4 class="modal-title" id="myModalLabel">Password change</h4>
       </div>
       <div class="modal-body">
      <table>
 			<tr  class="spaceUnder"><td>								<h:outputText value="Password" /></td><td>
-											<h:inputText type="text" maxlength="40" class="form-control" value="#{AdministratorBean.pass}"></h:inputText></td><td><h:outputText value="Enter password" style="color:red;" rendered="#{AdministratorBean.renderPassword3}" /></td></tr>
+											
+											<div class="input-group"><span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+											<h:inputText type="text" maxlength="40" class="form-control" value="#{AdministratorBean.pass}"></h:inputText></div></td><td><h:outputText value="Enter password" style="color:red;" rendered="#{AdministratorBean.renderPassword3}" /></td></tr>
 											
 									<tr  class="spaceUnder"><td>		<h:outputText value="Re-type Password" /></td><td>
-											<h:inputText type="text"  maxlength="40" class="form-control" value="#{AdministratorBean.passwordValidate}"></h:inputText></td><td><h:outputText value="Re-type password" style="color:red" rendered="#{AdministratorBean.renderPasswordValidate3}"/></td><td><h:outputText value="Password must match" style="color:red;" rendered="#{AdministratorBean.renderPasswordNot3}" /></td></tr>
+											<div class="input-group"><span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+											<h:inputText type="text"  maxlength="40" class="form-control" value="#{AdministratorBean.passwordValidate}"></h:inputText></div></td><td><h:outputText value="Re-type password" style="color:red" rendered="#{AdministratorBean.renderPasswordValidate3}"/></td><td><h:outputText value="Password must match" style="color:red;" rendered="#{AdministratorBean.renderPasswordNot3}" /></td></tr>
 											
 									</table>
 										<a4j:commandButton styleClass="btn btn-default"
 											value="Change password"
-											action="#{AdministratorBean.changePassword()}"
+											action="#{AdministratorBean.changePassword()}" oncomplete="$('#myModal9').modal('hide')" 
 											 />
       </div>
       <div class="modal-footer">
@@ -693,7 +716,7 @@ tr.spaceUnder > td
 							<td><h:commandButton class="btn btn-default"
 									value="Save Changes" action="#{AdministratorBean.saveAction}" /></td>
 						</tr>
-						<tr><td><h:commandButton class="btn btn-default" value="Show all users" action="#{AdministratorBean.showAllUsers}" /></td></tr>
+						<tr><td><a4j:commandButton styleClass="btn btn-default" value="Show all users" action="#{AdministratorBean.showAllUsers()}" /></td></tr>
 					</table>
 
 
@@ -710,12 +733,14 @@ tr.spaceUnder > td
 <h:form>
 
 						<h:outputLabel for="password" value="Password : " />
-						<h:inputSecret type="text" class="form-control" placeholder="Username" id="password" value="#{AdministratorBean.password}" />
+						<div class="input-group"><span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+						<h:inputSecret type="text" class="form-control" placeholder="Username" id="password" value="#{AdministratorBean.password}" /></div>
 						<br></br>
 						<h:outputText value="Enter password" style="color:red;" rendered="#{AdministratorBean.renderPassword2}" />
 					<br></br>
 						<h:outputLabel for="confirmPassword" value="Confirm password : " />
-						<h:inputSecret type="text" class="form-control" placeholder="Username" value="#{AdministratorBean.passwordValidate}" />
+						<div class="input-group"><span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+						<h:inputSecret type="text" class="form-control" placeholder="Username" value="#{AdministratorBean.passwordValidate}" /></div>
 			<br></br>
 					<h:outputText value="Re-type password" style="color:red;" rendered="#{AdministratorBean.renderPasswordValidate2}" />
 					<h:outputText value="Password must match" style="color:red;" rendered="#{AdministratorBean.renderPasswordNot2}" />
@@ -732,7 +757,9 @@ tr.spaceUnder > td
 				<table style="display: inline-block;margin-top:50px;text-align:left;">
 								<tr>
 									<td><h:outputText value="Enter String to find:" /></td>
-									<td><h:inputText type="text" class="form-control" value="#{AdministratorBean.nieco}" /></td><td><h:outputText style="color:red;" value="Enter string to find"  rendered="#{AdministratorBean.renderFind3}"  /></td>
+									<td>
+									<div class="input-group"><span class="input-group-addon"><i class="fa fa-search"></i></span>
+									<h:inputText type="text" class="form-control" value="#{AdministratorBean.nieco}" /></div></td><td><h:outputText style="color:red;" value="Enter string to find"  rendered="#{AdministratorBean.renderFind3}"  /></td>
 								</tr>
 
 
@@ -760,8 +787,9 @@ tr.spaceUnder > td
 
 				<table  style="float: left;margin-top:50px;margin-left:100px;margin-right:50px;">
 						<tr class="spaceUnder"><td><h:outputText value="Organization" /></td><td>
+						<div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
 						<h:inputText type="text" maxlength="100" class="form-control" id="Organization"
-							value="#{AdministratorBean.organization}" /></td><td><h:outputText value="Enter name of organization" style="red:color;" rendered="#{AdministratorBean.renderOrg}" /></td></tr>
+							value="#{AdministratorBean.organization}" /></div></td><td><h:outputText value="Enter name of organization" style="red:color;" rendered="#{AdministratorBean.renderOrg}" /></td></tr>
 
 
 
@@ -838,10 +866,69 @@ tr.spaceUnder > td
 					<table>
 				<tr><td><rich:dataScroller for="tabOrg" maxPages="10" /></td></tr>
 					<tr><td><h:commandButton class="btn btn-default" value="Save Changes" action="#{AdministratorBean.saveActionOrganization}" /> </td></tr>
-		<tr><td><a4j:commandButton value="Show all organization" styleClass="btn btn-default" action="#{AdministratorBean.showAllOrganizations()}" onclick="$('#myTab a:last').tab('show')"/></td></tr>
+		<tr><td><a4j:commandButton value="Show all organization" styleClass="btn btn-default" action="#{AdministratorBean.showAllOrganizations()}" /></td></tr>
 		</table>
 		</h:form>
 		</div>
+		
+		
+		
+		 <div class="tab-pane" id="edittask">
+		
+		 <h:form>
+		 <a4j:region id="ren" selfRendered="true">
+						<a4j:poll
+							action="#{AdministratorBean.updateEditableOrganizations()}"
+							interval="30" >
+						</a4j:poll>
+					
+
+					</a4j:region>
+		 <table>
+     <tr><td>  <h:outputText value="Name of Task:" /></td><td>
+     <div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
+      <h:inputText type="text" class="form-control" value="#{AdministratorBean.name}" required="true" requiredMessage="Enter Name of task" /></div></td></tr>
+     <tr><td><h:outputText value="Enter owner" /></td><td> <rich:select required="true" requiredMesage="Select owner">
+       <f:selectItems value="#{AdministratorBean.editableOwner}"  />
+      
+      </rich:select></td></tr>
+      <tr><td><h:inputTextarea cols="20" rows="20" value="#{AdministratorBean.xmlFile}" /></td></tr>
+      </table>
+     
+      <h:commandButton value="Save Changes" class="btn btn-default" action="#{AdministratorBean.saveXmlFile}"/>
+		 </h:form>
+	
+		 </div>
+		  <div class="tab-pane" id="createtask">
+		  
+		<h:form>	
+<table style="display: inline-block;margin-top:50px;text-align:left;">
+
+								<tr class="spaceUnder">
+									<td><h:outputText  value="Name of task:" />
+									
+										<div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
+									 <h:inputText type="text" class="form-control"
+											value="#{AdministratorBean.name}" maxlength="100" width="20" required="true" /> </div></td><td><h:outputText value="Enter Name of task"  style="color:red" rendered="#{AdministratorBean.renderName}" /></td>
+								</tr>
+								<tr  class="spaceUnder">
+									<td><h:outputText value="Load XML FILE" /></td><td><h:outputText value="Upload some file"  style="color:red" rendered="#{AdministratorBean.renderUpload}" /></td>
+								</tr>
+
+
+								<tr class="spaceUnder">
+									<td><rich:fileUpload
+											fileUploadListener="#{AdministratorBean.listener}"
+											id="upload" maxFilesQuantity="1" /></td>
+								</tr>
+								<tr>
+									<td><h:commandButton class="btn btn-default"
+											value="Create task"
+											action="#{AdministratorBean.createTask()}"  /></td>
+								</tr>
+							</table>
+							</h:form>
+		  </div>
 				
 </div>
 

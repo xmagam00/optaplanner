@@ -1,51 +1,50 @@
 package database;
 
+import javax.ejb.EJB;
+import javax.persistence.EntityManager;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.core.api.annotation.Inject;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import javax.persistence.*;
 
-import org.junit.*;
+@RunWith(Arquillian.class)
 
-import databaseOp.Operation;
-import definition.*;
 public class TestDatabase {
+
+   @Deployment
+
+   public static Archive createTestArchive() {
+
+      return ShrinkWrap.create(WebArchive.class,"test.war")
+
+    		  .addClass(Task.class)
+              .addClass(Organization.class);
+
+   }
+    
+   @Inject
+   EntityManager em;
+
+   @Test
+   public void TestDatabase() throws Exception {
+
+	   Organization org = new Organization();
 	  
-		List<UserDef> user;
-		List<UserDef> userChanged;
-		Operation op;
-	  
-	  @Test
-	  public void testUser()
-	  {	 user = new ArrayList<UserDef>();
-	  List<UserDef> userChanged = new ArrayList<UserDef>();
-		  for (int i =0;i<5;i++)
-		  {
-			  user.add(new UserDef("Moj","Nieco","Cau","Ahoj","Bejbe","Nalej"));
-			  userChanged.add(new UserDef("Moje","Nieco","Caua","Ahoja","Bejbe","Nalej"));
-		  }
-		
-		  
-		  int index = 0;
-		  for (UserDef element : user) {
-			    if ((element.getUsername()).equals(userChanged.get(index).getUsername()) 
-			    &((element.getEmail()).equals(userChanged.get(index).getEmail()))
-			    &((element.getRole()).equals(userChanged.get(index).getRole()))
-			    &((element.getOrganization()).equals(userChanged.get(index).getOrganization()))
-			    )
-			    {
-			    	
-			    	continue;
-			    }
-			  
-			    index++;
-			}
-		  
-		  
-	  
-	  
-	  
-}
+	   
+	   em.getTransaction().begin();
+	   org.setNameOfOrganization("nieco");
+	  em.getTransaction().commit();
+	   
+	   
+	   
+   }
+
 }

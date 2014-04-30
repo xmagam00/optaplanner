@@ -1,4 +1,5 @@
 package definition;
+import java.io.File;
 import java.io.Serializable;
 
 public class TaskDef implements Serializable{
@@ -21,8 +22,10 @@ public class TaskDef implements Serializable{
 	    private String renderUnpublish;
 	    private String renderEdit;
 	    private String renderDelete;
+	    private String renderCommand;
+	    private String link;
 	    
-	    public TaskDef(String id, String name, String state, String progress,String estimatedTime,String ifPublic,String owner,String xmlfile, String renderStop,String renderRun,String renderPublish, String renderUnpublish,String renderEdit, String renderDelete) {
+	    public TaskDef(String id, String name, String state, String progress,String estimatedTime,String ifPublic,String owner,String xmlfile, String renderStop,String renderRun,String renderPublish, String renderUnpublish,String renderEdit, String renderDelete,String renderCommand) {
 	        this.id = id;
 	        this.name = name;
 	        this.state = state;
@@ -37,6 +40,8 @@ public class TaskDef implements Serializable{
 	        this.renderRun = renderRun;
 	        this.renderPublish = renderPublish;
 	        this.renderUnpublish = renderUnpublish;
+	        this.renderCommand = renderCommand;
+	        this.link = "task/" + id+".html";
 	    }
 	    public String getId() {
 	        return id;
@@ -181,6 +186,29 @@ public class TaskDef implements Serializable{
 		{
 			return renderDelete;
 		}
+		
+		public String getRenderCommand()
+		{
+			return renderCommand;
+		}
+		
+		public void setRenderCommand(String render)
+		{
+			this.renderCommand = render;
+		}
+		
+		public String getLink()
+		{
+			return link;
+		}
+		
+		public void setLink(String link)
+		{
+			this.link = link;
+		}
+		
+		
+	
 		
 	}
 

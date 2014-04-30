@@ -173,17 +173,12 @@ public class Operation {
  		
  		Query q = eManager.createQuery("select password from User where username='" + username +"'");
  		 Object pass = q.getSingleResult();
- 		/* if (pass.toString().equals(ShaEncoder.hash(string)))
- 		 {
- 			 result = true;
- 			
- 		 }*/
- 		 
- 		 if (pass.toString().equals((string)))
+ 		 if (pass.toString().equals(ShaEncoder.hash(string)))
  		 {
  			 result = true;
  			
  		 }
+ 		 
  		
  		
        
