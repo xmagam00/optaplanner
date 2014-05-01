@@ -244,7 +244,7 @@ public class Operation {
 	 * @param username
 	 * @return true if operation succeed
 	 */
-	public void deleteUser(String username,long id)
+	public void deleteUser(long id)
  	{
 		User user = eManager.find(User.class, id);
 		 

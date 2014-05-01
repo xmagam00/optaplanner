@@ -162,7 +162,7 @@ function skus()
 <h:form>
 <a4j:region>
 					<a4j:poll id="poll33" action="#{AdministratorBean.updateTasks()}"
-						interval="1000" reRender="editUser,poll33" eventsQueue="foo"  timeout="1000"  
+						interval="1000" render="editUser,poll33" eventsQueue="foo"  timeout="1000"  
 						enabled="#{AdministratorBean.renderPoll}">
 						
 					</a4j:poll>
@@ -302,8 +302,8 @@ function skus()
 									rendered="#{o.renderRun}" oncomplete="$('#myModal4').modal('show')"  data-toggle="modal" data-target="#myModal4" />
 								
 
-								<h:commandButton class="btn btn-default" value="delete task"
-									action="#{AdministratorBean.deleteTask(o)}"
+								<a4j:commandButton styleClass="btn btn-default" value="delete task"
+									oncomplete="$('#myModal33').modal('show')" data-toggle="modal" data-target="#myModal33"
 									rendered="#{o.renderDelete}" />
 <a4j:commandButton styleClass="btn btn-default"
 									value="UnPublish Task"
@@ -339,6 +339,31 @@ function skus()
 						</h:column>
 
 					</h:dataTable>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal33" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
+        <h4 class="modal-title" id="myModalLabel">Information</h4>
+      </div>
+      <div class="modal-body">
+     Are you sure that you want to delete this Task ?
+     <table style="border-spacing:5px;border-collapse: separate;"><tr><td><a4j:commandButton value="Yes"  styleClass="btn btn-default" oncomplete="$('#myModal33').modal('hide')" action="#{AdministratorBean.deleteTaskSpec()}" /></td><td><a4j:commandButton  styleClass="btn btn-default" value="No" oncomplete="$('#myModal33').modal('hide')" /></td></tr>
+     </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       
+      </div>
+    </div>
+  </div>
+</div>	
+
+
 
 
 <!-- Modal -->
@@ -553,7 +578,7 @@ function skus()
 							interval="500" 
 							>
 						</a4j:poll>
-						<a4j:poll reRender="editUSER" interval="500">
+						<a4j:poll render="editUSER" interval="500">
 						</a4j:poll>
 
 					</a4j:region>
@@ -656,8 +681,8 @@ function skus()
 								<h:commandButton class="btn btn-default" value="Edit User"
 									action="#{AdministratorBean.editAction(po)}"
 									rendered="#{not po.editable}" />
-								<h:commandButton class="btn btn-default" value="Delete User"
-									action="#{AdministratorBean.deleteUser(po)}" />
+								<a4j:commandButton styleClass="btn btn-default" value="Delete User"
+									action="#{AdministratorBean.deleteUser(po)}" oncomplete="$('#myModal333').modal('show')"/>
 								<a4j:commandButton styleClass="btn btn-default"
 									value="Change Password"
 								oncomplete="$('#myModal9').modal('show')"
@@ -671,6 +696,28 @@ function skus()
 						</h:column>
 
 					</h:dataTable>
+	
+	<!-- Modal -->
+<div class="modal fade" id="myModal333" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
+        <h4 class="modal-title" id="myModalLabel">Information</h4>
+      </div>
+      <div class="modal-body">
+     Are you sure that you want to delete this User ?
+     <table style="border-spacing:5px;border-collapse: separate;"><tr><td><a4j:commandButton value="Yes"  styleClass="btn btn-default" oncomplete="$('#myModal333').modal('hide')" action="#{AdministratorBean.deleteUserSpec()}" /></td><td><a4j:commandButton  styleClass="btn btn-default" value="No" oncomplete="$('#myModal333').modal('hide')" /></td></tr>
+     </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       
+      </div>
+    </div>
+  </div>
+</div>	
+	
 										
 <!-- Modal -->
 <div class="modal fade" id="myModal9" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -799,7 +846,7 @@ function skus()
 					<a4j:region>
 						<h:form>
 							<a4j:poll id="poll" interval="50" enabled="true"
-								reRender="poll,tabOrg" />
+								render="poll,tabOrg" />
 						</h:form>
 					</a4j:region>
 					</h:form>
@@ -851,15 +898,34 @@ function skus()
 								<h:commandButton class="btn btn-default" value="Edit Organization"
 									action="#{AdministratorBean.editActionOrganization(org)}"
 									rendered="#{not org.editable}" />
-								<h:commandButton class="btn btn-default" value="Delete Organization"
-									action="#{AdministratorBean.deleteOrganization(org)}" />
+								<a4j:commandButton styleClass="btn btn-default" value="Delete Organization"
+									action="#{AdministratorBean.deleteOrganization(org)}" oncomplete="$('#myModal3333').modal('show')" />
 
 							</h:panelGrid>
 
 						</h:column>
 
 					</h:dataTable>
-				
+					<!-- Modal -->
+<div class="modal fade" id="myModal3333" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
+        <h4 class="modal-title" id="myModalLabel">Information</h4>
+      </div>
+      <div class="modal-body">
+     Are you sure that you want to delete this Organization ?
+     <table style="border-spacing:5px;border-collapse: separate;"><tr><td><a4j:commandButton value="Yes"  styleClass="btn btn-default" oncomplete="$('#myModal3333').modal('hide')" action="#{AdministratorBean.deleteOrgSpec()}" /></td><td><a4j:commandButton  styleClass="btn btn-default" value="No" oncomplete="$('#myModal3333').modal('hide')" /></td></tr>
+     </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       
+      </div>
+    </div>
+  </div>
+</div>	
 					<table>
 				<tr><td><rich:dataScroller for="tabOrg" maxPages="10" /></td></tr>
 					<tr><td><h:commandButton class="btn btn-default" value="Save Changes" action="#{AdministratorBean.saveActionOrganization}" /> </td></tr>

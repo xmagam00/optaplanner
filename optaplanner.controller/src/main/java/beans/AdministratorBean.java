@@ -155,6 +155,8 @@ private String renderOption3;
 	
 	private String loadFunction;
 	
+	private String idEntity;
+	
 	private static final String EMAIL_PATTERN = 
 			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -1358,8 +1360,16 @@ private String renderOption3;
 	}
 
 	public void deleteUser(UserDef user) {
+		setIdEntity("");
 		setLoadFunction("$('#MyTab li:eq(2) a').tab('show')");
-		op.deleteUser(user.getUsername(), Long.parseLong(user.getId()));
+		setIdEntity(user.getId());
+	}
+	
+	
+	public void deleteUserSpec()
+	{
+		
+		op.deleteUser(Long.parseLong(getIdEntity()));
 		List<UserDef> userList = new ArrayList<UserDef>();
 		List<UserDef> resultsUsers = op.getAllUsers();
 		for (Object item : resultsUsers) {
@@ -1369,6 +1379,7 @@ private String renderOption3;
 					obj[5].toString()));
 
 		}
+		setIdEntity("");
 		this.users = userList;
 	}
 
@@ -1616,11 +1627,18 @@ private String renderOption3;
 	}
 
 	public void deleteTask(TaskDef task) {
-
-		op.deleteTask(Long.parseLong(task.getId()));
+		setIdEntity("");
+		setIdEntity(task.getId());
+		
 
 	}
-
+	
+	public void deleteTaskSpec()
+	{
+		op.deleteTask(Long.parseLong(getIdEntity()));
+		setIdEntity("");
+	}
+	
 	public void changePassword() {
 		
 		setRenderPassword3("false");
@@ -1703,9 +1721,16 @@ private String renderOption3;
 	}
 
 	public void deleteOrganization(OrganizationDef org) {
+		setIdEntity("");
 		setLoadFunction("$('#MyTab li:eq(4) a').tab('show')");
-		op.deleteOrganization(Long.parseLong(org.getIdOrganization()));
+		setIdEntity(org.getIdOrganization());
+	}
+	
+	public void deleteORgSpec()
+	{
+		op.deleteOrganization(Long.parseLong(getIdEntity()));
 		updateOrganization();
+		setIdEntity("");
 	}
 
 	public void logout() {
@@ -2246,5 +2271,13 @@ private String renderOption3;
 		return loadFunction;
 	}
 	
-
+	public void setIdEntity(String id)
+	{
+		this.idEntity = id;
+	}
+	
+	public String getIdEntity()
+	{
+		return idEntity;
+	}
 }
