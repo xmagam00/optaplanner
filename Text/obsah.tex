@@ -430,20 +430,31 @@ Tento obrázok zobrazuje jednotlivé entity, ktoré sú potrebné na uloženie v
 Entitná množina task ďalej obsahuje položku, ktorá percentuálne hodnotí stav výpočtu úlohy(progress\_of\_task), čas do skončenia výpočtu úlohy(eta), nastavenie úlohy na privátnu alebo verejnú(ifPublic), názov úlohy(name) a cudzie kľúce user, ktorý odkazuje na užívateľa, ktorým bola úloha vytvorená a organization, ktorá odkazuje na organizáciu užívateľa, ktorým bola vytvorená. V ďalšej kapitole sa pozrieme na use case diagram.
 
 \subsection{Návrh užívateľského rozhrania}
-Výsledné rozhranie kladie dôraz na jednoduchosť a prehľadnosť zobrazených úloh. Z tôhto dôvodu boli implementované mechanizmy vyhľadávanie úloh, organizácií a užívateľov. Rovnako možnosti lexikografického triedenia. Po prihlásení do systému Jednotlivé môžnosti sú následe zakompotované do záložiek, v ktorých je sprístupné príslušná funkčnosť. Výsledné rozhranie je prenositeľné aj na mobilné zaradenie, čo je spôsobené použitím frameworku Twitter Boostrap.
+Výsledné rozhranie kladie dôraz na jednoduchosť a prehľadnosť zobrazených úloh. Z tôhto dôvodu boli implementované mechanizmy vyhľadávanie úloh, organizácií a užívateľov. Rovnako možnosti lexikografického triedenia. Po prihlásení do systému Jednotlivé môžnosti sú následe zakompotované do záložiek, v ktorých je sprístupné príslušná funkčnosť. Výsledné rozhranie je prenositeľné aj na mobilné zaradenie, čo je spôsobené použitím frameworku Twitter Boostrap. Je ešte lepšiu prívetivosť bolo použité rozšírenie Font Awesome. Užívateľské rozhranie je popísané na nasledujúcom obrázku:
+\begin{figure}[htb]
+
+\begin{center}
+
+\includegraphics[scale=0.5]{page_show.jpg} 
+\caption{Návrh užívateľského rozhrania}
+\label{rozhranie}
+
+\end{center}
+
+\end{figure}
+Na obrázku č.\ref{rozhranie} môžme vidieť návrh užívateľského rozhrania. Rozhranie je rozdelené do 5 častí, ktoré môžme rozoznať na obrázku číslami od 1 do 2, ktoré sú aj ohraničené. Celé rozhranie môžme rozdeliť do nasledujúcich častí:
+\begin{itemize}
+\item Oblasť č.1 predstavuje navigačné menu, kde sú jednotlivé akcie rozdelené do záložiek podľa ich názvu. Pre klinutí na príslušnú záložku sa zmení aj obsah na stránke. 
+\item Oblasť č.2 obsahuje informáciu o prihlásenom užívateľovi , rovnako obsahuje aj tlačidlo \uv{Logout}, prostredníctvom ktorého sa môže užívateľ z aplikácie odhlásiť
+\item Oblasť č.6 predstavuje funkčnú oblasť. Táto oblasť je špecifická pre každú záložka, ktorá reprezentuje jej obsah. V tej oblasti sú umiestnené typicky obsahy databázových tabuliek, nástroje na vyhľadávanie, rôzne akcie, ktoré je možné vykonávať s dátami, rovnako aj možnosti na vytváranie entít
+\item Oblasť č.3 predstavuje jednu z funkčných možností. Jedná sa o vyhľadávanie, ktoré je zložené zo vstupného prvky, do ktorého zadamé vyhľadávaný reťazec a druhá časť predstavuje menu,z ktorého zvolíme stĺpec na vyhľadávanie. Následne je možnosť realizovať tlačidlom Find, ktoré prekreslí obsah tabulky nižšie a naplní ju nájdenými výsledkami.
+\item Oblasť č.4 predstavuje tabulky, ktorá je dynamicky obnovaná a reaguje na asychronné ukladanie dát z web service, ktoré sa dynamicky obnovujú každé 4 sekundy. Tabuľka je rozdelená do stĺpcov. Názvy stĺpcov, ktoré sú označené modrou farbou sú zároveň odkazy, na ktoré je možné klinúť. Po kliknutí na daný odkaz dôjde k lexikografickému zoradeniu obsahu tabuľky podla daného stĺpca striedavo vzostupne alebo zostupne. Rád by som upozornil na stĺpec progress, ktorý pre každú úlohu zobrazuje stav spracovania úlohy. Rovnako musím zdôrazniť stĺpec Permission, ktorý zobrazuje, či je úloha verejná alebo privátna. Pokiaľ je úloha verejná(Public), tak je tento odkaz zobrazený modrou farbou, čo znamená, že je odkaz preto je možné naň ho kliknúť. Po kliknutí sa zobrazí stránka s informáciami o názve úlohy a obsahuje výsledného xml súboru. Tento odkaz je možné následne ľubovolne preposlať a pristupovať k nemu. V poslednom rade treba zdôrazniť stĺpec \uv{Actions}, ktorý je najdôležitejší pre každú úlohu povoluje sadu akcií. Jednotlivé akcie sú reprezentované tlačidlami, pritom odrážajú aktuálny stav spracovania úlohy spolu s ďalšími informácimi o úlohe.
+\item Oblasť č.5 predstavuje komponentu na stránkovanie, aby pri rozsiahlom obsahu sa nezväčšoval neúmerne veľkosť stránky.
 
 
+\end{itemize}
 
-
-
-
-
-
-
-
-
-
-
+Zvyšné návrhy rozhrania je možné dohľadať v prílohe.
 
 
 
@@ -451,7 +462,52 @@ Výsledné rozhranie kladie dôraz na jednoduchosť a prehľadnosť zobrazených
 
 
 \section{Implementácie}
-Aplikácie bola rozložená do viacerých tried podľa zodpovednosti daných komponent. Pri implementácií bolo použité JBoss Developer studo 7.1.1 GA spolu s JBoss AS 7.1.1 Final. Celý projekt boli založený na technológií maven, ktorú uľahčovala celý process vývoja a jeho následne nasadenie na JBoss server. Pre databázovú technológiu bol nainštalovaný mysql server nakonfigurovaný s príslunými prihlasovacími údajmi. Celý vývoj začal tvorbou balíka pre entitné triedy, ktoré pristupovali k databázami. Vývoj ďalej pokračoval tvorbou triedy, ktorá implementuje všetky potrebné operácie nad dátami. Následne treba správne nakonfigurovať datasource v JBoss AS, aby mohol správne pristupovať k databázmi vrátane prihlasovacích údajov. Následne pre správne priprájanie nasadeného maven projektu trebalo nastaviť súbor persistence.xml, do ktorého sa definovali entitné triedy a odkaz na datasource umiestneného na JBoss AS. Následne som sa sústredil na vývoj samotného užívatelského rozhrania. Užívateľské rozhranie som rozdelil do do 4 Managed bean, ktoré sa starajú o funkčnosť implementovaných xhtml stránok. Stránky sú celkom 4 , 3 pre užívatelské role, 4. pre prihlasovanie do systému. Každej stránke pritom odpovedá managed beana. Prihlasovacia stránka je upravená prostredníctvom Twitter Bootstrap-u, pričom obsahuje zabezpečenie prostredníctvom uživatelských rol. Rovnako obsahuje validáciu pred nekorektným prihlasovaním, ktoré môže byť spôsobené neznámym užívateľským meno alebo heslom. Následne je užívateľ presmerovaný na základe svojej role na príslušnú stránka. Každá stránka obsahuje záložky a podla svojej role dovodluje užívatelia vykonávať akcie. Základom každého zobrazenie je dátová tabulka h:datatable, ktorá zodpovedá príslušnému modelu(užívateľ, úloha, organizácia s príslušnými vlastnosťami), ktorá zobrazuje údaje na stránku a neustále obnovuje svoj obsah podľa obsahu v databázi. Príslušné riadky odpovedajú položkám v databázi pričom pre každú položku sa vzťahuje nejaká akcia, ktorá je reprezentovaná prislušným tlačidlom. Po stlačení tlačidla sa prislušna zmena prejaví na stránke rovnako ako aj na stránke. Vytváranie novej úlohy je reprezentované komponentov rich:upload, ktorá pochádza z frameworku Rich Faces. Táto komponenta zabezpečuje nahrávanie xml súborov, ktoré reprezentujú danú úlohu, celé je to zaobalené do formuláru, ktorý obsahuje položku na zadanie mena. Po stlačení tlačidla \uv{Create Task}, dôjde k zavolaniu methódy z managed beany príslušnej triedy, ktorá sa postará o vytvorenie úlohy v databázi a jej zobrazenie na stránke. V každú tabulku je možné zoraďovať podľa stĺpcov, deje sa to kliknutím na príslušný stĺpec, to spôsobí zavolanie metódy v managed bean-e, ktorá prejde všetky položky daného stĺpca, ktoré sú uložené v zozname a zoradí ich podľa stĺpcov. Obnovanie obsahuje sa realizuje prostredníctvom komponenty aj4:poll, ktorá je súčasťou frameworku Rich Faces. Táto komponenta neustála volá metódu, ktorá získava všetky položky z databáze, čím je zabezpečený aktuálny obsah tabuliek. Vyhľadávanie položiek v danej tabulke sa deje prostredníctvom formulára, do ktorého sa zadá vyhľadávaný reťazec a zvolí sa z vyskakovacie zoznamu, následna sa zavolá metóda, ktorá nastaví obsah h:datable na nájdené položky. Tento postup je rovnaký pre manažovanie organizácií a užívateĺov. Jednotlivé možnosti sú zakomponované od záložiek, ktoré sú implementované prostredníctvom twitter boostrap-u. Jednotlivé metódy sú pritom identické vo všetkých managed bean podľa užívatelskej role, až na to, že sú obmedzené podľa užívatelské role. Spustenie výpočtu sa deje prostredníctvom tlačidla \uv{Run Task}, to zavolé metódu \uv{Run Task} web service prostredníctvom http protokolu a predá mu ako parameter ID úlohy, ktorú má spustiť. Tá následne získa data z databáze a zaradí úlohu do fronty. Z fronty si odoberajú enterprise beany, ktoré sa môžu nachádzať kvôli rozprestrenie záťaže na viac serveroch. Tie si úlohu vyberú z actiemsq fronty a spustia výpočet. Priebežne pritom ukladajú údaje o stavu úlohy, času do ukončenia úlohy a percentuálnom ohodnotení úlohy. Po ukončení úlohy je uložené najlepšie možné riešenie do databáze. Užívateľ môže úlohy pozastaviť a to po stlačení tlačidla \uv{Stop Task}, ktoré zavolá metódu web service prostredníctvom protokolu http. Následne je možné úlohu opäť spustiť. Výsledky spracovania sú priebežne zobrazované(každé 2 sekundy) na užívateľské rozhranie. Rozhranie obsahuje validáciu, ktorá kontroluje všetky užívateľské vstupy.
+Aplikácie bola rozložená do viacerých tried podľa zodpovednosti daných komponent. Pri implementácií bolo použité JBoss Developer studo 7.1.1 GA spolu s JBoss AS 7.1.1 Final. Celý projekt boli založený na technológií maven, ktorú uľahčovala celý process vývoja a jeho následne nasadenie na JBoss server. Pre databázovú technológiu bol nainštalovaný mysql server nakonfigurovaný s príslušnými údajmi.
+
+\subsection{Rozdelenie aplikácie}
+
+	Aplikácia bola rozdelená na 2 časti:
+	\begin{itemize}
+	\item JSF aplikácia s užívateľským rozhraním, ktorá zobrazuje výsledky, umožňuje spravovanie databáze, rovnako aj pristupovanie k službám web service, je pritom rozdelená na hlavný modul s celou funkčnosťou a modul s entitami, ktoré zdieľa s PlannerService - optaplanner.controller
+	\item Web service + EJB aplikácia, ktorá poskytuje web service koncový bod spolu s metódami na spustenie a pozastavanie úlohy. Spustenie úlohy volá Message-driven Beanu, ktorá vykonáva spravanie(plánovanie) úlohy, využíva pritom modul Enties, ktorý obsahuje entitné triedy - PlannerService
+
+	\end{itemize}
+
+
+
+
+\subsubsection{JSF aplikácia}
+JSF aplikácia bola postavená na technológií JavaServer Faces v kombinácií s frameworkami Rich Faces, Twitter Boostrap a Font Awesome.
+	
+
+\subsubsection{Prihlasovanie}
+
+	
+
+
+
+
+\subsubsubsection{Implementácia rozhrania}
+
+	
+
+
+
+\subsubsubsection{Logika JSF aplikácie}
+
+
+
+
+
+\subsubsection{Web Service, EJB aplikácia}
+Pri implementácií web service bola využitá už čiastočne implementovaná Web service, do ktorej boli následne doplnená funkčnosť spustenia úlohy a pozastavenia úlohy. Jej časť spustenia výpočtu už nebola cieľom bakalárskej práce a bola teda implementovaná mojim vedúcim Martinom Večeřom.
+Táto aplikácia je pomenovaná PlannerService a obsahuje ako som spomínal Big Web servica s 2 metódami. Tieto métody sú metóda runTask s jedným parametrom a to ID úlohy, ktorá sa má spustiť. Pričom dôjde k vytvoreniu spojenia s Message-driven bean,ktorá vykonáva výpočet. Najprv sa do fronty zaradí ID úlohy, ktorá sa má spustiť. Následne si Mesage-driven beana získa z fronty ID úlohy a následne spustí výpočet. Tieto beany sa kvôli rozloženiu záťaže môžu nachádzať na viacerých serveroch. Priebežne pritom aktualizuje stav spracovania úlohy. Priebežne pritom ukladajú údaje o stavu úlohy, času do ukončenia úlohy a percentuálnom ohodnotení úlohy. Po ukončení úlohy je uložené najlepšie možné riešenie do databáze. Na skončení spracovania nastaví príslušný stav úlohy a skončí. Web service obsahuje aj metódu na pozastavenie výpočtu s 1 parametrom a to je ID úlohy, ktoré sa má pozastaviť. Tá následne zavolá Message-driven bean-u, ktorá si z fronty získa úlohu a pozastaví jej výpočet. Tie si úlohu vyberú z actiemsq fronty a spustia výpočet. 
+	
+	
+
+
+
+ Celý vývoj začal tvorbou balíka pre entitné triedy, ktoré pristupovali k databázami. Vývoj ďalej pokračoval tvorbou triedy, ktorá implementuje všetky potrebné operácie nad dátami. Následne treba správne nakonfigurovať datasource v JBoss AS, aby mohol správne pristupovať k databázmi vrátane prihlasovacích údajov. Následne pre správne priprájanie nasadeného maven projektu trebalo nastaviť súbor persistence.xml, do ktorého sa definovali entitné triedy a odkaz na datasource umiestneného na JBoss AS. Následne som sa sústredil na vývoj samotného užívatelského rozhrania. Užívateľské rozhranie som rozdelil do do 4 Managed bean, ktoré sa starajú o funkčnosť implementovaných xhtml stránok. Stránky sú celkom 4 , 3 pre užívatelské role, 4. pre prihlasovanie do systému. Každej stránke pritom odpovedá managed beana. Prihlasovacia stránka je upravená prostredníctvom Twitter Bootstrap-u, pričom obsahuje zabezpečenie prostredníctvom uživatelských rol. Rovnako obsahuje validáciu pred nekorektným prihlasovaním, ktoré môže byť spôsobené neznámym užívateľským meno alebo heslom. Následne je užívateľ presmerovaný na základe svojej role na príslušnú stránka. Každá stránka obsahuje záložky a podla svojej role dovodluje užívatelia vykonávať akcie. Základom každého zobrazenie je dátová tabulka h:datatable, ktorá zodpovedá príslušnému modelu(užívateľ, úloha, organizácia s príslušnými vlastnosťami), ktorá zobrazuje údaje na stránku a neustále obnovuje svoj obsah podľa obsahu v databázi. Príslušné riadky odpovedajú položkám v databázi pričom pre každú položku sa vzťahuje nejaká akcia, ktorá je reprezentovaná prislušným tlačidlom. Po stlačení tlačidla sa prislušna zmena prejaví na stránke rovnako ako aj na stránke. Vytváranie novej úlohy je reprezentované komponentov rich:upload, ktorá pochádza z frameworku Rich Faces. Táto komponenta zabezpečuje nahrávanie xml súborov, ktoré reprezentujú danú úlohu, celé je to zaobalené do formuláru, ktorý obsahuje položku na zadanie mena. Po stlačení tlačidla \uv{Create Task}, dôjde k zavolaniu methódy z managed beany príslušnej triedy, ktorá sa postará o vytvorenie úlohy v databázi a jej zobrazenie na stránke. V každú tabulku je možné zoraďovať podľa stĺpcov, deje sa to kliknutím na príslušný stĺpec, to spôsobí zavolanie metódy v managed bean-e, ktorá prejde všetky položky daného stĺpca, ktoré sú uložené v zozname a zoradí ich podľa stĺpcov. Obnovanie obsahuje sa realizuje prostredníctvom komponenty aj4:poll, ktorá je súčasťou frameworku Rich Faces. Táto komponenta neustála volá metódu, ktorá získava všetky položky z databáze, čím je zabezpečený aktuálny obsah tabuliek. Vyhľadávanie položiek v danej tabulke sa deje prostredníctvom formulára, do ktorého sa zadá vyhľadávaný reťazec a zvolí sa z vyskakovacie zoznamu, následna sa zavolá metóda, ktorá nastaví obsah h:datable na nájdené položky. Tento postup je rovnaký pre manažovanie organizácií a užívateĺov. Jednotlivé možnosti sú zakomponované od záložiek, ktoré sú implementované prostredníctvom twitter boostrap-u. Jednotlivé metódy sú pritom identické vo všetkých managed bean podľa užívatelskej role, až na to, že sú obmedzené podľa užívatelské role. 
 
 
 
@@ -459,7 +515,7 @@ Aplikácie bola rozložená do viacerých tried podľa zodpovednosti daných kom
 Testovanie prebiehalo na servery JBoss AS 7.1.1 Final najprv prostredníctvom jednodúch JUnit testov, ktoré malo overiť komplikovanú fukčnosť metód. Následne sa pre overenie fukčnosti databáze použil framework Arqullian, ktorý umožňuje nasadenie tried priamo do Java EE kontajneru, čo zjednodušuje testovanie. Prostredníctvom tohto frameworku sa testovala celková fukčnosť aplikácie. Jednoduchšie časti boli otestované pomocou JUnit testov. Postupným budovaním aplikácie sa pristupovalo k testovaniu navrhnutých častí. Junit boli postupne skonštruované pre jednoduchšie metódy, ako je overenie funkčnosti vyhľadávania entít, mazanie entít, pridanie entít do zoznamu úloh. Pomocou arquallian-u bolo následné otestovaná prihlasovanie, databázové operácie, rovnako bola otestovaná bezpečnosť aplikácie.
 
 
-V ďalšej častie prebiehalo testovanie medzi konkrétnymi užívateľmi. Užívatelia testovali aplikáciu a hľadali buggy, ktoré neodhalilo predošlé testovanie. Rovnako overovali, či boli splnené formálne požiadavky. Skupine užívateľov bol predložený odkaz na nasadenú aplikáciu a prihlasovacie údaje. Užívatelia mohli následne sa prihlasovať pod rôznymi užívateľskými rolami, tí nasledne testovali vytváranie užívatelov, organizácií, úloh. Následne mohli sledovať stav spracovania plánovacich úloh. Aplikáciu otestovali pod 2 prehliadačmi a to Google Chrome vo verzii 34.0 a Mozilla Firefox verzie 28.0. Aplikácia sa správala pod obomi rovnako a korektne. Po odhalení chýb boli chyby ohlásené a odstránené a aplikácia bola následne opäť nasadená. Tento postup sa opakoval až dokým neboli odhalené všetky chyby.
+V ďalšej častie prebiehalo testovanie medzi konkrétnymi užívateľmi. Užívatelia testovali aplikáciu a hľadali buggy, ktoré neodhalilo predošlé testovanie. Rovnako overovali, či boli splnené formálne požiadavky. Skupine užívateľov bol predložený odkaz na nasadenú aplikáciu a prihlasovacie údaje. Užívatelia mohli následne sa prihlasovať pod rôznymi užívateľskými rolami, tí nasledne testovali vytváranie užívatelov, organizácií, úloh. Následne mohli sledovať stav spracovania plánovacich úloh. Aplikáciu otestovali pod 2 prehliadačmi a to Google Chrome vo verzii 34.0 a Mozilla Firefox verzie 28.0. Bol použitý operačný systém linux 3.13.0-24-generic s operačným systémom Kubuntu 14.04.Aplikácia sa správala pod obomi rovnako a korektne. Po odhalení chýb boli chyby ohlásené a odstránené a aplikácia bola následne opäť nasadená. Tento postup sa opakoval až dokým neboli odhalené všetky chyby. 
 
 
 

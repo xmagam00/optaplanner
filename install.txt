@@ -1,0 +1,20 @@
+V prvom rade uviediem potrebné prostriedky pre beh aplikácie. Pre správny beh aplikácie potrebujeme nasledovné prostriedky:
+1. JBoss aplikačný server najmenej vo verzii 7.1.1.Final. Je možné ho zdarma stiahnuť z www.jboss.org
+2. Nástroj Maven, ktorý je možné stiahnuť vo verzii 3.2.1 z www.maven.apache.org, kde sa nachádza aj manuál na inštaláciu
+3. MySQL Connector/J minimálne vo verzii 5.0.8, ktorý môžte stiahnuť z https://dev.mysql.com/downloads/connector/j/
+4. MySQL databázový server najmenej vo verzii 5.5.37
+5. Webový prehlidač Mozilla Firefox najmenej vo verzii 29.0 alebo Google Chrome najmenej vo verzii 34.0
+V prvom rade je potrebné nainštalovať MySQL server nakonfigurovať databázu s názvom optaplanner s užívateľským menom root a heslom root. 
+Následne je potrebné rozbaliť JBoss aplikačný server na súborový systém. V ďalšom kroku nastaví náš aplikačný server pre správne použitie MySQL databáze. 
+V tomto kroku je potrebné nakonfigurovať súbor standalone.xml v adresári JBOSS_HOME/standalone/configuration/.
+Tam správne nastavíme datasource(zdroj databázových dát pre našlu aplikáciu)(môžme použiť online dokumentáciu https://docs.jboss.org/author/display/AS71/DataSource+configuration, kde je celý postup zdokumentovaný).
+Následne treba stiahnutý MySQL Connector/J skopírovať do adresára JBOSS_HOME/standalone/deployments. Aplikáciu môžme spustiť nasledovne:
+Skopírujeme maven projekt optaplanner.controller do adresára JBOSS_HOME/standalone/deployments
+Skopírujeme maven projekt PlannerService do adresára JBOSS_HOME/standalone/deployments
+Prejdeme do zložky JBOSS_HOME/standalone/bin a spustíme skript standalone.sh
+Aplikáciu je možné spustiť aj pomocou nástroju maven a to nasledovne:
+Nastavíme sa na projekt optaplanner.controller a zadamé príkaz mvn package
+Následne zadamé príkaz mvn compile
+A nakoniec príkaz mvn jboss as:deploy
+Postup uvedený vyššie vykonáme aj pre projekt Planner.Service. 
+Aplikáciu spustíme zadaním príkazu http://localhost:8080/optaplanner.controller/ do webového prehliadaču.
