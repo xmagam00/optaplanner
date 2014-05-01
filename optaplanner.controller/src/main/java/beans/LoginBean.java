@@ -186,16 +186,7 @@ public class LoginBean extends BaseAuthenticator{
 		
 		try {
 			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-			FacesContext test = FacesContext.getCurrentInstance();
-			if (test.getResponseComplete()) {
-				return;
-				}
-			externalContext.responseReset();
-			if (externalContext.isResponseCommitted())
-			{
-				
-				return;
-			}
+			
 			if (roles.equals("Administrator"))
 			{
 				externalContext.redirect("Administrator.xhtml");

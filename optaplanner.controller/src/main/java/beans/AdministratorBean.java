@@ -874,15 +874,17 @@ private String renderOption3;
 	}
 
 	public void saveXmlFile() {
+		setRenderPoll("false");
 		setRenderTab("true");
 		setLoadFunction("$('#MyTab a:first').tab('show')");
+	
 		op.changeXmlFile(getName(), getXmlFile(), getOwner());
 		setRenderPoll("true");
 		setXmlFile("");
 		setName("");
 		setOwner("");
-		setTab("Tasks");
-		setRenderTab("true");
+		setRenderTab("false");
+	
 	}
 
 	public void editXmlFile(TaskDef task) {
@@ -897,14 +899,13 @@ private String renderOption3;
 			editableOwner.add(obj[1].toString());
 
 		}
-		setRenderArea("true");
-		setRenderButton("true");
-		System.out.println(task.getXmlFile());
+		
+	
 		setXmlFile(task.getXmlFile());
 		setIdTask(task.getId());
 		setRenderPoll("false");
-		setTab("Edit");
-		setRenderTab("false");
+
+
 	}
 
 	public void showAllUsers() {
@@ -1583,14 +1584,10 @@ private String renderOption3;
 
 	public void createTask() {
 		
-		setRenderName("false");
+		setRenderPoll("false");
 		setRenderUpload("false");
 		setLoadFunction("$('#MyTab li:eq(1) a').tab('show')");
-		if (getName() == null || getName().isEmpty())
-		{	
-			setRenderName("true");
-			return;
-		}
+		
 		
 		if (getXmlFile() == null || getXmlFile().isEmpty())
 		{
@@ -1598,9 +1595,10 @@ private String renderOption3;
 			return;
 		}
 		
-		
+		setXmlFile("");
+		setName("");
 		op.createTask(getName(), getXmlFile(), getLoggedUsername());
-	
+		setRenderPoll("true");
 	}
 
 	public void unpublishTask(TaskDef task) {
@@ -1712,19 +1710,18 @@ private String renderOption3;
 
 	public void logout() {
 		identity.logout();
-		 HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-		            .getExternalContext().getSession(false);
-		    session.invalidate();
-		FacesContext.getCurrentInstance().getExternalContext()
-				.invalidateSession();
-		ExternalContext context = FacesContext.getCurrentInstance()
-				.getExternalContext();
+		ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
 		try {
-			context.redirect("Login.xhtml");
+			ex.redirect("Login.xhtml");
 		} catch (IOException e) {
-
+		
 			e.printStackTrace();
 		}
+		
+		
+		
+		
+		
 	}
 
 	public String getUsername() {

@@ -100,16 +100,16 @@ public class Operation {
 		
 		Organization orgtab = eManager.getReference(Organization.class,org.getIdOrganization());
 		
-	 
+	
 		eManager.getTransaction().begin();
 		Task task = new Task();
-		task.setXmlFile(xmlfile);
+		task.setXmlFile(name);
 		task.setStateOfTask("MODIFIED");
 		task.setIfPublic(0);
 		task.setProgress(0);
 		task.setETA(0);
 		task.setUser(usertab);
-		task.setName(name);
+		task.setName(xmlfile);
 		task.setOrganization(orgtab);
 		
 		eManager.persist(task);
