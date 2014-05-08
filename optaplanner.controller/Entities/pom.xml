@@ -27,17 +27,18 @@
 	</repositories>
 	
 	
-    <groupId>org.jboss</groupId>
-    <artifactId>entities</artifactId>
+   
+    <artifactId>org.jboss.optaplanner.controller.entities</artifactId>
    
     <packaging>jar</packaging>
     <name>Entities</name>
    
 	
 	<parent>  
-    <groupId>org.jboss</groupId>  
-    <artifactId>optaplanner.controller</artifactId>  
-    <version>0.1.0</version>  
+    <groupId>org.jboss.optaplanner</groupId>  
+    <artifactId>controller</artifactId>  
+    <version>0.0.1-SNAPSHOT</version>  
+   
   </parent>  
 	
     <url>http://jboss.org/jbossas</url>
@@ -50,7 +51,7 @@
     </licenses>
 
    <properties>
-     <org.richfaces.bom.version>4.2.2.Final</org.richfaces.bom.version>
+     
         <!-- Explicitly declaring the source encoding eliminates the following 
             message: -->
         <!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered 
@@ -81,13 +82,7 @@
 
     <dependencyManagement>
         <dependencies>
-             <dependency>
-                <groupId>org.richfaces</groupId>
-                <artifactId>richfaces-bom</artifactId>
-                <version>${org.richfaces.bom.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
+             
             <!-- JBoss distributes a complete set of Java EE 6 APIs including a Bill 
                 of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection) 
                 of artifacts. We use this here so that we always get the correct versions 
@@ -110,22 +105,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-           <dependency>
-                <groupId>org.richfaces.sandbox.ui.bootstrap</groupId>
-                <artifactId>bootstrap-ui</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+          
             
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
-   <dependency>
-   <groupId>org.jboss.seam.faces</groupId>
-   <artifactId>seam-faces</artifactId>
-   <version>3.1.0.Final</version>
-   
-</dependency>
+ 
 		
   
 
@@ -203,16 +189,7 @@
             <scope>test</scope>
         </dependency>
 	
-<dependency>
-<groupId>javax.faces</groupId>
-<artifactId>jsf-impl</artifactId>
-<version>1.2_15</version>
-</dependency>
- <dependency>
-<groupId>javax.faces</groupId>
-<artifactId>jsf-api</artifactId>
-<version>2.1</version>
-</dependency>
+
 	
 	
 	

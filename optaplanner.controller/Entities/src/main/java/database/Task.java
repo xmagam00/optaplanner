@@ -1,6 +1,7 @@
 package database;
 
 import javax.persistence.*;
+import model.TaskStatus;
 
 @Entity
 @Table(name="task")
@@ -9,7 +10,9 @@ public class Task {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idTask;
 	private String xmlFile;
-	private String stateOfTask;
+	
+	@Enumerated(EnumType.STRING)
+	private TaskStatus stateOfTask;
 	private int progressOfTask;
 	private int ifpublic;
 	private long eta;
@@ -44,12 +47,12 @@ public class Task {
 		
 	}
 	
-	public void setStateOfTask(String state_of_task_of_task)
+	public void setStateOfTask(TaskStatus state_of_task_of_task)
 	{
 		this.stateOfTask = state_of_task_of_task;
 	}
 	
-	public String getstate_of_task_of_task()
+	public TaskStatus getstate_of_task_of_task()
 	{
 		return stateOfTask;
 	}

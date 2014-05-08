@@ -157,6 +157,25 @@ private String renderOption3;
 	
 	private String idEntity;
 	
+	private String orgPoll;
+	
+	private String updPoll;
+	
+	private String orgPoll2;
+	
+	private String refreshValue="Stop Refresh";
+	private String refreshValue1="Stop Refresh";
+	private String refreshValue2="Stop Refresh";
+	private String renderUser="true";
+	
+	private String renderRow;
+	
+	private String renderRow2;
+	
+	private String renderRow3;
+	
+	
+	
 	private static final String EMAIL_PATTERN = 
 			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -164,8 +183,13 @@ private String renderOption3;
 	@PostConstruct
 	public void init() {
 		try {
-			
-			
+			setRenderRow("5");
+			setRenderRow2("5");
+			setRenderRow3("5");
+			setRenderUser("true");
+			setRefreshValue("Stop Refresh");
+			setUpdPoll("true");
+			setOrgPoll("true");
 			setRenderTab("false");
 			setLoadFunction("$('#MyTab a:first').tab('show')");
 			setRenderEmailFormat("false");
@@ -721,7 +745,24 @@ private String renderOption3;
 		return null;
 	}
 
+	
+	public void updateOwner()
+	{
+		
+		List<String> org = new ArrayList<String>();
+		List<UserDef> resultsOrg = op.getAllUsers();
+		for (Object item : resultsOrg) {
+			Object[] obj = (Object[]) item;
+
+			org.add(obj[1].toString());
+		}
+		
+		this.editableOwner = org;
+		
+	}
+	
 	public void updateEditableOrganizations() {
+		System.out.println("som tu");
 		this.editableOrganizations = null;
 		List<String> org = new ArrayList<String>();
 		List<OrganizationDef> resultsOrg = op.getOrganizations();
@@ -746,7 +787,7 @@ private String renderOption3;
 	}
 
 	public void updateTasks() {
-
+		System.out.println("renderuj");
 		List<TaskDef> org = new ArrayList<TaskDef>();
 		List<TaskDef> resultsOrg = op.getAllTasks();
 		for (Object item : resultsOrg) {
@@ -841,6 +882,7 @@ private String renderOption3;
 
 		}
 		this.users = user;
+		setRenderUser("true");
 		// return to current page
 		return null;
 
@@ -872,6 +914,8 @@ private String renderOption3;
 
 			index++;
 		}
+		setOrgPoll("true");
+		setUpdPoll("true");
 
 	}
 
@@ -929,6 +973,21 @@ private String renderOption3;
 	public void showAllOrganizations()
 	{
 		setLoadFunction("$('#MyTab li:eq(4) a').tab('show')");
+		List<OrganizationDef> list = new ArrayList<OrganizationDef>();
+		List<OrganizationDef> resultsOrg = op.getOrganizations();
+		for (Object item : resultsOrg) {
+			Object[] obj = (Object[]) item;
+			list.add(new OrganizationDef(obj[0].toString(), obj[1]
+					.toString()));
+			
+		}
+		this.organizations = list;
+	}
+	
+	public void showAllOrganizations2()
+	{
+		setLoadFunction("$('#MyTab li:eq(4) a').tab('show')");
+		setRenderRow3(op.countNumberOfOrganization());
 		List<OrganizationDef> list = new ArrayList<OrganizationDef>();
 		List<OrganizationDef> resultsOrg = op.getOrganizations();
 		for (Object item : resultsOrg) {
@@ -1310,8 +1369,29 @@ private String renderOption3;
 	public String saveActionTask() {
 		updateTasks();
 		setLoadFunction("$('#MyTab a:first').tab('show')");
+		setRenderRow("5");
 		setRenderPoll("true");
-
+		
+		return null;
+	}
+	
+	public String saveActionTask2() {
+		updateTasks();
+		setLoadFunction("$('#MyTab a:first').tab('show')");
+		String value = op.countNumberOfTask();
+		setRenderRow(value);
+		setRenderUser("true");
+		
+		return null;
+	}
+	
+	public String saveActionTask3() {
+		updateTasks();
+		setLoadFunction("$('#MyTab li:eq(2) a').tab('show')");
+		String value = op.countNumberOfUser();
+		setRenderRow2(value);
+		setRenderPoll("true");
+		
 		return null;
 	}
 
@@ -1340,7 +1420,7 @@ private String renderOption3;
 	}
 
 	public String editAction(UserDef user) {
-
+		setRenderUser("false");
 		this.oldUsers = null;
 		this.oldUsers = new ArrayList<UserDef>();
 		int index = 0;
@@ -1389,6 +1469,7 @@ private String renderOption3;
 		for (OrganizationDef order : organizations) {
 			order.setEditable(false);
 		}
+		setOrgPoll("true");
 		updateOrganizations(this.organizations, this.oldOrganizations);
 
 		// return to current page
@@ -1397,6 +1478,9 @@ private String renderOption3;
 	}
 
 	public String editActionOrganization(OrganizationDef org) {
+		setOrgPoll("false");
+		setUpdPoll("false");
+		setOrgPoll2("false");
 		setLoadFunction("$('#MyTab li:eq(4) a').tab('show')");
 		int index = 0;
 		org.setEditable(true);
@@ -1410,7 +1494,7 @@ private String renderOption3;
 			index++;
 
 		}
-
+		
 		return null;
 	}
 
@@ -1594,10 +1678,10 @@ private String renderOption3;
 	}
 
 	public void createTask() {
-		
+		setLoadFunction("$('#MyTab li:eq(1) a').tab('show')");
 		setRenderPoll("false");
 		setRenderUpload("false");
-		setLoadFunction("$('#MyTab li:eq(1) a').tab('show')");
+	
 		
 		
 		if (getXmlFile() == null || getXmlFile().isEmpty())
@@ -1605,10 +1689,10 @@ private String renderOption3;
 			setRenderUpload("true");
 			return;
 		}
-		
+		op.createTask(getName(), getXmlFile(), getLoggedUsername());
 		setXmlFile("");
 		setName("");
-		op.createTask(getName(), getXmlFile(), getLoggedUsername());
+		
 		setRenderPoll("true");
 	}
 
@@ -1627,16 +1711,20 @@ private String renderOption3;
 	}
 
 	public void deleteTask(TaskDef task) {
+		setOrgPoll("false");
 		setIdEntity("");
 		setIdEntity(task.getId());
 		
+		setOrgPoll2("false");
 
 	}
 	
 	public void deleteTaskSpec()
-	{
+	{ 
 		op.deleteTask(Long.parseLong(getIdEntity()));
 		setIdEntity("");
+		setOrgPoll("true");
+		setOrgPoll("true");
 	}
 	
 	public void changePassword() {
@@ -1693,8 +1781,9 @@ private String renderOption3;
 
 	public void createOrganization() {
 		setLoadFunction("$('#MyTab li:eq(4) a').tab('show')");
-		
+		setUpdPoll("false");
 		setRenderOrg("false");
+		setOrgPoll("false");
 		if (getOrganization() == null | getOrganization().isEmpty())
 		{
 			setRenderOrg("true");
@@ -1705,7 +1794,8 @@ private String renderOption3;
 		setRenderOrg("false");
 		op.createOrganization(this.organization);
 		updateOrganization();
-
+		setUpdPoll("true");
+		setOrgPoll("true");
 	}
 
 	public void updateOrganization() {
@@ -1719,14 +1809,30 @@ private String renderOption3;
 		}
 		this.organizations = org;
 	}
+	
+	
+	
+	public void updateUsers(){
+		System.out.println("user");
+		List<UserDef> org = new ArrayList<UserDef>();
+	List<UserDef> resultsUser = op.getAllUsers();
+	for (Object item : resultsUser) {
+		Object[] obj = (Object[]) item;
+		org.add(new UserDef(obj[0].toString(), obj[1].toString(),
+				obj[2].toString(), obj[3].toString(),
+				obj[4].toString(), obj[5].toString()));
 
+	}
+	
+	this.users = org;
+	}
 	public void deleteOrganization(OrganizationDef org) {
 		setIdEntity("");
 		setLoadFunction("$('#MyTab li:eq(4) a').tab('show')");
 		setIdEntity(org.getIdOrganization());
 	}
 	
-	public void deleteORgSpec()
+	public void deleteOrgSpec()
 	{
 		op.deleteOrganization(Long.parseLong(getIdEntity()));
 		updateOrganization();
@@ -1734,17 +1840,18 @@ private String renderOption3;
 	}
 
 	public void logout() {
+		
 		identity.logout();
-		ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
+		
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		externalContext.invalidateSession();
 		try {
-			ex.redirect("Login.xhtml");
-		} catch (IOException e) {
-		
-			e.printStackTrace();
+		externalContext.redirect("Login.xhtml");
 		}
-		
-		
-		
+		catch(Exception ex)
+		{
+			
+		}
 		
 		
 	}
@@ -1802,6 +1909,54 @@ private String renderOption3;
 		setRenderPassword2("false");
 		setRenderPasswordValidate2("false");
 		setRenderPasswordNot2("false");
+	}
+	
+	public void refresh()
+	{
+		if(getRefreshValue().equals("Stop Refresh"))
+		{ 
+			setRenderPoll("false");
+			setRefreshValue("Start Refresh");
+			return;
+		}
+		if(getRefreshValue().equals("Start Refresh"))
+		{ 
+			setRenderPoll("true");
+			setRefreshValue("Stop Refresh");
+			return;
+		}
+	}
+	
+	public void refresh1()
+	{
+		if(getRefreshValue1().equals("Stop Refresh"))
+		{ 
+			setOrgPoll("false");
+			setRefreshValue1("Start Refresh");
+			return;
+		}
+		if(getRefreshValue1().equals("Start Refresh"))
+		{ 
+			setOrgPoll("true");
+			setRefreshValue1("Stop Refresh");
+			return;
+		}
+	}
+	
+	public void refresh2()
+	{
+		if(getRefreshValue2().equals("Stop Refresh"))
+		{ 
+			setRenderUser("false");
+			setRefreshValue2("Start Refresh");
+			return;
+		}
+		if(getRefreshValue2().equals("Start Refresh"))
+		{ 
+			setRenderUser("true");
+			setRefreshValue2("Stop Refresh");
+			return;
+		}
 	}
 
 	public String getOrganization() {
@@ -2280,4 +2435,105 @@ private String renderOption3;
 	{
 		return idEntity;
 	}
+	
+	public void setOrgPoll(String set)
+	{
+		this.orgPoll= set;
+	}
+	
+	public String getOrgPoll()
+	{
+		return orgPoll;
+	}
+	
+	public void setUpdPoll(String set)
+	{
+		this.updPoll  = set;
+	}
+	
+	public String getUpdPoll()
+	{
+		return updPoll;
+	}
+	
+	public String getOrgPoll2(){
+		return orgPoll2;
+	}
+	
+	public void setOrgPoll2(String set)
+	{
+		this.orgPoll2 = set;
+	}
+
+
+	public void setRefreshValue(String set)
+	{
+		this.refreshValue = set;
+	}
+	
+	public String getRefreshValue()
+	{
+		return refreshValue;
+	}
+	
+	public void setRefreshValue1(String set)
+	{
+		this.refreshValue1 = set;
+	}
+	
+	public String getRefreshValue1()
+	{
+		return refreshValue1;
+	}
+	
+	public void setRefreshValue2(String set)
+	{
+		this.refreshValue2 = set;
+	}
+	
+	public String getRefreshValue2()
+	{
+		return refreshValue2;
+	}
+	
+	public void setRenderUser(String set)
+	{
+		this.renderUser = set;
+	}
+	
+	public String getRenderUser()
+	{
+		return renderUser;
+	}
+	
+	public String getRenderRow()
+	{
+		return renderRow;
+	}
+	
+	public void setRenderRow(String set)
+	{
+		this.renderRow = set;
+	}
+	
+	public String getRenderRow2()
+	{
+		return renderRow2;
+	}
+	
+	public void setRenderRow2(String set)
+	{
+		this.renderRow2 = set;
+	}
+	
+	public void setRenderRow3(String set)
+	{
+		this.renderRow3 = set;
+	}
+	
+	public String getRenderRow3()
+	{
+		return renderRow3;
+	}
+	
 }

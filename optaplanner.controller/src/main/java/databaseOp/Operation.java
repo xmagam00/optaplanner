@@ -1,7 +1,8 @@
 package databaseOp;
 import org.jboss.seam.security.Credentials;
-import org.picketlink.idm.impl.api.PasswordCredential;
 
+import org.picketlink.idm.impl.api.PasswordCredential;
+import model.TaskStatus;
 import java.sql.*;
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class Operation {
 		eManager.getTransaction().begin();
 		Task task = new Task();
 		task.setXmlFile(xmlfile);
-		task.setStateOfTask("NEW");
+		task.setStateOfTask(TaskStatus.NEW);
 		task.setIfPublic(0);
 		task.setProgress(0);
 		task.setETA(0);
@@ -99,12 +100,12 @@ public class Operation {
 		Organization org = (Organization)(idOrganization);
 		
 		Organization orgtab = eManager.getReference(Organization.class,org.getIdOrganization());
-		
+	
 	
 		eManager.getTransaction().begin();
 		Task task = new Task();
 		task.setXmlFile(name);
-		task.setStateOfTask("MODIFIED");
+		task.setStateOfTask(TaskStatus.MODIFIED);
 		task.setIfPublic(0);
 		task.setProgress(0);
 		task.setETA(0);
@@ -173,12 +174,16 @@ public class Operation {
  		
  		Query q = eManager.createQuery("select password from User where username='" + username +"'");
  		 Object pass = q.getSingleResult();
+ 		/* if (pass.toString().equals(ShaEncoder.hash(string)))
+ 		 {
+ 			 result = true;
+ 			
+ 		 }*/
  		 if (pass.toString().equals(ShaEncoder.hash(string)))
  		 {
  			 result = true;
  			
  		 }
- 		 
  		
  		
        
@@ -426,10 +431,15 @@ public class Operation {
 	public void deleteOrganization(Long org)
 	{			Organization organization = eManager.getReference(Organization.class, org);
 		 
+try {
 		  eManager.getTransaction().begin();
 		  eManager.remove(organization);
 		  eManager.getTransaction().commit();
-		
+}
+catch(Exception ex)
+{
+	
+}
 		
 	}
 	
@@ -544,6 +554,27 @@ public class Operation {
 
 		
 		return user.toString();
+	}
+	
+	public String countNumberOfTask()
+	{
+		Query query = eManager.createQuery("select count(*) as id from Task");
+		Object object= query.getSingleResult();
+		return object.toString();
+	}
+	
+	public String countNumberOfOrganization()
+	{
+		Query query = eManager.createQuery("select count(*) as id from Organization");
+		Object object= query.getSingleResult();
+		return object.toString();
+	}
+	
+	public String countNumberOfUser()
+	{
+		Query query = eManager.createQuery("select count(*) as id from User");
+		Object object= query.getSingleResult();
+		return object.toString();
 	}
 	
 	

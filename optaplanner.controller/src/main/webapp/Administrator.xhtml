@@ -13,16 +13,17 @@
 <meta charset="utf-8"></meta>
 <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 <link rel="icon" type="image/x-icon" href="#{request.contextPath}/resources/img/favicon.ico" />
-<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
 
+  <h:outputStylesheet library="css" name="bootstrap.css"  />
+  <h:outputStylesheet library="css" name="bootstrap-responsive.min.css"  />
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
 
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
     <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
     <meta name="description" content="Optaplanner service"></meta>
     <meta name="author" content="Martin Maga"></meta>
-  
-<h:outputStylesheet library="css" name="bootstrap.css"  />
+
 
 	<style>
 body {
@@ -34,12 +35,6 @@ body {
     height:900px;
 }
 
-html, body {
-    width: 100%;
-}
-table {
-    margin: 0 auto;
-}
 
 tr.spaceUnder > td
 {
@@ -49,15 +44,7 @@ tr.spaceUnder > td
 
 }
 </style>
-<h:outputScript target="head">
-    $ = jQuery;
-    // Then you can use it
-    $(document).ready(function() {
-       function test()
-       {
-       $('#usermanagement').removeClass('active')
-    });
-</h:outputScript>
+
 <script>
 function skus()
 {
@@ -72,23 +59,24 @@ function skus()
 </h:head>
 
 
-<h:body class="bodyclass" onload="#{AdministratorBean.loadFunction}" >
+<h:body class="preview" data-offset="80" data-spy="scroll" data-target=".subnav" id="top" onload="#{AdministratorBean.loadFunction}" >
 
 		<f:view>
 
 
 
 
-<h:form>
 
 
-			<h:commandButton class="btn pull-right" value="Logout"
-				action="#{AdministratorBean.logout}"></h:commandButton>
-			<h:outputText style="margin-right:10px;" value="#{AdministratorBean.loggedUsername}" class="pull-right" />
-			<h:outputLabel style="margin-left:5px;" value="User:" class="pull-right" /><i class="fa fa-user fa-fw pull-right"></i>
-		</h:form>	
+     
+
+			
+			
 
 <h:form>
+<div class="navbar navbar-default-top">
+      <div class="navbar-inner">
+      <div class="container">
 <ul class="nav nav-tabs" id="MyTab">
   <li ><a href="#task" data-toggle="tab"><i class="fa fa-home fa-fw"></i>Tasks</a></li>
   <li><a href="#createtask" data-toggle="tab"><i class="fa fa-pencil fa-fw"></i>Create Task</a></li>
@@ -97,8 +85,14 @@ function skus()
   <li><a href="#organizationmanagement" data-toggle="tab"><i class="fa fa-book fa-fw"></i>Organization Management</a></li>
     <li><a href="#edittask" data-toggle="tab"><i class="fa fa-pencil fa-fw"></i>Edit Task</a></li>
 
-</ul>
 
+<h:commandButton class="nav pull-right btn btn-default btn-lg" id="main-menu-right" value="Logout"
+				action="#{AdministratorBean.logout}"></h:commandButton>
+			<h:outputText style="margin-right:10px;" value="#{AdministratorBean.loggedUsername}" class="pull-right" />
+			<h:outputLabel style="margin-left:5px;" value="User:" class="pull-right" /><i class="fa fa-user fa-fw pull-right"></i>
+</ul>
+</div>
+</div></div>
 </h:form>
 <div class="tab-content">
 
@@ -111,49 +105,45 @@ function skus()
 <!-- Modal -->
 
  <h:form >
-
-							<table style="margin-top:50px;margin-left:100px;margin-right:50px;" >
-								<tr>
-									<td><h:outputText value="Enter String to find:" /></td>
-									<td>
+ <div class="container">
+<div class="row">
+								<div class="span2">
+									<h:outputText value="Enter String to find:" /></div>
+								
 									
 									
-										<div class="input-group"><span class="input-group-addon"><i class="fa fa-search"></i></span>
-									<h:inputText type="text" class="form-control" value="#{AdministratorBean.nieco}" /></div></td><td><h:outputText value="Enter string to find" style="color:red;" rendered="#{AdministratorBean.renderFind}" /></td>
-								</tr>
+									 <div class="span2">	<div class="input-group"><span class="input-group-addon"><i class="fa fa-search"></i></span>
+									<h:inputText type="text" class="form-control" value="#{AdministratorBean.nieco}" /></div><h:outputText value="Enter string to find" style="color:red;" rendered="#{AdministratorBean.renderFind}" />
+							</div>
 
 
-
-								<tr>
-									<td><h:outputText value="Select option to find" style="margin-right:10px;"/></td>
-									<td><rich:select  defaultLabel="Select option" value="#{AdministratorBean.findOption}">
+  <div class="row">
+						
+									 <div class="span2"><h:outputText value="Select option to find" style="margin-right:10px;"/></div>
+									 <div class="span2"><rich:select  defaultLabel="Select option" value="#{AdministratorBean.findOption}">
                 <f:selectItem itemValue="ID" itemLabel="ID" />
                 <f:selectItem itemValue="Permission" itemLabel="Permission" />
                 <f:selectItem itemValue="Owner" itemLabel="Owner" />
-            </rich:select></td><td><h:outputText value="Select option" style="color:red;" rendered="#{AdministratorBean.renderOption}" /></td>
+            </rich:select></div><h:outputText value="Select option" style="color:red;" rendered="#{AdministratorBean.renderOption}" />
 
 
-								</tr>
+								</div>
 
 
 
-								<tr>
-									<td>
-									
+							 <div class="row">
+									<div class="span2">
 									<h:commandButton class="btn btn-default btn-lg"
 											value="Find" action="#{AdministratorBean.findList}" type="submit" >
 											 
 											</h:commandButton>
-											
-											</td>
-								</tr>
-							</table>
-
+									</div>		
+								</div>
 						
 
+</div>
 
-
-
+</div>
    </h:form>
 
 
@@ -161,20 +151,22 @@ function skus()
 
 <h:form>
 <a4j:region>
+<h:form>
 					<a4j:poll id="poll33" action="#{AdministratorBean.updateTasks()}"
-						interval="1000" render="editUser,poll33" eventsQueue="foo"  timeout="1000"  
+						interval="4000" render="editUser,poll33" eventsQueue="foo"  
 						enabled="#{AdministratorBean.renderPoll}">
 						
 					</a4j:poll>
-		
+		</h:form>
 					
 					</a4j:region>
 </h:form>
 <h:form >
-
+<div class="container">
+<div class="table-responsive">
 					<h:dataTable value="#{AdministratorBean.task}" var="o"
-						class="table table-hover" id="editUser" rows="5" ajaxRendered="true">
-										
+						class="table table-hover" id="editUser" rows="#{AdministratorBean.renderRow}" >
+							
 						<h:column>
 
 							<f:facet name="header">
@@ -296,7 +288,7 @@ function skus()
 									rendered="#{o.renderEdit}"   />
 								<a4j:commandButton styleClass="btn btn-default" value="Stop task"
 									action="#{AdministratorBean.stopTask(o)}"
-									rendered="#{o.renderStop}" oncomplete="$('#myModal5').modal('show')" data-toggle="modal" data-target="#myModal5" />
+									rendered="#{o.renderStop}" onchange="$('#myModal5').modal('show')" data-toggle="modal" data-target="#myModal5" />
 								<a4j:commandButton styleClass="btn btn-default" value="Run task"
 									action="#{AdministratorBean.runTask(o)}"
 									rendered="#{o.renderRun}" oncomplete="$('#myModal4').modal('show')"  data-toggle="modal" data-target="#myModal4" />
@@ -304,7 +296,9 @@ function skus()
 
 								<a4j:commandButton styleClass="btn btn-default" value="delete task"
 									oncomplete="$('#myModal33').modal('show')" data-toggle="modal" data-target="#myModal33"
-									rendered="#{o.renderDelete}" />
+									rendered="#{o.renderDelete}" action="#{AdministratorBean.deleteTask(o)}" />
+									
+									
 <a4j:commandButton styleClass="btn btn-default"
 									value="UnPublish Task"
 									action="#{AdministratorBean.unpublishTask(o)}"
@@ -340,8 +334,8 @@ function skus()
 
 					</h:dataTable>
 
-
-
+</div>
+</div>
 <!-- Modal -->
 <div class="modal fade" id="myModal33" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -452,140 +446,148 @@ function skus()
 		
 					
 					</h:form>
-					<table>
+					 <div class="container">
+<div class="table-responsive">
+					<table class="table">
 						<tr>
-							<td><rich:dataScroller for="editUser" maxPages="5" /></td>
+							<td><rich:dataScroller for="editUser" maxPages="#{AdministratorBean.renderRow}" /></td>
 						</tr>
 
 						<tr>
 							<td><h:form><h:commandButton class="btn btn-default"
-									value="Show all tasks"
+									value="Show all tasks with datascroller"
 									action="#{AdministratorBean.saveActionTask()}" /></h:form></td>
 						</tr>
+						<tr><td><h:form><h:commandButton value="Show all tasks without datascroller"  class="btn btn-default" action="#{AdministratorBean.saveActionTask2()}"  /></h:form></td></tr>
+						
+						<tr><td><h:form><h:commandButton value="#{AdministratorBean.refreshValue}" class="btn btn-default" action="#{AdministratorBean.refresh}" /></h:form></td></tr>
+					
+					
 					</table>
-				
-					</div>
-				
+				</div>
+			</div>
+				</div>
 		
 
 				<div class="tab-pane active" id="usermanagement">
-					<h:form>
-								<table style="display: inline-block;margin-top:50px;text-align:left;">
-									<tr>
-										<td><h:outputText value="Enter String to find:" /></td>
-										<td>
+				
+								
+								
+								<div class="container">
+							
+								 <div class="span3" >
+								<h:form>
+							
+										<p>Enter String to find:</p> 
+										
 										
 										<div class="input-group"><span class="input-group-addon"><i class="fa fa-search"></i></span>
-										<h:inputText  type="text" class="form-control" value="#{AdministratorBean.nieco}" /></div></td><td><h:outputText value="Enter string to find" style="color:red;" rendered="#{AdministratorBean.renderFind2}" /></td>
-									</tr>
+											<h:inputText  type="text" class="form-control" value="#{AdministratorBean.nieco}" /></div><h:outputText value="Enter string to find" style="color:red;" rendered="#{AdministratorBean.renderFind2}" />
+							
 
 
 
-									<tr>
-										<td><h:outputText value="Select option to find" /></td>
-										<td><rich:select  defaultLabel="Select option" value="#{AdministratorBean.findOption}">
+									
+										<h:outputText value="Select option to find" />
+											<rich:select  defaultLabel="Select option" value="#{AdministratorBean.findOption}">
                 <f:selectItem itemValue="Username" itemLabel="Username" />
                 <f:selectItem itemValue="Organization" itemLabel="Organization" />
                 <f:selectItem itemValue="Email" itemLabel="Email" />
                    <f:selectItem itemValue="Role" itemLabel="Role" />
-            </rich:select></td><td><h:outputText value="Enter option" rendered="#{AdministratorBean.renderOption2}" /></td>
+            </rich:select><h:outputText value="Enter option" rendered="#{AdministratorBean.renderOption2}" />
 
-
-									</tr>
-
-
-
-									<tr>
-										<td><h:commandButton class="btn btn-default btn-lg"
+<br></br><br></br>
+									<h:commandButton class="btn btn-default"
 												value="Find" action="#{AdministratorBean.findListOrganization()}" >
 												
 											
 												</h:commandButton>
-												
-												</td>
-									</tr>
-								</table>
+									</h:form>
+								</div>
+						
+								<h:form>
+<a4j:region>
+<a4j:poll
+							action="#{AdministratorBean.updateEditableOrganizations}"
+							interval="5000" enabled="true" render="editOrg"
+							>
+						</a4j:poll>
+</a4j:region>
+</h:form>
+<h:form>
 
+ <div class="span3">
 
-
-
-								<table style="float:left;margin-top:50px;margin-left:100px;margin-right:50px;" >
-									<tr class="spaceUnder">
-										<td>Username:</td>
-										<td>
-										<div class="input-group"><span class="input-group-addon"><i class="fa fa-user"></i></span>
+							<h:outputText value="Username" />
+								<div class="input-group"><span class="input-group-addon"><i class="fa fa-user"></i></span>
 										<h:inputText type="text" class="form-control" maxlength="100" value="#{AdministratorBean.username}" /></div>
-										</td><td><h:outputText value="Enter username"  style="color:red" rendered="#{AdministratorBean.renderUsername}"/></td>
-									</tr>
-									<tr class="spaceUnder">
-										<td>Password:</td>
-										<td>
-										
+										<h:outputText value="Enter username"  style="color:red" rendered="#{AdministratorBean.renderUsername}"/>
+									
+									
+									<h:outputText value="Password" />
 										
 										<div class="input-group"><span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-										<h:inputSecret type="text" class="form-control" maxlength="100" value="#{AdministratorBean.pass}" /></div></td><td><h:outputText  style="color:red"  value="Enter password" rendered="#{AdministratorBean.renderPassword}" /></td>
-									</tr>
-									<tr class="spaceUnder">
-										<td>Re-type password:</td>
-										<td>
+										<h:inputSecret type="text" class="form-control" maxlength="100" value="#{AdministratorBean.pass}" /></div><h:outputText  style="color:red"  value="Enter password" rendered="#{AdministratorBean.renderPassword}" />
+								
+								
+									<h:outputText value="Re-type password" />
 										<div class="input-group"><span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
 										<h:inputSecret type="text" class="form-control"
-												value="#{AdministratorBean.passwordValidate}" maxlength="100" /></div></td><td><h:outputText value="Re-type password"  style="color:red" rendered="#{AdministratorBean.renderPasswordValidate}" /></td><td><h:outputText  style="color:red" value="Password must match" rendered="#{AdministratorBean.renderPasswordNot}" /></td>
-									</tr>
-									<tr class="spaceUnder">
-										<td>Email:</td>
-										<td>
+												value="#{AdministratorBean.passwordValidate}" maxlength="100" /></div><h:outputText value="Re-type password"  style="color:red" rendered="#{AdministratorBean.renderPasswordValidate}" /><h:outputText  style="color:red" value="Password must match" rendered="#{AdministratorBean.renderPasswordNot}" />
+							<h:outputText value="Email" />
 										<div class="input-group"><span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
 										<h:inputText type="text" class="form-control" maxlength="100" value="#{AdministratorBean.email}" />
 										</div>
-										</td><td><h:outputText  style="color:red" value="Enter email" rendered="#{AdministratorBean.renderEmail}" /></td><td><h:outputText value="Email not in correct format" rendered="#{AdministratorBean.renderEmailFormat}" /></td>
-									</tr>
-									<tr class="spaceUnder">
-										<td>Organization:</td>
-										<td><rich:select
-												value="#{AdministratorBean.organization}"
+										<h:outputText  style="color:red" value="Enter email" rendered="#{AdministratorBean.renderEmail}" /><h:outputText value="Email not in correct format" rendered="#{AdministratorBean.renderEmailFormat}" />
+									
+										<h:outputText value="Organization"/>
+									<rich:select id="editOrg" value="#{AdministratorBean.organization}"
+												
 												showControls="true">
 
 
 												<f:selectItems
 													value="#{AdministratorBean.editableOrganizations}"
-													id="editOrg" />
-											</rich:select></td><td><h:outputText value="Enter organization"   style="color:red" rendered="#{AdministratorBean.renderOrganization}" /></td>
-									</tr>
-									<tr class="spaceUnder">
-										<td>Role:</td>
-										<td><rich:select value="#{AdministratorBean.role}"
+													/>
+											</rich:select><h:outputText value="Enter organization"   style="color:red" rendered="#{AdministratorBean.renderOrganization}" />
+								<p>Role</p>
+											<rich:select value="#{AdministratorBean.role}"
 												defaultLabel="Click here to edit">
 												<f:selectItem itemValue="Reader" itemLabel="Reader" />
 												<f:selectItem itemValue="Administrator"
 													itemLabel="Administrator" />
 												<f:selectItem itemValue="Planner" itemLabel="Planner" />
 
-											</rich:select></td><td><h:outputText value="Enter user role"  style="color:red" rendered="#{AdministratorBean.renderRole}" /></td>
-									</tr>
-									<tr class="spaceUnder">
-										<td><h:commandButton class="btn btn-default"
+											</rich:select><h:outputText value="Enter user role"  style="color:red" rendered="#{AdministratorBean.renderRole}" />
+									<br></br>
+									<br></br>
+									<h:commandButton class="btn btn-default"
 												value="Create User"
-												action="#{AdministratorBean.createUser()}" /></td>
-									</tr>
-								</table>
-</h:form>
+												action="#{AdministratorBean.createUser()}" />
+								
+								
 							
-				<h:form style="position:relative;top:220px;left:-350px">
+								</div>
+							
+								</h:form>
+								</div>
+								
+								
+
+							
+				<h:form>
 					<a4j:region id="ren" selfRendered="true">
-						<a4j:poll
-							action="#{AdministratorBean.updateEditableOrganizations()}"
-							interval="500" 
-							>
-						</a4j:poll>
-						<a4j:poll render="editUSER" interval="500">
+						
+						<a4j:poll render="editUSER" interval="1000" action="#{AdministratorBean.updateUsers()}" enabled="#{AdministratorBean.renderUser}">
 						</a4j:poll>
 
 					</a4j:region>
+					<div class="container">
+					<div class="table-responsive">
 					<h:dataTable value="#{AdministratorBean.user}" var="po"
 						class="table table-hover" 
 						
-						id="editUSER" rows="10" >
+						id="editUSER" rows="#{AdministratorBean.renderRow2}" >
 
 						<h:column>
 
@@ -696,7 +698,8 @@ function skus()
 						</h:column>
 
 					</h:dataTable>
-	
+					</div>
+	</div>
 	<!-- Modal -->
 <div class="modal fade" id="myModal333" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -751,19 +754,23 @@ function skus()
     </div>
   </div>
 </div>	
-					
-					<table>
+					<div class="container">
+					<div class="taible-reponsive">
+					<table class="table">
 						<tr>
-							<td><rich:dataScroller for="editUSER" maxPages="10" /></td>
+							<td><rich:dataScroller for="editUSER" maxPages="#{AdministratorBean.renderRow2}" /></td>
 						</tr>
 						<tr>
 							<td><h:commandButton class="btn btn-default"
 									value="Save Changes" action="#{AdministratorBean.saveAction}" /></td>
 						</tr>
-						<tr><td><a4j:commandButton styleClass="btn btn-default" value="Show all users" action="#{AdministratorBean.showAllUsers()}" /></td></tr>
+						<tr><td><h:commandButton class="btn btn-default" value="Show all users with datascroller" action="#{AdministratorBean.showAllUsers()}" /></td></tr>
+						<tr><td><h:form><h:commandButton value="Show all users without datascroller"  class="btn btn-default" action="#{AdministratorBean.saveActionTask3()}"  /></h:form></td></tr>
+					<tr><td><h:form><h:commandButton value="#{AdministratorBean.refreshValue2}" class="btn btn-default" action="#{AdministratorBean.refresh2}" /></h:form></td></tr>
 					</table>
+					</div>
 
-
+</div>
 
 </h:form>
 
@@ -771,8 +778,8 @@ function skus()
 		</div>
 				 <div class="tab-pane" id="changepassword">
 					<div class="container">
-					<h:panelGrid column="1">
-
+				
+<div class="span2" style="float:none;margin:0 auto;">
 
 <h:form>
 
@@ -792,68 +799,73 @@ function skus()
 					<br></br>
 						<h:commandButton class="btn btn-default" action="#{AdministratorBean.validatePassword()}"
 							value="Change password" />
+						
 </h:form>
-					</h:panelGrid>
+</div>
+					
 					</div>
 				</div>
 			  <div class="tab-pane" id="organizationmanagement">
 <h:form>
-				<table style="display: inline-block;margin-top:50px;text-align:left;">
-								<tr>
-									<td><h:outputText value="Enter String to find:" /></td>
-									<td>
+				<div class="container">
+				<div class="span3">
+								
+									<h:outputText value="Enter String to find:" />
+									
 									<div class="input-group"><span class="input-group-addon"><i class="fa fa-search"></i></span>
-									<h:inputText type="text" class="form-control" value="#{AdministratorBean.nieco}" /></div></td><td><h:outputText style="color:red;" value="Enter string to find"  rendered="#{AdministratorBean.renderFind3}"  /></td>
-								</tr>
+									<h:inputText type="text" class="form-control" value="#{AdministratorBean.nieco}" /></div><h:outputText style="color:red;" value="Enter string to find"  rendered="#{AdministratorBean.renderFind3}"  />
+								
 
 
 
-								<tr class="spaceUnder">
-									<td><rich:select  defaultLabel="Select option" value="#{AdministratorBean.findOption}">
+								
+									<rich:select  defaultLabel="Select option" value="#{AdministratorBean.findOption}">
                 <f:selectItem itemValue="ID" itemLabel="ID" />
                 <f:selectItem itemValue="Name of Organization" itemLabel="Name of Organization" />
-              </rich:select></td><td><h:outputText value="Enter option" style="color:red;" rendered="#{AdministratorBean.renderOption3}" /></td>
+              </rich:select><h:outputText value="Enter option" style="color:red;" rendered="#{AdministratorBean.renderOption3}" />
 
 
-								</tr>
-
-
-
-								<tr class="spaceUnder">
-									<td><h:commandButton class="btn btn-default btn-lg"
-											value="Find" action="#{AdministratorBean.findListOrg}" /></td>
-								</tr>
-							</table>
+								
 
 
 
+							<br></br>
+									<br></br>
+								<h:commandButton class="btn btn-default"
+											value="Find" action="#{AdministratorBean.findListOrg}" />
+							
 
 
-				<table  style="float: left;margin-top:50px;margin-left:100px;margin-right:50px;">
-						<tr class="spaceUnder"><td><h:outputText value="Organization" /></td><td>
+
+</div>
+				<div class="span3">
+						<h:outputText value="Organization" />
 						<div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
 						<h:inputText type="text" maxlength="100" class="form-control" id="Organization"
-							value="#{AdministratorBean.organization}" /></div></td><td><h:outputText value="Enter name of organization" style="red:color;" rendered="#{AdministratorBean.renderOrg}" /></td></tr>
+							value="#{AdministratorBean.organization}" /></div><h:outputText value="Enter name of organization" style="red:color;" rendered="#{AdministratorBean.renderOrg}" />
 
 
-
-					<tr class="spaceUnder"><td><h:commandButton class="btn btn-default" action="#{AdministratorBean.createOrganization()}"
-						value="Create organization" /></td></tr>
-				</table>
+<br></br><br></br>
+					<h:commandButton class="btn btn-default" action="#{AdministratorBean.createOrganization()}"
+						value="Create organization" />
+			</div>
+				</div>
 				</h:form>
 
-		<h:form action="Administrator.xhtml#changepassword">
+		<h:form >
 					<a4j:region>
 						<h:form>
-							<a4j:poll id="poll" interval="50" enabled="true"
-								render="poll,tabOrg" />
+							<a4j:poll id="poll" interval="2000" 
+								render="poll,tabOrg" enabled="#{AdministratorBean.orgPoll}" action="#{AdministratorBean.updateOrganization}"/>
 						</h:form>
 					</a4j:region>
 					</h:form>
 					
 					<h:form>
+					<div class="container">
+					<div class="table-reponsive">
 					<h:dataTable value="#{AdministratorBean.organizations}" var="org"
-						class="table table-hover" rows="10"
+						class="table table-hover" rows="#{AdministratorBean.renderRow3}"
 						 id="tabOrg">
 
 						<h:column>
@@ -906,6 +918,7 @@ function skus()
 						</h:column>
 
 					</h:dataTable>
+					</div>	</div>
 					<!-- Modal -->
 <div class="modal fade" id="myModal3333" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -926,11 +939,17 @@ function skus()
     </div>
   </div>
 </div>	
-					<table>
-				<tr><td><rich:dataScroller for="tabOrg" maxPages="10" /></td></tr>
+<div class="container">
+<div class="table-responsive">
+					<table class="table">
+				<tr><td><rich:dataScroller for="tabOrg" maxPages="#{AdministratorBean.renderRow3}" /></td></tr>
 					<tr><td><h:commandButton class="btn btn-default" value="Save Changes" action="#{AdministratorBean.saveActionOrganization}" /> </td></tr>
-		<tr><td><a4j:commandButton value="Show all organization" styleClass="btn btn-default" action="#{AdministratorBean.showAllOrganizations()}" /></td></tr>
+		<tr><td><h:commandButton value="Show all organization with datascroller" class="btn btn-default" action="#{AdministratorBean.showAllOrganizations()}" /></td></tr>
+		<tr><td><h:commandButton value="Show all organization without datascroller" class="btn btn-default" action="#{AdministratorBean.showAllOrganizations2()}" /></td></tr>
+		<tr><td><h:form><h:commandButton value="#{AdministratorBean.refreshValue1}" class="btn btn-default" action="#{AdministratorBean.refresh1}" /></h:form></td></tr>
 		</table>
+		</div>
+		</div>
 		</h:form>
 		</div>
 		
@@ -943,59 +962,79 @@ function skus()
 		 <h:form>
 		 <a4j:region id="ren" >
 						<a4j:poll
-							action="#{AdministratorBean.updateEditableOrganizations()}"
-							interval="100" >
+							action="#{AdministratorBean.updateOwner}" enabled="true"
+							interval="4000" render="renderOwner">
 						</a4j:poll>
 					
 
 					</a4j:region>
-		 <table>
-     <tr><td>  <h:outputText value="Name of Task:" /></td><td>
+			<div class="container">		
+		<div class="span2" style="float:none;margin:0 auto;">
+		
+      <h:outputText value="Name of Task:" />
      <div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
-      <h:inputText type="text" class="form-control" value="#{AdministratorBean.name}" required="true" requiredMessage="Enter Name of task" /></div></td></tr>
-     <tr><td><h:outputText value="Enter owner" /></td><td> <rich:select required="true" requiredMesage="Select owner" value="#{AdministratorBean.owner}">
+      <h:inputText type="text" class="form-control" value="#{AdministratorBean.name}" required="true" id="nameT" requiredMessage="Enter Name of task" /></div>
+      <h:message for="nameT" />
+     
+      
+    <h:outputText value="Enter owner" /> <rich:select required="true" requiredMesage="Select owner" value="#{AdministratorBean.owner}" id="renderOwner"> 
+      <h:message for="renderOwner" />
        <f:selectItems value="#{AdministratorBean.editableOwner}"  />
       
-      </rich:select></td></tr>
-      <tr><td><h:inputTextarea cols="20" rows="20" value="#{AdministratorBean.xmlFile}" /></td></tr>
-      </table>
-     
-      <h:commandButton value="Save Changes" class="btn btn-default" action="#{AdministratorBean.saveXmlFile}"/>
+      </rich:select>
+      <br></br>
+         <br></br>
+            <br></br>
+     <h:inputTextarea cols="30" rows="20" value="#{AdministratorBean.xmlFile}" id="test99" required="true" requiredMessage="Cannot have empty definition"/>
+      <h:message style="color:red;" for="test99" />
+  
+     <h:commandButton value="Save Changes" class="btn btn-default" action="#{AdministratorBean.saveXmlFile}"/>
+		   </div>
+  </div>
 		 </h:form>
 	</h:panelGroup>
 	</h:form>
 		 </div>
+		
+		
+		
+		
 		  <div class="tab-pane" id="createtask">
 		  
-		<h:form>	
-<table style="display: inline-block;margin-top:50px;text-align:left;">
+			
 
-								<tr class="spaceUnder">
-									<td><h:outputText  value="Name of task:" />
+
+							<div class="container">
+							  <div class="row" style="margin:0px auto;">
+									  <div class="span2"><h:outputText  value="Name of task:" /></div>
 									
-										<div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
+										  <div class="span2"><div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
 									 <h:inputText type="text" class="form-control"
-											value="#{AdministratorBean.name}" maxlength="100" id="meno" required="true" requiredMessage="Enter Name of Task" /> </div></td>
-											<td><h:message style="color:red;" for="meno"/></td>
-								</tr>
-								<tr  class="spaceUnder">
-									<td><h:outputText value="Load XML FILE" /></td><td><h:outputText value="Upload some file"  style="color:red" rendered="#{AdministratorBean.renderUpload}" /></td>
-								</tr>
+											value="#{AdministratorBean.name}"  id="name" required="true" requiredMessage="Enter Name of Task" /> </div></div>
+											<h:message style="color:red;" for="name"/>
+								</div>
+							<div class="row">
+							<div class="span2">
+									<h:outputText value="Load XML FILE" /></div><div class="span2"><h:outputText value="Upload some file"  style="color:red" rendered="#{AdministratorBean.renderUpload}" />
+								
 
-
-								<tr class="spaceUnder">
-									<td><rich:fileUpload
+								<br></br>
+									<br></br>
+									<h:form><rich:fileUpload
 											fileUploadListener="#{AdministratorBean.listener}"
-											id="upload" maxFilesQuantity="1" /></td>
-								</tr>
-								<tr>
-									<td><h:commandButton class="btn btn-default"
+											id="upload" maxFilesQuantity="1" /></h:form>
+								</div>
+								</div>
+								
+								 <div class="row">
+								 <div class="span2">
+									<h:form><h:commandButton class="btn btn-default"
 											value="Create task"
-											action="#{AdministratorBean.createTask()}"  /></td>
-								</tr>
-							</table>
-							</h:form>
-		  </div>
+											action="#{AdministratorBean.createTask()}"  /></h:form>
+								
+						</div></div>
+							</div>
+	</div>
 				
 </div>
 

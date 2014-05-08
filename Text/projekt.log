@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.4.18)  26 APR 2014 12:42
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.4.18)  7 MAY 2014 00:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -624,7 +624,29 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip50
 )
-Spatny ustav! Moznosti: UPSY, UIFS, UITS, UPGM
+
+! Package keyval Error: {Martin Ve\IeC {\v c}e\IeC {\v r}a} supervisor.title.p 
+undefined.
+
+See the keyval package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.87 }
+      
+? ^^X
+Type <return> to proceed, S to scroll future error messages,
+R to run without stopping, Q to run quietly,
+I to insert something, E to edit your file,
+1 or ... or 9 to ignore the next 1 to 9 tokens of input,
+H for help, X to quit.
+? 
+! Interruption.
+\GenericError  ...                                
+                                                  \endgroup 
+l.87 }
+      
+? 
 No file projekt.aux.
 \openout1 = `projekt.aux'.
 
@@ -784,103 +806,396 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.11 \chapter
-             {Java Enterprise edition 6} [2
+l.7 \chapter
+            {Java Enterprise edition 6} [2
 
 ]
 Kapitola 2.
 
-LaTeX Warning: Citation `pojobook' on page 3 undefined on input line 13.
+LaTeX Warning: Citation `pojobook' on page 3 undefined on input line 9.
 
 
-LaTeX Warning: Citation `fitWeb' on page 3 undefined on input line 17.
+LaTeX Warning: Citation `fitWeb' on page 3 undefined on input line 13.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.19 
+l.15 
       [3
 
 ]
 
-LaTeX Warning: Citation `Pravidla' on page 4 undefined on input line 22.
+LaTeX Warning: Citation `Pravidla' on page 4 undefined on input line 18.
 
 
-LaTeX Warning: Reference `model' on page 4 undefined on input line 29.
+LaTeX Warning: Reference `model' on page 4 undefined on input line 25.
 
 <model.jpg, id=51, 328.22626pt x 346.29375pt>
 File: model.jpg Graphic file (type jpg)
  <use model.jpg>
-Package pdftex.def Info: model.jpg used on input line 34.
+Package pdftex.def Info: model.jpg used on input line 30.
 (pdftex.def)             Requested size: 164.11272pt x 173.14644pt.
 
 
-LaTeX Warning: Citation `guibook' on page 4 undefined on input line 41.
+LaTeX Warning: Citation `guibook' on page 4 undefined on input line 37.
 
 
-Overfull \hbox (20.69966pt too wide) in paragraph at lines 29--42
-\T1/cmr/m/n/10.95 mic-kých webo-vých strá-nok po-zostá-vaj-úceho z rôzneho zna£
--ko-va-cie-ho-ja-zyka(HTML,XHTML),
+Overfull \hbox (10.11787pt too wide) in paragraph at lines 25--38
+\T1/cmr/m/n/10.95 dy-na-mické webové stránkz po-zostá-vaj-úce z rôzneho zna£-ko
+-va-cieho ja-zyka(HTML,XHTML),
  []
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.42 
+l.38 
       [4] [5 <./model.jpg>]
 <webtechnology.jpg, id=62, 297.36093pt x 244.66406pt>
 File: webtechnology.jpg Graphic file (type jpg)
  <use webtechnology.jpg>
-Package pdftex.def Info: webtechnology.jpg used on input line 55.
+Package pdftex.def Info: webtechnology.jpg used on input line 51.
 (pdftex.def)             Requested size: 148.6801pt x 122.33173pt.
 
 
-LaTeX Warning: Reference `web' on page 6 undefined on input line 62.
+LaTeX Warning: Reference `web' on page 6 undefined on input line 58.
 
-[6 <./webtechnology.jpg>]
-LaTeX Font Info:    Try loading font information for U+msa on input line 69.
+[6 <./webtechnology.jpg>] <jsflifecycle.jpg, id=70, 375.65344pt x 186.6975pt>
+File: jsflifecycle.jpg Graphic file (type jpg)
+
+<use jsflifecycle.jpg>
+Package pdftex.def Info: jsflifecycle.jpg used on input line 78.
+(pdftex.def)             Requested size: 262.9556pt x 130.68735pt.
+
+
+LaTeX Warning: Reference `lifecycle' on page 7 undefined on input line 85.
+
+[7] <architecture.jpg, id=75, 509.905pt x 352.31625pt>
+File: architecture.jpg Graphic file (type jpg)
+ <use architecture.jpg>
+Package pdftex.def Info: architecture.jpg used on input line 93.
+(pdftex.def)             Requested size: 254.95187pt x 176.15768pt.
+
+
+LaTeX Warning: Reference `jsp' on page 8 undefined on input line 100.
+
+[8 <./jsflifecycle.jpg>] [9 <./architecture.jpg>]
+
+LaTeX Warning: Citation `fitWeb' on page 10 undefined on input line 106.
+
+<webservice.jpg, id=89, 323.70938pt x 62.48344pt>
+File: webservice.jpg Graphic file (type jpg)
+ <use webservice.jpg>
+Package pdftex.def Info: webservice.jpg used on input line 111.
+(pdftex.def)             Requested size: 161.8543pt x 31.24164pt.
+
+
+LaTeX Warning: Reference `com' on page 10 undefined on input line 118.
+
+[10 <./webservice.jpg>] [11] [12]
+
+LaTeX Warning: Citation `messagebook' on page 13 undefined on input line 151.
+
+[13] <maven.jpg, id=112, 388.652pt x 526.768pt>
+File: maven.jpg Graphic file (type jpg)
+ <use maven.jpg>
+Package pdftex.def Info: maven.jpg used on input line 163.
+(pdftex.def)             Requested size: 194.32552pt x 263.38335pt.
+
+
+LaTeX Warning: Reference `maven' on page 14 undefined on input line 170.
+
+
+LaTeX Warning: Citation `mavenbook' on page 14 undefined on input line 170.
+
+[14 <./maven.jpg>] [15] [16]
+
+LaTeX Warning: Citation `junitbook' on page 17 undefined on input line 181.
+
+
+LaTeX Warning: Citation `arqbook' on page 17 undefined on input line 183.
+
+[17] [18]
+Kapitola 3.
+
+LaTeX Warning: Citation `jbossbook' on page 19 undefined on input line 189.
+
+[19
+
+]
+Kapitola 4.
+[20
+
+] <fig/useCaseOverview.jpg, id=148, 233.05045pt x 187.5772pt>
+File: fig/useCaseOverview.jpg Graphic file (type jpg)
+
+<use fig/useCaseOverview.jpg>
+Package pdftex.def Info: fig/useCaseOverview.jpg used on input line 201.
+(pdftex.def)             Requested size: 116.52493pt x 93.78836pt.
+
+
+LaTeX Warning: Reference `obrazokUseCase' on page 21 undefined on input line 20
+8.
+
+
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 211.
+
+[21 <./fig/useCaseOverview.jpg>]
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2013/08/26 1.5b listings language file
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2013/08/26 1.5b (Carsten Heinz)
+)
+(./cloudBalancingSolverConfig.xml
+LaTeX Font Info:    Try loading font information for U+msa on input line 1.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 69.
+LaTeX Font Info:    Try loading font information for U+msb on input line 1.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-! Extra alignment tab has been changed to \cr.
-<recently read> \endtemplate 
-                             
-l.70 JSF Facelets Tag Library &
-                                http://java.sun.com/jsf/facelets  &  ui: &  ...
+)) [22]
+Overfull \hbox (0.71571pt too wide) in paragraph at lines 245--246
+\T1/cmr/m/n/10.95 <sco-re-Di-rec-tor-Fac-tory> a pod-tag <sco-re-De-fi-ni-ti-on
+-Type>). Po-kia© po-u-ºí-vame hard
+ []
 
-? X
- 
+[23]
+
+LaTeX Warning: Citation `algobook' on page 24 undefined on input line 261.
+
+
+LaTeX Warning: Citation `optabook' on page 24 undefined on input line 282.
+
+[24] [25]
+Kapitola 5.
+[26
+
+] <UseCase.jpg, id=218, 691.08188pt x 516.42938pt>
+File: UseCase.jpg Graphic file (type jpg)
+ <use UseCase.jpg>
+Package pdftex.def Info: UseCase.jpg used on input line 334.
+(pdftex.def)             Requested size: 276.42784pt x 206.56808pt.
+
+
+LaTeX Warning: Reference `use' on page 27 undefined on input line 341.
+
+[27 <./UseCase.jpg>]
+
+LaTeX Warning: Citation `boot' on page 28 undefined on input line 350.
+
+[28]
+Overfull \hbox (86.71173pt too wide) in paragraph at lines 355--356
+[]\T1/cmr/m/n/10.95 Podrobné vy-svet-le-nie jed-not-li-vých kom-po-nent ná-jdet
+e na na-sle-duj-úcej ad-rese http://getbootstrap.com/,
+ []
+
+<ER.jpg, id=231, 498.36188pt x 414.79968pt>
+File: ER.jpg Graphic file (type jpg)
+ <use ER.jpg>
+Package pdftex.def Info: ER.jpg used on input line 378.
+(pdftex.def)             Requested size: 249.18033pt x 207.39934pt.
+ [29] [30 <./ER.jpg>]
+<page_show.jpg, id=244, 1014.03844pt x 432.86719pt>
+File: page_show.jpg Graphic file (type jpg)
+ <use page_show.jpg>
+Package pdftex.def Info: page_show.jpg used on input line 403.
+(pdftex.def)             Requested size: 507.01797pt x 216.43306pt.
+
+Overfull \hbox (88.7643pt too wide) in paragraph at lines 403--404
+ [] 
+ []
+
+
+LaTeX Warning: Reference `rozhranie' on page 31 undefined on input line 410.
+
+[31 <./page_show.jpg>] [32] [33] [34] [35] [36]
+Kapitola 6.
+)
+No file projekt.bbl.
+(./prilohy.tex [37
+
+]
+P\v {r}\'{\i }loha A.
+
+Overfull \hbox (14.40547pt too wide) in paragraph at lines 12--13
+\T1/cmr/m/n/10.95 do-ku-men-tá-ciu https://docs.jboss.org/author/display/AS71/D
+ataSource+configuration, kde
+ []
+
+[38
+
+]
+Overfull \hbox (4.34091pt too wide) in paragraph at lines 22--23
+[]\T1/cmr/m/n/10.95 Prejdeme do zloºky JBOSS_HOME/standalone/bin a spus-tíme sk
+ript \T1/cmr/m/it/10.95 stan-da-lone.sh 
+ []
+
+[39]
+P\v {r}\'{\i }loha B.
+<page5.jpg, id=297, 1017.8025pt x 454.69875pt>
+File: page5.jpg Graphic file (type jpg)
+ <use page5.jpg>
+Package pdftex.def Info: page5.jpg used on input line 42.
+(pdftex.def)             Requested size: 508.90001pt x 227.34882pt.
+
+Overfull \hbox (90.64633pt too wide) in paragraph at lines 42--43
+ [] 
+ []
+
+<page.jpg, id=298, 1014.03844pt x 432.86719pt>
+File: page.jpg Graphic file (type jpg)
+ <use page.jpg>
+Package pdftex.def Info: page.jpg used on input line 55.
+(pdftex.def)             Requested size: 507.01797pt x 216.43306pt.
+
+Overfull \hbox (88.7643pt too wide) in paragraph at lines 55--56
+ [] 
+ []
+
+<page1.jpg, id=299, 1014.79124pt x 456.20438pt>
+File: page1.jpg Graphic file (type jpg)
+ <use page1.jpg>
+Package pdftex.def Info: page1.jpg used on input line 69.
+(pdftex.def)             Requested size: 507.39438pt x 228.10162pt.
+
+Overfull \hbox (89.1407pt too wide) in paragraph at lines 69--70
+ [] 
+ []
+
+<page2.jpg, id=300, 1015.54407pt x 441.14813pt>
+File: page2.jpg Graphic file (type jpg)
+ <use page2.jpg>
+Package pdftex.def Info: page2.jpg used on input line 81.
+(pdftex.def)             Requested size: 507.7708pt x 220.57352pt.
+
+Overfull \hbox (89.51712pt too wide) in paragraph at lines 81--82
+ [] 
+ []
+
+<page3.jpg, id=301, 1013.28563pt x 451.6875pt>
+File: page3.jpg Graphic file (type jpg)
+ <use page3.jpg>
+Package pdftex.def Info: page3.jpg used on input line 94.
+(pdftex.def)             Requested size: 506.64159pt x 225.84319pt.
+
+Overfull \hbox (88.38791pt too wide) in paragraph at lines 94--95
+ [] 
+ []
+
+<page4.jpg, id=302, 1014.79124pt x 456.95718pt>
+File: page4.jpg Graphic file (type jpg)
+ <use page4.jpg>
+Package pdftex.def Info: page4.jpg used on input line 106.
+(pdftex.def)             Requested size: 507.39438pt x 228.47803pt.
+
+Overfull \hbox (89.1407pt too wide) in paragraph at lines 106--107
+ [] 
+ []
+
+<page6.jpg, id=303, 1013.28563pt x 470.50781pt>
+File: page6.jpg Graphic file (type jpg)
+ <use page6.jpg>
+Package pdftex.def Info: page6.jpg used on input line 118.
+(pdftex.def)             Requested size: 506.64159pt x 235.25333pt.
+
+Overfull \hbox (88.38791pt too wide) in paragraph at lines 118--119
+ [] 
+ []
+
+[40
+
+ <./page5.jpg>] [41 <./page.jpg> <./page1.jpg>] [42 <./page2.jpg> <./page3.jpg>
+] [43 <./page4.jpg> <./page6.jpg>]
+P\v {r}\'{\i }loha C.
+<dotaz.jpg, id=328, 465.99094pt x 453.19313pt>
+File: dotaz.jpg Graphic file (type jpg)
+ <use dotaz.jpg>
+Package pdftex.def Info: dotaz.jpg used on input line 138.
+(pdftex.def)             Requested size: 232.99489pt x 226.59601pt.
+
+<dotaz1.jpg, id=329, 464.4853pt x 469.755pt>
+File: dotaz1.jpg Graphic file (type jpg)
+ <use dotaz1.jpg>
+Package pdftex.def Info: dotaz1.jpg used on input line 151.
+(pdftex.def)             Requested size: 232.24208pt x 234.87692pt.
+
+<dotaz2.jpg, id=330, 464.4853pt x 462.97969pt>
+File: dotaz2.jpg Graphic file (type jpg)
+ <use dotaz2.jpg>
+Package pdftex.def Info: dotaz2.jpg used on input line 164.
+(pdftex.def)             Requested size: 232.24208pt x 231.48927pt.
+
+<dotaz3.jpg, id=331, 462.97969pt x 448.67625pt>
+File: dotaz3.jpg Graphic file (type jpg)
+ <use dotaz3.jpg>
+Package pdftex.def Info: dotaz3.jpg used on input line 176.
+(pdftex.def)             Requested size: 231.48927pt x 224.33757pt.
+ [44
+
+ <./dotaz.jpg>] [45 <./dotaz1.jpg> <./dotaz2.jpg>] [46 <./dotaz3.jpg>]
+P\v {r}\'{\i }loha D.
+)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 136.
+ [47
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 136.
+ (./projekt.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 136.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 136.
+
+
+Package rerunfilecheck Warning: File `projekt.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `projekt.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  35697720F0A34D3E1F22E36F5960C94E;6465.
+
+LaTeX Font Warning: Size substitutions with differences
+(Font)              up to 1.28pt have occurred.
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 136.
+ ) 
 Here is how much of TeX's memory you used:
- 12688 strings out of 494994
- 173441 string characters out of 6180200
- 271469 words of memory out of 5000000
- 15712 multiletter control sequences out of 15000+600000
- 34439 words of font info for 56 fonts, out of 8000000 for 9000
+ 13393 strings out of 494994
+ 181489 string characters out of 6180200
+ 380660 words of memory out of 5000000
+ 16246 multiletter control sequences out of 15000+600000
+ 36402 words of font info for 58 fonts, out of 8000000 for 9000
  24 hyphenation exceptions out of 8191
- 49i,9n,35p,2359b,350s stack positions out of 5000i,500n,10000p,200000b,80000s
- </usr/share/texlive/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </u
-sr/share/texlive/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecbx1095.600pk> </usr/s
-hare/texlive/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </usr/share
-/texlive/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecbx2074.600pk> </usr/share/tex
-live/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecbx2488.600pk> </usr/share/texlive
-/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecti1095.600pk> </usr/share/texlive/tex
-mf-dist/fonts/pk/ljfour/jknappen/ec/ecrm1095.600pk> </usr/share/texlive/texmf-d
-ist/fonts/pk/ljfour/jknappen/ec/ecbx1728.600pk>{/usr/share/texlive/texmf-dist/f
-onts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uh
-vr8a.pfb>
-Output written on projekt.pdf (10 pages, 313365 bytes).
+ 49i,8n,49p,3910b,1414s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </usr/share/texlive/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecbx0900.600pk> <
+/usr/share/texlive/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> </usr
+/share/texlive/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecrm0600.600pk> </usr/sha
+re/texlive/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </usr/share/t
+exlive/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecbx1095.600pk> </usr/share/texli
+ve/texmf-dist/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </usr/share/texlive/t
+exmf-dist/fonts/pk/ljfour/jknappen/ec/ecbx2074.600pk> </usr/share/texlive/texmf
+-dist/fonts/pk/ljfour/jknappen/ec/ecbx2488.600pk> </usr/share/texlive/texmf-dis
+t/fonts/pk/ljfour/jknappen/ec/ecti1095.600pk> </usr/share/texlive/texmf-dist/fo
+nts/pk/ljfour/jknappen/ec/ecrm1095.600pk> </usr/share/texlive/texmf-dist/fonts/
+pk/ljfour/jknappen/ec/ecbx1728.600pk>{/usr/share/texlive/texmf-dist/fonts/enc/d
+vips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
+Output written on projekt.pdf (51 pages, 3101572 bytes).
 PDF statistics:
- 348 PDF objects out of 1000 (max. 8388607)
- 90 compressed objects within 1 object stream
- 17 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 896 PDF objects out of 1000 (max. 8388607)
+ 355 compressed objects within 4 object streams
+ 149 named destinations out of 1000 (max. 500000)
+ 116 words of extra memory for PDF output out of 10000 (max. 10000000)
 

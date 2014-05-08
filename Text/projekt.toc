@@ -1,0 +1,48 @@
+\select@language {czech}
+\contentsline {chapter}{\numberline {1}\IeC {\'U}vod}{2}{chapter.1}
+\contentsline {chapter}{\numberline {2}Java Enterprise edition 6}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Motiv\IeC {\'a}cia}{3}{section.2.1}
+\contentsline {section}{\numberline {2.2}\IeC {\v S}pecifik\IeC {\'a}cia platformy}{3}{section.2.2}
+\contentsline {section}{\numberline {2.3}Aplika\IeC {\v c}n\IeC {\'y} model}{4}{section.2.3}
+\contentsline {section}{\numberline {2.4}Webov\IeC {\'e} komponenty}{5}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}JavaServer Faces}{6}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}JavaServer Pages}{8}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.3}Web Service}{9}{subsection.2.4.3}
+\contentsline {subsubsection}{"Big" Web Services}{10}{section*.2}
+\contentsline {section}{\numberline {2.5}Java Persistence API}{11}{section.2.5}
+\contentsline {section}{\numberline {2.6}Enterprise JavaBeans}{12}{section.2.6}
+\contentsline {subsection}{\numberline {2.6.1}Session Bean}{12}{subsection.2.6.1}
+\contentsline {subsection}{\numberline {2.6.2}Message-driven Bean}{13}{subsection.2.6.2}
+\contentsline {section}{\numberline {2.7}Convetion over Configuration}{14}{section.2.7}
+\contentsline {section}{\numberline {2.8}Bezpe\IeC {\v c}nos\IeC {\v t}}{15}{section.2.8}
+\contentsline {section}{\numberline {2.9}Testovanie}{17}{section.2.9}
+\contentsline {chapter}{\numberline {3}JBoss Aplication Server}{19}{chapter.3}
+\contentsline {chapter}{\numberline {4}OptaPlanner}{20}{chapter.4}
+\contentsline {subsection}{\numberline {4.0.1}Princ\IeC {\'\i }p}{21}{subsection.4.0.1}
+\contentsline {subsection}{\numberline {4.0.2}Uk\IeC {\'a}\IeC {\v z}ka XML configura\IeC {\v c}n\IeC {\'e}ho s\IeC {\'u}boru}{22}{subsection.4.0.2}
+\contentsline {subsection}{\numberline {4.0.3}Optimaliza\IeC {\v c}n\IeC {\'e} algoritmy}{23}{subsection.4.0.3}
+\contentsline {subsection}{\numberline {4.0.4}V\IeC {\'y}sledky pl\IeC {\'a}novacieho probl\IeC {\'e}mu}{24}{subsection.4.0.4}
+\contentsline {chapter}{\numberline {5}Aplik\IeC {\'a}cie}{26}{chapter.5}
+\contentsline {section}{\numberline {5.1}\IeC {\v S}pecifik\IeC {\'a}cia po\IeC {\v z}iadavkov}{26}{section.5.1}
+\contentsline {section}{\numberline {5.2}Anal\IeC {\'y}za}{27}{section.5.2}
+\contentsline {subsubsection}{Twitter Bootstrap}{28}{section*.3}
+\contentsline {subsubsection}{Rich Faces}{29}{section*.4}
+\contentsline {section}{\numberline {5.3}N\IeC {\'a}vrh aplik\IeC {\'a}cie}{29}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}N\IeC {\'a}vrh modelu datab\IeC {\'a}ze}{29}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}N\IeC {\'a}vrh u\IeC {\v z}\IeC {\'\i }vate\IeC {\v l}sk\IeC {\'e}ho rozhrania}{31}{subsection.5.3.2}
+\contentsline {section}{\numberline {5.4}Implement\IeC {\'a}cie}{32}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}Rozdelenie aplik\IeC {\'a}cie}{32}{subsection.5.4.1}
+\contentsline {subsection}{\numberline {5.4.2}JSF aplik\IeC {\'a}cia}{33}{subsection.5.4.2}
+\contentsline {subsection}{\numberline {5.4.3}Prihlasovanie}{33}{subsection.5.4.3}
+\contentsline {subsection}{\numberline {5.4.4}Logika JSF aplik\IeC {\'a}cie}{33}{subsection.5.4.4}
+\contentsline {subsection}{\numberline {5.4.5}Implement\IeC {\'a}cia rozhrania}{34}{subsection.5.4.5}
+\contentsline {subsection}{\numberline {5.4.6}Web Service, EJB aplik\IeC {\'a}cia}{35}{subsection.5.4.6}
+\contentsline {section}{\numberline {5.5}Testovanie}{35}{section.5.5}
+\contentsline {section}{\numberline {5.6}Vyhodnotenie aplik\IeC {\'a}cie}{36}{section.5.6}
+\contentsline {chapter}{\numberline {6}Z\IeC {\'a}ver}{37}{chapter.6}
+\contentsline {chapter}{\numberline {A}In\IeC {\v s}tal\IeC {\'a}cia}{38}{appendix.A}
+\contentsline {chapter}{\numberline {B}U\IeC {\v z}\IeC {\'\i }vatelsk\IeC {\'e} rozhranie}{40}{appendix.B}
+\contentsline {chapter}{\numberline {C}Dotazn\IeC {\'\i }k}{44}{appendix.C}
+\contentsline {section}{\numberline {C.1}Obsah dotazn\IeC {\'\i }ka}{44}{section.C.1}
+\contentsline {section}{\numberline {C.2}Grafick\IeC {\'e} vyhodnotenie}{44}{section.C.2}
+\contentsline {chapter}{\numberline {D}CD so zdrojov\IeC {\'y}mi k\IeC {\'o}dmi}{47}{appendix.D}

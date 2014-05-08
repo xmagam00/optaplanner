@@ -27,8 +27,8 @@
 	</repositories>
 	
 	
-    <groupId>org.jboss</groupId>
-    <artifactId>optaplanner.controller</artifactId>
+    <groupId>org.jboss.optaplanner</groupId>
+    <artifactId>controller</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>optaplanner.controller</name>
@@ -440,8 +440,10 @@
             <!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
             <id>openshift</id>
             <build>
+           
                 <plugins>
                     <plugin>
+                    
                         <artifactId>maven-war-plugin</artifactId>
                         <version>${version.war.plugin}</version>
                         <configuration>
@@ -455,4 +457,5 @@
 			
 			
     </profiles>
+  
 </project>
