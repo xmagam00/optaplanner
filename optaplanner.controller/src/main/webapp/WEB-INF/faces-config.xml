@@ -47,15 +47,6 @@
 
     <!-- Write your navigation rules here. You are encouraged to use CDI 
         for creating @Named managed beans. -->
-	<!-- <navigation-rule>
-      <from-view-id>/Login.xhtml</from-view-id>
-           <navigation-case>
-         <from-action>#{identity.login}</from-action>
-         <from-outcome>success</from-outcome>
-           <if>#{LoginBean.getTest()}</if>
-         <to-view-id>/Administrator.xhtml</to-view-id>
-      </navigation-case>
-       
-   </navigation-rule> -->
+
    
 </faces-config>

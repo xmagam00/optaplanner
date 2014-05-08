@@ -20,10 +20,17 @@ import databaseOp.Operation;
 
 
 
+
+
+
+
+import javax.faces.application.Application;
+import javax.faces.application.NavigationHandler;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,6 +41,7 @@ import org.jboss.seam.faces.environment.SeamExternalContext;
 import org.jboss.seam.security.AuthenticationScoped;
 import org.jboss.seam.security.BaseAuthenticator;
 import org.jboss.seam.security.Credentials;
+import org.jboss.seam.security.Identity;
 /**
  * @author martin
  * 
@@ -45,12 +53,14 @@ public class LoginBean extends BaseAuthenticator{
 	@Inject
 	private Credentials credentials;
 
+
 	private String username;
 	private String password;
 	private boolean usernameValid = false;
 	private boolean passwordValid = false;
 	private boolean usernameEmpty = false;
 	private boolean passwordEmpty = false;
+
 	
 
 	
@@ -60,7 +70,12 @@ public class LoginBean extends BaseAuthenticator{
 	 */
 
 	
-	
+
+	public void doGet(HttpServletRequest request,  HttpServletResponse response) throws ServletException, IOException {
+		if("success".equals(processLogin())) {
+		response.sendRedirect("menu.jsp");
+		return; // <-- this return statement ensures that no content is adedd to the response further
+		}
 	
 	
 	public void setUsernameEmpty(boolean render) {
@@ -130,8 +145,11 @@ public class LoginBean extends BaseAuthenticator{
 		return passwordValid;
 	}
 	
-	
-	
+	public void preRenderView() throws IOException {
+	    
+	       System.out.println("tu");
+
+	}
 	
 	@Override
 	public void authenticate() {
@@ -160,7 +178,7 @@ public class LoginBean extends BaseAuthenticator{
 		}
 	
 		Operation op = new Operation();
-		
+		   System.out.println("tu1");
 		if (!op.validateUsername(credentials.getUsername())) {
 			setStatus(AuthenticationStatus.FAILURE);
 			setUsernameValid(true);
@@ -205,16 +223,16 @@ public class LoginBean extends BaseAuthenticator{
 				return userRole.toString();
 			}
 		});
+	
 		
 		
-		
-		
+
 		   setStatus(AuthenticationStatus.SUCCESS);
 
 
+		  
 
-		FacesContext fContext = FacesContext.getCurrentInstance();  
-		ExternalContext extContext = fContext.getExternalContext();  
+		   
 		
 
 
@@ -225,4 +243,5 @@ public class LoginBean extends BaseAuthenticator{
              
 
 	}
+	
 }

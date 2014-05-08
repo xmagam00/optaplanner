@@ -28,7 +28,7 @@
 	
 	
    
-    <artifactId>org.jboss.optaplanner.controller.entities</artifactId>
+    <artifactId>entities</artifactId>
    
     <packaging>jar</packaging>
     <name>Entities</name>

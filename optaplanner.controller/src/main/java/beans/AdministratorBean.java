@@ -209,8 +209,9 @@ private String renderOption3;
 			setUnpublishInformation("");
 			op = new Operation();
 			User user = identity.getUser();
-		
+
 			
+		
 			String result = op.getUserById(Long.parseLong(user.getId()));
 			setLoggedUsername(result);
 			
@@ -251,7 +252,7 @@ private String renderOption3;
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+		
 		}
 	}
 
