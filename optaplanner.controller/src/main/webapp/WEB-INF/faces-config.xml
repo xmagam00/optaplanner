@@ -23,23 +23,23 @@
         http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
 	<managed-bean>
 		<managed-bean-name>AdministratorBean</managed-bean-name>
-		<managed-bean-class>beans.AdministratorBean</managed-bean-class>
+		<managed-bean-class>org.jboss.optaplanner.controller.beans.AdministratorBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 		
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>ReaderBean</managed-bean-name>
-		<managed-bean-class>beans.ReaderBean</managed-bean-class>
+		<managed-bean-class>org.jboss.optaplanner.controller.beans.ReaderBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>PlannerBean</managed-bean-name>
-		<managed-bean-class>beans.PlannerBean</managed-bean-class>
+		<managed-bean-class>org.jboss.optaplanner.controller.beans.PlannerBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>LoginBean</managed-bean-name>
-		<managed-bean-class>beans.LoginBean</managed-bean-class>
+		<managed-bean-class>org.jboss.optaplanner.controller.beans.LoginBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 

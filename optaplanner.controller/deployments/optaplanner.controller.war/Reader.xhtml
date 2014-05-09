@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+
+<h:head>
+<meta charset="utf-8"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<link rel="icon" type="image/x-icon" href="#{request.contextPath}/resources/img/favicon.ico" />
+
+  <h:outputStylesheet library="css" name="bootstrap.css"  />
+  <h:outputStylesheet library="css" name="bootstrap-responsive.min.css"  />
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
+
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <meta name="description" content="Optaplanner service"></meta>
+    <meta name="author" content="Martin Maga"></meta>
+
+
+	<style>
+body {
+	
+	background-color: #eee !important;;
+  margin: 0; 
+    padding: 0;
+    text-align: center;
+    height:900px;
+}
+
+
+tr.spaceUnder > td
+{
+  padding-bottom: 1em;
+}
+
+
+}
+</style>
+
+<script>
+function skus()
+{
+
+	window.onload="
+}
+
+
+</script>
+
+	<title>Reader</title>
+</h:head>
+
+
+<h:body class="preview" data-offset="80" data-spy="scroll" data-target=".subnav" id="top" onload="#{ReaderBean.loadFunction}" >
+
+		<f:view>
+
+
+
+
+
+
+     
+
+			
+			
+
+<h:form>
+<div class="navbar navbar-default-top">
+      <div class="navbar-inner">
+      <div class="container">
+<ul class="nav nav-tabs" id="MyTab">
+  <li ><a href="#task" data-toggle="tab"><i class="fa fa-home fa-fw"></i>Tasks</a></li>
+
+
+  <li><a href="#changepassword" data-toggle="tab"><i class="fa fa-pencil fa-fw"></i>Change Password</a></li>
+
+
+
+
+<h:commandButton class="nav pull-right btn btn-default btn-lg" id="main-menu-right" value="Logout"
+				action="#{ReaderBean.logout}"></h:commandButton>
+			<h:outputText style="margin-right:10px;" value="#{ReaderBean.loggedUsername}" class="pull-right" />
+			<h:outputLabel style="margin-left:5px;" value="User:" class="pull-right" /><i class="fa fa-user fa-fw pull-right"></i>
+</ul>
+</div>
+</div></div>
+</h:form>
+<div class="tab-content">
+
+
+
+
+
+
+			 <div class="tab-pane" id="task">
+<!-- Modal -->
+
+ <h:form >
+ <div class="container">
+<div class="row">
+								<div class="span2">
+									<h:outputText value="Enter String to find:" /></div>
+								
+									
+									
+									 <div class="span2">	<div class="input-group"><span class="input-group-addon"><i class="fa fa-search"></i></span>
+									<h:inputText type="text" class="form-control" value="#{ReaderBean.nieco}" /></div><h:outputText value="Enter string to find" style="color:red;" rendered="#{ReaderBean.renderFind}" />
+							</div>
+
+
+  <div class="row">
+						
+									 <div class="span2"><h:outputText value="Select option to find" style="margin-right:10px;"/></div>
+									 <div class="span2"><rich:select  defaultLabel="Select option" value="#{ReaderBean.findOption}">
+                <f:selectItem itemValue="ID" itemLabel="ID" />
+                <f:selectItem itemValue="Permission" itemLabel="Permission" />
+                <f:selectItem itemValue="Owner" itemLabel="Owner" />
+            </rich:select></div><h:outputText value="Select option" style="color:red;" rendered="#{ReaderBean.renderOption}" />
+
+
+								</div>
+
+
+
+							 <div class="row">
+									<div class="span2">
+									<h:commandButton class="btn btn-default btn-lg"
+											value="Find" action="#{ReaderBean.findList}" type="submit" >
+											 
+											</h:commandButton>
+									</div>		
+								</div>
+						
+
+</div>
+
+</div>
+   </h:form>
+
+
+
+
+<h:form>
+<a4j:region>
+<h:form>
+					<a4j:poll id="poll33" action="#{ReaderBean.updateTasks()}"
+						interval="4000" render="editUser,poll33" eventsQueue="foo"  
+						enabled="#{ReaderBean.renderPoll}">
+						
+					</a4j:poll>
+		</h:form>
+					
+					</a4j:region>
+</h:form>
+<h:form >
+<div class="container">
+<div class="table-responsive">
+					<h:dataTable value="#{ReaderBean.task}" var="o"
+						class="table table-hover" id="editUser" rows="#{ReaderBean.renderRow}" >
+							
+						<h:column>
+
+							<f:facet name="header">
+				
+						<h:commandLink  action="#{ReaderBean.sortById}" >	
+							
+									<h:outputText value="ID"></h:outputText>
+							</h:commandLink>
+						
+							</f:facet>
+							<h:outputText value="#{o.id}"></h:outputText>
+
+						</h:column>
+						<h:column>
+
+							<f:facet name="header">
+				
+								<h:commandLink action="#{ReaderBean.sortByName}">
+									<h:outputText value="Name"></h:outputText>
+								</h:commandLink>
+				
+							</f:facet>
+
+
+							<h:outputText value="#{o.name}" />
+
+						</h:column>
+
+						<h:column>
+
+							<f:facet name="header">
+								<h:column>
+							
+									<h:commandLink action="#{ReaderBean.sortByState}">
+										<h:outputText value="State"></h:outputText>
+									</h:commandLink>
+					
+								</h:column>
+							</f:facet>
+							<h:outputText value="#{o.state}"></h:outputText>
+						</h:column>
+						<h:column>
+
+							<f:facet name="header">
+								<h:column>
+									<h:outputText value="Progress"></h:outputText>
+								</h:column>
+							</f:facet>
+							<rich:progressBar interval="100" value="#{o.progress}"></rich:progressBar>
+
+
+						</h:column>
+
+						<h:column>
+
+							<f:facet name="header">
+								<h:column>
+								
+									<h:commandLink action="#{ReaderBean.sortByETA}">
+										<h:outputText value="ETA"></h:outputText>
+									</h:commandLink>
+						
+								</h:column>
+							</f:facet>
+
+							<h:outputText value="#{o.estimatedTime}"></h:outputText>
+
+						</h:column>
+
+						<h:column>
+
+							<f:facet name="header">
+								<h:column>
+							
+									<h:commandLink action="#{ReaderBean.sortByPermission}">
+										<h:outputText value="Permission"></h:outputText>
+									</h:commandLink>
+							
+								</h:column>
+							</f:facet>
+							<h:outputText value="#{o.ifPublic}" rendered="#{not o.renderCommand}" ></h:outputText>
+							<strong><h:outputLink value="#{o.link}" rendered="#{ o.renderCommand}" target="_blank">
+							<h:outputText value="#{o.ifPublic}" />
+							
+							</h:outputLink>
+							</strong>
+							
+							
+						</h:column>
+
+						<h:column>
+
+							<f:facet name="header">
+								<h:column>
+								
+									<h:commandLink action="#{ReaderBean.sortByOwner}">
+										<h:outputText value="Owner"></h:outputText>
+									</h:commandLink>
+						
+								</h:column>
+							</f:facet>
+							<h:outputText value="#{o.owner}"></h:outputText>
+
+
+
+						</h:column>
+
+						<h:column>
+
+							<f:facet name="header">
+								<h:column>
+									<h:outputText value="Actions"></h:outputText>
+								</h:column>
+							</f:facet>
+							<h:panelGrid columns="2">
+				
+							
+									
+									
+<a4j:commandButton styleClass="btn btn-default"
+									value="UnPublish Task"
+									action="#{ReaderBean.unpublishTask(o)}"
+									
+									rendered="#{o.renderUnpublish}" data-toggle="modal" data-target="#myModal2" oncomplete="$('#myModal2').modal('show')"/>
+<a4j:commandButton styleClass="btn btn-default"
+									value="Publish Task"
+									action="#{ReaderBean.publishTask(o)}"
+									oncomplete="$('#myModal3').modal('show')"
+									rendered="#{o.renderPublish}" />
+
+					
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+							</h:panelGrid>
+						</h:column>
+
+					</h:dataTable>
+
+</div>
+</div>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
+        <h4 class="modal-title" id="myModalLabel">Information</h4>
+      </div>
+      <div class="modal-body">
+     Task has been published. Click on the blue link in the column "Permission" in the same row to show page.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       
+      </div>
+    </div>
+  </div>
+</div>	
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">close</button>
+        <h4 class="modal-title" id="myModalLabel">Information</h4>
+      </div>
+      <div class="modal-body">
+     Task has been unpublished.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       
+      </div>
+    </div>
+  </div>
+</div>	
+
+
+		
+
+
+
+
+
+		
+					
+					</h:form>
+					 <div class="container">
+<div class="table-responsive">
+					<table class="table">
+						<tr>
+							<td><rich:dataScroller for="editUser" maxPages="#{ReaderBean.renderRow}" /></td>
+						</tr>
+
+						<tr>
+							<td><h:form><h:commandButton class="btn btn-default"
+									value="Show all tasks with datascroller"
+									action="#{ReaderBean.saveActionTask()}" /></h:form></td>
+						</tr>
+						<tr><td><h:form><h:commandButton value="Show all tasks without datascroller"  class="btn btn-default" action="#{ReaderBean.saveActionTask2()}"  /></h:form></td></tr>
+						
+						<tr><td><h:form><h:commandButton value="#{ReaderBean.refreshValue}" class="btn btn-default" action="#{ReaderBean.refresh}" /></h:form></td></tr>
+					
+					
+					</table>
+				</div>
+			</div>
+				</div>
+		
+
+
+				 <div class="tab-pane" id="changepassword">
+					<div class="container">
+				
+<div class="span2" style="float:none;margin:0 auto;">
+
+<h:form>
+
+						<h:outputLabel for="password" value="Password : " />
+						<div class="input-group"><span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+						<h:inputSecret type="text" class="form-control" placeholder="Username" id="password" value="#{ReaderBean.password}" /></div>
+						<br></br>
+						<h:outputText value="Enter password" style="color:red;" rendered="#{ReaderBean.renderPassword2}" />
+					<br></br>
+						<h:outputLabel for="confirmPassword" value="Confirm password : " />
+						<div class="input-group"><span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+						<h:inputSecret type="text" class="form-control" placeholder="Username" value="#{ReaderBean.passwordValidate}" /></div>
+			<br></br>
+					<h:outputText value="Re-type password" style="color:red;" rendered="#{ReaderBean.renderPasswordValidate2}" />
+					<h:outputText value="Password must match" style="color:red;" rendered="#{ReaderBean.renderPasswordNot2}" />
+					<br></br>
+					<br></br>
+						<h:commandButton class="btn btn-default" action="#{ReaderBean.validatePassword()}"
+							value="Change password" />
+						
+</h:form>
+</div>
+					
+					</div>
+				</div>
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+				
+</div>
+
+<h:outputScript library="js" name="jquery-2.1.0.js"  />
+  <h:outputScript library="js" name="bootstrap.js"  />
+</f:view>
+</h:body>
+</html>

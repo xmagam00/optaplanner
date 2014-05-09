@@ -44,15 +44,7 @@ tr.spaceUnder > td
 
 }
 </style>
-<h:outputScript target="head">
-    $ = jQuery;
-    // Then you can use it
-    $(document).ready(function() {
-       function test()
-       {
-       $('#usermanagement').removeClass('active')
-    });
-</h:outputScript>
+
 <script>
 function skus()
 {
@@ -159,12 +151,13 @@ function skus()
 
 <h:form>
 <a4j:region>
+<h:form>
 					<a4j:poll id="poll33" action="#{AdministratorBean.updateTasks()}"
 						interval="4000" render="editUser,poll33" eventsQueue="foo"  
 						enabled="#{AdministratorBean.renderPoll}">
 						
 					</a4j:poll>
-		
+		</h:form>
 					
 					</a4j:region>
 </h:form>
@@ -295,7 +288,7 @@ function skus()
 									rendered="#{o.renderEdit}"   />
 								<a4j:commandButton styleClass="btn btn-default" value="Stop task"
 									action="#{AdministratorBean.stopTask(o)}"
-									rendered="#{o.renderStop}" onchange="$('#myModal5').modal('show')" data-toggle="modal" data-target="#myModal5" />
+									rendered="#{o.renderStop}" oncomplete="$('#myModal5').modal('show')" data-toggle="modal" data-target="#myModal5" />
 								<a4j:commandButton styleClass="btn btn-default" value="Run task"
 									action="#{AdministratorBean.runTask(o)}"
 									rendered="#{o.renderRun}" oncomplete="$('#myModal4').modal('show')"  data-toggle="modal" data-target="#myModal4" />
@@ -583,14 +576,16 @@ function skus()
 
 							
 				<h:form>
-					<a4j:region id="ren" selfRendered="true">
+					<a4j:region id="ren" >
 						
 						<a4j:poll render="editUSER" interval="1000" action="#{AdministratorBean.updateUsers()}" enabled="#{AdministratorBean.renderUser}">
 						</a4j:poll>
 
 					</a4j:region>
+					</h:form>
 					<div class="container">
 					<div class="table-responsive">
+					<h:form>
 					<h:dataTable value="#{AdministratorBean.user}" var="po"
 						class="table table-hover" 
 						
@@ -705,8 +700,10 @@ function skus()
 						</h:column>
 
 					</h:dataTable>
+					</h:form>
 					</div>
 	</div>
+	<h:form>
 	<!-- Modal -->
 <div class="modal fade" id="myModal333" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -760,7 +757,7 @@ function skus()
       </div>
     </div>
   </div>
-</div>	
+</div>
 					<div class="container">
 					<div class="taible-reponsive">
 					<table class="table">
@@ -772,8 +769,8 @@ function skus()
 									value="Save Changes" action="#{AdministratorBean.saveAction}" /></td>
 						</tr>
 						<tr><td><h:commandButton class="btn btn-default" value="Show all users with datascroller" action="#{AdministratorBean.showAllUsers()}" /></td></tr>
-						<tr><td><h:form><h:commandButton value="Show all users without datascroller"  class="btn btn-default" action="#{AdministratorBean.saveActionTask3()}"  /></h:form></td></tr>
-					<tr><td><h:form><h:commandButton value="#{AdministratorBean.refreshValue2}" class="btn btn-default" action="#{AdministratorBean.refresh2}" /></h:form></td></tr>
+						<tr><td><h:commandButton value="Show all users without datascroller"  class="btn btn-default" action="#{AdministratorBean.saveActionTask3()}"  /></td></tr>
+					<tr><td><h:commandButton value="#{AdministratorBean.refreshValue2}" class="btn btn-default" action="#{AdministratorBean.refresh2}" /></td></tr>
 					</table>
 					</div>
 
@@ -1012,13 +1009,14 @@ function skus()
 
 
 							<div class="container">
+							<h:form>
 							  <div class="row" style="margin:0px auto;">
 									  <div class="span2"><h:outputText  value="Name of task:" /></div>
 									
 										  <div class="span2"><div class="input-group"><span class="input-group-addon"><i class="fa fa-pencil-square-o"></i></span>
 									 <h:inputText type="text" class="form-control"
-											value="#{AdministratorBean.name}" maxlength="100" id="meno" required="true" requiredMessage="Enter Name of Task" /> </div></div>
-											<h:message style="color:red;" for="meno"/>
+											value="#{AdministratorBean.name}"  id="name" required="true" requiredMessage="Enter Name of Task" /> </div></div>
+											<h:message style="color:red;" for="name"/>
 								</div>
 							<div class="row">
 							<div class="span2">
@@ -1040,6 +1038,7 @@ function skus()
 											action="#{AdministratorBean.createTask()}"  />
 								
 						</div></div>
+						</h:form>
 							</div>
 	</div>
 				

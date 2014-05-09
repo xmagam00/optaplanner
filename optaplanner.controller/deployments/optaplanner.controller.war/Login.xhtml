@@ -68,6 +68,8 @@ body {
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
 <title>Optaplanner.Controller</title>
+
+
 </h:head>
 <h:body class="preview" data-offset="80" data-spy="scroll" data-target=".subnav" id="top">
 
@@ -102,10 +104,10 @@ body {
 								<h:inputSecret type="text" placeholder="Username" class="form-control" id="password" value="#{credentials.password}" required="true" requiredMessage="Please Enter Password"/></div><h:outputText value="Unknown user" rendered="#{Login.usernameValid}" />
 							<h:message for="password" style="color: red;" />
 							
-			
+		
 			
 				<br></br>
-							<h:commandButton class="btn btn-lg btn-default btn-block" action="#{identity.login}" oncomplete="#{LoginBean.navigate()}" value="Sign in"></h:commandButton>
+							<h:commandButton class="btn btn-lg btn-default btn-block" action="#{identity.login}" valueChangeListener="#{LoginBean.preRenderView}" value="Sign in">	  </h:commandButton>
 						
 			
 			</h:form>
