@@ -231,36 +231,81 @@ WildFly je open-source aplikačný server verzie 8, ktorý vznikol premenovaním
 
 
 \chapter{OptaPlanner}\label{optaplannerC}
-OptaPlanner je odľahčený open source software a ďalšie prokračovanie frameworku JBoss Drools, ktorý vykonáva a optimalizuje plánovacie problémy. Tento framework je určený pre programovací jazyk java a pomáha programátorom riešiť problémy s obmedzeniami efektívne. Optaplanner kombinuje optimalizačné heuristiky a metaheuristické metódy prostredníctvom kalkulácie skóre. Skóre je hodnota, ktorá reprezentuje bodové hodnotenie riešenia daného problému. Daný plánovací problém môže byť riešený rôznymi optimalizačnými algoritmami. Lepším riešením daného problému je to, ktoré má vyššie skóre. Optaplanner je možné použiť k optimalizácií plánovacích problémov. V bežnom živote, rovnako ako ja v podnikových sférách sa stretávame s rôznymi plánovacími problémami. Môže ísť o problémy ako správne naplánovať cestu vozidiel(aút, lodí,\ldots), aby sme ju spravili za čo najkratší čas, rovnako môžme požadovať aby cesta bola, čo finančne najefektívnejšia. Rovnako môžme plánovanie rozvrhu práce zamestatnancov vo firme, aby zbytočne nespomalovali chod a ostatních zamestatnci, ktorí sú na ich práci závislí nemuseli zbytočne čakať. Plánovať môžme spúšťanie testovania aplikácií v rámci vývojarskej firmy, aby niektoré úlohy boli otestované skôr ako iné no musí byť čo najefektívnejšie vývažené a zbytočne nemrhali časovým kvantom. Plánovacích problémov existuje celá rada a každý deň prichádzame s novými. Pokiaľ je problem dostatočne komplexný potom je veľmi vhodné použiť Optaplanner. Optaplanner môžme používať prostredníctvom maven-u, ktorý poskytuje potrebné triedy na výpočet a konfiguráciu systému, rovnako ako aj nastavenie definičného súboru problému vo formáte xml. Optaplanner je možné použiť aj k riešeniu nedetermisticky polynomiálnych problémov. Na nasledujúcom obrázku môžme vidieť príklad plánovacieho problému
+OptaPlanner je open source framework a prokračovanie frameworku JBoss Drools, ktorý vykonáva a optimalizuje rôzne plánovacie problémy, ktoré sú reprezentované XML súborom, s rozličným stupňom náročnosti. Optaplanner využíva pri riešení problému, ktoré nemusí vždy nájsť, optimalizačné heuristiky a metaheuristické metódy s využitím skóre. Skóre je hodnota, ktorá reprezentuje bodové hodnotenie optimálnosti dosiahnutého riešenia. Výsledným riešením je to riešenie, ktoré má najvyššie skóre. Tento framework neurčuje striktne akými algoritmami a metódami sa má daný problém vyriešiť, ale konfiguráciu ponecháva na strane užívateľa. OptaPlanner je určený pre jazyk Java, preto riešenie je vykonávané triedami v tomto jazyky. Tieto triedu sú špecifické pre daný problém, a musia byť schopné získať potrebné informácie z defičného súboru problému, ktorý reprezentuje zadanie problému, musia byť schopné vykonávať postupné kroky vedúce k riešeniu problému(napr. v prípade problému N Dám presúvať dámy, tak aby sa vždy nachádzali vo validných pozíciách) a prostriedky, ktoré ohodnotnia krok a pričítajú ho ku celkovému skóre. \newline \indent Samozrejme postup riešenia problému, kalkulácií skóre sa opakuje pre rôzne scenáre(napr. v prípade N Dám pre rôzne kombinácie pohybov) a vráti sa riešenie s najlepším skóre v podobe súboru vo formáte XML(napr. v prípade riešenia problému N Dám poskytne najlepšie možné riešenie). OptaPlanner sa snaží vždy nájsť optimálne riešenie vzhľadom k optimalizačným algoritmom a metaheurestickým metódom a dostupnému času, ale niekedy nie je schopný poskytnúť na predchádzajúce podmienky optimálne riešenie. Výhodou tohto frameworku je možnosť aplikovania na NP-úplne problémy. OptaPlanner je dostupný prostredníctvom nástroja Maven.
 
+\section{Plánovací problém}
+Plánovacím problémom môžme obecne rozumieť akýkoľvek problém, ktorý vyžaduje od nás zdroje a predikciu na priradenie zdrojov, nájdenie riešenia takého, abý výsledok bol v konečnom dôsledku najlepší, cenovo najprijatelnejší aj časovo najprijatelnejší.
+
+V bežnom živote, rovnako ako ja v podnikových sférách sa stretávame s rôznymi plánovacími problémami. Môže ísť o problémy ako správne naplánovať cestu vozidiel(aút, lodí,\ldots), aby sme ju spravili za čo najkratší čas, rovnako môžme požadovať aby cesta bola, čo finančne najefektívnejšia. Rovnako môžme plánovanie rozvrhu práce zamestatnancov vo firme, aby zbytočne nespomalovali chod a ostatních zamestatnci, ktorí sú na ich práci závislí nemuseli zbytočne čakať. Plánovať môžme spúšťanie testovania aplikácií v rámci vývojarskej firmy, aby niektoré úlohy boli otestované skôr ako iné no musí byť čo najefektívnejšie vývažené a zbytočne nemrhali časovým kvantom. Pokiaľ je problém dostatočne komplexný potom je veľmi vhodné použiť Optaplanner. 
 \newpage
 \begin{figure}[htb]
 
 \begin{center}
 
-\includegraphics[scale=0.5]{fig/useCaseOverview.jpg} 
-\caption{Job, Shop scheluding  [http://www.optaplanner.org/] }
+\includegraphics[scale=0.7]{fig/useCaseOverview.jpg} 
+\caption{Problém rozvrhnutia práce, prevzaté z [http://www.optaplanner.org/]. }
 \label{obrazokUseCase}
 
 \end{center}
 
 \end{figure}
-Obrázok č. \ref{obrazokUseCase} zobrazuje typické použitie OptaPlanner-u. Môžme vidieť v nasledujúcom obrázku vystupú 4 osoby, ktoré vykonávajú nejakú činnosť. Ich činnosť je špecifická a silne závisí od práce predchádzajúcich. Optaplanner sa snaží ich činnosti maximálne optimalizovať a jednotlivé činnosti zvoliť v následnosti tak, aby výsledná práca bola spravená za najkratší možný čas vzhľadom na činnosť, ktorá sa optimalizuje.
+Obrázok č. \ref{obrazokUseCase} zobrazuje typické použitie OptaPlanner-u. Môžme vidieť v nasledujúcom obrázku vystupú 4 osoby(označené obdĺžnikom modrej, žltej, zelenej a oranžovej farby), ktoré vykonávajú nejakú činnosť. Ich činnosť je špecifická a silne závisí od práce predchádzajúcich. V prípade náročnosť zadania takého problému je pomerne jednoduché naplánovať správne poradie činností. Problém nastáva, ak by v danom obrázku bolo niekoľko násobne viac ôsob. V tomto prípade štandardným prístupom by mohlo dôsť k neefektívnemu rozdelnie práce a k zbytočnému mrhaniu času. Preto je vhodné použiť OptaPlanner, ktorý sas naží ich činnosti maximálne optimalizovať a jednotlivé činnosti zvoliť v následnosti tak, aby výsledná práca bola spravená za najkratší možný čas vzhľadom na činnosť, ktorá sa optimalizuje.
+
+Definícia problému v prirodzenom jazyku by mohla v oblasti informačných technológií spôsobiť nejednoznačnosť v jej interpretácií, preto je používaný súbor vo formáte XML, v ktorom definujeme počiatočné zadanie problému. Formát XML súboru závisí od zadania problému. V prípade, že si zobere problém N Dám, tak zadanie súboru obsahuje presnú pozíciu dám na šachovnici. Keď si zobereme problém obchodného cestujúceho, tak definičný XML súbor obsahuje zoznam miest a jednotlivé vzdialenosti od seba. Obsah definičného súboru nemôže nemá jednoznačný formát, ale vždy závisí od plánovacieho problému.
 
 
-\subsection{Princíp}
-Riešenie problému je postavené na práci s definícou problému, ktorý je reprezentovaný xml súborom. Ako sa má daný problém riešiť je dané kódom v Jave. Riešenie je možné ovplyvnoť konfiguráciou Optaplanner-u, v ktorom môžme nastaviť optimalizačné algoritmy plus ďalšie heuristiky, rovnako aj spôsob kalkulácie skóre. Riešenia poskytnutým týmto frameworkom, ktorý využíva pokročilé optimalizačné algoritmy, sú dosiahnuteľné v reálnom čase. Dosiahnutie v reálnom čase znamená nájdenie 1 alebo viacerých riešení, alebo nenájdenie žiadneho riešenia vzhľadom na poskytnutý čas a optimalizačné algoritmy, ktoré sú implementované. Najlepšim riešením je riešenia s najvyšším skóre.
+\section{Výsledky plánovacieho problému}
+
+Niektoré problémy môžu obsahovať aj pozitívne podmienky alebo odmeny, ktoré by mali byť splnené pokiaľ je možné ich splniť.
 
 
+
+
+OptaPlanner podporuje niekoľko optimalizačných algoritmov ako efektívne nájsť tieto veľké množstvá riešení. V závislosti na prípade použitia, niektoré optimalizačné algoritmy dosahujú lepšie výsledky ako ostatné, ale to je nemožné povedať dopredu. Pri plánovaní, je ľahké prepnúť algoritmus optimalizácie, zmenou konfigurácie Solver-u.
+
+
+
+\section{Princíp}
+Princíp riešenia problému je založené na konfigurácií OptaPlanner tvorbou javovských tried na získanie potrebných dát z definičného súboru, prostriedkov na kalkuláciu skóre a aplikáciu odkiaľ spúšťami výpočet. Riešenie problémom sa začína tvorou XML definičného problému špecifického pre daný problém. Následne sa vytvoria triedy pre získanie dát z XML súboru, triedy pre vykonávanie krokov(napr. v prípade N dám presúvanie dám na validné pozicie) a prostriedky pre kalkuláciu skóre a nastavenie konfiguračného súboru pre daný problém, ktorý bude bližšie popísaný v nasledujúcej kapitole\ref{confopt}. Aby bolo jasné aké akcie sú povolené pre daný problém sú definované v triedach pre riešenie obmedzenia:
+\cite{optabook}
+\begin{itemize}
+\item Negatívne "hard" obmedzenie, ktoré nesmú byť porušené\label{hardobm}
+\item Negatívne "soft" obmedzenie, ktoré by nemali byť porušené pokiaľ sa dá tomu vyhnúť.
+\item Pozitívne "soft" obmedzenia, ktoré by mali splnené pokiaľ je to možné(môžu viesť k lepšiemu skóre)
+\end{itemize}
+
+ Prostriedky pre kalkulácie skôre môžu byť 3 typov:
+\begin{itemize}\label{skorkal}
+\item Jednoduchá kalkulácie skóre 1 metódou
+\item Inkrementálna kalkulácie skóre prostredníctvom viacerých metód
+\item Drools kalkulácia skore - táto konfigurácia definuje pravidlá pre kalkulovanie skóre\label{drollskal}
+\end{itemize}
+Drools kalkulácia skóre využíva vlastnú DRL syntax a je daná súborom, ktorý obsahuje pravidlá. Každé pravidlo je dané svojim názvom a podmienkou, v ktorej sa overuje priebežné riešenie problému(napr. v prípade N Dám priebežné rozloženie dám), ktorá v prípade splnenia upravuje skóre. Treba zdôrazniť, že v konfiguračnom súbore užívateľ nastavuje optimalizačné algoritmy a metaheuristické metódy, ktorý sa snažia v spolupráci s triedami na riešenie vyberať vždy najlepšie kroky pri riešení.
+
+ Spustenie riešenia je dané zavolaním hlavnej metódy odkiaľ sa spúšťa riešenie problému. 
+a spustí vykonávanie(plánovanie). Postup je nasledovný:
+\begin{enumerate}
+\item Overenie prostriedkov(definičného súboru, konfiguračného súboru(spôsob kalkulácie, definičného triedy, použitie plánovacích algoritmy a metaheurestických metód) a prostriedkov na kalkuláciu skóre)
+\item Načítanie sa obsah XML súboru 
+\item Vykonanie kroku podľa použitia plánovacích algoritmov
+\item Optimalizácia kroku v prípade použitia metaheuristických metód
+\item Ohodnotenie kroku(v závislosti od použitia prostriedkov na kalkuláciu skóre\ref{skorkal})
+\item Vykonanie alternatívneho kroku vzhľadom(napr. v prípade N Dám presunutie dámy na ľavú stranu šachovnice, miesto pravej)
+\item Optimalizácia alternatívneho kroku v prípade použitia metaheuristických metód
+\item Ohodnotenie kroku(v závislosti od použitia prostriedkov na kalkuláciu skóre\ref{skorkal})
+\item Opakovanie krokov 3., 4., 5., 6. až dokým nie je dosiahnuté riešenie alebo plánovanie nie je predčasne ukončené
+\item Nájdenie riešenia alebo predčasné ukončenie plánovanie vzhľadom na vysoké poskytnuté skóre(je možné použiť v prípade, že riešenie problému vzhľadom na dostupný čas a použitie plánovacích algoritmov nebolo nájdené)
+
+\end{enumerate}
 
 \newpage
-\subsection{Ukážka XML configuračného súboru}
-V nasledujúcom obrázku by som rád ukázal príklad XML configuračného súboru pre OptaPlanner.
+\section{Konfiguráciu OptaPlanneru}\label{confopt}
+Konfigurácia OptaPlanner sa realizuje prostredníctvom XML súboru, ktorá má 3 povinné časti a 4. voliteĺnú. Pre lepšiu prehľadnosť je uvedená ukážka konfiguračného súboru. 
  \lstset{
     language=xml,
     tabsize=3,
     %frame=lines,
-    caption=Test,
+    caption=Vyváženie cloudu,
     label=code:sample,
     frame=shadowbox,
     rulesepcolor=\color{gray},
@@ -279,75 +324,28 @@ V nasledujúcom obrázku by som rád ukázal príklad XML configuračného súbo
     \lstinputlisting{cloudBalancingSolverConfig.xml}
 
 \newpage
-Konfigurácie solveru pozostáva z 3 častí: 
+Nastavenie konfiguračného súboru(solver) pre riešenie problému vyváženie cloudu pozostáva z 3 častí: 
 \begin{itemize}
-\item Domail model configuration(ja umiestnené medzi tagom <solutionClass>): Definuje hlavnú triedu pre riešenie. Ďalej sa skladá z triedy, ktorá zaobstaráva plánovanie(planningEntityClass).
-\item Configurácia skóre, ktorá hovorí Optaplanneru ako ma optimalizovať premenné(tag <scoreDirectorFactory> a podtag <scoreDefinitionType>). Pokiaľ používame hard a soft obmedzenia, použijeme "HardSoftScore". Musíme tiež uviesť ako vypočítať také skóre, v závislosti na našich požiadavkách. Ďalej sa, sme musíme  pozrieť do 2 alternatívy pre výpočet skóre: pomocou jednoduchej implementácie Java(umiestnime triedy to tagu <simpleScoreCalculatorClass>, alebo pomocou Drols DRL(umiestnime do tagy <scoreDrl>.Optaplanner bude hľadať riešenie s najvyšším skóre. Budeme používať HardSoftScore, čo znamená, plánovač bude hľadať riešenie s žiadnymi tvrdými obmedzeniami členenie (spĺňajú požiadavky na hardvér) a pokiaľ možno čo najmenej mäkkých obmedzenia členenie (minimalizovať náklady na údržbu).
-\item Konfigurácia optimalizačných algoritmov(tag <constructionHeuristic> a podtag <constructionHeuristicType>). V našom prípade použijeme optimalizačný algoritmus FIRST\_FIT\_DECREASING
-\item Voliteľne je možné definovať aj metaheuristiky(umiestnené v tagy <localSearch>). V našom prípade bola použitá metaheuristika TABU SEARCH
-
-\end{itemize}
-
-
-\subsection{Optimalizačné algoritmy}
-V nasledujúcej časti textu si ukážeme optimalizačné algoritmy, ktoré používa optaplanner.
+\item Nastavania definičných tried plánovacie problému, nastavania tried zabezpečujúce plánovanie, nastavenie definícií skóre a nastavenie použitia plánovacích algoritmov, po prípade nastavenia metaheurestických metód
+\item Súbor je rozdelený na 3 časti:
 \begin{itemize}
-\item First FIT - To je veľmi jednoduché greedy algoritmus aproximácie. Algoritmus spracováva položky v ľubovoľnom poradí. Pre každú položku sa pokúsi umiestniť na položku v prvej priehradke, kde ju môže vložiť. Ak nie je nájdený žiadna priehradka, otvára novú priehradku a kladie položku v rámci nového zásobníka.
-
-\item Firt FIT Decreasing - Tento algoritmus na rozdiel predchádzajúceho funguje nasledovne: Položky sú zoradené podľa ne-rastúcej veľkosti. Ďalším bodom je vždy zabalená položka do prvého koša, kde sa hodí.
-\item Firt FIT Decreasing + heurestic local search -  Algoritmus funguje nasledovne: Položky sú zoradené podľa ne-rastúcou veľkosti. Ďalším bodom je vždy zabalené do prvého koša, kde sa hodí. Local search  je metaheuristická metóda pre riešenie výpočtovo zložitých optimalizačných úloh. Miestne vyhľadávanie je možné použiť na problémy, ktoré môžu byť formulované ako hľadanie riešení maximalizuje kritérium medzi niekoľkými kandidátnymi riešeniami. Miestne algoritmy sa pohybujú z roztoku do roztoku v priestore kandidátnych riešení (priestor hľadania) za použitia lokálnych zmien, kým je roztok považovaný za optimálny je nájdený, alebo uplynul čas.
-
-\begin{itemize}
-\item Hill Climbing - hill climbing je matematická optimalizácia technika, ktorá patrí do rodiny miestneho vyhľadávania. Jedná sa o iteratívny algoritmus, ktorý začína s ľubovoľným riešenie problému, potom sa pokúsi nájsť lepšie riešenie tým, že postupne mení jeden prvok riešenia. Ak zmena vytvára lepšie riešenie zmeny sa opakujú až žiadne ďalšie zlepšenie nie je možno nájsť.\cite{algobook}
-
-
-
-
-\item Tabu Search - Tabu search používa miestny alebo susedcký postup vyhľadávania tak, že iteratívne presuvá z jedného možného riešenia x k lepšiemu riešeniu x  v susedstve x, kým sa niektoré kritérium zastavenia splní. Miestne postupy vyhľadávania často uviaznu v zle ohodnotených oblastiach. V snahe vyhnúť sa týmto nástrahám a preskúmať oblasti hľadaného miesta, ktoré by mali zostať bez prehliadky inými miestnymi postupmi vyhľadávania, tabu search starostlivo skúma okolí každého toku ako hľadanie postupuje. Riešenie prijatí do novej štvrti sú určené pomocou pamäťových štruktúr.
-
-\item Simulated Annealing - Simulované Annealing je všeobecný algoritmus pre globálne optimalizačné problémy lokalizovať dobré priblíženie k globálnej optimálnej danej funkcie vo veľkom vyhľadávacieho priestoru. To sa často používa pri hľadaní priestorov diskrétnych . U niektorých problémov, môže simulované žíhanie byť účinnejšie ako vyčerpávajúci zoznam - za predpokladu, že cieľom je iba nájsť prijateľne dobré riešenie v stanovenú dobu, skôr ako tým najlepším možným riešením .
-
+\item Domain model configuration(začínajúc riadkom č.4), v ktorom sú uvedené triedy definujúce problém a riešenie
+\item Score Configuration(začínajúc riadkom č.7) definujúce spôsob kalkulácie skóre vrátane triedy
+\item Optimalization algorithms configuration(začínajúc riadkom č.13) sú uvedené optimalizačné algoritmy, vrátane spôsobu ukončenia plánovia
 \end{itemize}
-
+\item Na riadku č.3 uvedená medzi značkami \epmh{enviromentMode} hodnota \uv{FAST_ASSERT}, ktorá umožňuje OptaPlanner detekovať chyby v implementácií
+\item Na riadku č.5 je uvedená medzi značkami \emph{solutionClass} hodnota \uv{org.optaplanner.examples.cloudbalancing.domain.CloudBalance}, ktorá odkazuje na definičnú triedu modelu problému vyváženie cloudu
+\item Na riadku č.6 je uvedená medzi značkami \emph{planningEntityClass} hodnota \uv{org.optaplanner.examples.cloudbalancing.domain.CloudProcess}, ktorá odkazuje na triedu, ktorá realizuje riešenie(plánovanie) problému
+\item Na riadku č.9 je uvedená medzi značkami  \emph{scoreDefinition} hodnota \uv{HARD_SOFT}, ktorá hovorí, že pri kalkulácií skóre použijeme len hard obmedzenia\ref{hardobm}
+\item na riadku č.10 je uvedená medzi značkami \emph{simpleScoreCalculatorClass} hodnota \uv{org.optaplanner.examples.cloudbalancing.solver.score.CloudBalancingSimpleScoreCalculator}, ktorá odkazuje na trieda, ktorá kalkuluje skóre pri riešení problému
+\item Na riadku č.11 je uvedená medzi značkami \emph{scoreDrl} hodnot \uv{/org/optaplanner/examples/cloudbalancing/solver/cloudBalancingScoreRules.drl}, ktorá odkazuje na Drools definicíciu kalkulácie skóre\ref{drollskal}
+\item na riadku č.15 je uvedená medzi značkami \emph{maximumSecondsSpend} hodnota \uv{120}, ktorá hovorí, že riešenie musí byť nájdené do 120 sekúnd v opačnom prípade dôjde k ukončeniu riešeniu a vrátenia najlepšieho doposiaľ dosiahnutého riešenia
+\item Na riadku č.18 je uvedená medzi značkami \emph{constructionHeuresticType} hodnota \uv{FIRST_FIT?DECREASING}, ktorá označuje použitie plánovacieho algoritmu FIRST_FIT_DECREASING\cite{algibook}
 \end{itemize}
+\item Na riadku č. 20 je uvedená medzi značkami \emph{pickEarlyType} hodnota \uv{FIRST_NON_DETERIORATING_SCORE}, ktorá označuje použitie pri kalkulovaní skóre najprv nezhoršujúce sa skóre(ohodnotenie, ktoré zvyšuje hodnotu celkového skóre)
+\item Na riadku č. 25 je uvedená medzi značkami \emph{entityTabuSize} hodnota \uv{entityTabuSize}, ktorá značí použitie metaheuristickej metódy pri riešení TABU SEARCH\cite{algibook}, s veľkosťou tabuľky 7
+\item Na riadku č. 28 je uvedená medzi značkami \emhp{acceptedCoundLimit} hodnota \uv{1000}, ktorá označuje počet náhodných krokov, ktoré sú vyhodnotené počas 1 kroku riešenia problému
 
-
-
-
-
-
-\subsection{Výsledky plánovacieho problému}
-
-
-Každý plánovací problém je definovaný na základe obmedzení, ktoré musia minimálne spĺnať: \cite{optabook}
-\begin{itemize}
-\item Negatívne "hard" obmedzenie, ktoré nesmie byť porušené
-\item Negatívne "soft" obmedzenie, ktoré by nemali byť porušené pokiaľ sa dá tomu vyhnúť.
-\end{itemize}
-
-Niektoré problémy môžu obsahovať aj pozitívne podmienky alebo odmeny, ktoré by mali byť splnené pokiaľ je možné ich splniť.
-
-Tieto podmienky definujú skóre plánovacieho problému. Tieto podmienky môžu byť zapísané v Jave alebo v Drools pravidlách, ktoré značne zjednodušujú kód.
-
- Vytvorenie pomocou pravidiel  môže robiť  spájanie s inými akciami jednoduchším. Tieto pravidlá bývajú typicky definované pomocou XML súboru.
-Optaplanner spajá pri riešení skóre a plánovacie algoritmy.
-
-
-
-
-Bbmedzenia definujú výpočetné skóre problému plánovania. Každé riešenie problému plánovanie môže byť odstupňovaná so skóre. 
-
-Plánovanie problému má niekoľko riešení. Existuje niekoľko kategórií riešení:
-\begin{itemize}
-\item Možným riešením je nejaké riešenie, či je alebo nie je ľubovoľný počet obmedzení. Problémy plánovania mávajú neuveriteľne veľké množstvo možných riešení. Mnoho z týchto riešení sú bezcenné.
-\item Uskutočniteľným riešením je riešenie, ktoré neporušuje žiadne (negatívne)tvrdé obmedzenia. Niekedy nie sú realizovateľné riešenie. Každý uskutočniteľné riešenie je možné riešenie.
-
-\item Optimálnym riešením je riešenie s najvyšším počtom bodov. Problémy plánovanie mávajú jedno alebo niekoľko optimálnych riešení. K dispozícii je vždy aspoň 1 optimálnym riešením, a to aj v prípade , že neexistujú žiadne uskutočniteľné riešenie, a optimálne riešenie nie je možné .
-\item Najlepším riešením je nájsť riešenie s najvyšším skóre zistené implementáciou v danom čase.
-
-\end{itemize}
-
-OptaPlanner podporuje niekoľko optimalizačných algoritmov ako efektívne nájsť tieto veľké množstvá riešení. V závislosti na prípade použitia, niektoré optimalizačné algoritmy dosahujú lepšie výsledky ako ostatné, ale to je nemožné povedať dopredu. Pri plánovaní, je ľahké prepnúť algoritmus optimalizácie, zmenou konfigurácie Solver-u.
 
 
 \newpage
