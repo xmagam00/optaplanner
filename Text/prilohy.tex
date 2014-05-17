@@ -3,32 +3,29 @@
 {
 	V tejto kapitole by som Vád objasnil postup inštalácie aplikácie. V prvom rade uviediem potrebné prostriedky pre beh aplikácie. Pre správny beh aplikácie potrebujeme nasledovné prostriedky:
 	\begin{itemize}
-	\item JBoss aplikačný server najmenej vo verzii 7.1.1.Final. Je možné ho zdarma stiahnuť z www.jboss.org
-	\item Nástroj Maven, ktorý je možné stiahnuť vo verzii 3.2.1 z www.maven.apache.org, kde sa nachádza aj manuál na inštaláciu
-	\item MySQL Connector/J minimálne vo verzii 5.0.8, ktorý môžte stiahnuť  \\ z https://dev.mysql.com/downloads/connector/j/
-	\item MySQL databázový server najmenej vo verzii 5.5.37
-	\item Webový prehlidač Mozilla Firefox najmenej vo verzii 29.0 alebo Google Chrome najmenej vo verzii 34.0
+	\item JBoss aplikačný server najmenej vo verzii 7.1.1.Final. Je možné ho zdarma stiahnuť z http://jbossas.jboss.org/downloads
+	\item MySQL Connector/J minimálne vo verzii 5.0.8, ktorý je súčasťou CD
+	\item MySQL databázový server najmenej vo verzii 5.5.37(na distribúcií ubuntu je možné nainštalovať príkazom \uv{apt-get install mysql-server mysql-client}, alebo je možné postupovať podľa nasledujúceho návodu http://dev.mysql.com/doc/refman/5.1/en/linux-installation.html)
+	\item Webový prehlidač Mozilla Firefox najmenej vo verzii 29.0 alebo Google Chrome najmenej vo verzii 34.0(v prostredí ubuntu je možné ho nainštalovať nasledujúcim príkazom \uv{apt get install firefox/google-chrome})
 	\end{itemize}
-	V prvom rade je potrebné nainštalovať MySQL server nakonfigurovať databázu s názvom \uv{optaplanner} s užívateľským menom \uv{root} a heslom \uv{root}. Následne je potrebné rozbaliť JBoss aplikačný server na súborový systém. V ďalšom kroku nastaví náš aplikačný server pre správne použitie MySQL databáze. V tomto kroku je potrebné nakonfigurovať súbor \emph{standalone.xml} v adresári JBOSS\_HOME/standalone/configuration/. Tam správne nastavíme datasource(zdroj databázových dát pre našlu aplikáciu)(môžme použiť online dokumentáciu https://docs.jboss.org/author/display/AS71/DataSource+configuration, kde je celý postup zdokumentovaný). Následne treba stiahnutý MySQL Connector/J skopírovať do adresára JBOSS\_HOME/standalone/deployments. Následne treba vytvoriť potrebnú databázu to a naplniť ju dátami :
+	V prvom rade je potrebné nainštalovať MySQL server nakonfigurovať databázu s názvom \uv{optaplanner} s užívateľským menom \uv{root} a heslom \uv{root}. Následne je potrebné rozbaliť stiahnutý JBoss aplikačný server na súborový systém. V ďalšom kroku nastaví náš aplikačný server pre správne použitie MySQL databáze.  To urobíme zkopírovaním súboru standalone-full.xml do adresára JBOSS\_HOME\footnote{JBOSS_HOME predstavuje koreňový adresár serveru JBoss na disku}/standalone/configuration a prepíše aktuálny obsah súboru.
+
+	Následne treba ovládač mysql-connector-java-5.1.29-bin.jar do adresára JBOSS\_HOME/standalone/deployments. Následne treba vytvoriť potrebnú databázu to a naplniť ju dátami :
 	\begin{itemize}
 	\item zadaním príkazu mysql -u root -p optaplanner < cesta/k/suboru/create.sql(bude od nás vyžadované heslo root, ktoré zadáme)
 	\item zadaním príkazu mysql -u root -p optaplanner < cesta/k/suboru/insert.sql(bude od nás vyžadované heslo root, ktoré zadáme)
 	\end{itemize}
 
+	Nakoniec skopríruje súbor standalone.conf do adresára JBOSS\_HOME/bin a prepíše aktuálny obsah súboru.
+
 	Aplikáciu môžme spustiť nasledovne:
 	\begin{itemize}
-	\item Skopírujeme maven projekt optaplanner.controller do adresára \\ JBOSS\_HOME/standalone/deployments
-	\item Skopírujeme maven projekt PlannerService do adresára \\ JBOSS\_HOME/standalone/deployments
+	\item Skopírujeme adresára optaplanner.controlle.war do adresára \\ JBOSS\_HOME/standalone/deployments
+	\item Skopírujeme súbor PlannerService.war do adresára \\ JBOSS\_HOME/standalone/deployments
 	\item Prejdeme do zložky JBOSS\_HOME/standalone/bin a spustíme skript \emph{standalone.sh}
 	\end{itemize}
-	Aplikáciu je možné spustiť aj pomocou nástroju maven a to nasledovne:
-	\begin{itemize}
-	\item Nastavíme sa na projekt optaplanner.controller a zadamé príkaz mvn package
-	\item Následne zadamé príkaz mvn compile
-	\item A nakoniec príkaz mvn jboss as:deploy
-	\end{itemize}
-	Postup uvedený vyššie vykonáme aj pre projekt Planner.Service. 
-	Aplikáciu spustíme zadaním príkazu \uv{http://localhost:8080/optaplanner.controller/} do webového prehliadaču.
+	
+	K aplikácií pristúpime zadaním adresy \uv{http://localhost:8080/optaplanner.controller.war/} do webového podporovaného webového prehliadaču.
 
 
 }
@@ -184,11 +181,7 @@
 	}
 
 
-	\section{Grafické vyhodnotenie}
-	{
-
-
-	}
+	
 
 
 }
@@ -197,12 +190,13 @@
 {
 	Priložené CD obsahuje nasledujúce súbory:
 	\begin{itemize}
-	\item optaplanner.controller - adresár JSF aplikácie obsahujúci potrebné zdrojové kódy a .xhtml stránky vrátane konfiguračných súborov
-	\item PlannerService - adresár s EJB a web service, ktorý obsahuje zdrojové kódy vrátane konfiguračných súborov
+	\item optaplanner.controller.war - adresár JSF aplikácie obsahujúci potrebné zdrojové kódy a .xhtml stránky vrátane konfiguračných súborov
+	\item PlannerService.war - adresár s EJB a web service, ktorý obsahuje zdrojové kódy vrátane konfiguračných súborov
 	\item install.txt - súbor s popisom inštalácie
 	\item create.sql - sql súbor s definíciami tabuliek
 	\item insert.sql sql súbor s naplnením dát tabuliek
 	\item bachelor\_thesis.pdf - elektronická verzia textovej Časti bakálarskej práce
+	\item mysql-connector-java-5.1.29-bin.jar - ovládač pre prácu s MySQL databázou
 	\end{itemize}
 }
 %\chapter{RelaxNG Schéma konfiguraèního soboru}
