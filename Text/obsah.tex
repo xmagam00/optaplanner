@@ -401,6 +401,8 @@ V druhej časti sa zameriame na problémy backend-u aplikácie. Celá aplikácie
 
 Koncový bod webovej služby je reprezentovaný v podobe session bean-y\ref{sessionkap}, ktorá obsahuje funkčnosť pre spustenie a zastavenie výpočtu. Pri spustení výpočtu sú informácie predávanie message-driven bean\ref{messagekap}, ktorá zabezpečuje spúštanie plánovania prostredníctvom OptaPlanner-u\ref{optaplannerC}.
 
+Kvôli závislosti časti systému PlannerService na entitných triedach, bola aplikácia užívateľského rozhrania na multimodulový projekt. Modulom bol pritom balík s entitnými triedami, ktorý bol nainštalovaný ako závislosť do lokálneho repozitára prostredníctvom nástroja maven. PlannerService následne len má uvedený vo svojom konfiguračnom súbore(pom.xml)\ref{mavenkap} závislosť na modul entitných tried.
+
 
 \section{Návrh aplikácie}
 Výsledná aplikácia je rozdelená na 2 časti. Na časť reprezentujúci grafického užívateľského rozhranie s podporou prihlasovanie a užívateľských rol, zabezpečenia proti neautorizovanému prístupu. Rovnako je schopné zobrazovať úlohy, užívateľov a organizácie podľa užívateľskej role. Rozhranie pravidelne aktualizuje informácia o úlohach, užívateľoch a organizáciach z databáze. Pre spustenie výpočtu úlohy komunikuje pomocou webovej služby s \uv{PlannerService}(optimalizovaná pre riešenie problému N Dám), ktorá implementuje spracovanie informácií. Pri požiadavke o spustenie/pozastavenie výpočtu spracovania úlohy sa predá v HTTP požiadavky ID úlohy. Webová služba následne zaradí požiadavok o spustení do jms fronty. Message-driven bean-a následne postupne odoberá požiadavky z fronty a vyhodnocuje. Pritom najprv nájde potrebný XML definičný súbor v databáze a spustí výpočet pomocou OptaPlanner. Priebežné informácie(čas do skončenia plánovania, pokrok vo výpočte) sú priebežne vkladané do databáze, čo umožňuje užívateľovi prostredníctvom rozhrania sledovať stav úlohy. Pozastavenie úlohy dôjde prostredníctvom zmeny stavu vo webovej službe, čo pozastaví plánovanie.
@@ -451,7 +453,7 @@ Výsledné rozhranie kladie dôraz na jednoduchosť a prehľadnosť zobrazených
 
 \begin{center}
 
-\includegraphics[scale=0.4]{page_show.jpg} 
+\includegraphics[scale=0.4]{page.jpg} 
 \caption{Návrh užívateľského rozhrania}
 \label{rozhranie}
 
@@ -473,42 +475,105 @@ Na obrázku č.\ref{rozhranie} môžme vidieť návrh užívateľského rozhrani
 Zvyšné návrhy rozhrania pre vytvorenie úlohy, editovanie úlohy, spravovanie užívateľov, spravovanie organizácií, zmenu hesla a prihlasovanie je možné dohľadať v prílohe.
 
 
-\section{Implementácie}
-Aplikácie bola rozložená do viacerých tried podľa zodpovednosti daných komponent. Pri implementácií bolo použité JBoss Developer studo 7.1.1 GA spolu s JBoss AS 7.1.1 Final. Celý projekt boli založený na technológií maven, ktorú uľahčovala celý process vývoja a jeho následne nasadenie na JBoss server. Pre databázovú technológiu bol nainštalovaný mysql server nakonfigurovaný s príslušnými údajmi.
-
-\subsection{Rozdelenie aplikácie}
-
-	Aplikácia bola rozdelená na 2 časti:
-	\begin{itemize}
-	\item JSF aplikácia s užívateľským rozhraním, ktorá zobrazuje výsledky, umožňuje spravovanie databáze, rovnako aj pristupovanie k službám web service, je pritom rozdelená na hlavný modul s celou funkčnosťou a modul s entitami, ktoré zdieľa s PlannerService - optaplanner.controller
-	\item Web service + EJB aplikácia, ktorá poskytuje web service koncový bod spolu s metódami na spustenie a pozastavanie úlohy. Spustenie úlohy volá Message-driven Beanu, ktorá vykonáva spravanie(plánovanie) úlohy, využíva pritom modul Enties, ktorý obsahuje entitné triedy - PlannerService
-
-	\end{itemize}
+\chapter{Implementácie}
+Nasledujúca kapitola pojedná o oboch častiach systému pre monitorovanie stavu plánovacích úloh.  Najprv rozobereme aplikáciu pre užívateľské rozhranie\ref{approz} a následne PlannerService\ref{plannerapp}, ktorá zabezpečuje riešenie plánovacích úloh prostredníctvom OptaPlanner-u. Pre technológiu MySQL bol zvolený MySQL server vo verzii 5.5.37. Obe časť boli založené na nástroji maven s použitím vývojové prostredia JBoss Developer Studio vo verzii 7.1.0 GA. Na koniec treba spomenúť, že správnu komunikáciu systému s databázou je potrebné nastaviť v konfigurácií JBoss-u datasource\cite{jbossbook},v ktorom sa nastaví odkaz na databázu spolu s prihlasovacími údajmi. Pre používanie JMS fronty v časti systému PlannerService\ref{plannerapp} je potrebné nakonfigurovať v konfigurácií JBoss-u frontu s názvom \emph{OptaPlanner}. V poslednom rade pre použitie zvolenej databázovej technológie je potrebné stiahnuť potrebnú knižnicu a vložiť adresára \emph{deployments}.
 
 
-
-
-\subsection{JSF aplikácia}
-JSF aplikácia bola postavená na technológií JavaServer Faces v kombinácií s frameworkami Rich Faces, Twitter Boostrap a Font Awesome.  Aplikácia zabezpečuje prihlasovanie užívateľov v kombinácií s bezpečnosťou, ktorá je implementovaná s frameworkom Seam. Je rozdelená na .xhtml stŕanky podľa užívateľskej role. Na každej stránke pritom môžme nájsť komponenty, ktoré dovoluju užívateľovi príslušné akcie. Na .xhtml stránkach sa následne zobrazuje aj obsah spracovania, ktorý už bol prezentovaný tak aj entity užívateľov a organizácií spolu s ich spravovaním. Tieto komunikujú prostredníctvom expression language s managed beananmi na pozadí, ktoré rovnako vykonávajú aj validáciu jednotlivých komponent(od nepovolených hodnot, až po prázdne vstupné polia). Stlačenie príslušného tlačidla spôsoby zavolanie metódy z managed beany a vykonanie akcie, pričom jej obsah môže byť ale nemusí byť zobrazený na .xhtml stránku.
+\section{Aplikácie pre užívateľské rozhranie}\label{approz}
+Aplikácie pre užívateľské rozhranie, ktorá je schopná zobrazovať informácie o úlohách, užívateľoch a organizáciach a umožňovať ich správu. Základom tejto aplikácie je komunikácia s databázou. Komunikáciu zabezpečuje JBoss a to tak, že sa v súbore persistence.xml pre našu aplikáciu(\emph{optapanner.controller}) správne nastaví odkaz na datasource a definíciu entitných tried.
 	
 
 \subsection{Prihlasovanie}
-Prihlasovanie je realizované prostredníctvom frameworku Seam, z ktorého sme využili moduly Seam Faces a Seam Security. Pre každú užívateľskú roli bolo vytvorené rozhranie a metódy, ktoré overovali indentity užívateľa. Pre prístup musela mať užívateľ danú užívateľskú rolu, pričom prístup bol implementovaný enum-om, v ktorom kažej role, ktorá bola reprezentovaná anotáciou(@Administrator,@Reader, @Planner) boli povolené len im prislúchajúce stránky a bolo deklarované, čo sa má vykonať pri po pokuse o nepovolený prístup(presmerovanie na prihlasovací formulár). Prihlasovanie rovnako obsahovalo validáciu a informovalo užívateľa o nevalidnom hesle, alebo mene. Po úspešnom prihlásení bola do životného cyklu vložená Identita a užívateľ bol presmerovaný na jemu prislúchajúcu stránku. Vloženie identity malu tú výhodu, že bolo možné z managed beany zistiť aký je prihlásený užívateľ. Prihlasovanie overovalo údaje z databáze, pričom pre overenie hesla používalo tŕiedy ShaEncoder, ktorá obsahuje hash funkcia prostredníctvom, ktorej sú zabezpečené všetky heslá v databáze.
+Prihlasovanie je realizované prostredníctvom frameworku Seam. Základom je vytvorenie komponent na XHTML stránke pre zadanie mena a hesla užívateľa. Tieto údaje sú spracované v backing bean-e(triede) s názvom \emph{LoginBean}, ktorá je súčasťou balíku \emph{org.jboss.optaplanner.controller.beans}. Táto trieda obsahuje aj validátory(metódy validateUsername/validatePassword), ktoré kontrolujú existenciu užívateľa a správnosť hesla v prípade, že existuje a podľa zistených informácií(existuje užívateľ/neexistuje, validné/nevalidné heslo) sa zobrazí komponenta \emph{h:outputText}, ktorá obsahuje príslušný text.
 
-\subsection{Logika JSF aplikácie}
-V prvom rade trebalo správne nakonfigurovať súbor persistence.xml, aby ukazoval na nami definovaný datasource v rámci aplikačného servera. To umožňuje pristupovanie k dátam v databáze.
-Celá logika aplikácie bola sústredná bola sústredená do managead bean, pričom 1 managed beana podľa prihláseného užívateľa(napr. užívatelská rola administrátor na stránke Administrátor.xhtml bola spravovaná managed beanov AdministratorBean). Tie obsahovali metódy a vlastnosti, ktoré bola zobrazované/prevzaté z komponent na .xhtml stránke. Vlasnosti museli spĺňať princíp POJO. Metódy následne volali podľa potreby databázové operácie, ktoré boli sústredené v balíku databaseOP v triede Operation. Tá obsahovala metódy na mazanie, update, vytváranie entít. Predpisy entitných tried sa nachádzali v module Entites. V balíku service sa nachádzali triedy, ktoré umožňujú volanie metód web service.
+V prípade, že validácia prebehne úspešne zavolá sa metóda \emph{authenticate}, ktorá zabezpečí získanie užívateľskej role zadaného užívateľa, ktorú následne vloží do životného cyklu aplikácie pomocou metódy \emph{setUser}, do sa pomocou triedy \emph{org.picketlink.idm.api.User} vloží ID užívateľa a užívateľská rola.
+
+Navigácia užívateľa sa realizuje nastavením navigačných pravidiel v súbore \emph{faces-config.xml}, do ktorého sa podľa užívateľske role užívateľa nastaví hodnota premennej isX(Admin/Planner/Reader) na hodnotu TRUE a zabezpečí presmerovanie užívateľa na stránku podľa role:
+\begin{itemize}
+\item Rola Administrator bude presmerovaná na stránku Administrator.xhtml 
+\item Rola Planner bude presmerovaná na stránku Planner.xhtml
+\item Rola Reader bude presmerovaná na stránku Reader.xhtml
+\end{itemize}
+
+Úspešné prihlásenie je dané nastavení metódy \emph{setStatus} na hodnotu SUCCESS, v prípade, že validácia údajov neprebehne úspešne nastavíme prihlasovanie na neúspešné prostredníctvom metódy \emph{setStatus} na hodnotu FAILURE. Po uspešnom prihlásení je možné identitu ľahko získať nainjektovaním(uvedením anotácie @Inject) triedy Identity.Z ktorej je možné získať prihlasovacie meno užívateľa, ktorá sa zobrazuje na stránke.
+
+Problematika odhlasovanie úzko súvisí s prihlasovaním a v podstate jednoduchá. Na XHTML stránke sa nachádza grafická komponenta \emph{h:commandButton}, ktorá v atribúte action volá metódu logout pre príslušnú backing beanu. Tá spôsobí zavolanie metódy identity.logout, ktorá odobere identitu daného užívateľa(zamedzí mu opätovnú prístup k stránke podľa jeho role) a presmeruje ho na prihlasovacie stránku(Login.xhtml).
+
+\subsection{Zabezpečenie}
+Úzko s prihlasovaním súvisí aj prblematika zabezpečenia aplikácie proti neutorizovanému prístupu. Teda povedzme užívateľ s rolou Planner by chcel pristúpiť na stránku, ktorá je určená pre rolu Administrator. Aplikácia mu to nedovolí a v prípade o takýto pokus bude užívateľ presmerovaný naspäť na prihlasovaciu stránku. Následne sa nájdenie trieda, ktorá je anotovaná anotáciu @ViewConfig. Táto trieda obsahuje výpočtový typ, ktorý obsahuje anotácie @ViewPattern, ktorej obsah je stránka, na ktorú má byť povolený prístup. Pri každej takej anotácií je nachádza názov užívateľskej role uvedený prostredníctvom anotácie. Použitie názvu užívateľskej role je dané vytvoren´im špeciálneho rozhrania, ktoré je anotované anotáciu \emph{SecurityBindingType}. Uvedenie anotovanej užívateľskej role vedľa stránky, ktorá má byť povolená spôsobí zavolenie triedy \emph{Autorization}, ktorá je anotovaná anotáciu \emph{Service}, ktorá overí vloženú identitu prostredníctvom metódy \emph{authenticate} z triedy \emph{LoginBean} a vráti odpoveď. Takýmto spôsobom sa povolí prístup pre užívateľskú rolu na danú stránku. Veďla každej anotácie @ViewPattern sa nachádza aj anotácia \emph{AccessDeniedView}, ktorá spôsobí presmerovaní na jej obsah, v prípade, že prihlásený užívateľ nemá danú užívateľskú rolu. Tento postup sa opakuje neustále v prípade pokusu o prístup k akejkoľvek stránke uvedenej rozhraní anotovaní anotáciou \emph{ViewConfig}.
+
+
+
+\subsection{Komunikácie s PlannerService}
+Základom komunikácie s výpočtou časťou systému PlannerService je vygenerovanie klienta z WSDL súboru webovej služby. Preto bolo potrebné vykonať nasledovné kroky:
+\begin{itemize}
+\item Nasadenie PlannerService na JBoss
+\item Zavolanie skriptu wsconsume.sh, ktorý je súčasťou aplikačného serveru s prepínačom -k a cestou k WSDL súboru
+\item Skopírovanie vygenerovaných tried do aplikácie pre užívateľské rozhranie do balíku \emph{org.jboss.optaplanner.controller.service}
+\end{itemize}
+Po týchto krokoch sa v metóde \emph{runTask} a \emph{stopTask} volá metóda, ktorá zavolá vytvorí webovú službu a zavolá metódu runTask/pauseTask, ktoré sú súčasťou PlannerService s argumentom ID úlohy. Tieto metódy sú súčasťou backing bean pre užívateľsku rolu Planner a Administrator.
+
+
+\subsection{Logika aplikácie}
+Pre každú užívateľskú rolu bola vytvorená 1 XHTML stránka a backing beana a to nasledovne:
+\begin{itemize}
+\item Pre rolu Administrator je určená stránka Administrator.xhtml a backing beana(trieda) \emph{AdministratorBean}
+\item Pre rolu Planner je určená stránka Planner.xhtml a backing beana(trieda) \emph{PlannerBean}
+\item Pre rolu Reader je určená stránka Reader.xhtml a backing beana(trieda) \emph{ReaderBean}
+\end{itemize}
+Všetky backing beany sú súčasťou balíka \emph{org.jboss.optaplanner.controller.beans}. Aby beany mohli byť správne používané je potrebné ich uviesť v súbore faces-config.xml. To sa urobí uvedením medzi značky \emph{managed-bean}, kde uvedieme názov beany, triedu vrátane cesty v hierarchii balíkov a typ beany(ktorý bol zvolený na session). Backing bean-y obsahujú metódy a vlastnosti, ktoré bola zobrazované/prevzaté z komponent na .xhtml stránkach. Všetky vlasnosti museli spĺňať princíp POJO. Pre potreby získavania dát z databáze bola použitá trieda \emph{databaseOp}, ktorá je súčasťou balíku \emph{org.jboss.optaplanner.controller.database}, pričom vytvára inštanciu triedy EntityManager, ktorý využíva entitné triedy. Táto trieda obsahuje metódy na vytváranie úloh, užívateľov, organizácií, rovnako aj mazanie, editovanie jednotlivých položiek, rovnako aj získavanie. Tieto dáta sú následne predávané backing bean-ám podľa potreby.
+
 
 \subsection{Implementácia rozhrania}
-Pre implementáciu rozhrania som využil technológiu xhtml stránok. Pre každú užívateľskú rolu som vytvoril xhtml stránku identitickú s názvom užívateľskej role. Pre prihlasovanie bola použitá Login.xhtml stránka. Na Login.xhtml boli umiestnené komponenty na zadanie užívateľského mena a hesla vrátane skrytých validačných komponent. Pre implementáciu xhtml pre užívateľské role sa zameriam na užívateĽskú rolu Administrátor, keďže rola Plánovač a Čitateľ prevzali všetku implementáciu a komponenty práve od Administrátor, ale len v obmedzenom množstve, teda komponenty vrátane akcií, ktoré mohli vykonávať. XHTML stránka sa skladá v hornej časti z menu, ktoré je implementované ako záložky prostredníctvom Twitter Boostrap-u. V pravej hornej časti sa nachádza informácia o prihlásenom užívatelovi vrátane tlačidla na odhlásnie. Pri kliknutí na záložky sa zobrazí obsah, ktorý odpovedá názvu záložku. Záložky \uv{user management, task, organization management} obsahujú komponenty h:datatable z knižnice JSF pre zobrazenie dát. Tieto dáta sú pravidelné obnovované komponentov z knižnice Rich Faces a4j:poll, ktorý využíva Ajax pre obnovenie obsahu. Každá z tých záložiek obsahuje pole pre vyhľadávanie pričom je možné zvoliť podľa, ktorého stĺpca sa bude vyhľadávať. Výsledky sa zobrazia do tabuľky(h:datatable) pričom zobrazené položky budú odpovedať nájdeným výsledkom. Pri každej položke v tabuľke je možné vykonávať isté akcie ako je vymazať danú entitu, po prípade ju editovať, alebo vykonávať množstvo iných akcií. Akcie pritom reflektujú individuálny stav danej entity.Pri každej z tých záložiek okrem task(ktorú v zápäti rozoberem) je možné entity aj vytvárať. Vytváranie je veľmi jednoduché, keď užívateľ vyplní všetky polia, ktoré musí mať daná entita. Každú tabuľke je možné aj radiť. Radenie prebieha kliknutím na názov stĺpca tabuľky, pričom danú stĺpec implementuje funkciu radenia pre daný stĺpec len v prípade, že názov je vyznačený modrou farbou. Vytváranie úloh(taskov) je zaradené do samostatnej záložky kvôli lepšej prehľadnosti. Užívateľ vyplní meno a prostredníctvom komponenty na nahrávanie súboru z knižnice Rich Faces nahrá obsah do databáze. Ďalej rozoberem záložku change password, ktorá umožňuje si pre daného užívateľa zmeniť heslo, vyplní pritom heslo a potvrdenie heslo a heslo sa zmení. Nakoniec rozoberem záložku edittask, táto záložka je pri bežnom prehliadaní prázna je to spravené kvôli bezpečnosti. Táto záložka sa aktivuje editovaním úlohy v záložke task, ktorá nás prepne do záložky edittask, v ktorej sa už aktivuje obsah a užívateľ vyplní názov úlohy,vlastníka úlohy a nakoniec edituje xml súbor úlohy. Potvrdením sa vytvorí úloha so stavom "MODIFIED".
+Pre implementáciu rozhrania bola použitá technológia XHTML stránok. Pre každú užívateľskú rolu bola vytvorená XHTML stránku identitická s názvom užívateľskej role. Pre prihlasovanie bola použitá  stránka Login.xhtml stránka. Na Login.xhtml boli umiestnené komponenty na zadanie užívateľského mena a hesla vrátane skrytých validačných komponent. Na tejto stránke boli použité správne CSS frameworky na zabezpečenie prenositeľnosti na mobilné zariadenia a zároveň poskytli užívateľskú prívetivosť.
+
+Pri implementáciu xhtml pre užívateľské role sa zameriam na užívateĽskú rolu Administrátor, keďže rola Plánovač a Čitateľ prevzali všetku implementáciu a komponenty práve od Administrátor, ale len v obmedzenom množstve, teda komponenty vrátane akcií, ktoré mohli vykonávať. XHTML stránka sa skladá v hornej časti z menu, ktoré je implementované ako záložky prostredníctvom Twitter Boostrap-u. V pravej hornej časti sa nachádza informácia o prihlásenom užívatelovi vrátane tlačidla na odhlásenie.  
+
+
+Pri kliknutí na záložky sa zobrazí obsah, ktorý odpovedá názvu záložku. Záložky \uv{user management, task, organization management} obsahujú komponenty h:datatable z knižnice JSF pre zobrazenie dát. Tieto dáta sú pravidelné obnovované z databáze, čo zabezpečuje ich aktuálnosť . Každá z tých záložiek obsahuje pole pre vyhľadávanie pričom je možné zvoliť podľa, ktorého stĺpca sa bude vyhľadávať. Výsledky sa zobrazia do tabuľky(h:datatable) pričom zobrazené položky budú odpovedať nájdeným výsledkom. Pri vyhľadávaní sa prerušení obnovanie obsahu tabuliek a zobrazí sa informácie o vyhľadávanom reťazci a časovom razítku kedy bolo vyhľadávanie realizované. S vyhľadanými položkami je rovnako možné realizovať všetky akcie. Pre potreby opätovného obnovenia obsahu tabuľky je potrebné stlačiť tlačidlo pod tabuľkou s názvom \emph{showX(Users,Tasks,Organizations)}, ktoré sa nachádza na bielom páse pre rýchlejšie zorientovanie užívateľa. Toto tlačidlo spôsobí pre danú tabuľku(users,taks,organizations) získanie aktuálnych dát z databáze zavolaním metódy z triedy \emph{databaseOp} getAllX(Tasks/Users/Organizations), ktoré vytvoria dotaz na získanie aktuálnych dát z databáze. Tieto dáta sú predané príslušnej tabuľke a zároveň sa obnoví obnovovanie obsahu tabuliek.
+
+ Pri každej položke v tabuľke je možné vykonávať isté akcie ako je vymazať danú entitu(task,user,organization), po prípade ju editovať, alebo vykonávať množstvo iných akcií. Akcie pritom reflektujú individuálny stav danej entity. Pri každej z tých záložiek okrem task(ktorú v zápäti rozoberem) je možné entity aj vytvárať. Vytváranie je veľmi jednoduché, keď užívateľ vyplní všetky polia, ktoré musí mať daná entita sa zavolá metódu z backing beany(napr. na editovanie editTask, na vytvorenie organizácie createOrganization, \ldots), ktoré spôsobia zavolanie metódy z triedy \emph{databaseOp}, ktoré zabezpečia vytvorenie novej entity. 
+
+ Každú tabuľke je možné aj radiť. Radenie prebieha kliknutím na názov stĺpca tabuľky(zvýraznený modrou farbou), pričom danú stĺpec implementuje funkciu radenia pre daný stĺpec. Pri kliknutí na názov stĺpca dôjde k zavolanie metódy(napr. pre stĺpec ID sa zavolá metóda sortById), ktorá je daná atribútom action v grafickej komponente \emph{h:commandLink}. Metóda radenia je implementovaná prostredníctvom triedy \emph{Collections}, ktorá obsahuje metódu sort, ktoré triedia model(trieda, ktorá obsahuje rovnaké položky ako príslušna databázová tabuľka) danej entity, ktorá vytvorí komparátor, ktorý porovná 2 položky daného modelu a upraví ich poradie.
+
+
+Vytváranie úloh(taskov) je zaradené do samostatnej záložky kvôli lepšej prehľadnosti. Užívateľ vyplní názov a prostredníctvom komponenty na nahrávanie súboru z knižnice Rich Faces nahrá obsah do databáze. Ďalej rozoberem záložku change password, ktorá umožňuje si pre daného užívateľa zmeniť heslo, vyplní pritom heslo a potvrdenie heslo a heslo sa zmení. Nakoniec rozoberem záložku edittask, táto záložka je pri bežnom prehliadaní nevidelná je to spravené kvôli bezpečnosti. Táto záložka sa aktivuje editovaním úlohy v záložke task v tabuľke tlačidlom Edit Task, ktorá nás prepne do záložky Edit Task, v ktorej sa už aktivuje obsah a užívateľ vyplní názov úlohy,vlastníka úlohy a nakoniec edituje xml súbor úlohy. Potvrdením sa vytvorí úloha so stavom \uv{MODIFIED}.
+
+
+\subsection{Publikovanie úloh}
+Ďalšou podstatnou časťou aplikácie pre užívateľské rozhranie je možnosť publikovať/odpublikovať úlohu(task). Túto akciu je možné realizovať prostredníctvom tlačidla v tabuľke Publish Task/Unpublish Task. Tieto tlačidlá nie sú vždy prístupné, podmienkou je, že úloha je nastavená ako privátna a nachádza v stave \uv{MODIFIED} alebo \uv{COMPLETE}. Naopak odpublikovanie úlohy je možné kedykoľvek podmienkou je, aby úloha bola nastavená ako verejná(public). Publikovanie je realizovaná zavolaním metódy \uv{publishTask}. V tejto metóde dôjde k zmene stavu úlohy na verejenú, pričom informácia sa uloží do databáze. Pritom dôjde k vytvoreniu stránky, ktorej názov odpovedá ID úlohy a do súboru(stránky), do ktorého sa zapíše názov úlohy a obsah XML súboru. Táto stránka je následne prístupná pod URL http://optaplanner.controller/task/ID.html. Pričom k tejto stránke pristupovať kedykoľvek až dokým nie je úloha odpublikovaná. V tom prípade dôjde k zmazaniu súboru.
+
+\subsection{Validácia}
+Všetky grafické komponenty obsahujú validáciu na neprázdne, niektoré aj na nevalidné komponenty. Všetky komponenty, do ktorých sa zadáva nejaká informácia je realizovaná grafickou komponentou \emph{h:inputText}, ktoré spracovávajú užívateľské vstupy. Každá komponenta obsahuje atribút \emph{required} nastavenú na hodnotu true, ktorá spôsobí automatickú validáciu v prípade nezadanej hodnoty. Každá komponenta obsahuje aj atribút \emph{requiredMessage},ktorý ako hodnotu obsahuje reťazec, ktorý sa zobrazí v prípade, že nie je zadaná hodnota. Rovnako obsahuje aj atribút ID s nejakou jedinečnou hodnotou. Aby informácia o nezadaní bola zobrazená je potrebné vytvoriť komponentu h:message, ktorá obsahuje atribút for, ktorý obsahuje id h:inputText komponenty, pre ktorú má byť správa zobrazená. Niektoré komponenty(napr. validácia prihlásenia) sú validované na základe validátorov, ktoré obsahujú odkaz na metódy v triede \emph{LoginBean}, ktoré v prípade potreby nastavia zobrazenie komponenty h:outputText prostredníctvom nastavenia atribútu rendered na hodnotu true, pričom táto komponenta obsahuje text podľa danej situácie(napr. neznámy užívateľ, nevalidné heslo). V opačnom prípade je komponenta skrytá, teda hodnota atribútu je nastavená na hodnotu false.
 
 
 
 
+\section{PlannerService}\label{plannerapp}
+PlannerService predstavuje časť systému pre monitorovania, ktorá zabezpečuje spracovanie požiadavok od aplikácie z užívateľského rozhrania. Základom je trieda \emph{OptaPlanerWebService}, ktorá predstavuje \uv{Big} webovú službu, ktorá je súčasťou balíku \emph{org.jboss.optaplanner.service.server}. Tá je špeciálne anotovaná prostredníctvom anotácie @WebService, ktorá označuje, že daná trieda je webovou službou. Tá obsahuje 2 metódy \uv{runTask} a \uv{pauseTask}, ktoré sú anotované anotácou @WebMethod, a sú teda prístupne a môžu byť vzdialene zavolané klientom(aplikáciou pre užívateľské rozhranie). Ako argument obsahujú metódy hodnotu typu long, ktorá predstavuje ID plánovacej úlohy, s ktorou sa má daná akcia vykonať.
 
-\subsection{Web Service, EJB aplikácia}
-Pri implementácií web service bola využitá už čiastočne implementovaná Web service, do ktorej boli následne doplnená funkčnosť spustenia úlohy a pozastavenia úlohy. Jej časť spustenia výpočtu už nebola cieľom bakalárskej práce a bola teda implementovaná mojim vedúcim Martinom Večeřom.
-Táto aplikácia je pomenovaná PlannerService a obsahuje ako som spomínal Big Web servica s 2 metódami. Tieto métody sú metóda runTask s jedným parametrom a to ID úlohy, ktorá sa má spustiť. Pričom dôjde k vytvoreniu spojenia s Message-driven bean,ktorá vykonáva výpočet. Najprv sa do fronty zaradí ID úlohy, ktorá sa má spustiť. Následne si Mesage-driven beana získa z fronty ID úlohy a následne spustí výpočet. Tieto beany sa kvôli rozloženiu záťaže môžu nachádzať na viacerých serveroch. Priebežne pritom aktualizuje stav spracovania úlohy. Priebežne pritom ukladajú údaje o stavu úlohy, času do ukončenia úlohy a percentuálnom ohodnotení úlohy. Po ukončení úlohy je uložené najlepšie možné riešenie do databáze. Na skončení spracovania nastaví príslušný stav úlohy a skončí. Web service obsahuje aj metódu na pozastavenie výpočtu s 1 parametrom a to je ID úlohy, ktoré sa má pozastaviť. Tá následne zavolá Message-driven bean-u, ktorá si z fronty získa úlohu a pozastaví jej výpočet. Tie si úlohu vyberú z actiemsq fronty a spustia výpočet. 
+ Druhou dôležitou triedou
+je \emph{OptaPlannerMessageBean}, ktorá je súčaštou balíku \emph{org.jboss.optaplanner.service.server}. Táto trieda predstavuje Message-driven bean-u a je anotovaná anotáciu @MessageDriven a pre prijímanie požiadavkov využíva JMS frontu s názvom \emph{OptaPlanner}. Túto frontu je potrebné v konfigurácií JBoss-u nastaviť.
+
+Základným predpokladom je korektné nastavenie súboru persitence.xml, ktorý odkazuje na entitné triedy a odkaz na datasource.
+
+Princíp fungovania tejto časti systému je nasledujúca:
+\begin{itemize}
+\item Klient(aplikácia užívateľského rozhrania) zadá požiadavok na spustenie/pozastavenie úlohy, ktorú realizuje zavolaním metódy webovej služny PlannerService s ID plánovacej úlohy
+\item Metóda runTask PlannerService vytvorí spojenie s triedou \emph{OptaPlannerMessageBean}, a následne vložením správy s ID úlohy do JMS fronty \emph{OptaPlanner}
+\item Trieda \emph{OptaPlannerMessageBean}, ktorá je Message-driven bean tá obsahuje odkaz rovnako na JMS frontu  \emph{OptaPlanner}. Tá obsahuje metódu \emph{onMessage}, ktorá zabezpečuje spracovánie správ z JMS fronty \emph{OptaPlanner} správu po správe
+\item Metóda \emph{onMessage} získa zo správy ID úlohy, ktorú následne získa z databáze, zmení stav úlohy na \emph{IN_PROGRESS} a vytvorí inštanciu triedy \emph{ProblemSolver}, ktorej konštruktor dostane ako parameter XML súbor plánovacej úlohy z databáze. Táto trieda je súčaštou balíku \emph{org.jboss.optaplanner.service.solver}. Po vykonaní tohto kroku sa spustí metóda \emph{run}, ktorá nastaví konfiguráciu pre riešenie problému N Dám. Následne sa zavolá metóda \emph{execute}, ktorá spustí výpočet(riešenie).
+\item V message-driven bean sa v cykle neustále získava skóre z triedy \emph{ProblemSolver} na základe, ktorého sa počítajú hodnoty do skončenia úlohy a pokroku, ktoré sa zapisujú do databáze.
+\item Po ukončení/vyriešení úlohy sa z triedy \emph{ProblemSolver} získa najlepšie riešenie(XML predpis), ktorý sa uloží do databáze s informáciami o dokončení úlohy(zmení stav úlohy na \emph{COMPLETE})
+\item Tento postup sa opakuje pre všetky správy v JMS fronte \emph{OptaPlanner}
+\end{itemize}
+
+Na koniec spomeniem princíp fungovania metódy na pozastavenie vykonávania plánovania:
+\begin{itemize}
+\item Klient(aplikácie užívateľského rozhrania) zavolá metódu \emph{pauseTask} s argumentom ID úlohy, ktorá sa má pozastaviť
+\item Metóda \emph{pauseTask} triedy \emph{OptaPlannerWebService} spôsobí zmenu stav úlohu na \emph{PAUSE}
+\item Message-driven bean v metóde \emph{onMessage} neustále obnovuje hodnoty o priebehu vykonávaní funkcie a podmienke cyklu je podmienka,že úloha je nastavená na stav \emph{IN_PROGRESS}. Teda v prípade zmeny stavu sa cyklus zastaví a teda aj výpočet(riešenie)
+\end{itemize}
 	
 	
 
