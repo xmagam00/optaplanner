@@ -1,0 +1,84 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+\providecommand{\selectlanguage}[1]{\relax}
+\providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem{arqbook}
+Ament, J.~D.: \emph{Arquillian Testing Guide}. Packt Publishing, 2013,
+  iSBN~978-1782160700.
+
+\bibitem{optabook}
+Bali, M.: \emph{Drools JBoss Rules 5.X Developer's Guide}. Manning
+  Publications, 2007, iSBN~978-1933988344.
+
+\bibitem{mavenbook}
+Company, S.: \emph{Maven: The Definitive Guide}. O'Reilly Media, 2008,
+  iSBN~978-0596517335.
+
+\bibitem{jsfbook}
+David~Geary, C. S.~H.: \emph{Core JavaServer Faces (3rd Edition)}. Prentice
+  Hall, 2010, iSBN~978-0137012893.
+
+\bibitem{ejbbook}
+Debu~Panda, D.~L., Reza~Rahman: \emph{EJB 3 in Action}. Packt Publishing, 2013,
+  iSBN~978-1782161264.
+
+\bibitem{xhtmlbook}
+Felke-Morris, T.: \emph{Web Development and Design Foundations with XHTML, 5th
+  Edition}. Addison-Wesley, 2010, iSBN~978-0132122702.
+
+\bibitem{fontweb}
+Gandy, D.: Font Awesome [online]. {\tt
+  http://fortawesome.github.io/Font-Awesome/}, 2014-11-03 [cit. 2013-10-25].
+
+\bibitem{Pravidla}
+Gupta, A.: \emph{Java EE 6 Pocet Guide}. O'REILLY, 2012,
+  iSBN~978-1-449-33668-4.
+
+\bibitem{ajaxbook}
+III, A. T.~H.: \emph{Ajax: The Definitive Guide}. O'Reilly Media, 2008,
+  iSBN~978-0596528386.
+
+\bibitem{jbossbook}
+Javid~Jamae, P.~J.: \emph{JBoss in Action: Configuring the JBoss Application
+  Server}. Manning Publications, 2008, iSBN~978-1933988023.
+
+\bibitem{javaeespec}
+Jendrock, E.: \emph{The Java EE 6 Tutorial: Basic Concepts (4th Edition) (Java
+  Series)}. Addison-Wesley Professional, 2010, iSBN~978-0137081851.
+
+\bibitem{fitweb}
+Jendrock, E.; Cervera-Navarro, R.; Evans, I.; aj.: The Java EE 6 Tutorial
+  [online]. {\tt http://docs.oracle.com/javaee/6/tutorial/doc/}, 2013-11-03
+  [cit. 2013-10-25].
+
+\bibitem{junitbook}
+Kaczanowski, T.: \emph{Practical Unit Testing with JUnit and Mockito}. Tomasz
+  Kaczanowski, 2005, iSBN~978-1584504184.
+
+\bibitem{jpabook}
+Merrick~Schincariol, M.~K.: \emph{Pro JPA 2}. Apress, 2013,
+  iSBN~978-1430249269.
+
+\bibitem{seambook}
+Michael Juntao~Yuan, T.~H.: \emph{JBoss Seam: Simplicity and Power Beyond Java
+  EE}. Prentice Hall, 2007, iSBN~978-0131347960.
+
+\bibitem{testdevbook}
+Piroumian, V.: \emph{Test Driven Development: By Example}. Addison-Wesley
+  Professional, 2002, iSBN~978-0321146533.
+
+\bibitem{algibook}
+Skiena, S.~S.: \emph{The Algorithm Design Manual}. Springer, 2012,
+  iSBN~978-1849967204.
+
+\bibitem{boot}
+Thilo, M. O. J. T. C. R.~J.: Twitter Bootstrap [online]. {\tt
+  hhttp://getbootstrap.com/}, 2013-12-16 [cit. 2013-12-27].
+
+\end{thebibliography}
